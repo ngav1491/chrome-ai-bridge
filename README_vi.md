@@ -8,7 +8,7 @@
 
 > 🌟 **Biến trình duyệt Chrome của bạn thành trợ lý thông minh** - Để AI kiểm soát trình duyệt của bạn, biến nó thành công cụ tự động hóa mạnh mẽ được điều khiển bởi AI.
 
-**📖 Tài liệu**: [English](README.md) | [Tieng Viet](README_zh.md) | [Tiếng Việt](README_vi.md)
+**📖 Tài liệu**: [English](README.md) | [Tiếng Việt](README_vi.md)
 
 > Dự án vẫn đang trong giai đoạn đầu và đang được phát triển tích cực. Sẽ có thêm nhiều tính năng, cải thiện độ ổn định và các nâng cấp khác trong tương lai.
 

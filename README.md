@@ -8,7 +8,7 @@
 
 > 🌟 **Turn your Chrome browser into your intelligent assistant** - Let AI take control of your browser, transforming it into a powerful AI-controlled automation tool.
 
-**📖 Documentation**: [English](README.md) | [Tieng Viet](README_zh.md)
+**📖 Documentation**: [English](README.md) | [Tiếng Việt](README_vi.md)
 
 > The project is still in its early stages and is under intensive development. More features, stability improvements, and other enhancements will follow.
 
