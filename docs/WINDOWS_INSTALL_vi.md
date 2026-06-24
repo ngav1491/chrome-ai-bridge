@@ -6,7 +6,7 @@ Các bước cài đặt và cấu hình chi tiết của Chrome MCP Server trê
 
 1. **Tải xuống tiện ích Chrome mới nhất từ GitHub**
 
-Liên kết tải xuống: https://github.com/hangwin/mcp-chrome/releases
+Liên kết tải xuống: https://github.com/ngav1491/chrome-ai-bridge/releases
 
 2. **Cài đặt mcp-chrome-bridge trên toàn cục**
 

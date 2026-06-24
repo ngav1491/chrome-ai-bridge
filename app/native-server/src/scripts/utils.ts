@@ -11,6 +11,13 @@ export const mkdir = promisify(fs.mkdir);
 export const writeFile = promisify(fs.writeFile);
 
 /**
+ * Project name (GitHub repo): chrome-ai-bridge.
+ * The CLI binary is still published as `mcp-chrome-bridge` for backwards compatibility
+ * with the Chrome extension's Native Messaging manifest. Logs are kept under the
+ * `mcp-chrome-bridge` directory so existing user installations continue to work.
+ */
+
+/**
  * Get the log directory path for wrapper scripts.
  * Uses platform-appropriate user directories to avoid permission issues.
  *

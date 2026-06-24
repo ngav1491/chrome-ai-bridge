@@ -1,10 +1,10 @@
 # Chrome MCP Server 🚀
 
-[![Stars](https://img.shields.io/github/stars/hangwin/mcp-chrome)](https://img.shields.io/github/stars/hangwin/mcp-chrome)
+[![Stars](https://img.shields.io/github/stars/ngav1491/chrome-ai-bridge)](https://img.shields.io/github/stars/ngav1491/chrome-ai-bridge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-blue.svg)](https://www.typescriptlang.org/)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-green.svg)](https://developer.chrome.com/docs/extensions/)
-[![Release](https://img.shields.io/github/v/release/hangwin/mcp-chrome.svg)](https://img.shields.io/github/v/release/hangwin/mcp-chrome.svg)
+[![Release](https://img.shields.io/github/v/release/ngav1491/chrome-ai-bridge.svg)](https://img.shields.io/github/v/release/ngav1491/chrome-ai-bridge.svg)
 
 > 🌟 **Biến trình duyệt Chrome của bạn thành trợ lý thông minh** - Để AI kiểm soát trình duyệt của bạn, biến nó thành công cụ tự động hóa mạnh mẽ được điều khiển bởi AI.
 
@@ -56,9 +56,9 @@ Chrome MCP Server là một **máy chủ Model Context Protocol (MCP)** dựa tr
 
 1. **Tải xuống tiện ích Chrome mới nhất từ GitHub**
 
-Liên kết tải xuống: https://github.com/hangwin/mcp-chrome/releases
+Liên kết tải xuống: https://github.com/ngav1491/chrome-ai-bridge/releases
 
-2. **Cài đặt mcp-chrome-bridge trên toàn cục**
+2. **Cài đặt mcp-chrome-bridge trên toàn cục** (CLI; tên dự án: `chrome-ai-bridge`)
 
 npm
 
