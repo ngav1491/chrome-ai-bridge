@@ -35,7 +35,15 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        # --ignore-scripts prevents the native-server postinstall hook from
+        # running before its own dist/ has been built.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Build the workspaces that ship a dist (needed by postinstall)
+        run: pnpm build:shared && pnpm build:native
+
+      - name: Re-run postinstall hooks with dist/ in place
+        run: pnpm rebuild
 
       - name: Lint
         run: pnpm lint

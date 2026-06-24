@@ -42,7 +42,15 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        # Skip postinstall on the first install so the native-server dist
+        # is not required to exist yet.
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Build shared + native-server
+        run: pnpm build:shared && pnpm build:native
+
+      - name: Re-run postinstall hooks with dist/ in place
+        run: pnpm rebuild
 
       - name: Build the extension
         run: pnpm build:extension
