@@ -49,5 +49,11 @@
     "**/*.{json,md,yaml,html,css}": [
       "prettier --write"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged",
+      "commit-msg": "npx --no -- commitlint --edit \"$1\""
+    }
   }
 }
