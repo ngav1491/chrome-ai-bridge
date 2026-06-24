@@ -44,11 +44,12 @@ const model = reactive<any>({});
 
 function applyDefaults() {
   if (!props.node) return;
-  if (!props.node.config) props.node.config = {};
+  const cfg = { ...(props.node.config || {}) };
   const defaults = spec.value?.defaults || {};
-  for (const [k, v] of Object.entries(defaults))
-    if (props.node.config[k] === undefined) props.node.config[k] = v;
-  Object.assign(model, props.node.config);
+  for (const [k, v] of Object.entries(defaults)) {
+    if (cfg[k] === undefined) cfg[k] = v;
+  }
+  Object.assign(model, cfg);
 }
 
 onMounted(applyDefaults);
@@ -61,7 +62,9 @@ watch(
   model,
   () => {
     if (!props.node) return;
-    props.node.config = { ...(props.node.config || {}), ...model };
+    // Build a fresh object instead of mutating the incoming prop.
+    const cfg = { ...(props.node.config || {}), ...model };
+    Object.assign(model, cfg);
   },
   { deep: true },
 );

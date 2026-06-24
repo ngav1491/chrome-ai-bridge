@@ -163,7 +163,10 @@ function handleScroll(): void {
 /**
  * Scroll to bottom of content area
  */
-function scrollToBottom(behavior: ScrollBehavior = 'smooth'): void {
+// `ScrollBehavior` is part of the DOM lib types. eslint may not see it as
+// a global without an explicit reference; using it via the type position
+// works in all TS targets.
+function scrollToBottom(behavior: 'auto' | 'smooth' = 'smooth'): void {
   if (!contentRef.value) return;
   contentRef.value.scrollTo({
     top: contentRef.value.scrollHeight,
