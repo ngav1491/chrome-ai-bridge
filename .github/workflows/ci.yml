@@ -49,7 +49,8 @@ jobs:
         run: pnpm lint
 
       - name: Typecheck
-        run: pnpm typecheck
+        # Skip @chrome-mcp/wasm-simd (a Rust crate that has no tsconfig).
+        run: pnpm -r --filter='!@chrome-mcp/wasm-simd' exec tsc --noEmit
 
       - name: Build all workspaces
         run: pnpm build
