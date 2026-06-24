@@ -90,8 +90,22 @@ jobs:
 
       - name: Verify checksums
         run: |
-          cd release-artifacts
-          sha256sum -c chrome-ai-bridge-extension.sha256
+          # download-artifact extracts the artifact zip into the target dir,
+          # so we expect chrome-ai-bridge-extension.{zip,sha256} directly under
+          # release-artifacts/. List files first to surface path mismatches
+          # clearly if the download layout changes.
+          ls -la release-artifacts/
+          if [ ! -f release-artifacts/chrome-ai-bridge-extension.zip ]; then
+            echo "Missing release-artifacts/chrome-ai-bridge-extension.zip" >&2
+            find release-artifacts -type f
+            exit 1
+          fi
+          if [ ! -f release-artifacts/chrome-ai-bridge-extension.sha256 ]; then
+            echo "Missing release-artifacts/chrome-ai-bridge-extension.sha256" >&2
+            find release-artifacts -type f
+            exit 1
+          fi
+          sha256sum -c release-artifacts/chrome-ai-bridge-extension.sha256
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
