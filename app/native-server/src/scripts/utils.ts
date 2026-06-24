@@ -12,34 +12,37 @@ export const writeFile = promisify(fs.writeFile);
 
 /**
  * Project name (GitHub repo): chrome-ai-bridge.
- * The CLI binary is still published as `mcp-chrome-bridge` for backwards compatibility
- * with the Chrome extension's Native Messaging manifest. Logs are kept under the
- * `mcp-chrome-bridge` directory so existing user installations continue to work.
+ * The CLI binary is now published as `chrome-ai-bridge` (the new canonical
+ * name). We still keep the legacy `mcp-chrome-bridge` directory layout on
+ * disk for existing users, so new logs continue to land in
+ * `chrome-ai-bridge/` and any old `mcp-chrome-bridge/` directory is left in
+ * place (it is harmless once the Native Messaging manifest has been
+ * re-registered with the new host name).
  */
 
 /**
  * Get the log directory path for wrapper scripts.
  * Uses platform-appropriate user directories to avoid permission issues.
  *
- * - macOS: ~/Library/Logs/mcp-chrome-bridge
- * - Windows: %LOCALAPPDATA%/mcp-chrome-bridge/logs
- * - Linux: $XDG_STATE_HOME/mcp-chrome-bridge/logs or ~/.local/state/mcp-chrome-bridge/logs
+ * - macOS: ~/Library/Logs/chrome-ai-bridge
+ * - Windows: %LOCALAPPDATA%/chrome-ai-bridge/logs
+ * - Linux: $XDG_STATE_HOME/chrome-ai-bridge/logs or ~/.local/state/chrome-ai-bridge/logs
  */
 export function getLogDir(): string {
   const homedir = os.homedir();
 
   if (os.platform() === 'darwin') {
-    return path.join(homedir, 'Library', 'Logs', 'mcp-chrome-bridge');
+    return path.join(homedir, 'Library', 'Logs', 'chrome-ai-bridge');
   } else if (os.platform() === 'win32') {
     return path.join(
       process.env.LOCALAPPDATA || path.join(homedir, 'AppData', 'Local'),
-      'mcp-chrome-bridge',
+      'chrome-ai-bridge',
       'logs',
     );
   } else {
     // Linux: XDG_STATE_HOME or ~/.local/state
     const xdgState = process.env.XDG_STATE_HOME || path.join(homedir, '.local', 'state');
-    return path.join(xdgState, 'mcp-chrome-bridge', 'logs');
+    return path.join(xdgState, 'chrome-ai-bridge', 'logs');
   }
 }
 

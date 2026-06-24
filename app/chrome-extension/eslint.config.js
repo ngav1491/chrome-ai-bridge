@@ -30,6 +30,8 @@ export default defineConfig([
       'workers/**',
       'public/libs/**',
       'copy-inject-scripts.mjs',
+      'copy-static-assets.mjs',
+      'make-release-zip.mjs',
     ],
   },
   js.configs.recommended,

@@ -7,11 +7,11 @@ noiDungTiengViet Chrome MCP Bridge noiDungTiengViet。
 Chrome MCP Bridge noiDungTiengViet：
 
 ```
-npm install -g mcp-chrome-bridge
+npm install -g chrome-ai-bridge
 └─ postinstall.js
    ├─ noiDungTiengViet npm_prefix/bin   ← noiDungTiengViet（noiDungTiengVietrootnoiDungTiengViet）
    ├─ noiDungTiengViet                  ← noiDungTiengVietsudo，noiDungTiengViet
-   └─ noiDungTiengViet ➜ noiDungTiengViet mcp-chrome-bridge register --system
+   └─ noiDungTiengViet ➜ noiDungTiengViet chrome-ai-bridge register --system
       └─ noiDungTiengViet
 ```
 
@@ -22,7 +22,7 @@ noiDungTiengViet，noiDungTiengViet。
 ### 1. noiDungTiengViet
 
 ```bash
-npm install -g mcp-chrome-bridge
+npm install -g chrome-ai-bridge
 ```
 
 noiDungTiengViet，noiDungTiengViet Native Messaging noiDungTiengViet。noiDungTiengViet，noiDungTiengViet。
@@ -47,13 +47,13 @@ noiDungTiengViet
 noiDungTiengViet，noiDungTiengViet，noiDungTiengViet：
 
 ```bash
-mcp-chrome-bridge register
+chrome-ai-bridge register
 ```
 
 **noiDungTiengViet：noiDungTiengViet：**
 
 ```bash
-mcp-chrome-bridge doctor
+chrome-ai-bridge doctor
 ```
 
 ### 3. noiDungTiengViet
@@ -66,10 +66,10 @@ noiDungTiengViet：
 
 ```bash
 # macOS/Linux
-sudo mcp-chrome-bridge register --system
+sudo chrome-ai-bridge register --system
 
 # Windows (noiDungTiengViet)
-mcp-chrome-bridge register --system
+chrome-ai-bridge register --system
 ```
 
 noiDungTiengViet。
@@ -80,14 +80,14 @@ noiDungTiengViet。
 noiDungTiengViet PowerShell，noiDungTiengViet：
 
 ```
-mcp-chrome-bridge register
+chrome-ai-bridge register
 ```
 
 **macOS/Linux**：
 noiDungTiengViet sudo noiDungTiengViet：
 
 ```
-sudo mcp-chrome-bridge register
+sudo chrome-ai-bridge register
 ```
 
 ## noiDungTiengViet
@@ -96,14 +96,14 @@ sudo mcp-chrome-bridge register
 
 ```
 noiDungTiengViet
-├─ noiDungTiengViet (mcp-chrome-bridge register)
+├─ noiDungTiengViet (chrome-ai-bridge register)
 │  ├─ noiDungTiengViet
 │  ├─ noiDungTiengViet
 │  ├─ noiDungTiengViet
 │  ├─ noiDungTiengViet
 │  └─ WindowsnoiDungTiengViet：noiDungTiengViet
 │
-└─ noiDungTiengViet (mcp-chrome-bridge register --system)
+└─ noiDungTiengViet (chrome-ai-bridge register --system)
    ├─ noiDungTiengViet
    │  ├─ noiDungTiengViet → noiDungTiengViet
    │  └─ noiDungTiengViet → noiDungTiengViet
@@ -147,7 +147,7 @@ manifest.json
    - noiDungTiengViet Windows noiDungTiengViet
 3. noiDungTiengViet：
    - noiDungTiengViet
-   - macOS/Linux: `sudo mcp-chrome-bridge register --system`
+   - macOS/Linux: `sudo chrome-ai-bridge register --system`
    - Windows: noiDungTiengViet
 
 ## noiDungTiengViet
@@ -200,9 +200,9 @@ noiDungTiengViet
 │  ├─ noiDungTiengViet (macOS/Linux)
 │  │  ├─ "Permission denied" noiDungTiengViet
 │  │  ├─ "Native host has exited" noiDungTiengViet
-│  │  └─ noiDungTiengViet mcp-chrome-bridge fix-permissions
+│  │  └─ noiDungTiengViet chrome-ai-bridge fix-permissions
 │  │
-│  └─ noiDungTiengViet mcp-chrome-bridge register --system
+│  └─ noiDungTiengViet chrome-ai-bridge register --system
 │
 ├─ noiDungTiengViet
 │  ├─ noiDungTiengVietNode.jsnoiDungTiengViet (node -v)
@@ -243,27 +243,27 @@ noiDungTiengViet，noiDungTiengViet：
    a) **noiDungTiengViet（noiDungTiengViet）**：
 
    ```bash
-   mcp-chrome-bridge fix-permissions
+   chrome-ai-bridge fix-permissions
    ```
 
    b) **noiDungTiengViet**：
 
    ```bash
-   mcp-chrome-bridge doctor --fix
+   chrome-ai-bridge doctor --fix
    ```
 
    c) **noiDungTiengViet**：
 
    ```bash
    # noiDungTiengViet
-   npm list -g mcp-chrome-bridge
+   npm list -g chrome-ai-bridge
    # noiDungTiengViet pnpm
-   pnpm list -g mcp-chrome-bridge
+   pnpm list -g chrome-ai-bridge
 
    # noiDungTiengViet（noiDungTiengViet）
-   chmod +x /path/to/node_modules/mcp-chrome-bridge/run_host.sh
-   chmod +x /path/to/node_modules/mcp-chrome-bridge/index.js
-   chmod +x /path/to/node_modules/mcp-chrome-bridge/cli.js
+   chmod +x /path/to/node_modules/chrome-ai-bridge/run_host.sh
+   chmod +x /path/to/node_modules/chrome-ai-bridge/index.js
+   chmod +x /path/to/node_modules/chrome-ai-bridge/cli.js
    ```
 
    **Windows noiDungTiengViet**：
@@ -278,20 +278,20 @@ noiDungTiengViet，noiDungTiengViet：
    a) **noiDungTiengViet（noiDungTiengViet）**：
 
    ```cmd
-   mcp-chrome-bridge fix-permissions
+   chrome-ai-bridge fix-permissions
    ```
 
    b) **noiDungTiengViet**：
 
    ```cmd
-   mcp-chrome-bridge doctor --fix
+   chrome-ai-bridge doctor --fix
    ```
 
    c) **noiDungTiengViet**：
 
    ```cmd
    # noiDungTiengViet
-   npm list -g mcp-chrome-bridge
+   npm list -g chrome-ai-bridge
 
    # noiDungTiengViet（noiDungTiengViet -> noiDungTiengViet）
    # noiDungTiengViet run_host.bat noiDungTiengViet
@@ -301,15 +301,15 @@ noiDungTiengViet，noiDungTiengViet：
 
    ```bash
    # noiDungTiengViet
-   npm uninstall -g mcp-chrome-bridge
-   # noiDungTiengViet pnpm uninstall -g mcp-chrome-bridge
+   npm uninstall -g chrome-ai-bridge
+   # noiDungTiengViet pnpm uninstall -g chrome-ai-bridge
 
    # noiDungTiengViet
-   npm install -g mcp-chrome-bridge
-   # noiDungTiengViet pnpm install -g mcp-chrome-bridge
+   npm install -g chrome-ai-bridge
+   # noiDungTiengViet pnpm install -g chrome-ai-bridge
 
    # noiDungTiengViet，noiDungTiengViet
-   mcp-chrome-bridge fix-permissions
+   chrome-ai-bridge fix-permissions
    ```
 
 4. noiDungTiengViet Windows noiDungTiengViet，noiDungTiengViet
@@ -317,7 +317,7 @@ noiDungTiengViet，noiDungTiengViet：
    - noiDungTiengViet，noiDungTiengViet `HKLM\Software\Google\Chrome\NativeMessagingHosts\`
 
 5. noiDungTiengViet
-   - noiDungTiengViet `mcp-chrome-bridge register --system` noiDungTiengViet
+   - noiDungTiengViet `chrome-ai-bridge register --system` noiDungTiengViet
    - noiDungTiengViet
 
 6. noiDungTiengViet

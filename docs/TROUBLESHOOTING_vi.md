@@ -5,13 +5,13 @@
 Chạy công cụ chẩn đoán để xác định các sự cố thường gặp:
 
 ```bash
-mcp-chrome-bridge doctor
+chrome-ai-bridge doctor
 ```
 
 Tự động sửa các sự cố thường gặp:
 
 ```bash
-mcp-chrome-bridge doctor --fix
+chrome-ai-bridge doctor --fix
 ```
 
 ### Xuất báo cáo chẩn đoán
@@ -20,13 +20,13 @@ Nếu cần gửi Issue, bạn có thể xuất báo cáo chẩn đoán:
 
 ```bash
 # In báo cáo Markdown ra terminal (sao chép và dán vào GitHub Issue)
-mcp-chrome-bridge report
+chrome-ai-bridge report
 
 # Ghi vào tệp
-mcp-chrome-bridge report --output mcp-report.md
+chrome-ai-bridge report --output mcp-report.md
 
 # Sao chép trực tiếp vào bộ nhớ tạm
-mcp-chrome-bridge report --copy
+chrome-ai-bridge report --copy
 ```
 
 Theo mặc định, tên người dùng, đường dẫn và token sẽ được ẩn. Nếu bạn cần cung cấp đường dẫn đầy đủ, có thể sử dụng `--no-redact`.
@@ -40,17 +40,17 @@ Lỗi khởi động về cơ bản là **vấn đề quyền** hoặc do **node
 **Khuyến nghị chạy công cụ chẩn đoán trước:**
 
 ```bash
-mcp-chrome-bridge doctor
+chrome-ai-bridge doctor
 ```
 
 Quy trình khắc phục sự cố cốt lõi
 
 1. Sau khi cài đặt gói npm trên toàn cục, xác nhận vị trí của tệp manifest `com.chromemcp.nativehost.json`, bên trong có một trường **path** trỏ đến một script khởi động:
 
-1.1 **Kiểm tra xem mcp-chrome-bridge đã được cài đặt thành công chưa**, đảm bảo nó được cài đặt **toàn cục**
+1.1 **Kiểm tra xem chrome-ai-bridge đã được cài đặt thành công chưa**, đảm bảo nó được cài đặt **toàn cục**
 
 ```bash
-mcp-chrome-bridge -V
+chrome-ai-bridge -V
 ```
 
 <img width="612" alt="Ảnh chụp màn hình 2025-06-11 15 09 57" src="https://github.com/user-attachments/assets/59458532-e6e1-457c-8c82-3756a5dbb28e" />
@@ -67,21 +67,21 @@ Nếu gói npm được cài đặt bình thường, một tệp `com.chromemcp.
 {
   "name": "com.chromemcp.nativehost",
   "description": "Node.js Host for Browser Bridge Extension",
-  "path": "/Users/xxx/Library/pnpm/global/5/.pnpm/mcp-chrome-bridge@1.0.23/node_modules/mcp-chrome-bridge/dist/run_host.sh",
+  "path": "/Users/xxx/Library/pnpm/global/5/.pnpm/chrome-ai-bridge@1.0.23/node_modules/chrome-ai-bridge/dist/run_host.sh",
   "type": "stdio",
   "allowed_origins": ["chrome-extension://hbdgbgagpkpjffpklnamcljpakneikee/"]
 }
 ```
 
-> Nếu phát hiện không có tệp manifest này, bạn có thể thử thực thi dòng lệnh: `mcp-chrome-bridge register`
+> Nếu phát hiện không có tệp manifest này, bạn có thể thử thực thi dòng lệnh: `chrome-ai-bridge register`
 
 2. **Kiểm tra nhật ký**
 
 Nhật ký hiện được lưu trữ trong thư mục người dùng có thể ghi:
 
-- **macOS**: `~/Library/Logs/mcp-chrome-bridge/`
-- **Windows**: `%LOCALAPPDATA%\mcp-chrome-bridge\logs\` (ví dụ: `C:\Users\xxx\AppData\Local\mcp-chrome-bridge\logs\`)
-- **Linux**: `~/.local/state/mcp-chrome-bridge/logs/`
+- **macOS**: `~/Library/Logs/chrome-ai-bridge/`
+- **Windows**: `%LOCALAPPDATA%\chrome-ai-bridge\logs\` (ví dụ: `C:\Users\xxx\AppData\Local\chrome-ai-bridge\logs\`)
+- **Linux**: `~/.local/state/chrome-ai-bridge/logs/`
 
 <img width="804" alt="Ảnh chụp màn hình 2025-06-11 15 09 41" src="https://github.com/user-attachments/assets/ce7b7c94-7c84-409a-8210-c9317823aae1" />
 
@@ -90,7 +90,7 @@ Nhật ký hiện được lưu trữ trong thư mục người dùng có thể 
 3.1. `run_host.sh` (trên Windows là `run_host.bat`) không có quyền thực thi: chạy lệnh sau để sửa:
 
 ```bash
-mcp-chrome-bridge fix-permissions
+chrome-ai-bridge fix-permissions
 ```
 
 3.2. Script không tìm thấy node: nếu bạn sử dụng công cụ quản lý phiên bản Node (nvm, volta, asdf, fnm), bạn có thể đặt biến môi trường `CHROME_MCP_NODE_PATH`:
@@ -99,7 +99,7 @@ mcp-chrome-bridge fix-permissions
 export CHROME_MCP_NODE_PATH=/path/to/your/node
 ```
 
-Hoặc chạy `mcp-chrome-bridge doctor --fix` để ghi đường dẫn Node hiện tại.
+Hoặc chạy `chrome-ai-bridge doctor --fix` để ghi đường dẫn Node hiện tại.
 
 3.3 Nếu đã loại trừ hai nguyên nhân trên mà vẫn không được, hãy xem nhật ký trong thư mục nhật ký, sau đó gửi issue
 
@@ -107,9 +107,9 @@ Hoặc chạy `mcp-chrome-bridge doctor --fix` để ghi đường dẫn Node hi
 
 Nhật ký trình bao bọc hiện được lưu trữ ở vị trí người dùng có thể ghi:
 
-- **macOS**: `~/Library/Logs/mcp-chrome-bridge/`
-- **Windows**: `%LOCALAPPDATA%\mcp-chrome-bridge\logs\`
-- **Linux**: `~/.local/state/mcp-chrome-bridge/logs/`
+- **macOS**: `~/Library/Logs/chrome-ai-bridge/`
+- **Windows**: `%LOCALAPPDATA%\chrome-ai-bridge\logs\`
+- **Linux**: `~/.local/state/chrome-ai-bridge/logs/`
 
 #### Thực thi công cụ hết thời gian
 

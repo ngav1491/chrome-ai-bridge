@@ -58,12 +58,12 @@ Chrome MCP Server là một **máy chủ Model Context Protocol (MCP)** dựa tr
 
 Liên kết tải xuống: https://github.com/ngav1491/chrome-ai-bridge/releases
 
-2. **Cài đặt mcp-chrome-bridge trên toàn cục** (CLI; tên dự án: `chrome-ai-bridge`)
+2. **Cài đặt chrome-ai-bridge trên toàn cục** (CLI; tên dự án: `chrome-ai-bridge`)
 
 npm
 
 ```bash
-npm install -g mcp-chrome-bridge
+npm install -g chrome-ai-bridge
 ```
 
 pnpm
@@ -71,11 +71,11 @@ pnpm
 ```bash
 # Phương pháp 1: Bật script trên toàn cục (khuyến nghị)
 pnpm config set enable-pre-post-scripts true
-pnpm install -g mcp-chrome-bridge
+pnpm install -g chrome-ai-bridge
 
 # Phương pháp 2: Đăng ký thủ công (nếu postinstall không chạy)
-pnpm install -g mcp-chrome-bridge
-mcp-chrome-bridge register
+pnpm install -g chrome-ai-bridge
+chrome-ai-bridge register
 ```
 
 > Lưu ý: pnpm v7+ mặc định tắt script postinstall để tăng cường bảo mật. Cài đặt `enable-pre-post-scripts` kiểm soát việc có chạy script pre/post cài đặt hay không. Nếu đăng ký tự động thất bại, hãy sử dụng lệnh đăng ký thủ công ở trên.
@@ -114,13 +114,13 @@ Nếu client của bạn chỉ hỗ trợ phương thức kết nối stdio, vui
 
 ```sh
 # Phương pháp kiểm tra với npm
-npm list -g mcp-chrome-bridge
+npm list -g chrome-ai-bridge
 # Phương pháp kiểm tra với pnpm
-pnpm list -g mcp-chrome-bridge
+pnpm list -g chrome-ai-bridge
 ```
 
 Giả sử lệnh trên xuất ra đường dẫn: /Users/xxx/Library/pnpm/global/5
-Thì đường dẫn cuối cùng của bạn sẽ là: /Users/xxx/Library/pnpm/global/5/node_modules/mcp-chrome-bridge/dist/mcp/mcp-server-stdio.js
+Thì đường dẫn cuối cùng của bạn sẽ là: /Users/xxx/Library/pnpm/global/5/node_modules/chrome-ai-bridge/dist/mcp/mcp-server-stdio.js
 
 2. Thay thế cấu hình dưới đây bằng đường dẫn cuối cùng bạn vừa nhận được
 
@@ -131,7 +131,7 @@ Thì đường dẫn cuối cùng của bạn sẽ là: /Users/xxx/Library/pnpm/
       "command": "npx",
       "args": [
         "node",
-        "/Users/xxx/Library/pnpm/global/5/node_modules/mcp-chrome-bridge/dist/mcp/mcp-server-stdio.js"
+        "/Users/xxx/Library/pnpm/global/5/node_modules/chrome-ai-bridge/dist/mcp/mcp-server-stdio.js"
       ]
     }
   }

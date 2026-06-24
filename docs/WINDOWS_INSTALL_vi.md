@@ -11,11 +11,11 @@
 3. Cài đặt native messaging host:
 
    ```powershell
-   npm install -g mcp-chrome-bridge
-   mcp-chrome-bridge register
+   npm install -g chrome-ai-bridge
+   chrome-ai-bridge register
    ```
 
-   Nếu cần đăng ký cho mọi user trên máy, chạy PowerShell với quyền admin rồi gọi `mcp-chrome-bridge register --system`.
+   Nếu cần đăng ký cho mọi user trên máy, chạy PowerShell với quyền admin rồi gọi `chrome-ai-bridge register --system`.
 
 4. Nhấp biểu tượng chrome-ai-bridge trên thanh công cụ Chrome, nhấp **Kết nối**, rồi dùng URL `http://127.0.0.1:12306/mcp` trong cấu hình MCP client.
 

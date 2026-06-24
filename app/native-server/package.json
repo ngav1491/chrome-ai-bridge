@@ -1,9 +1,10 @@
 {
-  "name": "mcp-chrome-bridge",
-  "version": "1.0.29",
-  "description": "Chrome Native-Messaging host (Node)",
+  "name": "chrome-ai-bridge",
+  "version": "0.2.0",
+  "description": "chrome-ai-bridge Native Messaging host (Node)",
   "main": "dist/index.js",
   "bin": {
+    "chrome-ai-bridge": "./dist/cli.js",
     "mcp-chrome-bridge": "./dist/cli.js",
     "chrome-mcp-bridge": "./dist/cli.js",
     "mcp-chrome-stdio": "./dist/mcp/mcp-server-stdio.js"

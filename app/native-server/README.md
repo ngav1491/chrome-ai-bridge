@@ -53,26 +53,26 @@ npm run build
 #### noiDungTiengViet
 
 ```bash
-mcp-chrome-bridge register --detect
+chrome-ai-bridge register --detect
 ```
 
 #### noiDungTiengViet
 
 ```bash
 # noiDungTiengViet Chrome
-mcp-chrome-bridge register --browser chrome
+chrome-ai-bridge register --browser chrome
 
 # noiDungTiengViet Chromium
-mcp-chrome-bridge register --browser chromium
+chrome-ai-bridge register --browser chromium
 
 # noiDungTiengViet
-mcp-chrome-bridge register --browser all
+chrome-ai-bridge register --browser all
 ```
 
 #### noiDungTiengViet（noiDungTiengViet）
 
 ```bash
-npm i -g mcp-chrome-bridge
+npm i -g chrome-ai-bridge
 ```
 
 #### noiDungTiengViet

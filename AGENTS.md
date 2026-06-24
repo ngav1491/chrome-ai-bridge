@@ -14,5 +14,5 @@
 - Locales `zh_CN` and `zh_TW` have been removed; only `en`, `vi`, and `ja` remain.
 - Docs are bilingual: each `README.md` / `docs/*.md` has a `_vi.md` counterpart; Chinese-only `_zh.md` files have been deleted.
 - Prompts also have `_vi.md` versions under `prompt/`; the original `content-analize.md`, `modify-web.md`, and `excalidraw-prompt.md` are kept as the canonical versions.
-- The CLI binary / npm package is still named `mcp-chrome-bridge` (not renamed) to remain compatible with the Chrome Native Messaging manifest and existing user installs.
+- The CLI binary is now published as `chrome-ai-bridge`; the legacy `mcp-chrome-bridge` and `chrome-mcp-bridge` names are kept as bin aliases in `app/native-server/package.json` for backwards compatibility. The legacy `mcp-chrome-bridge` log directory on disk is no longer written to by new installs.
 - Build command for the full project: `corepack pnpm build` from the repo root.

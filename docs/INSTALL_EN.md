@@ -46,7 +46,7 @@ The extension uses your existing Chrome profile, so any logged-in sites, saved p
 The extension requires a small native host binary on your machine so Chrome can communicate with the MCP server. Install it once via npm:
 
 ```bash
-npm install -g mcp-chrome-bridge
+npm install -g chrome-ai-bridge
 ```
 
 The postinstall script automatically registers the Chrome Native Messaging manifest. If the install is silent and the command exits with code `0`, you can move to Step 4.
@@ -54,17 +54,17 @@ The postinstall script automatically registers the Chrome Native Messaging manif
 If the postinstall script was skipped (some package managers disable postinstall scripts), register manually:
 
 ```bash
-mcp-chrome-bridge register
+chrome-ai-bridge register
 ```
 
 To register globally for all users on the machine:
 
 ```bash
 # macOS / Linux
-sudo mcp-chrome-bridge register --system
+sudo chrome-ai-bridge register --system
 
 # Windows (run from an elevated PowerShell)
-mcp-chrome-bridge register --system
+chrome-ai-bridge register --system
 ```
 
 ### Step 4 — Open the extension and connect
@@ -98,7 +98,7 @@ corepack pnpm build
 The build runs three workspace projects:
 
 - `packages/shared` → compiled TypeScript utilities (`dist/`)
-- `app/native-server` → the `mcp-chrome-bridge` CLI binary (`dist/`)
+- `app/native-server` → the `chrome-ai-bridge` CLI binary (`dist/`)
 - `app/chrome-extension` → the WXT-built extension at `app/chrome-extension/.output/chrome-mv3/`
 
 > If you only need to rebuild the extension (for example after editing Vue components), run `corepack pnpm --filter chrome-mcp-server build`.
@@ -119,7 +119,7 @@ For local development you can run the CLI directly from the build output:
 node app/native-server/dist/cli.js
 ```
 
-This is equivalent to `mcp-chrome-bridge` when installed globally, and is useful when iterating on the native host without re-installing the npm package.
+This is equivalent to `chrome-ai-bridge` when installed globally, and is useful when iterating on the native host without re-installing the npm package.
 
 ---
 
@@ -147,15 +147,15 @@ Add the following entry to your MCP client configuration:
 STDIO requires the absolute path to the bundled stdio entry. Locate it first:
 
 ```bash
-npm list -g mcp-chrome-bridge
+npm list -g chrome-ai-bridge
 # or
-pnpm list -g mcp-chrome-bridge
+pnpm list -g chrome-ai-bridge
 ```
 
 The output looks similar to:
 
 ```
-/Users/xxx/Library/pnpm/global/5/node_modules/mcp-chrome-bridge
+/Users/xxx/Library/pnpm/global/5/node_modules/chrome-ai-bridge
 ```
 
 Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your client config:
@@ -167,7 +167,7 @@ Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your
       "command": "npx",
       "args": [
         "node",
-        "/Users/xxx/Library/pnpm/global/5/node_modules/mcp-chrome-bridge/dist/mcp/mcp-server-stdio.js"
+        "/Users/xxx/Library/pnpm/global/5/node_modules/chrome-ai-bridge/dist/mcp/mcp-server-stdio.js"
       ]
     }
   }
@@ -182,7 +182,7 @@ Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your
 2. From a terminal, run a quick health check:
 
    ```bash
-   mcp-chrome-bridge doctor
+   chrome-ai-bridge doctor
    ```
 
    The command should report the native host, the Chrome extension id, and the configured port.
@@ -193,7 +193,7 @@ Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your
 
 ## 6. Updating
 
-- **End users**: download the latest release ZIP, replace the old extension folder with the new one, then click **Reload** on the extension card at `chrome://extensions/`. Run `npm install -g mcp-chrome-bridge@latest` to update the CLI host.
+- **End users**: download the latest release ZIP, replace the old extension folder with the new one, then click **Reload** on the extension card at `chrome://extensions/`. Run `npm install -g chrome-ai-bridge@latest` to update the CLI host.
 - **Developers**: `git pull`, then re-run `corepack pnpm install --frozen-lockfile && corepack pnpm build`, and click **Reload** on the extension card.
 
 ---
@@ -204,19 +204,19 @@ Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your
 2. Remove the global CLI host:
 
    ```bash
-   npm uninstall -g mcp-chrome-bridge
+   npm uninstall -g chrome-ai-bridge
    ```
 
 3. Optionally delete the extracted folder and any log directory:
-   - macOS: `~/Library/Logs/mcp-chrome-bridge/`
-   - Windows: `%LOCALAPPDATA%\mcp-chrome-bridge\logs\`
-   - Linux: `~/.local/state/mcp-chrome-bridge/logs/`
+   - macOS: `~/Library/Logs/chrome-ai-bridge/`
+   - Windows: `%LOCALAPPDATA%\chrome-ai-bridge\logs\`
+   - Linux: `~/.local/state/chrome-ai-bridge/logs/`
 
 ---
 
 ## 8. Troubleshooting
 
 - **Extension shows an error after loading** — open the extension's **Errors** button at `chrome://extensions/`. Most loading errors are caused by selecting the wrong folder (e.g. selecting the parent folder instead of the folder that contains `manifest.json`).
-- **MCP client cannot connect** — run `mcp-chrome-bridge doctor`. If the native host is missing, run `mcp-chrome-bridge register` again.
+- **MCP client cannot connect** — run `chrome-ai-bridge doctor`. If the native host is missing, run `chrome-ai-bridge register` again.
 - **Port already in use** — open the extension popup, change the listening port, and update the MCP client config accordingly.
 - **Need more help** — see [`docs/TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for the full diagnostic flow.
