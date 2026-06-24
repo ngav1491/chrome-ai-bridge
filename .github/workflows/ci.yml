@@ -49,8 +49,13 @@ jobs:
         run: pnpm lint
 
       - name: Typecheck
-        # Skip @chrome-mcp/wasm-simd (a Rust crate that has no tsconfig).
-        run: pnpm -r --filter='!@chrome-mcp/wasm-simd' exec tsc --noEmit
+        # The chrome-extension workspace is built by Vite + WXT (which already
+        # runs vue-tsc). Running plain `tsc --noEmit` there fails because the
+        # extension's tsconfig is not set up for type-checking every transitive
+        # type definition. Restrict typecheck to the Node-side workspaces.
+        run: |
+          pnpm --filter chrome-mcp-shared exec tsc --noEmit
+          pnpm --filter mcp-chrome-bridge exec tsc --noEmit
 
       - name: Build all workspaces
         run: pnpm build
