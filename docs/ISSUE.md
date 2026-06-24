@@ -1182,7 +1182,7 @@
 - [Khắc phục sự cố](TROUBLESHOOTING_vi.md)
 - [Đóng góp](CONTRIBUTING_vi.md)
 - [Công cụ](TOOLS_vi.md)
-- [Cài đặt Windows](WINDOWS_INSTALL_vi.md)
+- [Cài đặt](INSTALL_VI.md)
 
 ---
 
