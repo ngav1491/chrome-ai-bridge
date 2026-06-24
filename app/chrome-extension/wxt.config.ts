@@ -1,6 +1,5 @@
 import { defineConfig } from 'wxt';
 import tailwindcss from '@tailwindcss/vite';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 import Icons from 'unplugin-icons/vite';
@@ -134,31 +133,8 @@ export default defineConfig({
         resolvers: [IconsResolver({ prefix: 'i', enabledCollections: ['lucide', 'mdi', 'ri'] })],
       }) as any,
       Icons({ compiler: 'vue3', autoInstall: false }) as any,
-      // Ensure static assets are available as early as possible to avoid race conditions in dev
-      // Copy workers/_locales/inject-scripts into the build output before other steps
-      viteStaticCopy({
-        targets: [
-          {
-            src: 'inject-scripts/*.js',
-            dest: 'inject-scripts',
-          },
-          {
-            src: ['workers/*'],
-            dest: 'workers',
-          },
-          {
-            src: '_locales/**/*',
-            dest: '_locales',
-          },
-        ],
-        // Use writeBundle so outDir exists for dev and prod
-        hook: 'writeBundle',
-        // Enable watch so changes to these files are reflected during dev
-        watch: {
-          // Use default patterns inferred from targets; explicit true enables watching
-          // Vite plugin will watch src patterns and re-copy on change
-        } as any,
-      }) as any,
+      // Static assets under inject-scripts/, _locales/, workers/ are copied
+      // after the build by copy-static-assets.mjs (see package.json build script).
     ],
     build: {
       // noiDungTiengVietxây dựngnoiDungTiengVietcầnnoiDungTiengVietes6

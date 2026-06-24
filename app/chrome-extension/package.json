@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
-    "build": "wxt build && node copy-inject-scripts.mjs",
+    "build": "wxt build && node copy-static-assets.mjs && node make-release-zip.mjs",
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",

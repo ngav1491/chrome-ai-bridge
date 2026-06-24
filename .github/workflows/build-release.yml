@@ -58,15 +58,13 @@ jobs:
       - name: Zip the extension output
         run: |
           mkdir -p release-artifacts
-          cd app/chrome-extension/.output
-          # WXT 0.20+ produces a single zip per build target.
-          ZIP_FILE=$(ls -1 chrome-mv3*.zip | head -n 1)
-          if [ -z "$ZIP_FILE" ]; then
-            echo "No zip found in app/chrome-extension/.output" >&2
+          # pnpm build runs wxt build, copy-static-assets, and make-release-zip
+          # (which packages .output/chrome-mv3 into a single zip for unpacked install).
+          if [ ! -f app/chrome-extension/.output/chrome-ai-bridge-extension.zip ]; then
+            echo "Release zip not found at app/chrome-extension/.output/chrome-ai-bridge-extension.zip" >&2
             exit 1
           fi
-          cp "$ZIP_FILE" ../../release-artifacts/chrome-ai-bridge-extension.zip
-          cd ../..
+          cp app/chrome-extension/.output/chrome-ai-bridge-extension.zip release-artifacts/chrome-ai-bridge-extension.zip
           sha256sum release-artifacts/chrome-ai-bridge-extension.zip | tee release-artifacts/chrome-ai-bridge-extension.sha256
 
       - name: Upload build artifacts
