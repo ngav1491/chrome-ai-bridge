@@ -29,6 +29,7 @@ export default defineConfig([
       'libs/**',
       'workers/**',
       'public/libs/**',
+      'copy-inject-scripts.mjs',
     ],
   },
   js.configs.recommended,

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-env node */
 // Copy inject-scripts to the WXT output dir after build.
 // WXT 0.20 does not preserve viteStaticCopy outputs reliably for
 // the `web_accessible_resources` paths declared in the manifest, so
