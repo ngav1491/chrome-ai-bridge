@@ -2,40 +2,40 @@
   <div v-if="visible" class="rr-modal">
     <div class="rr-dialog">
       <div class="rr-header">
-        <div class="title">定时执行</div>
+        <div class="title">định thờithực thi</div>
         <button class="close" @click="$emit('close')">✕</button>
       </div>
       <div class="rr-body">
         <div class="row">
-          <label>启用</label>
-          <label class="chk"><input type="checkbox" v-model="enabled" />启用定时</label>
+          <label>bật</label>
+          <label class="chk"><input type="checkbox" v-model="enabled" />bậtđịnh thời</label>
         </div>
         <div class="row">
-          <label>类型</label>
+          <label>kiểu</label>
           <select v-model="type">
-            <option value="interval">每隔 N 分钟</option>
-            <option value="daily">每天固定时间</option>
-            <option value="once">只执行一次</option>
+            <option value="interval">noiDungTiengViet N phút</option>
+            <option value="daily">mỗi ngàycố địnhthời gian</option>
+            <option value="once">noiDungTiengVietthực thimột lần</option>
           </select>
         </div>
         <div class="row" v-if="type === 'interval'">
-          <label>间隔(分钟)</label>
+          <label>khoảng cách(phút)</label>
           <input type="number" v-model.number="intervalMinutes" />
         </div>
         <div class="row" v-if="type === 'daily'">
-          <label>时间(HH:mm)</label>
-          <input v-model="dailyTime" placeholder="例如 09:30" />
+          <label>thời gian(HH:mm)</label>
+          <input v-model="dailyTime" placeholder="ví dụ 09:30" />
         </div>
         <div class="row" v-if="type === 'once'">
-          <label>时间(ISO)</label>
-          <input v-model="onceAt" placeholder="例如 2025-10-05T10:00:00" />
+          <label>thời gian(ISO)</label>
+          <input v-model="onceAt" placeholder="ví dụ 2025-10-05T10:00:00" />
         </div>
         <div class="row">
-          <label>参数(JSON)</label>
+          <label>tham số(JSON)</label>
           <textarea v-model="argsJson" placeholder='{ "username": "xx" }'></textarea>
         </div>
         <div class="section">
-          <div class="section-title">已有计划</div>
+          <div class="section-title">noiDungTiengViet</div>
           <div class="sched-list">
             <div class="sched-row" v-for="s in schedules" :key="s.id">
               <div class="meta">
@@ -43,14 +43,14 @@
                 <span class="desc">{{ describe(s) }}</span>
               </div>
               <div class="actions">
-                <button class="small danger" @click="$emit('remove', s.id)">删除</button>
+                <button class="small danger" @click="$emit('remove', s.id)">xóa</button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="rr-footer">
-        <button class="primary" @click="save">保存</button>
+        <button class="primary" @click="save">lưu</button>
       </div>
     </div>
   </div>
@@ -111,9 +111,9 @@ function safeParse(s: string) {
 }
 
 function describe(s: any) {
-  if (s.type === 'interval') return `每 ${s.when} 分钟`;
-  if (s.type === 'daily') return `每天 ${s.when}`;
-  if (s.type === 'once') return `一次 ${s.when}`;
+  if (s.type === 'interval') return `noiDungTiengViet ${s.when} phút`;
+  if (s.type === 'daily') return `mỗi ngày ${s.when}`;
+  if (s.type === 'once') return `một lần ${s.when}`;
   return '';
 }
 </script>

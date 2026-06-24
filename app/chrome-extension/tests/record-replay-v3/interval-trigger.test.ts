@@ -1,6 +1,6 @@
 /**
  * @fileoverview Interval Trigger Handler Tests
- * @description 测试 interval 触发器的安装、卸载和触发行为
+ * @description kiểm thử interval triggernoiDungTiengVietcài đặt、gỡ cài đặtnoiDungTiengVietkích hoạthành vi
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';

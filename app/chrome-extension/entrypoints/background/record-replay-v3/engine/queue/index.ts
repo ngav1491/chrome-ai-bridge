@@ -1,5 +1,5 @@
 /**
- * @fileoverview Queue 模块导出入口
+ * @fileoverview Queue điểm vào xuất module
  */
 
 export * from './queue';

@@ -1,31 +1,31 @@
 /**
- * @fileoverview Domain 层导出入口
- * @description 导出所有 Domain 类型定义
+ * @fileoverview Domain noiDungTiengVietxuấtđiểm vào
+ * @description xuấttất cả Domain kiểuđịnh nghĩa
  */
 
-// JSON 基础类型
+// JSON cơ sởkiểu
 export * from './json';
 
-// ID 类型
+// ID kiểu
 export * from './ids';
 
-// 错误类型
+// lỗikiểu
 export * from './errors';
 
-// 策略类型
+// chiến lượckiểu
 export * from './policy';
 
-// 变量类型
+// biếnkiểu
 export * from './variables';
 
-// Flow 类型
+// Flow kiểu
 export * from './flow';
 
-// 事件类型
+// sự kiệnkiểu
 export * from './events';
 
-// 调试器类型
+// gỡ lỗinoiDungTiengVietkiểu
 export * from './debug';
 
-// 触发器类型
+// kiểu trigger
 export * from './triggers';

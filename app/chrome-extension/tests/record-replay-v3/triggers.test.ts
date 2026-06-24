@@ -1,5 +1,5 @@
 /**
- * @fileoverview 触发器测试 (P4-01)
+ * @fileoverview triggerkiểm thử (P4-01)
  * @description
  * Tests for:
  * - TriggerStore CRUD operations

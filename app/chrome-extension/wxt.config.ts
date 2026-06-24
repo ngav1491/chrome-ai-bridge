@@ -18,10 +18,10 @@ const IS_DEV = process.env.NODE_ENV !== 'production' && process.env.MODE !== 'pr
 export default defineConfig({
   modules: ['@wxt-dev/module-vue'],
   runner: {
-    // 方案1: 禁用自动启动（推荐）
+    // phương án1: vô hiệu hóatự độngkhởi động（khuyến nghị）
     disabled: true,
 
-    // 方案2: 如果要启用自动启动并使用现有配置，取消注释下面的配置
+    // phương án2: nếunoiDungTiengVietbậttự độngkhởi độngnoiDungTiengVietsử dụnghiện cócấu hình，hủynoiDungTiengVietcấu hình
     // chromiumArgs: [
     //   '--user-data-dir=' + homedir() + (process.platform === 'darwin'
     //     ? '/Library/Application Support/Google/Chrome'
@@ -34,7 +34,10 @@ export default defineConfig({
   manifest: {
     // Use environment variable for the key, fallback to undefined if not set
     key: CHROME_EXTENSION_KEY,
-    default_locale: 'zh_CN',
+    // default_locale determines which _locales/<locale>/messages.json is used as the
+    // fallback when the user's Chrome UI language has no matching _locales entry.
+    // Available locales (auto-loaded from _locales/ folder): de, en, ja, ko, vi
+    default_locale: 'vi',
     name: '__MSG_extensionName__',
     description: '__MSG_extensionDescription__',
     permissions: [
@@ -100,15 +103,15 @@ export default defineConfig({
     web_accessible_resources: [
       {
         resources: [
-          '/models/*', // 允许访问 public/models/ 下的所有文件
-          '/workers/*', // 允许访问 workers 文件
-          '/inject-scripts/*', // 允许内容脚本注入的助手文件
+          '/models/*', // noiDungTiengViettruy cập public/models/ noiDungTiengViettất cảtệp
+          '/workers/*', // noiDungTiengViettruy cập workers tệp
+          '/inject-scripts/*', // noiDungTiengVietscriptnoiDungTiengViettệp
         ],
         matches: ['<all_urls>'],
       },
     ],
-    // 注意：以下安全策略在开发环境会阻断 dev server 的资源加载，
-    // 只在生产环境启用，开发环境交由 WXT 默认策略处理。
+    // lưu ý：noiDungTiengVietchiến lượcnoiDungTiengViet dev server noiDungTiengViet，
+    // noiDungTiengVietbật，noiDungTiengViet WXT mặc địnhchiến lượcxử lý。
     ...(IS_DEV
       ? {}
       : {
@@ -158,13 +161,13 @@ export default defineConfig({
       }) as any,
     ],
     build: {
-      // 我们的构建产物需要兼容到es6
+      // noiDungTiengVietxây dựngnoiDungTiengVietcầnnoiDungTiengVietes6
       target: 'es2015',
-      // 非生产环境下生成sourcemap
+      // noiDungTiengViettạosourcemap
       sourcemap: env.mode !== 'production',
-      // 禁用gzip 压缩大小报告，因为压缩大型文件可能会很慢
+      // vô hiệu hóagzip noiDungTiengViet，noiDungTiengViettệpnoiDungTiengViet
       reportCompressedSize: false,
-      // chunk大小超过1500kb是触发警告
+      // chunknoiDungTiengVietvượt quá1500kbnoiDungTiengVietkích hoạtcảnh báo
       chunkSizeWarningLimit: 1500,
       minify: false,
     },

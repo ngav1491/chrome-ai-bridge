@@ -1,6 +1,6 @@
 /**
- * @fileoverview Record-Replay V3 公共 API 入口
- * @description 导出所有公共类型和接口
+ * @fileoverview Record-Replay V3 công khai API điểm vào
+ * @description xuấttất cảcông khaikiểunoiDungTiengVietgiao diện
  */
 
 // ==================== Domain ====================
@@ -23,7 +23,7 @@ import { createPersistentVarsStore } from './storage/persistent-vars';
 import { createTriggersStore } from './storage/triggers';
 
 /**
- * 创建完整的 StoragePort 实现
+ * tạođầy đủ StoragePort triển khai
  */
 export function createStoragePort(): StoragePort {
   return {
@@ -38,8 +38,8 @@ export function createStoragePort(): StoragePort {
 
 // ==================== Version ====================
 
-/** V3 API 版本 */
+/** V3 API phiên bản */
 export const RR_V3_VERSION = '3.0.0' as const;
 
-/** 是否为 V3 API */
+/** có phải là V3 API */
 export const IS_RR_V3 = true as const;

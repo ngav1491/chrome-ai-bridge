@@ -15,11 +15,11 @@ interface ConsoleToolParams {
   windowId?: number;
   includeExceptions?: boolean;
   maxMessages?: number;
-  // 新增参数
+  // thêm mớitham số
   mode?: ConsoleMode;
-  buffer?: boolean; // mode="buffer" 的别名
-  clear?: boolean; // 读取前清空
-  clearAfterRead?: boolean; // 读取后清空（mcp-tools.js 风格）
+  buffer?: boolean; // mode="buffer" noiDungTiengViet
+  clear?: boolean; // đọcnoiDungTiengVietlàm trống
+  clearAfterRead?: boolean; // đọcnoiDungTiengVietlàm trống（mcp-tools.js phong cách）
   pattern?: string;
   onlyErrors?: boolean;
   limit?: number;
@@ -64,7 +64,7 @@ interface ConsoleResult {
   droppedExceptionCount: number;
 }
 
-// 辅助函数
+// noiDungTiengViethàm
 
 function normalizeLimit(value: unknown, fallback: number): number {
   const n = typeof value === 'number' && Number.isFinite(value) ? Math.floor(value) : fallback;
@@ -75,7 +75,7 @@ function parseRegexPattern(pattern?: string): RegExp | undefined {
   if (typeof pattern !== 'string') return undefined;
   const trimmed = pattern.trim();
   if (!trimmed) return undefined;
-  // 支持 /pattern/flags 语法
+  // hỗ trợ /pattern/flags noiDungTiengViet
   const match = trimmed.match(/^\/(.+)\/([gimsuy]*)$/);
   try {
     return match ? new RegExp(match[1], match[2]) : new RegExp(trimmed);
@@ -162,7 +162,7 @@ class ConsoleTool extends BaseBrowserToolExecutor {
     let targetTab: chrome.tabs.Tab;
     let targetTabId: number | undefined;
 
-    // 解析正则表达式
+    // phân tích cú phápnoiDungTiengVietbiểu thức
     let compiledPattern: RegExp | undefined;
     try {
       compiledPattern = parseRegexPattern(pattern);
@@ -198,18 +198,18 @@ class ConsoleTool extends BaseBrowserToolExecutor {
 
       targetTabId = targetTab.id;
 
-      // 确定模式：buffer 参数是 mode="buffer" 的别名
+      // noiDungTiengVietschema：buffer tham sốnoiDungTiengViet mode="buffer" noiDungTiengViet
       const resolvedMode: ConsoleMode =
         mode === 'buffer' || buffer === true ? 'buffer' : 'snapshot';
 
-      // 计算有效的消息限制
+      // tính toánnoiDungTiengViettin nhắnnoiDungTiengViet
       const normalizedMaxMessages = normalizeLimit(maxMessages, DEFAULT_MAX_MESSAGES);
       const effectiveLimit =
         typeof limit === 'number'
           ? normalizeLimit(limit, normalizedMaxMessages)
           : normalizedMaxMessages;
 
-      // Buffer 模式
+      // Buffer schema
       if (resolvedMode === 'buffer') {
         try {
           await consoleBuffer.ensureStarted(targetTabId);
@@ -221,13 +221,13 @@ class ConsoleTool extends BaseBrowserToolExecutor {
           throw error;
         }
 
-        // 处理读取前清空请求
+        // xử lýđọcnoiDungTiengVietlàm trốngyêu cầu
         let clearedBefore: { clearedMessages: number; clearedExceptions: number } | null = null;
         if (clear === true) {
           clearedBefore = consoleBuffer.clear(targetTabId, 'manual');
         }
 
-        // 读取缓冲区
+        // đọcvùng đệm
         const read = consoleBuffer.read(targetTabId, {
           pattern: compiledPattern,
           onlyErrors,
@@ -239,13 +239,13 @@ class ConsoleTool extends BaseBrowserToolExecutor {
           return createErrorResponse('Console buffer is not available for this tab.');
         }
 
-        // 处理读取后清空请求（mcp-tools.js 风格，避免重复读取）
+        // xử lýđọcnoiDungTiengVietlàm trốngyêu cầu（mcp-tools.js phong cách，tránhlặp lạiđọc）
         let clearedAfter: { clearedMessages: number; clearedExceptions: number } | null = null;
         if (clearAfterRead === true) {
           clearedAfter = consoleBuffer.clear(targetTabId, 'manual');
         }
 
-        // 构建清空摘要
+        // xây dựnglàm trốngnoiDungTiengViet
         let clearedSummary = '';
         if (clearedBefore) {
           clearedSummary += ` Cleared ${clearedBefore.clearedMessages} messages and ${clearedBefore.clearedExceptions} exceptions before reading.`;
@@ -281,13 +281,13 @@ class ConsoleTool extends BaseBrowserToolExecutor {
         };
       }
 
-      // Snapshot 模式（一次性捕获）
+      // Snapshot schema（một lầnnoiDungTiengViet）
       const result = await this.captureConsoleMessages(targetTabId, {
         includeExceptions,
         maxMessages: effectiveLimit,
       });
 
-      // 应用过滤器
+      // noiDungTiengVietbộ lọc
       const filtered = applyResultFilters(result, {
         pattern: compiledPattern,
         onlyErrors,
@@ -572,7 +572,7 @@ class ConsoleTool extends BaseBrowserToolExecutor {
         // Clean up
         chrome.debugger.onEvent.removeListener(eventListener);
 
-        // 如果 buffer 模式正在使用这个 tab，不要关闭 Runtime/Log 域
+        // nếu buffer schemađangsử dụngnoiDungTiengViet tab，noiDungTiengVietđóng Runtime/Log noiDungTiengViet
         const keepDomainsEnabled = consoleBuffer.isCapturing(tabId);
         if (!keepDomainsEnabled) {
           try {

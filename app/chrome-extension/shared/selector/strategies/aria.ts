@@ -1,6 +1,6 @@
 /**
- * ARIA Strategy - 基于无障碍属性的选择器策略
- * 使用 aria-label, role 等属性生成选择器
+ * ARIA Strategy - noiDungTiengVietthuộc tínhnoiDungTiengVietbộ chọnchiến lược
+ * sử dụng aria-label, role noiDungTiengVietthuộc tínhtạobộ chọn
  */
 
 import type { SelectorCandidate, SelectorStrategy } from '../types';

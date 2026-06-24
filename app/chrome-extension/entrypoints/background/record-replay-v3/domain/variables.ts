@@ -1,77 +1,77 @@
 /**
- * @fileoverview 变量类型定义
- * @description 定义 Record-Replay V3 中使用的变量指针和持久化变量
+ * @fileoverview biếnkiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengVietbiếnnoiDungTiengVietlưu trữ lâu dàibiến
  */
 
 import type { JsonValue, UnixMillis } from './json';
 
-/** 变量名称 */
+/** biếntên */
 export type VariableName = string;
 
-/** 持久化变量名称（以 $ 开头） */
+/** lưu trữ lâu dàibiếntên（noiDungTiengViet $ noiDungTiengViet） */
 export type PersistentVariableName = `$${string}`;
 
-/** 变量作用域 */
+/** biếnphạm vi */
 export type VariableScope = 'run' | 'flow' | 'persistent';
 
 /**
- * 变量指针
- * @description 指向变量的引用，支持 JSON path 访问
+ * biếnnoiDungTiengViet
+ * @description trỏ đếnbiếnnoiDungTiengViet，hỗ trợ JSON path truy cập
  */
 export interface VariablePointer {
-  /** 变量作用域 */
+  /** biếnphạm vi */
   scope: VariableScope;
-  /** 变量名称 */
+  /** biếntên */
   name: VariableName;
-  /** JSON path（用于访问嵌套属性） */
+  /** JSON path（dùng chotruy cậpnoiDungTiengVietthuộc tính） */
   path?: ReadonlyArray<string | number>;
 }
 
 /**
- * 变量定义
- * @description Flow 中声明的变量
+ * biếnđịnh nghĩa
+ * @description Flow noiDungTiengVietbiến
  */
 export interface VariableDefinition {
-  /** 变量名称 */
+  /** biếntên */
   name: VariableName;
-  /** 显示标签 */
+  /** hiển thịnhãn */
   label?: string;
-  /** 描述 */
+  /** mô tả */
   description?: string;
-  /** 是否敏感（不显示/导出） */
+  /** có/khôngnhạy cảm（noiDungTiengViethiển thị/xuất） */
   sensitive?: boolean;
-  /** 是否必需 */
+  /** có/khôngnoiDungTiengViet */
   required?: boolean;
-  /** 默认值 */
+  /** mặc địnhnoiDungTiengViet */
   default?: JsonValue;
-  /** 作用域（不含 persistent，persistent 通过 $ 前缀判断） */
+  /** phạm vi（noiDungTiengViet persistent，persistent thông qua $ tiền tốphán đoán） */
   scope?: Exclude<VariableScope, 'persistent'>;
 }
 
 /**
- * 持久化变量记录
- * @description 存储在 IndexedDB 中的持久化变量
+ * lưu trữ lâu dàibiếnghi
+ * @description lưu trữnoiDungTiengViet IndexedDB tronglưu trữ lâu dàibiến
  */
 export interface PersistentVarRecord {
-  /** 变量键（以 $ 开头） */
+  /** biếnnoiDungTiengViet（noiDungTiengViet $ noiDungTiengViet） */
   key: PersistentVariableName;
-  /** 变量值 */
+  /** biếnnoiDungTiengViet */
   value: JsonValue;
-  /** 最后更新时间 */
+  /** cuối cùngcập nhậtthời gian */
   updatedAt: UnixMillis;
-  /** 版本号（单调递增，用于 LWW 和调试） */
+  /** phiên bảnnoiDungTiengViet（noiDungTiengViettăng dần，dùng cho LWW noiDungTiengVietgỡ lỗi） */
   version: number;
 }
 
 /**
- * 判断变量名是否为持久化变量
+ * phán đoánbiếnnoiDungTiengVietcó phải làlưu trữ lâu dàibiến
  */
 export function isPersistentVariable(name: string): name is PersistentVariableName {
   return name.startsWith('$');
 }
 
 /**
- * 解析变量指针字符串
+ * phân tích cú phápbiếnnoiDungTiengVietchuỗi
  * @example "$user.name" -> { scope: 'persistent', name: '$user', path: ['name'] }
  */
 export function parseVariablePointer(ref: string): VariablePointer | null {
@@ -89,7 +89,7 @@ export function parseVariablePointer(ref: string): VariablePointer | null {
     };
   }
 
-  // 默认为 run 作用域
+  // mặc địnhnoiDungTiengViet run phạm vi
   return {
     scope: 'run',
     name,

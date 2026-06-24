@@ -1,37 +1,37 @@
 /**
- * @fileoverview ID 类型定义
- * @description 定义 Record-Replay V3 中使用的各种 ID 类型
+ * @fileoverview ID kiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengViet ID kiểu
  */
 
-/** Flow 唯一标识符 */
+/** Flow mã định danh duy nhất */
 export type FlowId = string;
 
-/** Node 唯一标识符 */
+/** Node mã định danh duy nhất */
 export type NodeId = string;
 
-/** Edge 唯一标识符 */
+/** Edge mã định danh duy nhất */
 export type EdgeId = string;
 
-/** Run 唯一标识符 */
+/** Run mã định danh duy nhất */
 export type RunId = string;
 
-/** Trigger 唯一标识符 */
+/** Trigger mã định danh duy nhất */
 export type TriggerId = string;
 
-/** Edge 标签类型 */
+/** Edge nhãnkiểu */
 export type EdgeLabel = string;
 
-/** 预定义的 Edge 标签常量 */
+/** noiDungTiengVietđịnh nghĩanoiDungTiengViet Edge nhãnnoiDungTiengViet */
 export const EDGE_LABELS = {
-  /** 默认边 */
+  /** mặc địnhnoiDungTiengViet */
   DEFAULT: 'default',
-  /** 错误处理边 */
+  /** lỗixử lýnoiDungTiengViet */
   ON_ERROR: 'onError',
-  /** 条件为真时的边 */
+  /** điều kiệnnoiDungTiengViet */
   TRUE: 'true',
-  /** 条件为假时的边 */
+  /** điều kiệnnoiDungTiengViet */
   FALSE: 'false',
 } as const;
 
-/** Edge 标签类型（从常量推导） */
+/** Edge nhãnkiểu（noiDungTiengViet） */
 export type EdgeLabelValue = (typeof EDGE_LABELS)[keyof typeof EDGE_LABELS];

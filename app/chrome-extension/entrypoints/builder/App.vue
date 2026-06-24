@@ -2,8 +2,8 @@
   <!-- rr-theme container provides CSS variables; data-theme for light/dark -->
   <div class="builder-page rr-theme" :data-theme="theme">
     <div v-if="fallbackNotice" class="notice-top">
-      <span>已应用回退建议：提升 {{ fallbackNotice.type }} 优先级</span>
-      <button class="mini" @click="undoFallbackPromotion">撤销</button>
+      <span>noiDungTiengVietgợi ý：noiDungTiengViet {{ fallbackNotice.type }} độ ưu tiên</span>
+      <button class="mini" @click="undoFallbackPromotion">noiDungTiengViet</button>
     </div>
 
     <div class="main">
@@ -26,10 +26,10 @@
       <div class="topbar rr-topbar backdrop-blur">
         <div class="left">
           <strong class="text-[var(--rr-text)]">{{ title }}</strong>
-          <span class="tip">工作流可视化编排</span>
+          <span class="tip">quy trình làm việcnoiDungTiengViet</span>
         </div>
         <div class="right">
-          <button class="top-btn" @click="exportFlow" title="导出 JSON">
+          <button class="top-btn" @click="exportFlow" title="xuất JSON">
             <svg
               width="14"
               height="14"
@@ -40,9 +40,9 @@
             >
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
             </svg>
-            导出
+            xuất
           </button>
-          <label class="top-btn import" title="导入 JSON">
+          <label class="top-btn import" title="nhập JSON">
             <svg
               width="14"
               height="14"
@@ -53,10 +53,10 @@
             >
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
             </svg>
-            导入
+            nhập
             <input type="file" accept="application/json" @change="onImport" />
           </label>
-          <button class="top-btn" @click="openRename" title="重命名工作流">
+          <button class="top-btn" @click="openRename" title="noiDungTiengVietquy trình làm việc">
             <svg
               width="14"
               height="14"
@@ -74,7 +74,7 @@
             class="top-btn"
             :class="{ active: triggerPanelVisible }"
             @click="triggerPanelVisible = !triggerPanelVisible"
-            title="管理触发器"
+            title="quản lýtrigger"
           >
             <svg
               width="14"
@@ -93,7 +93,7 @@
             class="top-btn"
             :disabled="!selectedId"
             @click="runFromSelected"
-            title="从选中节点回放"
+            title="noiDungTiengVietnútphát lại"
           >
             <svg
               width="14"
@@ -105,9 +105,13 @@
             >
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
-            从选中运行
+            noiDungTiengVietchạy
           </button>
-          <button class="top-btn primary" @click="runAll" title="从头回放整流">
+          <button
+            class="top-btn primary"
+            @click="runAll"
+            title="noiDungTiengVietphát lạinoiDungTiengViet"
+          >
             <svg
               width="14"
               height="14"
@@ -118,7 +122,7 @@
             >
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
-            运行
+            chạy
           </button>
           <span class="divider-vert" />
           <span class="status" :data-state="saveState">{{ saveLabel }}</span>
@@ -136,7 +140,7 @@
               <polyline points="17 21 17 13 7 13 7 21" />
               <polyline points="7 3 7 8 15 8" />
             </svg>
-            保存
+            lưu
           </button>
         </div>
       </div>
@@ -181,7 +185,7 @@
       />
 
       <div class="bottom-toolbar">
-        <button class="toolbar-btn" @click="store.undo" title="撤销 (⌘/Ctrl+Z)">
+        <button class="toolbar-btn" @click="store.undo" title="noiDungTiengViet (⌘/Ctrl+Z)">
           <svg
             width="16"
             height="16"
@@ -193,7 +197,7 @@
             <path d="M3 7v6h6M21 17a9 9 0 00-9-9 9 9 0 00-9 9" />
           </svg>
         </button>
-        <button class="toolbar-btn" @click="store.redo" title="重做 (⌘/Ctrl+Shift+Z)">
+        <button class="toolbar-btn" @click="store.redo" title="noiDungTiengViet (⌘/Ctrl+Shift+Z)">
           <svg
             width="16"
             height="16"
@@ -206,7 +210,7 @@
           </svg>
         </button>
         <span class="toolbar-divider" />
-        <button class="toolbar-btn" @click="store.layoutAuto" title="自动排版">
+        <button class="toolbar-btn" @click="store.layoutAuto" title="tự độngnoiDungTiengViet">
           <svg
             width="16"
             height="16"
@@ -221,7 +225,7 @@
             <rect x="3" y="14" width="7" height="7" rx="1" />
           </svg>
         </button>
-        <button class="toolbar-btn" @click="fitAll" title="自适应视图">
+        <button class="toolbar-btn" @click="fitAll" title="noiDungTiengViet">
           <svg
             width="16"
             height="16"
@@ -248,21 +252,21 @@
   <div v-if="renameVisible" class="rr-modal">
     <div class="rr-dialog small">
       <div class="rr-header">
-        <div class="title">重命名工作流</div>
+        <div class="title">noiDungTiengVietquy trình làm việc</div>
         <button class="close" @click="renameVisible = false">✕</button>
       </div>
       <div class="rr-body">
         <div class="row">
-          <label>名称</label>
-          <input v-model="renameName" placeholder="工作流名称" />
+          <label>tên</label>
+          <input v-model="renameName" placeholder="quy trình làm việctên" />
         </div>
         <div class="row">
-          <label>描述</label>
-          <textarea v-model="renameDesc" placeholder="可选描述"></textarea>
+          <label>mô tả</label>
+          <textarea v-model="renameDesc" placeholder="tùy chọnmô tả"></textarea>
         </div>
       </div>
       <div class="rr-footer">
-        <button class="primary" @click="applyRename">保存</button>
+        <button class="primary" @click="applyRename">lưu</button>
       </div>
     </div>
   </div>
@@ -296,7 +300,7 @@ import PropertyPanel from '@/entrypoints/popup/components/builder/components/Pro
 import EdgePropertyPanel from '@/entrypoints/popup/components/builder/components/EdgePropertyPanel.vue';
 import TriggerPanel from '@/entrypoints/popup/components/builder/components/TriggerPanel.vue';
 
-const title = ref('工作流编辑器');
+const title = ref('quy trình làm việcchỉnh sửanoiDungTiengViet');
 // theme state: persisted in localStorage and default to system preference
 const theme = ref<'light' | 'dark'>(
   (localStorage.getItem('rr-theme') as 'light' | 'dark' | null) ||
@@ -359,7 +363,7 @@ async function bootstrap() {
         const { flow: flowV2, warnings } = flowV3ToV2ForBuilder(flowV3);
         warnings.forEach((w) => pushToast(w, 'warn'));
         store.initFromFlow(flowV2);
-        title.value = `编辑：${flowV2.name || flowV2.id}`;
+        title.value = `chỉnh sửa：${flowV2.name || flowV2.id}`;
 
         if (q.focus) {
           setTimeout(() => {
@@ -372,11 +376,17 @@ async function bootstrap() {
         }
       } else {
         // Flow not found - notify user and initialize empty flow
-        pushToast(`工作流 "${q.flowId}" 未找到，已创建新工作流`, 'warn');
+        pushToast(
+          `quy trình làm việc "${q.flowId}" không tìm thấy，noiDungTiengViettạonoiDungTiengVietquy trình làm việc`,
+          'warn',
+        );
         initEmptyFlow();
       }
     } catch (e) {
-      pushToast(`加载工作流失败：${e instanceof Error ? e.message : String(e)}`, 'error');
+      pushToast(
+        `noiDungTiengVietquy trình làm việcthất bại：${e instanceof Error ? e.message : String(e)}`,
+        'error',
+      );
       initEmptyFlow();
     }
   } else if (q.new === '1') {
@@ -385,13 +395,13 @@ async function bootstrap() {
 }
 
 /**
- * 初始化一个空的工作流
+ * khởi tạonoiDungTiengVietquy trình làm việc
  */
 function initEmptyFlow() {
   const now = Date.now();
   const empty: FlowV2 = {
     id: `flow_${now}`,
-    name: '新建工作流',
+    name: 'noiDungTiengVietquy trình làm việc',
     version: 1,
     steps: [],
     variables: [],
@@ -401,7 +411,7 @@ function initEmptyFlow() {
     } as any,
   } as any;
   store.initFromFlow(empty);
-  title.value = '新建工作流';
+  title.value = 'noiDungTiengVietquy trình làm việc';
 }
 
 // Builder helpers mostly ported from modal component
@@ -476,8 +486,8 @@ function applyRename() {
 }
 
 /**
- * 保存 Flow 到 V3 RPC
- * @returns 保存成功返回 FlowV3，失败返回 null
+ * lưu Flow noiDungTiengViet V3 RPC
+ * @returns lưuthành côngtrả về FlowV3，thất bạitrả về null
  */
 async function save(): Promise<FlowV3 | null> {
   try {
@@ -511,7 +521,7 @@ async function save(): Promise<FlowV3 | null> {
 
     return saved;
   } catch (e) {
-    pushToast(`保存失败：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`lưuthất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
     return null;
   }
 }
@@ -527,8 +537,8 @@ function schId(flowId: string, nodeId: string, idx: number): TriggerId {
 }
 
 /**
- * 将 V2 schedule 配置转换为 cron 表达式
- * @returns cron 表达式或 null（如果无法转换）
+ * noiDungTiengViet V2 schedule cấu hìnhchuyển đổi thành cron biểu thức
+ * @returns cron biểu thứcnoiDungTiengViet null（nếukhông thểchuyển đổi）
  */
 function scheduleToCron(schedule: { type?: string; when?: string }): string | null {
   if (!schedule) return null;
@@ -555,13 +565,13 @@ function scheduleToCron(schedule: { type?: string; when?: string }): string | nu
     return `${minute} ${hour} * * *`;
   }
 
-  // V3 cron 不支持 'once' 一次性定时
+  // V3 cron noiDungTiengViethỗ trợ 'once' một lầnnoiDungTiengVietđịnh thời
   return null;
 }
 
 /**
- * 从 trigger 节点配置同步触发器到 V3 存储
- * @description V2 schedules 会转换为 V3 cron triggers
+ * noiDungTiengViet trigger nútcấu hìnhđồng bộtriggernoiDungTiengViet V3 lưu trữ
+ * @description V2 schedules noiDungTiengVietchuyển đổi thành V3 cron triggers
  */
 async function syncTriggersAndSchedules(flowId: string, nodes: unknown[]) {
   const triggersNeeded: TriggerSpec[] = [];
@@ -631,12 +641,12 @@ async function syncTriggersAndSchedules(flowId: string, nodes: unknown[]) {
           const scheduleType = String(s?.type || 'unknown');
           if (scheduleType === 'once') {
             pushToast(
-              `节点 ${n.id} 的定时 #${i + 1}: V3 暂不支持一次性定时（once），已跳过`,
+              `nút ${n.id} noiDungTiengVietđịnh thời #${i + 1}: V3 noiDungTiengViethỗ trợmột lầnnoiDungTiengVietđịnh thời（once），noiDungTiengViet`,
               'warn',
             );
           } else {
             pushToast(
-              `节点 ${n.id} 的定时 #${i + 1}: 无法转换为 cron（type=${scheduleType}），已跳过`,
+              `nút ${n.id} noiDungTiengVietđịnh thời #${i + 1}: không thểchuyển đổi thành cron（type=${scheduleType}），noiDungTiengViet`,
               'warn',
             );
           }
@@ -710,7 +720,7 @@ async function exportFlow() {
     } as chrome.downloads.DownloadOptions);
     URL.revokeObjectURL(url);
   } catch (e) {
-    pushToast(`导出失败：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`xuấtthất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
   }
 }
 
@@ -725,7 +735,7 @@ async function onImport(e: Event) {
     const candidates = extractFlowCandidates(parsed);
 
     if (!candidates.length) {
-      pushToast('导入失败：未找到工作流数据', 'error');
+      pushToast('nhậpthất bại：không tìm thấyquy trình làm việcdữ liệu', 'error');
       return;
     }
 
@@ -741,7 +751,7 @@ async function onImport(e: Event) {
       const { flow: flowV2, warnings } = flowV3ToV2ForBuilder(saved);
       warnings.forEach((w) => pushToast(w, 'warn'));
       store.initFromFlow(flowV2);
-      title.value = `编辑：${flowV2.name || flowV2.id}`;
+      title.value = `chỉnh sửa：${flowV2.name || flowV2.id}`;
 
       // Sync triggers
       try {
@@ -759,11 +769,11 @@ async function onImport(e: Event) {
         store.importFromSteps();
       }
 
-      title.value = `编辑：${store.flowLocal.name || store.flowLocal.id}`;
+      title.value = `chỉnh sửa：${store.flowLocal.name || store.flowLocal.id}`;
       await save(); // Convert and save as V3
     }
   } catch (e) {
-    pushToast(`导入失败：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`nhậpthất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
   } finally {
     input.value = '';
   }
@@ -787,7 +797,7 @@ async function runFromSelected() {
       ...(startNodeId ? { startNodeId: startNodeId as NodeId } : {}),
     });
   } catch (e) {
-    pushToast(`运行失败：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`chạythất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
   }
 }
 
@@ -801,7 +811,7 @@ async function runAll() {
     await rpc.ensureConnected();
     await rpc.request('rr_v3.enqueueRun', { flowId: saved.id as FlowId });
   } catch (e) {
-    pushToast(`运行失败：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`chạythất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
   }
 }
 
@@ -849,7 +859,11 @@ onUnmounted(() => document.removeEventListener('keydown', onKey));
 // Auto save debounced
 const saveState = ref<'idle' | 'saving' | 'saved'>('idle');
 const saveLabel = computed(() =>
-  saveState.value === 'saving' ? '保存中…' : saveState.value === 'saved' ? '已保存' : '',
+  saveState.value === 'saving'
+    ? 'lưunoiDungTiengViet…'
+    : saveState.value === 'saved'
+      ? 'noiDungTiengVietlưu'
+      : '',
 );
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
 let statusTimer: ReturnType<typeof setTimeout> | null = null;

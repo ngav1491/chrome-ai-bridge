@@ -1,6 +1,6 @@
 /**
- * @fileoverview StoragePort 接口定义
- * @description 定义 Storage 层的抽象接口，用于依赖注入
+ * @fileoverview StoragePort giao diệnđịnh nghĩa
+ * @description định nghĩa Storage noiDungTiengVietgiao diện，dùng chophụ thuộcnoiDungTiengViet
  */
 
 import type { FlowId, RunId, TriggerId } from '../../domain/ids';
@@ -11,107 +11,107 @@ import type { TriggerSpec } from '../../domain/triggers';
 import type { RunQueue } from '../queue/queue';
 
 /**
- * FlowsStore 接口
+ * FlowsStore giao diện
  */
 export interface FlowsStore {
-  /** 列出所有 Flow */
+  /** liệt kêtất cả Flow */
   list(): Promise<FlowV3[]>;
-  /** 获取单个 Flow */
+  /** lấyđơn lẻ Flow */
   get(id: FlowId): Promise<FlowV3 | null>;
-  /** 保存 Flow */
+  /** lưu Flow */
   save(flow: FlowV3): Promise<void>;
-  /** 删除 Flow */
+  /** xóa Flow */
   delete(id: FlowId): Promise<void>;
 }
 
 /**
- * RunsStore 接口
+ * RunsStore giao diện
  */
 export interface RunsStore {
-  /** 列出所有 Run 记录 */
+  /** liệt kêtất cả Run ghi */
   list(): Promise<RunRecordV3[]>;
-  /** 获取单个 Run 记录 */
+  /** lấyđơn lẻ Run ghi */
   get(id: RunId): Promise<RunRecordV3 | null>;
-  /** 保存 Run 记录 */
+  /** lưu Run ghi */
   save(record: RunRecordV3): Promise<void>;
-  /** 部分更新 Run 记录 */
+  /** noiDungTiengVietcập nhật Run ghi */
   patch(id: RunId, patch: Partial<RunRecordV3>): Promise<void>;
 }
 
 /**
- * EventsStore 接口
- * @description seq 分配必须由 append() 内部原子完成
+ * EventsStore giao diện
+ * @description seq noiDungTiengVietbắt buộcnoiDungTiengViet append() bên trongnoiDungTiengViethoàn tất
  */
 export interface EventsStore {
   /**
-   * 追加事件并原子分配 seq
-   * @description 在单个事务中：读取 RunRecordV3.nextSeq -> 写入事件 -> 递增 nextSeq
-   * @param event 事件输入（不含 seq）
-   * @returns 完整事件（含分配的 seq 和 ts）
+   * noiDungTiengVietsự kiệnnoiDungTiengViet seq
+   * @description noiDungTiengVietđơn lẻnoiDungTiengViet：đọc RunRecordV3.nextSeq -> ghisự kiện -> tăng dần nextSeq
+   * @param event sự kiệnđầu vào（noiDungTiengViet seq）
+   * @returns đầy đủsự kiện（noiDungTiengViet seq noiDungTiengViet ts）
    */
   append(event: RunEventInput): Promise<RunEvent>;
 
   /**
-   * 列出事件
+   * liệt kêsự kiện
    * @param runId Run ID
-   * @param opts 查询选项
+   * @param opts truy vấntùy chọn
    */
   list(runId: RunId, opts?: { fromSeq?: number; limit?: number }): Promise<RunEvent[]>;
 }
 
 /**
- * PersistentVarsStore 接口
+ * PersistentVarsStore giao diện
  */
 export interface PersistentVarsStore {
-  /** 获取持久化变量 */
+  /** lấylưu trữ lâu dàibiến */
   get(key: PersistentVariableName): Promise<PersistentVarRecord | undefined>;
-  /** 设置持久化变量 */
+  /** cài đặtlưu trữ lâu dàibiến */
   set(
     key: PersistentVariableName,
     value: PersistentVarRecord['value'],
   ): Promise<PersistentVarRecord>;
-  /** 删除持久化变量 */
+  /** xóalưu trữ lâu dàibiến */
   delete(key: PersistentVariableName): Promise<void>;
-  /** 列出持久化变量 */
+  /** liệt kêlưu trữ lâu dàibiến */
   list(prefix?: PersistentVariableName): Promise<PersistentVarRecord[]>;
 }
 
 /**
- * TriggersStore 接口
+ * TriggersStore giao diện
  */
 export interface TriggersStore {
-  /** 列出所有触发器 */
+  /** liệt kêtất cảtrigger */
   list(): Promise<TriggerSpec[]>;
-  /** 获取单个触发器 */
+  /** lấyđơn lẻtrigger */
   get(id: TriggerId): Promise<TriggerSpec | null>;
-  /** 保存触发器 */
+  /** lưutrigger */
   save(spec: TriggerSpec): Promise<void>;
-  /** 删除触发器 */
+  /** xóatrigger */
   delete(id: TriggerId): Promise<void>;
 }
 
 /**
- * StoragePort 接口
- * @description 聚合所有存储接口，用于依赖注入
+ * StoragePort giao diện
+ * @description noiDungTiengViettất cảlưu trữgiao diện，dùng chophụ thuộcnoiDungTiengViet
  */
 export interface StoragePort {
-  /** Flows 存储 */
+  /** Flows lưu trữ */
   flows: FlowsStore;
-  /** Runs 存储 */
+  /** Runs lưu trữ */
   runs: RunsStore;
-  /** Events 存储 */
+  /** Events lưu trữ */
   events: EventsStore;
-  /** Queue 存储 */
+  /** Queue lưu trữ */
   queue: RunQueue;
-  /** 持久化变量存储 */
+  /** lưu trữ lâu dàibiếnlưu trữ */
   persistentVars: PersistentVarsStore;
-  /** 触发器存储 */
+  /** triggerlưu trữ */
   triggers: TriggersStore;
 }
 
 /**
- * 创建 NotImplemented 的 Store
- * @description 避免 Proxy 生成 'then' 导致 thenable 行为
+ * tạo NotImplemented noiDungTiengViet Store
+ * @description tránh Proxy tạo 'then' noiDungTiengViet thenable hành vi
  */
 function createNotImplementedStore<T extends object>(name: string): T {
   const target = {} as T;
@@ -129,8 +129,8 @@ function createNotImplementedStore<T extends object>(name: string): T {
 }
 
 /**
- * 创建 NotImplemented 的 StoragePort
- * @description Phase 0 占位实现
+ * tạo NotImplemented noiDungTiengViet StoragePort
+ * @description Phase 0 giữ chỗtriển khai
  */
 export function createNotImplementedStoragePort(): StoragePort {
   return {

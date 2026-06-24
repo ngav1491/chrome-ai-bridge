@@ -253,7 +253,7 @@ function applyStroke(el: SVGElement, strokeWidth = '1.2'): void {
 function createDisplayIcon(value: DisplayValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // 容器边框（虚线矩形表示容器）
+  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -290,37 +290,37 @@ function createDisplayIcon(value: DisplayValue): SVGElement {
 
   switch (value) {
     case 'block':
-      // 两个全宽的块级元素，垂直堆叠
+      // haitoàn chiều rộngnoiDungTiengVietphần tử，noiDungTiengViet
       addBlock(3.5, 3.5, 8, 3);
       addBlock(3.5, 8.5, 8, 3);
       break;
     case 'inline':
-      // 三行文本表示内联流
+      // noiDungTiengVietvăn bảnbiểu thịnoiDungTiengViet
       addLine(3.5, 4.5, 8);
       addLine(3.5, 7.5, 5);
       addLine(3.5, 10.5, 6.5);
       break;
     case 'inline-block':
-      // 左边一个块，右边两行文本
+      // noiDungTiengViet，noiDungTiengVietvăn bản
       addBlock(3.5, 4.5, 3.5, 6);
       addLine(8, 5.5, 4);
       addLine(8, 8.5, 3);
       break;
     case 'flex':
-      // 三个水平排列的弹性子项
+      // noiDungTiengViet
       addBlock(3.5, 4.5, 2.5, 6);
       addBlock(6.5, 4.5, 2.5, 6);
       addBlock(9.5, 4.5, 2.5, 6);
       break;
     case 'grid':
-      // 2x2 网格布局
+      // 2x2 noiDungTiengViet
       addBlock(3.5, 3.5, 3.5, 3.5);
       addBlock(8, 3.5, 3.5, 3.5);
       addBlock(3.5, 8, 3.5, 3.5);
       addBlock(8, 8, 3.5, 3.5);
       break;
     case 'none': {
-      // 禁用符号：斜线
+      // vô hiệu hóanoiDungTiengViet：noiDungTiengViet
       const slash = document.createElementNS(SVG_NS, 'path');
       slash.setAttribute('d', 'M4 11L11 4');
       slash.setAttribute('stroke', 'currentColor');
@@ -355,7 +355,7 @@ function createFlowIcon(direction: FlexDirectionValue): SVGElement {
 function createHorizontalAlignIcon(value: AlignmentAxisValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // 容器边框（虚线矩形表示容器）
+  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -368,14 +368,14 @@ function createHorizontalAlignIcon(value: AlignmentAxisValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // 内容块的 X 坐标根据对齐方式不同
+  // noiDungTiengViet X tọa độdựa trêncách căn chỉnh khác nhau
   const blockX: Record<AlignmentAxisValue, number> = {
-    'flex-start': 3.5, // 左对齐
-    center: 5.5, // 居中对齐
-    'flex-end': 7.5, // 右对齐
+    'flex-start': 3.5, // noiDungTiengViet
+    center: 5.5, // căn giữa
+    'flex-end': 7.5, // noiDungTiengViet
   };
 
-  // 两个小方块表示子元素（水平方向排列变为垂直方向排列）
+  // hainoiDungTiengVietbiểu thịnoiDungTiengVietphần tử（noiDungTiengViet）
   const block1 = document.createElementNS(SVG_NS, 'rect');
   block1.setAttribute('x', String(blockX[value]));
   block1.setAttribute('y', '4');
@@ -399,7 +399,7 @@ function createHorizontalAlignIcon(value: AlignmentAxisValue): SVGElement {
 function createVerticalAlignIcon(value: AlignmentAxisValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // 容器边框（虚线矩形表示容器）
+  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -412,14 +412,14 @@ function createVerticalAlignIcon(value: AlignmentAxisValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // 内容块的 Y 坐标根据对齐方式不同
+  // noiDungTiengViet Y tọa độdựa trêncách căn chỉnh khác nhau
   const blockY: Record<AlignmentAxisValue, number> = {
-    'flex-start': 3.5, // 顶部对齐
-    center: 5.5, // 居中对齐
-    'flex-end': 7.5, // 底部对齐
+    'flex-start': 3.5, // noiDungTiengViet
+    center: 5.5, // căn giữa
+    'flex-end': 7.5, // noiDungTiengViet
   };
 
-  // 两个小方块表示子元素
+  // hainoiDungTiengVietbiểu thịnoiDungTiengVietphần tử
   const block1 = document.createElementNS(SVG_NS, 'rect');
   block1.setAttribute('x', '4');
   block1.setAttribute('y', String(blockY[value]));

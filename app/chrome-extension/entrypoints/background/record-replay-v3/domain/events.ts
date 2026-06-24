@@ -1,6 +1,6 @@
 /**
- * @fileoverview 事件类型定义
- * @description 定义 Record-Replay V3 中的运行事件和状态
+ * @fileoverview sự kiệnkiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 trongchạysự kiệnnoiDungTiengViettrạng thái
  */
 
 import type { JsonObject, JsonValue, UnixMillis } from './json';
@@ -8,28 +8,28 @@ import type { EdgeLabel, FlowId, NodeId, RunId } from './ids';
 import type { RRError } from './errors';
 import type { TriggerFireContext } from './triggers';
 
-/** 取消订阅函数类型 */
+/** hủyđăng kýhàmkiểu */
 export type Unsubscribe = () => void;
 
-/** Run 状态 */
+/** Run trạng thái */
 export type RunStatus = 'queued' | 'running' | 'paused' | 'succeeded' | 'failed' | 'canceled';
 
 /**
- * 事件基础接口
- * @description 所有事件的公共字段
+ * sự kiệncơ sởgiao diện
+ * @description tất cảsự kiệnnoiDungTiengVietcông khaitrường
  */
 export interface EventBase {
-  /** 所属 Run ID */
+  /** noiDungTiengViet Run ID */
   runId: RunId;
-  /** 事件时间戳 */
+  /** sự kiệnthời giannoiDungTiengViet */
   ts: UnixMillis;
-  /** 单调递增序列号 */
+  /** noiDungTiengViettăng dầnnoiDungTiengViet */
   seq: number;
 }
 
 /**
- * 暂停原因
- * @description 描述 Run 暂停的原因
+ * tạm dừngnguyên nhân
+ * @description mô tả Run tạm dừngnoiDungTiengVietnguyên nhân
  */
 export type PauseReason =
   | { kind: 'breakpoint'; nodeId: NodeId }
@@ -37,35 +37,35 @@ export type PauseReason =
   | { kind: 'command' }
   | { kind: 'policy'; nodeId: NodeId; reason: string };
 
-/** 恢复原因 */
+/** khôi phụcnguyên nhân */
 export type RecoveryReason = 'sw_restart' | 'lease_expired';
 
 /**
- * Run 事件联合类型
- * @description 所有可能的运行时事件
+ * Run sự kiệnnoiDungTiengVietkiểu
+ * @description tất cảnoiDungTiengVietchạynoiDungTiengVietsự kiện
  */
 export type RunEvent =
-  // ===== Run 生命周期事件 =====
+  // ===== Run noiDungTiengVietsự kiện =====
   | (EventBase & { type: 'run.queued'; flowId: FlowId })
   | (EventBase & { type: 'run.started'; flowId: FlowId; tabId: number })
   | (EventBase & { type: 'run.paused'; reason: PauseReason; nodeId?: NodeId })
   | (EventBase & { type: 'run.resumed' })
   | (EventBase & {
       type: 'run.recovered';
-      /** 恢复原因 */
+      /** khôi phụcnguyên nhân */
       reason: RecoveryReason;
-      /** 恢复前状态 */
+      /** khôi phụcnoiDungTiengViettrạng thái */
       fromStatus: 'running' | 'paused';
-      /** 恢复后状态 */
+      /** khôi phụcnoiDungTiengViettrạng thái */
       toStatus: 'queued';
-      /** 原 ownerId（用于审计） */
+      /** noiDungTiengViet ownerId（dùng chonoiDungTiengViet） */
       prevOwnerId?: string;
     })
   | (EventBase & { type: 'run.canceled'; reason?: string })
   | (EventBase & { type: 'run.succeeded'; tookMs: number; outputs?: JsonObject })
   | (EventBase & { type: 'run.failed'; error: RRError; nodeId?: NodeId })
 
-  // ===== Node 执行事件 =====
+  // ===== Node thực thisự kiện =====
   | (EventBase & { type: 'node.queued'; nodeId: NodeId })
   | (EventBase & { type: 'node.started'; nodeId: NodeId; attempt: number })
   | (EventBase & {
@@ -83,7 +83,7 @@ export type RunEvent =
     })
   | (EventBase & { type: 'node.skipped'; nodeId: NodeId; reason: 'disabled' | 'unreachable' })
 
-  // ===== 变量和日志事件 =====
+  // ===== biếnnoiDungTiengVietnhật kýsự kiện =====
   | (EventBase & {
       type: 'vars.patch';
       patch: Array<{ op: 'set' | 'delete'; name: string; value?: JsonValue }>;
@@ -96,89 +96,89 @@ export type RunEvent =
       data?: JsonValue;
     });
 
-/** Run 事件类型（从联合类型提取） */
+/** Run sự kiệnkiểu（noiDungTiengVietkiểutrích xuất） */
 export type RunEventType = RunEvent['type'];
 
 /**
- * 分布式 Omit（保留联合类型）
+ * noiDungTiengViet Omit（noiDungTiengVietkiểu）
  */
 type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : never;
 
 /**
- * Run 事件输入类型
- * @description seq 必须由 storage 层原子分配（通过 RunRecordV3.nextSeq）
- * ts 可选，默认为 Date.now()
+ * Run sự kiệnđầu vàokiểu
+ * @description seq bắt buộcnoiDungTiengViet storage noiDungTiengViet（thông qua RunRecordV3.nextSeq）
+ * ts tùy chọn，mặc địnhnoiDungTiengViet Date.now()
  */
 export type RunEventInput = DistributiveOmit<RunEvent, 'seq' | 'ts'> & {
   ts?: UnixMillis;
 };
 
-/** Run Schema 版本 */
+/** Run Schema phiên bản */
 export const RUN_SCHEMA_VERSION = 3 as const;
 
 /**
- * Run 记录 V3
- * @description 存储在 IndexedDB 中的 Run 摘要记录
+ * Run ghi V3
+ * @description lưu trữnoiDungTiengViet IndexedDB trong Run noiDungTiengVietghi
  */
 export interface RunRecordV3 {
-  /** Schema 版本 */
+  /** Schema phiên bản */
   schemaVersion: typeof RUN_SCHEMA_VERSION;
-  /** Run 唯一标识符 */
+  /** Run mã định danh duy nhất */
   id: RunId;
-  /** 关联的 Flow ID */
+  /** liên quan Flow ID */
   flowId: FlowId;
 
-  /** 当前状态 */
+  /** hiện tạitrạng thái */
   status: RunStatus;
-  /** 创建时间 */
+  /** tạothời gian */
   createdAt: UnixMillis;
-  /** 最后更新时间 */
+  /** cuối cùngcập nhậtthời gian */
   updatedAt: UnixMillis;
 
-  /** 开始执行时间 */
+  /** bắt đầuthực thithời gian */
   startedAt?: UnixMillis;
-  /** 结束时间 */
+  /** kết thúcthời gian */
   finishedAt?: UnixMillis;
-  /** 总耗时（毫秒） */
+  /** noiDungTiengViet（mili giây） */
   tookMs?: number;
 
-  /** 绑定的 Tab ID（每 Run 独占） */
+  /** noiDungTiengViet Tab ID（noiDungTiengViet Run độc quyền） */
   tabId?: number;
-  /** 起始节点 ID（如果不是默认入口） */
+  /** bắt đầunút ID（nếunoiDungTiengVietmặc địnhđiểm vào） */
   startNodeId?: NodeId;
-  /** 当前执行节点 ID */
+  /** hiện tạithực thinút ID */
   currentNodeId?: NodeId;
 
-  /** 当前尝试次数 */
+  /** hiện tạisố lần thử */
   attempt: number;
-  /** 最大尝试次数 */
+  /** số lần thử tối đa */
   maxAttempts: number;
 
-  /** 运行参数 */
+  /** chạytham số */
   args?: JsonObject;
-  /** 触发器上下文 */
+  /** triggerngữ cảnh */
   trigger?: TriggerFireContext;
-  /** 调试配置 */
+  /** gỡ lỗicấu hình */
   debug?: { breakpoints?: NodeId[]; pauseOnStart?: boolean };
 
-  /** 错误信息（如果失败） */
+  /** lỗithông tin（nếuthất bại） */
   error?: RRError;
-  /** 输出结果 */
+  /** đầu rakết quả */
   outputs?: JsonObject;
 
-  /** 下一个事件序列号（缓存字段） */
+  /** noiDungTiengVietsự kiệnnoiDungTiengViet（bộ nhớ đệmtrường） */
   nextSeq: number;
 }
 
 /**
- * 判断 Run 是否已终止
+ * phán đoán Run có/khôngnoiDungTiengViet
  */
 export function isTerminalStatus(status: RunStatus): boolean {
   return status === 'succeeded' || status === 'failed' || status === 'canceled';
 }
 
 /**
- * 判断 Run 是否正在执行
+ * phán đoán Run có/khôngđangthực thi
  */
 export function isActiveStatus(status: RunStatus): boolean {
   return status === 'running' || status === 'paused';

@@ -1,6 +1,6 @@
 /**
- * @fileoverview 调试器类型定义
- * @description 定义 Record-Replay V3 中的调试器状态和协议
+ * @fileoverview gỡ lỗinoiDungTiengVietkiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 tronggỡ lỗinoiDungTiengViettrạng tháinoiDungTiengVietgiao thức
  */
 
 import type { JsonValue } from './json';
@@ -8,74 +8,74 @@ import type { NodeId, RunId } from './ids';
 import type { PauseReason } from './events';
 
 /**
- * 断点定义
+ * điểm dừngđịnh nghĩa
  */
 export interface Breakpoint {
-  /** 断点所在节点 ID */
+  /** điểm dừngnoiDungTiengVietnút ID */
   nodeId: NodeId;
-  /** 是否启用 */
+  /** có/khôngbật */
   enabled: boolean;
 }
 
 /**
- * 调试器状态
- * @description 描述调试器当前的连接和执行状态
+ * gỡ lỗinoiDungTiengViettrạng thái
+ * @description mô tảgỡ lỗinoiDungTiengViethiện tạinoiDungTiengVietkết nốinoiDungTiengVietthực thitrạng thái
  */
 export interface DebuggerState {
-  /** 关联的 Run ID */
+  /** liên quan Run ID */
   runId: RunId;
-  /** 调试器连接状态 */
+  /** gỡ lỗinoiDungTiengVietkết nốitrạng thái */
   status: 'attached' | 'detached';
-  /** 执行状态 */
+  /** thực thitrạng thái */
   execution: 'running' | 'paused';
-  /** 暂停原因（仅当 execution='paused' 时有效） */
+  /** tạm dừngnguyên nhân（noiDungTiengViet execution='paused' noiDungTiengViet） */
   pauseReason?: PauseReason;
-  /** 当前节点 ID */
+  /** hiện tạinút ID */
   currentNodeId?: NodeId;
-  /** 断点列表 */
+  /** điểm dừngdanh sách */
   breakpoints: Breakpoint[];
-  /** 单步模式 */
+  /** một bướcschema */
   stepMode?: 'none' | 'stepOver';
 }
 
 /**
- * 调试器命令
- * @description 客户端发送给调试器的命令
+ * gỡ lỗilệnh
+ * @description phía clientgửinoiDungTiengVietgỡ lỗinoiDungTiengVietlệnh
  */
 export type DebuggerCommand =
-  // ===== 连接控制 =====
+  // ===== kết nốiđiều khiển =====
   | { type: 'debug.attach'; runId: RunId }
   | { type: 'debug.detach'; runId: RunId }
 
-  // ===== 执行控制 =====
+  // ===== thực thiđiều khiển =====
   | { type: 'debug.pause'; runId: RunId }
   | { type: 'debug.resume'; runId: RunId }
   | { type: 'debug.stepOver'; runId: RunId }
 
-  // ===== 断点管理 =====
+  // ===== điểm dừngquản lý =====
   | { type: 'debug.setBreakpoints'; runId: RunId; nodeIds: NodeId[] }
   | { type: 'debug.addBreakpoint'; runId: RunId; nodeId: NodeId }
   | { type: 'debug.removeBreakpoint'; runId: RunId; nodeId: NodeId }
 
-  // ===== 状态查询 =====
+  // ===== trạng tháitruy vấn =====
   | { type: 'debug.getState'; runId: RunId }
 
-  // ===== 变量操作 =====
+  // ===== biếnthao tác =====
   | { type: 'debug.getVar'; runId: RunId; name: string }
   | { type: 'debug.setVar'; runId: RunId; name: string; value: JsonValue };
 
-/** 调试器命令类型（从联合类型提取） */
+/** gỡ lỗilệnhkiểu（noiDungTiengVietkiểutrích xuất） */
 export type DebuggerCommandType = DebuggerCommand['type'];
 
 /**
- * 调试器命令响应
+ * gỡ lỗilệnhphản hồi
  */
 export type DebuggerResponse =
   | { ok: true; state?: DebuggerState; value?: JsonValue }
   | { ok: false; error: string };
 
 /**
- * 创建初始调试器状态
+ * tạonoiDungTiengVietgỡ lỗinoiDungTiengViettrạng thái
  */
 export function createInitialDebuggerState(runId: RunId): DebuggerState {
   return {

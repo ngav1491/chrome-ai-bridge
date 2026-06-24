@@ -10,74 +10,76 @@ export function validateNode(n: NodeBase): string[] {
     case STEP_TYPES.DBLCLICK:
     case 'fill': {
       const hasCandidate = !!c?.target?.candidates?.length;
-      if (!hasCandidate) errs.push('缺少目标选择器候选');
-      if (n.type === 'fill' && (!('value' in c) || c.value === undefined)) errs.push('缺少输入值');
+      if (!hasCandidate) errs.push('thiếumục tiêubộ chọnứng viên');
+      if (n.type === 'fill' && (!('value' in c) || c.value === undefined))
+        errs.push('thiếuđầu vàonoiDungTiengViet');
       break;
     }
     case STEP_TYPES.WAIT: {
-      if (!c?.condition) errs.push('缺少等待条件');
+      if (!c?.condition) errs.push('thiếuchờđiều kiện');
       break;
     }
     case STEP_TYPES.ASSERT: {
-      if (!c?.assert) errs.push('缺少断言条件');
+      if (!c?.assert) errs.push('thiếukhẳng địnhđiều kiện');
       break;
     }
     case STEP_TYPES.NAVIGATE: {
-      if (!c?.url) errs.push('缺少 URL');
+      if (!c?.url) errs.push('thiếu URL');
       break;
     }
     case STEP_TYPES.HTTP: {
-      if (!c?.url) errs.push('HTTP: 缺少 URL');
+      if (!c?.url) errs.push('HTTP: thiếu URL');
       if (c?.assign && typeof c.assign === 'object') {
         const pathRe = /^[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+|\[\d+\])*$/;
         for (const v of Object.values(c.assign)) {
           const s = String(v);
-          if (!pathRe.test(s)) errs.push(`Assign: 路径非法 ${s}`);
+          if (!pathRe.test(s)) errs.push(`Assign: đường dẫnnoiDungTiengViet ${s}`);
         }
       }
       break;
     }
     case STEP_TYPES.HANDLE_DOWNLOAD: {
-      // filenameContains 可选
+      // filenameContains tùy chọn
       break;
     }
     case STEP_TYPES.EXTRACT: {
-      if (!c?.saveAs) errs.push('Extract: 需填写保存变量名');
-      if (!c?.selector && !c?.js) errs.push('Extract: 需提供 selector 或 js');
+      if (!c?.saveAs) errs.push('Extract: cần điềnlưubiếnnoiDungTiengViet');
+      if (!c?.selector && !c?.js) errs.push('Extract: cần cung cấp selector noiDungTiengViet js');
       break;
     }
     case STEP_TYPES.SWITCH_TAB: {
       if (!c?.tabId && !c?.urlContains && !c?.titleContains)
-        errs.push('SwitchTab: 需提供 tabId 或 URL/标题包含');
+        errs.push('SwitchTab: cần cung cấp tabId noiDungTiengViet URL/tiêu đềbao gồm');
       break;
     }
     case STEP_TYPES.SCREENSHOT: {
-      // selector 可空（全页/可视区），不强制
+      // selector noiDungTiengViet（noiDungTiengViet/noiDungTiengViet），noiDungTiengVietbắt buộc
       break;
     }
     case STEP_TYPES.TRIGGER_EVENT: {
       const hasCandidate = !!c?.target?.candidates?.length;
-      if (!hasCandidate) errs.push('缺少目标选择器候选');
-      if (!String(c?.event || '').trim()) errs.push('需提供事件类型');
+      if (!hasCandidate) errs.push('thiếumục tiêubộ chọnứng viên');
+      if (!String(c?.event || '').trim()) errs.push('cần cung cấpsự kiệnkiểu');
       break;
     }
     case STEP_TYPES.IF: {
       const arr = Array.isArray(c?.branches) ? c.branches : [];
-      if (arr.length === 0) errs.push('需添加至少一个条件分支');
+      if (arr.length === 0) errs.push('noiDungTiengVietthêmnoiDungTiengVietđiều kiệnnhánh');
       for (let i = 0; i < arr.length; i++) {
-        if (!String(arr[i]?.expr || '').trim()) errs.push(`分支${i + 1}: 需填写条件表达式`);
+        if (!String(arr[i]?.expr || '').trim())
+          errs.push(`nhánh${i + 1}: cần điềnđiều kiệnbiểu thức`);
       }
       break;
     }
     case STEP_TYPES.SET_ATTRIBUTE: {
       const hasCandidate = !!c?.target?.candidates?.length;
-      if (!hasCandidate) errs.push('缺少目标选择器候选');
-      if (!String(c?.name || '').trim()) errs.push('需提供属性名');
+      if (!hasCandidate) errs.push('thiếumục tiêubộ chọnứng viên');
+      if (!String(c?.name || '').trim()) errs.push('cần cung cấpthuộc tínhnoiDungTiengViet');
       break;
     }
     case STEP_TYPES.LOOP_ELEMENTS: {
-      if (!String(c?.selector || '').trim()) errs.push('需提供元素选择器');
-      if (!String(c?.subflowId || '').trim()) errs.push('需提供子流 ID');
+      if (!String(c?.selector || '').trim()) errs.push('cần cung cấpphần tửbộ chọn');
+      if (!String(c?.subflowId || '').trim()) errs.push('cần cung cấpnoiDungTiengViet ID');
       break;
     }
     case STEP_TYPES.SWITCH_FRAME: {
@@ -85,23 +87,26 @@ export function validateNode(n: NodeBase): string[] {
       break;
     }
     case STEP_TYPES.EXECUTE_FLOW: {
-      if (!String(c?.flowId || '').trim()) errs.push('需选择要执行的工作流');
+      if (!String(c?.flowId || '').trim())
+        errs.push('noiDungTiengVietthực thinoiDungTiengVietquy trình làm việc');
       break;
     }
     case STEP_TYPES.CLOSE_TAB: {
-      // 允许空（关闭当前标签页），不强制
+      // noiDungTiengViet（đónghiện tạinhãnnoiDungTiengViet），noiDungTiengVietbắt buộc
       break;
     }
     case STEP_TYPES.SCRIPT: {
-      // 若配置了 saveAs/assign，应提供 code
+      // noiDungTiengVietcấu hìnhnoiDungTiengViet saveAs/assign，noiDungTiengViet code
       const hasAssign = c?.assign && Object.keys(c.assign).length > 0;
       if ((c?.saveAs || hasAssign) && !String(c?.code || '').trim())
-        errs.push('Script: 配置了保存/映射但缺少代码');
+        errs.push(
+          'Script: cấu hìnhnoiDungTiengVietlưu/ánh xạnoiDungTiengVietthiếunoiDungTiengViet',
+        );
       if (hasAssign) {
         const pathRe = /^[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+|\[\d+\])*$/;
         for (const v of Object.values(c.assign || {})) {
           const s = String(v);
-          if (!pathRe.test(s)) errs.push(`Assign: 路径非法 ${s}`);
+          if (!pathRe.test(s)) errs.push(`Assign: đường dẫnnoiDungTiengViet ${s}`);
         }
       }
       break;

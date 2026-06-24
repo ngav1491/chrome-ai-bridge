@@ -1,6 +1,6 @@
 /**
- * @fileoverview 工件（Artifacts）接口
- * @description 定义截图等工件的获取和存储接口
+ * @fileoverview artifact（Artifacts）giao diện
+ * @description định nghĩaảnh chụp màn hìnhnoiDungTiengVietartifactnoiDungTiengVietlấynoiDungTiengVietlưu trữgiao diện
  */
 
 import type { NodeId, RunId } from '../../domain/ids';
@@ -8,19 +8,19 @@ import type { RRError } from '../../domain/errors';
 import { RR_ERROR_CODES, createRRError } from '../../domain/errors';
 
 /**
- * 截图结果
+ * ảnh chụp màn hìnhkết quả
  */
 export type ScreenshotResult = { ok: true; base64: string } | { ok: false; error: RRError };
 
 /**
- * 工件服务接口
- * @description 提供工件获取和存储功能
+ * artifactdịch vụgiao diện
+ * @description noiDungTiengVietartifactlấynoiDungTiengVietlưu trữnoiDungTiengViet
  */
 export interface ArtifactService {
   /**
-   * 截取页面截图
+   * noiDungTiengViettrangảnh chụp màn hình
    * @param tabId Tab ID
-   * @param options 截图选项
+   * @param options ảnh chụp màn hìnhtùy chọn
    */
   screenshot(
     tabId: number,
@@ -31,11 +31,11 @@ export interface ArtifactService {
   ): Promise<ScreenshotResult>;
 
   /**
-   * 保存截图
+   * lưuảnh chụp màn hình
    * @param runId Run ID
    * @param nodeId Node ID
-   * @param base64 截图数据
-   * @param filename 文件名（可选）
+   * @param base64 ảnh chụp màn hìnhdữ liệu
+   * @param filename tệpnoiDungTiengViet（tùy chọn）
    */
   saveScreenshot(
     runId: RunId,
@@ -46,8 +46,8 @@ export interface ArtifactService {
 }
 
 /**
- * 创建 NotImplemented 的 ArtifactService
- * @description Phase 0-1 占位实现
+ * tạo NotImplemented noiDungTiengViet ArtifactService
+ * @description Phase 0-1 giữ chỗtriển khai
  */
 export function createNotImplementedArtifactService(): ArtifactService {
   return {
@@ -65,8 +65,8 @@ export function createNotImplementedArtifactService(): ArtifactService {
 }
 
 /**
- * 创建基于 chrome.tabs.captureVisibleTab 的 ArtifactService
- * @description 使用 Chrome API 截取可见标签页
+ * tạonoiDungTiengViet chrome.tabs.captureVisibleTab noiDungTiengViet ArtifactService
+ * @description sử dụng Chrome API noiDungTiengVietnhãnnoiDungTiengViet
  */
 export function createChromeArtifactService(): ArtifactService {
   // In-memory storage for screenshots (could be replaced with IndexedDB)
@@ -133,14 +133,14 @@ export function createChromeArtifactService(): ArtifactService {
 }
 
 /**
- * 工件策略执行器
- * @description 根据策略配置决定是否获取工件
+ * artifactchiến lượcthực thinoiDungTiengViet
+ * @description dựa trênchiến lượccấu hìnhquyết địnhcó/khônglấyartifact
  */
 export interface ArtifactPolicyExecutor {
   /**
-   * 执行截图策略
-   * @param policy 截图策略
-   * @param context 上下文
+   * thực thiảnh chụp màn hìnhchiến lược
+   * @param policy ảnh chụp màn hìnhchiến lược
+   * @param context ngữ cảnh
    */
   executeScreenshotPolicy(
     policy: 'never' | 'onFailure' | 'always',
@@ -155,25 +155,25 @@ export interface ArtifactPolicyExecutor {
 }
 
 /**
- * 创建默认的工件策略执行器
+ * tạomặc địnhnoiDungTiengVietartifactchiến lượcthực thinoiDungTiengViet
  */
 export function createArtifactPolicyExecutor(service: ArtifactService): ArtifactPolicyExecutor {
   return {
     executeScreenshotPolicy: async (policy, context) => {
-      // 根据策略决定是否截图
+      // dựa trênchiến lượcquyết địnhcó/khôngảnh chụp màn hình
       const shouldCapture = policy === 'always' || (policy === 'onFailure' && context.failed);
 
       if (!shouldCapture) {
         return { captured: false };
       }
 
-      // 截图
+      // ảnh chụp màn hình
       const result = await service.screenshot(context.tabId);
       if (!result.ok) {
         return { captured: false, error: result.error };
       }
 
-      // 保存（如果指定了文件名）
+      // lưu（nếuchỉ địnhnoiDungTiengViettệpnoiDungTiengViet）
       if (context.saveAs) {
         const saveResult = await service.saveScreenshot(
           context.runId,

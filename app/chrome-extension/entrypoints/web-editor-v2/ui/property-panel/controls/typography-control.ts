@@ -127,7 +127,7 @@ function createBaseIconSvg(): SVGSVGElement {
 function createTextAlignIcon(value: TextAlignValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // 容器边框（虚线矩形表示容器）
+  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -140,27 +140,27 @@ function createTextAlignIcon(value: TextAlignValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // 文本行的位置配置：每行的 [x起点, 宽度]
+  // văn bảnnoiDungTiengVietcấu hình：noiDungTiengViet [xđiểm bắt đầu, noiDungTiengViet]
   const lineConfigs: Record<TextAlignValue, Array<[number, number]>> = {
     left: [
-      [3.5, 8], // 长行
-      [3.5, 5], // 短行
-      [3.5, 6.5], // 中行
+      [3.5, 8], // noiDungTiengViet
+      [3.5, 5], // noiDungTiengViet
+      [3.5, 6.5], // noiDungTiengViet
     ],
     center: [
-      [3.5, 8], // 长行居中
-      [5, 5], // 短行居中
-      [4.25, 6.5], // 中行居中
+      [3.5, 8], // noiDungTiengViet
+      [5, 5], // noiDungTiengViet
+      [4.25, 6.5], // noiDungTiengViet
     ],
     right: [
-      [3.5, 8], // 长行
-      [6.5, 5], // 短行靠右
-      [5.5, 6.5], // 中行靠右
+      [3.5, 8], // noiDungTiengViet
+      [6.5, 5], // noiDungTiengViet
+      [5.5, 6.5], // noiDungTiengViet
     ],
     justify: [
-      [3.5, 8], // 全宽
-      [3.5, 8], // 全宽
-      [3.5, 8], // 全宽
+      [3.5, 8], // toàn chiều rộng
+      [3.5, 8], // toàn chiều rộng
+      [3.5, 8], // toàn chiều rộng
     ],
   };
 
@@ -185,7 +185,7 @@ function createTextAlignIcon(value: TextAlignValue): SVGElement {
 function createVerticalAlignIcon(value: VerticalAlignValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // 容器边框（虚线矩形表示容器）
+  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -198,15 +198,15 @@ function createVerticalAlignIcon(value: VerticalAlignValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // 内容块的 Y 坐标根据对齐方式不同
+  // noiDungTiengViet Y tọa độdựa trêncách căn chỉnh khác nhau
   const blockY: Record<VerticalAlignValue, number> = {
-    top: 3.5, // 顶部对齐
-    middle: 5.5, // 居中对齐
-    bottom: 7.5, // 底部对齐
-    baseline: 6.5, // baseline 稍微偏下
+    top: 3.5, // noiDungTiengViet
+    middle: 5.5, // căn giữa
+    bottom: 7.5, // noiDungTiengViet
+    baseline: 6.5, // baseline noiDungTiengViet
   };
 
-  // 两个小方块表示子元素
+  // hainoiDungTiengVietbiểu thịnoiDungTiengVietphần tử
   const block1 = document.createElementNS(SVG_NS, 'rect');
   block1.setAttribute('x', '4');
   block1.setAttribute('y', String(blockY[value]));
@@ -225,7 +225,7 @@ function createVerticalAlignIcon(value: VerticalAlignValue): SVGElement {
 
   svg.append(container, block1, block2);
 
-  // baseline 模式添加基线指示线
+  // baseline schemathêmnoiDungTiengViet
   if (value === 'baseline') {
     const baselinePath = document.createElementNS(SVG_NS, 'path');
     baselinePath.setAttribute('d', 'M3 10H12');

@@ -1,6 +1,6 @@
 /**
- * @fileoverview 插件类型定义
- * @description 定义 Record-Replay V3 中的节点和触发器插件接口
+ * @fileoverview tiện íchkiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 trongnútnoiDungTiengViettriggertiện íchgiao diện
  */
 
 import { z } from 'zod';
@@ -14,65 +14,65 @@ import type { FlowV3, NodeV3 } from '../../domain/flow';
 import type { TriggerKind } from '../../domain/triggers';
 
 /**
- * Schema 类型
- * @description 使用 Zod 进行配置校验
+ * Schema kiểu
+ * @description sử dụng Zod noiDungTiengVietcấu hìnhxác thực
  */
 export type Schema<T> = z.ZodType<T, z.ZodTypeDef, unknown>;
 
 /**
- * 节点执行上下文
- * @description 提供给节点执行器的运行时上下文
+ * nútthực thingữ cảnh
+ * @description noiDungTiengVietnútthực thinoiDungTiengVietchạynoiDungTiengVietngữ cảnh
  */
 export interface NodeExecutionContext {
   /** Run ID */
   runId: RunId;
-  /** Flow 定义（快照） */
+  /** Flow định nghĩa（snapshot） */
   flow: FlowV3;
-  /** 当前节点 ID */
+  /** hiện tạinút ID */
   nodeId: NodeId;
 
-  /** 绑定的 Tab ID（每 Run 独占） */
+  /** noiDungTiengViet Tab ID（noiDungTiengViet Run độc quyền） */
   tabId: number;
-  /** Frame ID（默认 0 为主框架） */
+  /** Frame ID（mặc định 0 noiDungTiengViet） */
   frameId?: number;
 
-  /** 当前变量表 */
+  /** hiện tạibiếnnoiDungTiengViet */
   vars: Record<string, JsonValue>;
 
   /**
-   * 日志记录
+   * nhật kýghi
    */
   log: (level: 'debug' | 'info' | 'warn' | 'error', message: string, data?: JsonValue) => void;
 
   /**
-   * 选择下一个边
-   * @description 用于条件分支节点
+   * noiDungTiengViet
+   * @description dùng chođiều kiệnnhánhnút
    */
   chooseNext: (label: string) => { kind: 'edgeLabel'; label: string };
 
   /**
-   * 工件操作
+   * artifactthao tác
    */
   artifacts: {
-    /** 截取当前页面截图 */
+    /** noiDungTiengViethiện tạitrangảnh chụp màn hình */
     screenshot: () => Promise<{ ok: true; base64: string } | { ok: false; error: RRError }>;
   };
 
   /**
-   * 持久化变量操作
+   * lưu trữ lâu dàibiếnthao tác
    */
   persistent: {
-    /** 获取持久化变量 */
+    /** lấylưu trữ lâu dàibiến */
     get: (name: `$${string}`) => Promise<JsonValue | undefined>;
-    /** 设置持久化变量 */
+    /** cài đặtlưu trữ lâu dàibiến */
     set: (name: `$${string}`, value: JsonValue) => Promise<void>;
-    /** 删除持久化变量 */
+    /** xóalưu trữ lâu dàibiến */
     delete: (name: `$${string}`) => Promise<void>;
   };
 }
 
 /**
- * 变量补丁操作
+ * biếnnoiDungTiengVietthao tác
  */
 export interface VarsPatchOp {
   op: 'set' | 'delete';
@@ -81,38 +81,38 @@ export interface VarsPatchOp {
 }
 
 /**
- * 节点执行结果
+ * nútthực thikết quả
  */
 export type NodeExecutionResult =
   | {
       status: 'succeeded';
-      /** 下一步执行方向 */
+      /** noiDungTiengVietthực thinoiDungTiengViet */
       next?: { kind: 'edgeLabel'; label: string } | { kind: 'end' };
-      /** 输出结果 */
+      /** đầu rakết quả */
       outputs?: JsonObject;
-      /** 变量修改 */
+      /** biếnnoiDungTiengViet */
       varsPatch?: VarsPatchOp[];
     }
   | { status: 'failed'; error: RRError };
 
 /**
- * 节点定义
- * @description 定义一种节点类型的执行逻辑
+ * nútđịnh nghĩa
+ * @description định nghĩanoiDungTiengVietnútkiểunoiDungTiengVietthực thilogic
  */
 export interface NodeDefinition<
   TKind extends NodeKind = NodeKind,
   TConfig extends JsonObject = JsonObject,
 > {
-  /** 节点类型标识 */
+  /** nútkiểuđịnh danh */
   kind: TKind;
-  /** 配置校验 Schema */
+  /** cấu hìnhxác thực Schema */
   schema: Schema<TConfig>;
-  /** 默认策略 */
+  /** mặc địnhchiến lược */
   defaultPolicy?: NodePolicy;
   /**
-   * 执行节点
-   * @param ctx 执行上下文
-   * @param node 节点定义（含配置）
+   * thực thinút
+   * @param ctx thực thingữ cảnh
+   * @param node nútđịnh nghĩa（noiDungTiengVietcấu hình）
    */
   execute(
     ctx: NodeExecutionContext,
@@ -121,61 +121,61 @@ export interface NodeDefinition<
 }
 
 /**
- * 触发器安装上下文
+ * triggercài đặtngữ cảnh
  */
 export interface TriggerInstallContext<
   TKind extends TriggerKind = TriggerKind,
   TConfig extends JsonObject = JsonObject,
 > {
-  /** 触发器 ID */
+  /** trigger ID */
   triggerId: TriggerId;
-  /** 触发器类型 */
+  /** kiểu trigger */
   kind: TKind;
-  /** 是否启用 */
+  /** có/khôngbật */
   enabled: boolean;
-  /** 关联的 Flow ID */
+  /** liên quan Flow ID */
   flowId: FlowId;
-  /** 触发器配置 */
+  /** triggercấu hình */
   config: TConfig;
-  /** 传递给 Flow 的参数 */
+  /** truyền cho Flow noiDungTiengViettham số */
   args?: JsonObject;
 }
 
 /**
- * 触发器定义
- * @description 定义一种触发器类型的安装和卸载逻辑
+ * triggerđịnh nghĩa
+ * @description định nghĩanoiDungTiengVietkiểu triggernoiDungTiengVietcài đặtnoiDungTiengVietgỡ cài đặtlogic
  */
 export interface TriggerDefinition<
   TKind extends TriggerKind = TriggerKind,
   TConfig extends JsonObject = JsonObject,
 > {
-  /** 触发器类型标识 */
+  /** kiểu triggerđịnh danh */
   kind: TKind;
-  /** 配置校验 Schema */
+  /** cấu hìnhxác thực Schema */
   schema: Schema<TConfig>;
-  /** 安装触发器 */
+  /** cài đặttrigger */
   install(ctx: TriggerInstallContext<TKind, TConfig>): Promise<void> | void;
-  /** 卸载触发器 */
+  /** gỡ cài đặttrigger */
   uninstall(ctx: TriggerInstallContext<TKind, TConfig>): Promise<void> | void;
 }
 
 /**
- * 插件注册上下文
+ * tiện íchđăng kýngữ cảnh
  */
 export interface PluginRegistrationContext {
-  /** 注册节点定义 */
+  /** đăng kýnútđịnh nghĩa */
   registerNode(def: NodeDefinition): void;
-  /** 注册触发器定义 */
+  /** đăng kýtriggerđịnh nghĩa */
   registerTrigger(def: TriggerDefinition): void;
 }
 
 /**
- * 插件接口
- * @description Record-Replay 插件的标准接口
+ * tiện íchgiao diện
+ * @description Record-Replay tiện íchnoiDungTiengVietgiao diện
  */
 export interface RRPlugin {
-  /** 插件名称 */
+  /** tiện íchtên */
   name: string;
-  /** 注册插件内容 */
+  /** đăng kýtiện íchnoiDungTiengViet */
   register(ctx: PluginRegistrationContext): void;
 }

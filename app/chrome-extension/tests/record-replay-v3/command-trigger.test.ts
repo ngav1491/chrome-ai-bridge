@@ -1,5 +1,5 @@
 /**
- * @fileoverview Command Trigger Handler 测试 (P4-04)
+ * @fileoverview Command Trigger Handler kiểm thử (P4-04)
  * @description
  * Tests for:
  * - Command event handling

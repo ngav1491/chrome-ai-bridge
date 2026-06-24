@@ -44,7 +44,7 @@ export const triggerEventNode: NodeRuntime<any> = {
   validate: (step) => {
     const s: any = step;
     const ok = !!s?.target?.candidates?.length && typeof s?.event === 'string' && s.event;
-    return ok ? { ok } : { ok, errors: ['缺少目标选择器或事件类型'] };
+    return ok ? { ok } : { ok, errors: ['thiếumục tiêubộ chọnnoiDungTiengVietsự kiệnkiểu'] };
   },
   run: async (ctx, step) => {
     const s: any = expandTemplatesDeep(step as any, ctx.vars);
@@ -99,7 +99,9 @@ export const setAttributeNode: NodeRuntime<any> = {
   validate: (step) => {
     const s: any = step;
     const ok = !!s?.target?.candidates?.length && typeof s?.name === 'string' && s.name;
-    return ok ? { ok } : { ok, errors: ['需提供目标选择器与属性名'] };
+    return ok
+      ? { ok }
+      : { ok, errors: ['cần cung cấpmục tiêubộ chọnnoiDungTiengVietthuộc tínhnoiDungTiengViet'] };
   },
   run: async (ctx, step) => {
     const s: any = expandTemplatesDeep(step as any, ctx.vars);
@@ -190,7 +192,7 @@ export const loopElementsNode: NodeRuntime<any> = {
       s.selector &&
       typeof s?.subflowId === 'string' &&
       s.subflowId;
-    return ok ? { ok } : { ok, errors: ['需提供 selector 与 subflowId'] };
+    return ok ? { ok } : { ok, errors: ['cần cung cấp selector noiDungTiengViet subflowId'] };
   },
   run: async (ctx, step) => {
     const s: any = expandTemplatesDeep(step as any, ctx.vars);

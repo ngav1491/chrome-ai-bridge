@@ -1,11 +1,11 @@
 /**
  * @fileoverview Once Trigger Handler (M3.1)
  * @description
- * 使用 chrome.alarms 的 when 参数实现一次性定时触发。
+ * sử dụng chrome.alarms noiDungTiengViet when tham sốtriển khaimột lầnnoiDungTiengVietđịnh thờikích hoạt。
  *
- * 行为：
- * - 每个触发器对应一个一次性 alarm
- * - 触发后自动将触发器禁用 (enabled=false) 并卸载
+ * hành vi：
+ * - mỗitriggernoiDungTiengVietmột lầnnoiDungTiengViet alarm
+ * - kích hoạtnoiDungTiengViettự độngnoiDungTiengViettriggervô hiệu hóa (enabled=false) noiDungTiengVietgỡ cài đặt
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -21,8 +21,8 @@ type OnceTriggerSpec = TriggerSpecByKind<'once'>;
 export interface OnceTriggerHandlerDeps {
   logger?: Pick<Console, 'debug' | 'info' | 'warn' | 'error'>;
   /**
-   * 可选：自定义禁用触发器的方法
-   * 如果未提供，将直接更新 TriggerStore
+   * tùy chọn：noiDungTiengVietđịnh nghĩavô hiệu hóatriggernoiDungTiengVietphương thức
+   * nếunoiDungTiengViet，noiDungTiengViettrực tiếpcập nhật TriggerStore
    */
   disableTrigger?: (triggerId: TriggerId) => Promise<void>;
 }
@@ -40,7 +40,7 @@ const ALARM_PREFIX = 'rr_v3_once_';
 // ==================== Utilities ====================
 
 /**
- * 校验并规范化 whenMs
+ * xác thựcnoiDungTiengVietchuẩn hóa whenMs
  */
 function normalizeWhenMs(value: unknown): UnixMillis {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
@@ -50,14 +50,14 @@ function normalizeWhenMs(value: unknown): UnixMillis {
 }
 
 /**
- * 生成 alarm 名称
+ * tạo alarm tên
  */
 function alarmNameForTrigger(triggerId: TriggerId): string {
   return `${ALARM_PREFIX}${triggerId}`;
 }
 
 /**
- * 从 alarm 名称解析 triggerId
+ * noiDungTiengViet alarm tênphân tích cú pháp triggerId
  */
 function parseTriggerIdFromAlarmName(name: string): TriggerId | null {
   if (!name.startsWith(ALARM_PREFIX)) return null;
@@ -68,7 +68,7 @@ function parseTriggerIdFromAlarmName(name: string): TriggerId | null {
 // ==================== Handler Implementation ====================
 
 /**
- * 创建 once 触发器处理器工厂
+ * tạo once triggerxử lýnoiDungTiengVietfactory
  */
 export function createOnceTriggerHandlerFactory(
   deps?: OnceTriggerHandlerDeps,
@@ -77,7 +77,7 @@ export function createOnceTriggerHandlerFactory(
 }
 
 /**
- * 创建 once 触发器处理器
+ * tạo once triggerxử lýnoiDungTiengViet
  */
 export function createOnceTriggerHandler(
   fireCallback: TriggerFireCallback,
@@ -85,7 +85,7 @@ export function createOnceTriggerHandler(
 ): TriggerHandler<'once'> {
   const logger = deps?.logger ?? console;
 
-  // 延迟创建 store，避免在测试环境中出问题
+  // độ trễtạo store，tránhnoiDungTiengVietkiểm thửnoiDungTiengViet
   let triggersStore: ReturnType<typeof createTriggersStore> | null = null;
   const getTriggersStore = () => {
     if (!triggersStore) {
@@ -109,7 +109,7 @@ export function createOnceTriggerHandler(
   let listening = false;
 
   /**
-   * 递增版本号以使挂起的操作失效
+   * tăng dầnphiên bảnnoiDungTiengVietthao tácnoiDungTiengViet
    */
   function bumpVersion(triggerId: TriggerId): number {
     const next = (versions.get(triggerId) ?? 0) + 1;
@@ -118,7 +118,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * 清除指定 alarm
+   * xóachỉ định alarm
    */
   async function clearAlarmByName(name: string): Promise<void> {
     if (!chrome.alarms?.clear) return;
@@ -130,7 +130,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * 清除所有 once alarms
+   * xóatất cả once alarms
    */
   async function clearAllOnceAlarms(): Promise<void> {
     if (!chrome.alarms?.getAll || !chrome.alarms?.clear) return;
@@ -146,7 +146,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * 调度 alarm
+   * lập lịch alarm
    */
   async function schedule(triggerId: TriggerId, expectedVersion: number): Promise<void> {
     if (!chrome.alarms?.create) {
@@ -167,7 +167,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * 内部卸载逻辑（不触发外部 uninstall）
+   * bên tronggỡ cài đặtlogic（noiDungTiengVietkích hoạtnoiDungTiengViet uninstall）
    */
   async function uninstallInternal(triggerId: TriggerId): Promise<void> {
     bumpVersion(triggerId);
@@ -180,7 +180,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * Alarm 事件处理
+   * Alarm sự kiệnxử lý
    */
   const onAlarm = (alarm: chrome.alarms.Alarm): void => {
     const triggerId = parseTriggerIdFromAlarmName(alarm?.name ?? '');
@@ -200,9 +200,9 @@ export function createOnceTriggerHandler(
       } catch (e) {
         logger.error(`[OnceTriggerHandler] onFire failed for trigger "${triggerId}":`, e);
       } finally {
-        // 检查版本是否仍然有效
+        // kiểm traphiên bảncó/khôngnoiDungTiengViet
         if (installed.get(triggerId)?.version === expectedVersion) {
-          // 禁用触发器
+          // vô hiệu hóatrigger
           try {
             await disableTrigger(triggerId);
           } catch (e) {
@@ -212,7 +212,7 @@ export function createOnceTriggerHandler(
             );
           }
 
-          // 卸载触发器
+          // gỡ cài đặttrigger
           try {
             await uninstallInternal(triggerId);
           } catch (e) {
@@ -227,7 +227,7 @@ export function createOnceTriggerHandler(
   };
 
   /**
-   * 确保正在监听 alarm 事件
+   * đảm bảođanglắng nghe alarm sự kiện
    */
   function ensureListening(): void {
     if (listening) return;
@@ -240,7 +240,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * 停止监听 alarm 事件
+   * dừnglắng nghe alarm sự kiện
    */
   function stopListening(): void {
     if (!listening) return;

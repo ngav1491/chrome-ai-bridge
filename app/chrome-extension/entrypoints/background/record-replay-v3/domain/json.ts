@@ -1,24 +1,24 @@
 /**
- * @fileoverview JSON 基础类型定义
- * @description 定义 Record-Replay V3 中使用的 JSON 相关类型
+ * @fileoverview JSON cơ sởkiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengViet JSON noiDungTiengVietkiểu
  */
 
-/** JSON 原始类型 */
+/** JSON thôkiểu */
 export type JsonPrimitive = string | number | boolean | null;
 
-/** JSON 对象类型 */
+/** JSON đối tượngkiểu */
 export interface JsonObject {
   [key: string]: JsonValue;
 }
 
-/** JSON 数组类型 */
+/** JSON mảngkiểu */
 export type JsonArray = JsonValue[];
 
-/** 任意 JSON 值类型 */
+/** noiDungTiengViet JSON noiDungTiengVietkiểu */
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
-/** ISO 8601 日期时间字符串 */
+/** ISO 8601 ngàythời gianchuỗi */
 export type ISODateTimeString = string;
 
-/** Unix 毫秒时间戳 */
+/** Unix mili giâythời giannoiDungTiengViet */
 export type UnixMillis = number;

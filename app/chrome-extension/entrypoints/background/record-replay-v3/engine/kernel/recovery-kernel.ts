@@ -1,10 +1,10 @@
 /**
- * @fileoverview 支持崩溃恢复的 ExecutionKernel 实现 (P3-06)
+ * @fileoverview hỗ trợsậpkhôi phụcnoiDungTiengViet ExecutionKernel triển khai (P3-06)
  * @description
- * 提供 ExecutionKernel 的恢复增强实现，支持 `recover()` 方法。
- * 通过委托给 RecoveryCoordinator 实现崩溃恢复。
+ * noiDungTiengViet ExecutionKernel noiDungTiengVietkhôi phụcnoiDungTiengViettriển khai，hỗ trợ `recover()` phương thức。
+ * thông quaủy thác cho RecoveryCoordinator triển khaisậpkhôi phục。
  *
- * 其他执行方法（startRun, pauseRun 等）暂未实现，将在后续阶段完成。
+ * khácthực thiphương thức（startRun, pauseRun noiDungTiengViet）noiDungTiengViettriển khai，noiDungTiengViethoàn tất。
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -20,28 +20,28 @@ import type { ExecutionKernel, RunStartRequest, RunStatusInfo } from './kernel';
 // ==================== Types ====================
 
 /**
- * 支持恢复的 Kernel 依赖
+ * hỗ trợkhôi phụcnoiDungTiengViet Kernel phụ thuộc
  */
 export interface RecoveryEnabledKernelDeps {
-  /** 存储层 */
+  /** lưu trữnoiDungTiengViet */
   storage: StoragePort;
-  /** 事件总线 */
+  /** sự kiệnbus */
   events: EventsBus;
-  /** 当前 Service Worker 的 ownerId */
+  /** hiện tại Service Worker noiDungTiengViet ownerId */
   ownerId: string;
-  /** 时间源 */
+  /** nguồn thời gian */
   now?: () => UnixMillis;
-  /** 日志器 */
+  /** logger */
   logger?: Pick<Console, 'debug' | 'info' | 'warn' | 'error'>;
 }
 
 // ==================== Factory ====================
 
 /**
- * 创建支持恢复的 ExecutionKernel
+ * tạohỗ trợkhôi phụcnoiDungTiengViet ExecutionKernel
  * @description
- * 此实现仅支持 `recover()` 和 `getRunStatus()` 方法。
- * 其他执行方法暂未实现，将在后续阶段完成。
+ * noiDungTiengViettriển khainoiDungTiengViethỗ trợ `recover()` noiDungTiengViet `getRunStatus()` phương thức。
+ * khácthực thiphương thứcnoiDungTiengViettriển khai，noiDungTiengViethoàn tất。
  */
 export function createRecoveryEnabledKernel(deps: RecoveryEnabledKernelDeps): ExecutionKernel {
   const logger = deps.logger ?? console;

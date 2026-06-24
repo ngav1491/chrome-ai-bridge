@@ -1,10 +1,10 @@
 /**
- * DOM Path - DOM 路径计算和定位
+ * DOM Path - DOM đường dẫntính toánnoiDungTiengVietđịnh vị
  *
- * DOM 路径是元素在 DOM 树中的索引路径，用于：
- * - 元素位置追踪
- * - 选择器失效后的快速恢复
- * - 元素比较和验证
+ * DOM đường dẫnnoiDungTiengVietphần tửnoiDungTiengViet DOM noiDungTiengViettrongchỉ mụcđường dẫn，dùng cho：
+ * - phần tửnoiDungTiengViettheo dõi
+ * - bộ chọnnoiDungTiengVietkhôi phục
+ * - phần tửnoiDungTiengVietxác thực
  */
 
 // =============================================================================
@@ -12,15 +12,15 @@
 // =============================================================================
 
 /**
- * DOM 路径：从根到目标元素的子元素索引数组
+ * DOM đường dẫn：noiDungTiengVietmục tiêuphần tửnoiDungTiengVietphần tửchỉ mụcmảng
  *
  * @example
  * ```
- * [0, 2, 1] 表示:
+ * [0, 2, 1] biểu thị:
  * root
  *  └─ children[0]
  *      └─ children[2]
- *          └─ children[1]  <- 目标元素
+ *          └─ children[1]  <- mục tiêuphần tử
  * ```
  */
 export type DomPath = number[];
@@ -30,15 +30,15 @@ export type DomPath = number[];
 // =============================================================================
 
 /**
- * 计算元素在 DOM 树中的路径
+ * tính toánphần tửnoiDungTiengViet DOM noiDungTiengViettrongđường dẫn
  *
- * 从目标元素向上遍历到根节点（Document 或 ShadowRoot），
- * 记录每一层在父元素 children 中的索引。
+ * noiDungTiengVietmục tiêuphần tửnoiDungTiengVietnút（Document noiDungTiengViet ShadowRoot），
+ * ghinoiDungTiengVietphần tử children trongchỉ mục。
  *
  * @example
  * ```ts
  * const path = computeDomPath(button);
- * // => [0, 2, 1] - 从 body/shadowRoot 开始的路径
+ * // => [0, 2, 1] - noiDungTiengViet body/shadowRoot bắt đầunoiDungTiengVietđường dẫn
  * ```
  */
 export function computeDomPath(element: Element): DomPath {
@@ -49,7 +49,7 @@ export function computeDomPath(element: Element): DomPath {
     const parent: Element | null = current.parentElement;
 
     if (parent) {
-      // 正常父元素
+      // noiDungTiengVietphần tử
       const siblings = Array.from(parent.children);
       const index = siblings.indexOf(current);
       if (index >= 0) {
@@ -59,7 +59,7 @@ export function computeDomPath(element: Element): DomPath {
       continue;
     }
 
-    // 检查是否是 ShadowRoot 或 Document 的直接子元素
+    // kiểm tracó/khôngnoiDungTiengViet ShadowRoot noiDungTiengViet Document noiDungTiengViettrực tiếpnoiDungTiengVietphần tử
     const parentNode = current.parentNode;
     if (parentNode instanceof ShadowRoot || parentNode instanceof Document) {
       const children = Array.from(parentNode.children);
@@ -69,7 +69,7 @@ export function computeDomPath(element: Element): DomPath {
       }
     }
 
-    // 到达根节点，停止遍历
+    // noiDungTiengVietnút，dừngnoiDungTiengViet
     break;
   }
 
@@ -77,16 +77,16 @@ export function computeDomPath(element: Element): DomPath {
 }
 
 /**
- * 根据 DOM 路径定位元素
+ * dựa trên DOM đường dẫnđịnh vịphần tử
  *
- * @param root - 查询根节点（Document 或 ShadowRoot）
- * @param path - DOM 路径
- * @returns 找到的元素，如果路径无效则返回 null
+ * @param root - truy vấnnoiDungTiengVietnút（Document noiDungTiengViet ShadowRoot）
+ * @param path - DOM đường dẫn
+ * @returns noiDungTiengVietphần tử，nếuđường dẫnkhông hợp lệnoiDungTiengViettrả về null
  *
  * @example
  * ```ts
  * const element = locateByDomPath(document, [0, 2, 1]);
- * // => 返回 body > children[0] > children[2] > children[1]
+ * // => trả về body > children[0] > children[2] > children[1]
  * ```
  */
 export function locateByDomPath(root: Document | ShadowRoot, path: DomPath): Element | null {
@@ -105,9 +105,9 @@ export function locateByDomPath(root: Document | ShadowRoot, path: DomPath): Ele
 }
 
 /**
- * 比较两个 DOM 路径
+ * noiDungTiengViethai DOM đường dẫn
  *
- * @returns 包含是否相同和公共前缀长度的结果
+ * @returns bao gồmcó/khôngnoiDungTiengVietcông khaitiền tốđộ dàinoiDungTiengVietkết quả
  *
  * @example
  * ```ts
@@ -136,7 +136,7 @@ export function compareDomPaths(
 }
 
 /**
- * 检查路径 A 是否是路径 B 的祖先
+ * kiểm trađường dẫn A có/khôngnoiDungTiengVietđường dẫn B noiDungTiengViettổ tiên
  *
  * @example
  * ```ts
@@ -159,7 +159,7 @@ export function isAncestorPath(ancestor: DomPath, descendant: DomPath): boolean 
 }
 
 /**
- * 获取从祖先路径到后代路径的相对路径
+ * lấynoiDungTiengViettổ tiênđường dẫnnoiDungTiengVietđường dẫnnoiDungTiengVietđường dẫn
  *
  * @example
  * ```ts

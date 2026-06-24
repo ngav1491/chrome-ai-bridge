@@ -1,75 +1,75 @@
 {
   "extensionName": {
     "message": "chrome-mcp-server",
-    "description": "擴充功能名稱"
+    "description": "Tên tiện ích mở rộng"
   },
   "extensionDescription": {
-    "message": "使用您自己的 Chrome 瀏覽器暴露瀏覽器功能",
-    "description": "擴充功能描述"
+    "message": "Sử dụng trình duyệt Chrome của bạn để mở rộng chức năng trình duyệt",
+    "description": "Mô tả tiện ích mở rộng"
   },
   "nativeServerConfigLabel": {
-    "message": "原生伺服器設定",
-    "description": "本機伺服器設定的主要區段標題"
+    "message": "Cấu hình Native Server",
+    "description": "Tiêu đề chính của mục cài đặt máy chủ cục bộ"
   },
   "semanticEngineLabel": {
-    "message": "語意引擎",
-    "description": "語意引擎的主要區段標題"
+    "message": "Công cụ ngữ nghĩa",
+    "description": "Tiêu đề chính của mục công cụ ngữ nghĩa"
   },
   "embeddingModelLabel": {
-    "message": "Embedding 模型",
-    "description": "模型選擇的主要區段標題"
+    "message": "Mô hình Embedding",
+    "description": "Tiêu đề chính của mục chọn mô hình"
   },
   "indexDataManagementLabel": {
-    "message": "索引資料管理",
-    "description": "資料管理主要區段標題"
+    "message": "Quản lý dữ liệu chỉ mục",
+    "description": "Tiêu đề chính của mục quản lý dữ liệu"
   },
   "modelCacheManagementLabel": {
-    "message": "模型快取管理",
-    "description": "快取管理主要區段標題"
+    "message": "Quản lý bộ nhớ đệm mô hình",
+    "description": "Tiêu đề chính của mục quản lý bộ nhớ đệm"
   },
   "statusLabel": {
-    "message": "狀態",
-    "description": "通用狀態標籤"
+    "message": "Trạng thái",
+    "description": "Nhãn trạng thái chung"
   },
   "runningStatusLabel": {
-    "message": "執行狀態",
-    "description": "伺服器執行狀態標籤"
+    "message": "Trạng thái hoạt động",
+    "description": "Nhãn trạng thái hoạt động của máy chủ"
   },
   "connectionStatusLabel": {
-    "message": "連線狀態",
-    "description": "連線狀態標籤"
+    "message": "Trạng thái kết nối",
+    "description": "Nhãn trạng thái kết nối"
   },
   "lastUpdatedLabel": {
-    "message": "最後更新：",
-    "description": "最後更新時間戳標籤"
+    "message": "Cập nhật lần cuối:",
+    "description": "Nhãn thời gian cập nhật lần cuối"
   },
   "connectButton": {
-    "message": "連線",
-    "description": "連線按鈕文字"
+    "message": "Kết nối",
+    "description": "Văn bản nút kết nối"
   },
   "disconnectButton": {
-    "message": "中斷連線",
-    "description": "中斷連線按鈕文字"
+    "message": "Ngắt kết nối",
+    "description": "Văn bản nút ngắt kết nối"
   },
   "connectingStatus": {
-    "message": "連線中...",
-    "description": "連線狀態訊息"
+    "message": "Đang kết nối...",
+    "description": "Thông báo trạng thái đang kết nối"
   },
   "connectedStatus": {
-    "message": "已連線",
-    "description": "已連線狀態訊息"
+    "message": "Đã kết nối",
+    "description": "Thông báo trạng thái đã kết nối"
   },
   "disconnectedStatus": {
-    "message": "已中斷",
-    "description": "已中斷狀態訊息"
+    "message": "Đã ngắt kết nối",
+    "description": "Thông báo trạng thái đã ngắt kết nối"
   },
   "detectingStatus": {
-    "message": "偵測中...",
-    "description": "偵測狀態訊息"
+    "message": "Đang phát hiện...",
+    "description": "Thông báo trạng thái đang phát hiện"
   },
   "serviceRunningStatus": {
-    "message": "服務執行中 (連結埠: $PORT$)",
-    "description": "含連結埠號的服務執行狀態",
+    "message": "Dịch vụ đang chạy (Cổng: $PORT$)",
+    "description": "Trạng thái dịch vụ đang chạy với số cổng",
     "placeholders": {
       "port": {
         "content": "$1",
@@ -78,104 +78,104 @@
     }
   },
   "serviceNotConnectedStatus": {
-    "message": "服務未連線",
-    "description": "服務未連線狀態"
+    "message": "Dịch vụ chưa kết nối",
+    "description": "Trạng thái dịch vụ chưa kết nối"
   },
   "connectedServiceNotStartedStatus": {
-    "message": "已連線，服務未啟動",
-    "description": "已連線但服務未啟動狀態"
+    "message": "Đã kết nối, dịch vụ chưa khởi động",
+    "description": "Trạng thái đã kết nối nhưng dịch vụ chưa khởi động"
   },
   "mcpServerConfigLabel": {
-    "message": "MCP 伺服器設定",
-    "description": "MCP 伺服器設定區段標籤"
+    "message": "Cấu hình máy chủ MCP",
+    "description": "Nhãn mục cấu hình máy chủ MCP"
   },
   "connectionPortLabel": {
-    "message": "連結埠",
-    "description": "連結埠輸入標籤"
+    "message": "Cổng kết nối",
+    "description": "Nhãn nhập cổng kết nối"
   },
   "refreshStatusButton": {
-    "message": "重新整理狀態",
-    "description": "重新整理狀態按鈕提示"
+    "message": "Làm mới trạng thái",
+    "description": "Tooltip nút làm mới trạng thái"
   },
   "copyConfigButton": {
-    "message": "複製設定",
-    "description": "複製設定按鈕文字"
+    "message": "Sao chép cấu hình",
+    "description": "Văn bản nút sao chép cấu hình"
   },
   "retryButton": {
-    "message": "重試",
-    "description": "重試按鈕文字"
+    "message": "Thử lại",
+    "description": "Văn bản nút thử lại"
   },
   "cancelButton": {
-    "message": "取消",
-    "description": "取消按鈕文字"
+    "message": "Hủy",
+    "description": "Văn bản nút hủy"
   },
   "confirmButton": {
-    "message": "確認",
-    "description": "確認按鈕文字"
+    "message": "Xác nhận",
+    "description": "Văn bản nút xác nhận"
   },
   "saveButton": {
-    "message": "儲存",
-    "description": "儲存按鈕文字"
+    "message": "Lưu",
+    "description": "Văn bản nút lưu"
   },
   "closeButton": {
-    "message": "關閉",
-    "description": "關閉按鈕文字"
+    "message": "Đóng",
+    "description": "Văn bản nút đóng"
   },
   "resetButton": {
-    "message": "重設",
-    "description": "重設按鈕文字"
+    "message": "Đặt lại",
+    "description": "Văn bản nút đặt lại"
   },
   "initializingStatus": {
-    "message": "初始化中...",
-    "description": "初始化進度訊息"
+    "message": "Đang khởi tạo...",
+    "description": "Thông báo tiến trình khởi tạo"
   },
   "processingStatus": {
-    "message": "處理中...",
-    "description": "處理進度訊息"
+    "message": "Đang xử lý...",
+    "description": "Thông báo tiến trình xử lý"
   },
   "loadingStatus": {
-    "message": "載入中...",
-    "description": "載入進度訊息"
+    "message": "Đang tải...",
+    "description": "Thông báo tiến trình tải"
   },
   "clearingStatus": {
-    "message": "清除中...",
-    "description": "清除進度訊息"
+    "message": "Đang xóa...",
+    "description": "Thông báo tiến trình xóa"
   },
   "cleaningStatus": {
-    "message": "清理中...",
-    "description": "清理進度訊息"
+    "message": "Đang dọn dẹp...",
+    "description": "Thông báo tiến trình dọn dẹp"
   },
   "downloadingStatus": {
-    "message": "下載中...",
-    "description": "下載進度訊息"
+    "message": "Đang tải xuống...",
+    "description": "Thông báo tiến trình tải xuống"
   },
   "semanticEngineReadyStatus": {
-    "message": "語意引擎已就緒",
-    "description": "語意引擎就緒狀態"
+    "message": "Công cụ ngữ nghĩa đã sẵn sàng",
+    "description": "Trạng thái công cụ ngữ nghĩa sẵn sàng"
   },
   "semanticEngineInitializingStatus": {
-    "message": "語意引擎初始化中...",
-    "description": "語意引擎初始化狀態"
+    "message": "Đang khởi tạo công cụ ngữ nghĩa...",
+    "description": "Trạng thái khởi tạo công cụ ngữ nghĩa"
   },
   "semanticEngineInitFailedStatus": {
-    "message": "語意引擎初始化失敗",
-    "description": "語意引擎初始化失敗狀態"
+    "message": "Khởi tạo công cụ ngữ nghĩa thất bại",
+    "description": "Trạng thái khởi tạo công cụ ngữ nghĩa thất bại"
   },
   "semanticEngineNotInitStatus": {
-    "message": "語意引擎未初始化",
-    "description": "語意引擎未初始化狀態"
+    "message": "Công cụ ngữ nghĩa chưa được khởi tạo",
+    "description": "Trạng thái công cụ ngữ nghĩa chưa khởi tạo"
   },
   "initSemanticEngineButton": {
-    "message": "初始化語意引擎",
-    "description": "初始化語意引擎按鈕文字"
+    "message": "Khởi tạo công cụ ngữ nghĩa",
+    "description": "Văn bản nút khởi tạo công cụ ngữ nghĩa"
   },
   "reinitializeButton": {
-    "message": "重新初始化",
-    "description": "重新初始化按鈕文字"
+    "message": "Khởi tạo lại",
+    "description": "Văn bản nút khởi tạo lại"
   },
   "downloadingModelStatus": {
-    "message": "正在下載模型... $PROGRESS$%",
-    "description": "含百分比的模型下載進度",
+    "message": "Đang tải mô hình... $PROGRESS$%",
+    "description": "Tiến trình tải mô hình với phần trăm",
     "placeholders": {
       "progress": {
         "content": "$1",
@@ -184,263 +184,435 @@
     }
   },
   "switchingModelStatus": {
-    "message": "正在切換模型...",
-    "description": "模型切換進度訊息"
+    "message": "Đang chuyển đổi mô hình...",
+    "description": "Thông báo tiến trình chuyển đổi mô hình"
   },
   "modelLoadedStatus": {
-    "message": "模型已載入",
-    "description": "模型成功載入狀態"
+    "message": "Mô hình đã được tải",
+    "description": "Trạng thái tải mô hình thành công"
   },
   "modelFailedStatus": {
-    "message": "模型載入失敗",
-    "description": "模型載入失敗狀態"
+    "message": "Tải mô hình thất bại",
+    "description": "Trạng thái tải mô hình thất bại"
   },
   "lightweightModelDescription": {
-    "message": "輕量級多語言模型",
-    "description": "輕量級模型選項描述"
+    "message": "Mô hình đa ngôn ngữ nhẹ",
+    "description": "Mô tả tùy chọn mô hình nhẹ"
   },
   "betterThanSmallDescription": {
-    "message": "比 e5-small 稍大，但效果更佳",
-    "description": "中等模型選項描述"
+    "message": "Lớn hơn e5-small một chút, nhưng hiệu quả tốt hơn",
+    "description": "Mô tả tùy chọn mô hình trung bình"
   },
   "multilingualModelDescription": {
-    "message": "多語言語意模型",
-    "description": "多語言模型選項描述"
+    "message": "Mô hình ngữ nghĩa đa ngôn ngữ",
+    "description": "Mô tả tùy chọn mô hình đa ngôn ngữ"
   },
   "fastPerformance": {
-    "message": "快速",
-    "description": "快速效能指標"
+    "message": "Nhanh",
+    "description": "Chỉ báo hiệu năng nhanh"
   },
   "balancedPerformance": {
-    "message": "平衡",
-    "description": "平衡效能指標"
+    "message": "Cân bằng",
+    "description": "Chỉ báo hiệu năng cân bằng"
   },
   "accuratePerformance": {
-    "message": "精確",
-    "description": "精確效能指標"
+    "message": "Chính xác",
+    "description": "Chỉ báo hiệu năng chính xác"
   },
   "networkErrorMessage": {
-    "message": "網路連線錯誤，請檢查網路後再試一次",
-    "description": "網路連線錯誤訊息"
+    "message": "Lỗi kết nối mạng, vui lòng kiểm tra kết nối và thử lại",
+    "description": "Thông báo lỗi kết nối mạng"
   },
   "modelCorruptedErrorMessage": {
-    "message": "模型檔案毀損或不完整，請重新下載",
-    "description": "模型毀損錯誤訊息"
+    "message": "Tệp mô hình bị hỏng hoặc không đầy đủ, vui lòng tải lại",
+    "description": "Thông báo lỗi mô hình bị hỏng"
   },
   "unknownErrorMessage": {
-    "message": "未知錯誤，請檢查您的網路是否可存取 HuggingFace",
-    "description": "未知錯誤回退訊息"
+    "message": "Lỗi không xác định, vui lòng kiểm tra mạng có thể truy cập HuggingFace không",
+    "description": "Thông báo lỗi không xác định"
   },
   "permissionDeniedErrorMessage": {
-    "message": "權限被拒絕",
-    "description": "權限被拒絕錯誤訊息"
+    "message": "Quyền bị từ chối",
+    "description": "Thông báo lỗi quyền bị từ chối"
   },
   "timeoutErrorMessage": {
-    "message": "操作逾時",
-    "description": "逾時錯誤訊息"
+    "message": "Thao tác hết thời gian",
+    "description": "Thông báo lỗi hết thời gian"
   },
   "indexedPagesLabel": {
-    "message": "已索引頁面",
-    "description": "已索引頁面數量標籤"
+    "message": "Các trang đã lập chỉ mục",
+    "description": "Nhãn số lượng trang đã lập chỉ mục"
   },
   "indexSizeLabel": {
-    "message": "索引大小",
-    "description": "索引大小標籤"
+    "message": "Kích thước chỉ mục",
+    "description": "Nhãn kích thước chỉ mục"
   },
   "activeTabsLabel": {
-    "message": "作用中分頁",
-    "description": "作用中分頁數量標籤"
+    "message": "Các thẻ đang hoạt động",
+    "description": "Nhãn số lượng thẻ đang hoạt động"
   },
   "vectorDocumentsLabel": {
-    "message": "向量文件",
-    "description": "向量文件數量標籤"
+    "message": "Tài liệu vector",
+    "description": "Nhãn số lượng tài liệu vector"
   },
   "cacheSizeLabel": {
-    "message": "快取大小",
-    "description": "快取大小標籤"
+    "message": "Kích thước bộ nhớ đệm",
+    "description": "Nhãn kích thước bộ nhớ đệm"
   },
   "cacheEntriesLabel": {
-    "message": "快取項目",
-    "description": "快取項目數量標籤"
+    "message": "Các mục bộ nhớ đệm",
+    "description": "Nhãn số lượng mục bộ nhớ đệm"
   },
   "clearAllDataButton": {
-    "message": "清除所有資料",
-    "description": "清除所有資料按鈕文字"
+    "message": "Xóa tất cả dữ liệu",
+    "description": "Văn bản nút xóa tất cả dữ liệu"
   },
   "clearAllCacheButton": {
-    "message": "清除所有快取",
-    "description": "清除所有快取按鈕文字"
+    "message": "Xóa tất cả bộ nhớ đệm",
+    "description": "Văn bản nút xóa tất cả bộ nhớ đệm"
   },
   "cleanExpiredCacheButton": {
-    "message": "清理過期快取",
-    "description": "清理過期快取按鈕文字"
+    "message": "Dọn dẹp bộ nhớ đệm hết hạn",
+    "description": "Văn bản nút dọn dẹp bộ nhớ đệm hết hạn"
   },
   "exportDataButton": {
-    "message": "匯出資料",
-    "description": "匯出資料按鈕文字"
+    "message": "Xuất dữ liệu",
+    "description": "Văn bản nút xuất dữ liệu"
   },
   "importDataButton": {
-    "message": "匯入資料",
-    "description": "匯入資料按鈕文字"
+    "message": "Nhập dữ liệu",
+    "description": "Văn bản nút nhập dữ liệu"
   },
   "confirmClearDataTitle": {
-    "message": "確認清除資料",
-    "description": "清除資料確認對話框標題"
+    "message": "Xác nhận xóa dữ liệu",
+    "description": "Tiêu đề hộp thoại xác nhận xóa dữ liệu"
   },
   "settingsTitle": {
-    "message": "設定",
-    "description": "設定對話框標題"
+    "message": "Cài đặt",
+    "description": "Tiêu đề hộp thoại cài đặt"
   },
   "aboutTitle": {
-    "message": "關於",
-    "description": "關於對話框標題"
+    "message": "Giới thiệu",
+    "description": "Tiêu đề hộp thoại giới thiệu"
   },
   "helpTitle": {
-    "message": "說明",
-    "description": "說明對話框標題"
+    "message": "Trợ giúp",
+    "description": "Tiêu đề hộp thoại trợ giúp"
   },
   "clearDataWarningMessage": {
-    "message": "此操作將清除所有已索引的網頁內容與向量資料，包括：",
-    "description": "清除資料警告訊息"
+    "message": "Thao tác này sẽ xóa tất cả nội dung trang web đã lập chỉ mục và dữ liệu vector, bao gồm:",
+    "description": "Thông báo cảnh báo xóa dữ liệu"
   },
   "clearDataList1": {
-    "message": "所有網頁的文字內容索引",
-    "description": "清除資料列表第一項"
+    "message": "Chỉ mục nội dung văn bản của tất cả các trang web",
+    "description": "Mục danh sách xóa dữ liệu thứ nhất"
   },
   "clearDataList2": {
-    "message": "向量嵌入資料",
-    "description": "清除資料列表第二項"
+    "message": "Dữ liệu vector embedding",
+    "description": "Mục danh sách xóa dữ liệu thứ hai"
   },
   "clearDataList3": {
-    "message": "搜尋歷史與快取",
-    "description": "清除資料列表第三項"
+    "message": "Lịch sử tìm kiếm và bộ nhớ đệm",
+    "description": "Mục danh sách xóa dữ liệu thứ ba"
   },
   "clearDataIrreversibleWarning": {
-    "message": "此操作無法復原！清除後需重新瀏覽網頁以重建索引。",
-    "description": "不可逆操作警告"
+    "message": "Thao tác này không thể hoàn tác! Sau khi xóa cần duyệt lại trang web để xây dựng lại chỉ mục.",
+    "description": "Cảnh báo thao tác không thể hoàn tác"
   },
   "confirmClearButton": {
-    "message": "確認清除",
-    "description": "確認清除操作按鈕"
+    "message": "Xác nhận xóa",
+    "description": "Nút xác nhận thao tác xóa"
   },
   "cacheDetailsLabel": {
-    "message": "快取詳細資訊",
-    "description": "快取詳細資訊區段標籤"
+    "message": "Chi tiết bộ nhớ đệm",
+    "description": "Nhãn mục chi tiết bộ nhớ đệm"
   },
   "noCacheDataMessage": {
-    "message": "尚無快取資料",
-    "description": "無可用快取資料訊息"
+    "message": "Chưa có dữ liệu bộ nhớ đệm",
+    "description": "Thông báo không có dữ liệu bộ nhớ đệm"
   },
   "loadingCacheInfoStatus": {
-    "message": "正在載入快取資訊...",
-    "description": "載入快取資訊狀態"
+    "message": "Đang tải thông tin bộ nhớ đệm...",
+    "description": "Trạng thái tải thông tin bộ nhớ đệm"
   },
   "processingCacheStatus": {
-    "message": "正在處理快取...",
-    "description": "處理快取狀態"
+    "message": "Đang xử lý bộ nhớ đệm...",
+    "description": "Trạng thái xử lý bộ nhớ đệm"
   },
   "expiredLabel": {
-    "message": "已過期",
-    "description": "過期項目標籤"
+    "message": "Đã hết hạn",
+    "description": "Nhãn mục hết hạn"
   },
   "bookmarksBarLabel": {
-    "message": "書籤列",
-    "description": "書籤列資料夾名稱"
+    "message": "Thanh dấu trang",
+    "description": "Tên thư mục thanh dấu trang"
   },
   "newTabLabel": {
-    "message": "新分頁",
-    "description": "新分頁標籤"
+    "message": "Thẻ mới",
+    "description": "Nhãn thẻ mới"
   },
   "currentPageLabel": {
-    "message": "目前頁面",
-    "description": "目前頁面標籤"
+    "message": "Trang hiện tại",
+    "description": "Nhãn trang hiện tại"
   },
   "menuLabel": {
-    "message": "功能表",
-    "description": "功能表無障礙標籤"
+    "message": "Menu",
+    "description": "Nhãn trợ năng menu"
   },
   "navigationLabel": {
-    "message": "導覽",
-    "description": "導覽無障礙標籤"
+    "message": "Điều hướng",
+    "description": "Nhãn trợ năng điều hướng"
   },
   "mainContentLabel": {
-    "message": "主要內容",
-    "description": "主要內容無障礙標籤"
+    "message": "Nội dung chính",
+    "description": "Nhãn trợ năng nội dung chính"
   },
   "languageSelectorLabel": {
-    "message": "語言",
-    "description": "語言選擇器標籤"
+    "message": "Ngôn ngữ",
+    "description": "Nhãn bộ chọn ngôn ngữ"
   },
   "themeLabel": {
-    "message": "主題",
-    "description": "主題選擇器標籤"
+    "message": "Chủ đề",
+    "description": "Nhãn bộ chọn chủ đề"
   },
   "lightTheme": {
-    "message": "淺色",
-    "description": "淺色主題選項"
+    "message": "Sáng",
+    "description": "Tùy chọn chủ đề sáng"
   },
   "darkTheme": {
-    "message": "深色",
-    "description": "深色主題選項"
+    "message": "Tối",
+    "description": "Tùy chọn chủ đề tối"
   },
   "autoTheme": {
-    "message": "自動",
-    "description": "自動主題選項"
+    "message": "Tự động",
+    "description": "Tùy chọn chủ đề tự động"
   },
   "advancedSettingsLabel": {
-    "message": "進階設定",
-    "description": "進階設定區段標籤"
+    "message": "Cài đặt nâng cao",
+    "description": "Nhãn mục cài đặt nâng cao"
   },
   "debugModeLabel": {
-    "message": "偵錯模式",
-    "description": "偵錯模式切換標籤"
+    "message": "Chế độ gỡ lỗi",
+    "description": "Nhãn bật/tắt chế độ gỡ lỗi"
   },
   "verboseLoggingLabel": {
-    "message": "詳細日誌",
-    "description": "詳細日誌切換標籤"
+    "message": "Ghi nhật ký chi tiết",
+    "description": "Nhãn bật/tắt ghi nhật ký chi tiết"
   },
   "successNotification": {
-    "message": "操作已成功完成",
-    "description": "通用成功通知"
+    "message": "Thao tác đã hoàn tất thành công",
+    "description": "Thông báo thành công chung"
   },
   "warningNotification": {
-    "message": "警告：請在繼續前檢查",
-    "description": "通用警告通知"
+    "message": "Cảnh báo: vui lòng kiểm tra trước khi tiếp tục",
+    "description": "Thông báo cảnh báo chung"
   },
   "infoNotification": {
-    "message": "資訊",
-    "description": "通用資訊通知"
+    "message": "Thông tin",
+    "description": "Thông báo thông tin chung"
   },
   "configCopiedNotification": {
-    "message": "設定已複製到剪貼簿",
-    "description": "設定複製成功訊息"
+    "message": "Cấu hình đã được sao chép vào bộ nhớ tạm",
+    "description": "Thông báo sao chép cấu hình thành công"
   },
   "dataClearedNotification": {
-    "message": "資料清除成功",
-    "description": "資料清除成功訊息"
+    "message": "Xóa dữ liệu thành công",
+    "description": "Thông báo xóa dữ liệu thành công"
   },
   "bytesUnit": {
-    "message": "bytes",
-    "description": "位元組單位"
+    "message": "byte",
+    "description": "Đơn vị byte"
   },
   "kilobytesUnit": {
     "message": "KB",
-    "description": "千位元組單位"
+    "description": "Đơn vị kilobyte"
   },
   "megabytesUnit": {
     "message": "MB",
-    "description": "百萬位元組單位"
+    "description": "Đơn vị megabyte"
   },
   "gigabytesUnit": {
     "message": "GB",
-    "description": "十億位元組單位"
+    "description": "Đơn vị gigabyte"
   },
   "itemsUnit": {
-    "message": "項目",
-    "description": "項目計數單位"
+    "message": "mục",
+    "description": "Đơn vị đếm mục"
   },
   "pagesUnit": {
-    "message": "頁面",
-    "description": "頁面計數單位"
+    "message": "trang",
+    "description": "Đơn vị đếm trang"
+  },
+  "userscriptsManagerTitle": {
+    "message": "Trình quản lý script người dùng",
+    "description": "Tiêu đề trang Tùy chọn"
+  },
+  "emergencySwitchLabel": {
+    "message": "Công tắc khẩn cấp",
+    "description": "Công tắc tắt khẩn cấp"
+  },
+  "createRunSectionTitle": {
+    "message": "Tạo / Chạy",
+    "description": "Tiêu đề phân vùng tạo và chạy"
+  },
+  "nameLabel": {
+    "message": "Tên",
+    "description": "Nhãn nhập tên"
+  },
+  "runAtLabel": {
+    "message": "Thời điểm chạy",
+    "description": "Nhãn chọn runAt"
+  },
+  "runAtAuto": {
+    "message": "Tự động",
+    "description": "runAt tự động"
+  },
+  "runAtDocumentStart": {
+    "message": "document_start",
+    "description": "runAt document_start"
+  },
+  "runAtDocumentEnd": {
+    "message": "document_end",
+    "description": "runAt document_end"
+  },
+  "runAtDocumentIdle": {
+    "message": "document_idle",
+    "description": "runAt document_idle"
+  },
+  "worldLabel": {
+    "message": "Ngữ cảnh thực thi",
+    "description": "Nhãn chọn world"
+  },
+  "worldAuto": {
+    "message": "Tự động",
+    "description": "world tự động"
+  },
+  "worldIsolated": {
+    "message": "Cô lập (ISOLATED)",
+    "description": "World ISOLATED"
+  },
+  "worldMain": {
+    "message": "Trang (MAIN)",
+    "description": "World MAIN"
+  },
+  "modeLabel": {
+    "message": "Chế độ",
+    "description": "Nhãn chọn chế độ"
+  },
+  "modeAuto": {
+    "message": "Tự động",
+    "description": "mode tự động"
+  },
+  "modePersistent": {
+    "message": "Lâu dài",
+    "description": "mode persistent"
+  },
+  "modeCss": {
+    "message": "Chỉ kiểu (CSS)",
+    "description": "mode css"
+  },
+  "modeOnce": {
+    "message": "Chạy một lần (CDP)",
+    "description": "mode once"
+  },
+  "allFramesLabel": {
+    "message": "Tất cả frame",
+    "description": "Hộp kiểm allFrames"
+  },
+  "persistLabel": {
+    "message": "Lưu trữ lâu dài",
+    "description": "Hộp kiểm persist"
+  },
+  "dnrFallbackLabel": {
+    "message": "Dự phòng DNR",
+    "description": "Hộp kiểm DNR fallback"
+  },
+  "matchesInputLabel": {
+    "message": "Khớp (phân tách bằng dấu phẩy)",
+    "description": "Nhập matches"
+  },
+  "excludesInputLabel": {
+    "message": "Loại trừ (phân tách bằng dấu phẩy)",
+    "description": "Nhập excludes"
+  },
+  "tagsInputLabel": {
+    "message": "Thẻ (phân tách bằng dấu phẩy)",
+    "description": "Nhập tags"
+  },
+  "scriptLabel": {
+    "message": "Script",
+    "description": "Nhãn văn bản script"
+  },
+  "applyButton": {
+    "message": "Áp dụng",
+    "description": "Nút áp dụng"
+  },
+  "runOnceButton": {
+    "message": "Chạy một lần (CDP)",
+    "description": "Nút chạy một lần"
+  },
+  "listSectionTitle": {
+    "message": "Danh sách script",
+    "description": "Tiêu đề phân vùng danh sách"
+  },
+  "queryLabel": {
+    "message": "Tìm kiếm",
+    "description": "Nhãn nhập truy vấn"
+  },
+  "statusAll": {
+    "message": "Tất cả",
+    "description": "Trạng thái-Tất cả"
+  },
+  "statusEnabled": {
+    "message": "Đã bật",
+    "description": "Trạng thái-Đã bật"
+  },
+  "statusDisabled": {
+    "message": "Đã tắt",
+    "description": "Trạng thái-Đã tắt"
+  },
+  "domainLabel": {
+    "message": "Tên miền",
+    "description": "Nhãn lọc tên miền"
+  },
+  "exportAllButton": {
+    "message": "Xuất tất cả",
+    "description": "Nút xuất"
+  },
+  "tableHeaderName": {
+    "message": "Tên",
+    "description": "Tiêu đề bảng-Tên"
+  },
+  "tableHeaderWorld": {
+    "message": "Ngữ cảnh thực thi",
+    "description": "Tiêu đề bảng-World"
+  },
+  "tableHeaderRunAt": {
+    "message": "Thời điểm chạy",
+    "description": "Tiêu đề bảng-RunAt"
+  },
+  "tableHeaderUpdated": {
+    "message": "Thời gian cập nhật",
+    "description": "Tiêu đề bảng-Thời gian cập nhật"
+  },
+  "deleteButton": {
+    "message": "Xóa",
+    "description": "Nút xóa"
+  },
+  "placeholderOptional": {
+    "message": "Tùy chọn",
+    "description": "Placeholder tùy chọn chung"
+  },
+  "placeholderMatchesExample": {
+    "message": "Ví dụ: https://*.example.com/*",
+    "description": "Placeholder ví dụ khớp"
+  },
+  "placeholderScriptHint": {
+    "message": "Dán JS/CSS/TM vào đây",
+    "description": "Placeholder trường văn bản script"
+  },
+  "placeholderDomainHint": {
+    "message": "example.com",
+    "description": "Placeholder bộ lọc tên miền"
   }
 }

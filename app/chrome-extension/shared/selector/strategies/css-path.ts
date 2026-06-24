@@ -1,6 +1,6 @@
 /**
- * CSS Path Strategy - 基于 DOM 路径的选择器策略
- * 使用 nth-of-type 生成完整的 CSS 路径
+ * CSS Path Strategy - noiDungTiengViet DOM đường dẫnnoiDungTiengVietbộ chọnchiến lược
+ * sử dụng nth-of-type tạođầy đủ CSS đường dẫn
  */
 
 import type { SelectorCandidate, SelectorStrategy } from '../types';

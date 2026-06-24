@@ -1,6 +1,6 @@
 /**
- * @fileoverview 租约管理
- * @description 管理 Run 的租约续约和过期回收
+ * @fileoverview leasequản lý
+ * @description quản lý Run noiDungTiengVietleasenoiDungTiengVietthu hồi
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -8,57 +8,57 @@ import type { RunId } from '../../domain/ids';
 import type { RunQueue, RunQueueConfig, Lease } from './queue';
 
 /**
- * 租约管理器
- * @description 管理租约续约和过期检测
+ * leasequản lýnoiDungTiengViet
+ * @description quản lýleasenoiDungTiengVietphát hiện
  */
 export interface LeaseManager {
   /**
-   * 开始心跳
-   * @param ownerId 持有者 ID
+   * bắt đầuheartbeat
+   * @param ownerId người giữ ID
    */
   startHeartbeat(ownerId: string): void;
 
   /**
-   * 停止心跳
-   * @param ownerId 持有者 ID
+   * dừngheartbeat
+   * @param ownerId người giữ ID
    */
   stopHeartbeat(ownerId: string): void;
 
   /**
-   * 检查并回收过期租约
-   * @param now 当前时间
-   * @returns 被回收的 Run ID 列表
+   * kiểm tranoiDungTiengVietthu hồinoiDungTiengVietlease
+   * @param now hiện tạithời gian
+   * @returns noiDungTiengVietthu hồinoiDungTiengViet Run ID danh sách
    */
   reclaimExpiredLeases(now: UnixMillis): Promise<RunId[]>;
 
   /**
-   * 判断租约是否过期
+   * phán đoánleasecó/khôngnoiDungTiengViet
    */
   isLeaseExpired(lease: Lease, now: UnixMillis): boolean;
 
   /**
-   * 创建新租约
+   * tạonoiDungTiengVietlease
    */
   createLease(ownerId: string, now: UnixMillis): Lease;
 
   /**
-   * 停止所有心跳
+   * dừngtất cảheartbeat
    */
   dispose(): void;
 }
 
 /**
- * 创建租约管理器
+ * tạoleasequản lýnoiDungTiengViet
  */
 export function createLeaseManager(queue: RunQueue, config: RunQueueConfig): LeaseManager {
   const heartbeatTimers = new Map<string, ReturnType<typeof setInterval>>();
 
   return {
     startHeartbeat(ownerId: string): void {
-      // 如果已有定时器，先停止
+      // nếunoiDungTiengVietđịnh thờinoiDungTiengViet，noiDungTiengVietdừng
       this.stopHeartbeat(ownerId);
 
-      // 创建新的心跳定时器
+      // tạonoiDungTiengVietheartbeatđịnh thờinoiDungTiengViet
       const timer = setInterval(async () => {
         try {
           await queue.heartbeat(ownerId, Date.now());
@@ -105,8 +105,8 @@ export function createLeaseManager(queue: RunQueue, config: RunQueueConfig): Lea
 }
 
 /**
- * 生成唯一的 owner ID
- * @description 用于标识当前 Service Worker 实例
+ * tạonoiDungTiengViet owner ID
+ * @description dùng chođịnh danhhiện tại Service Worker thể hiện
  */
 export function generateOwnerId(): string {
   return `sw_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;

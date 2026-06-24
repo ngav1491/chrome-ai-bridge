@@ -1,10 +1,10 @@
 import { cdpSessionManager } from '@/utils/cdp-session-manager';
 
 /**
- * ConsoleBuffer - 持久化的控制台日志缓冲管理器
+ * ConsoleBuffer - lưu trữ lâu dàinoiDungTiengVietđiều khiểnnoiDungTiengVietnhật kýnoiDungTiengVietquản lýnoiDungTiengViet
  *
- * 为每个 tab 维护一个滚动缓冲区，持续收集控制台事件。
- * 当 tab 导航到新域名时会自动清空缓冲，避免不同站点日志混淆。
+ * noiDungTiengVietmỗi tab noiDungTiengVietcuộnvùng đệm，noiDungTiengVietđiều khiểnnoiDungTiengVietsự kiện。
+ * noiDungTiengViet tab điều hướngnoiDungTiengViettên miềnnoiDungTiengViettự độnglàm trốngnoiDungTiengViet，tránhnoiDungTiengVietnhật kýnoiDungTiengViet。
  */
 
 const DEFAULT_MAX_BUFFER_MESSAGES = 2000;
@@ -104,13 +104,13 @@ function formatConsoleArgs(args: unknown[]): string {
 }
 
 /**
- * 从 CDP RemoteObject 提取安全的预览数据，丢弃 objectId 避免内存泄漏
+ * noiDungTiengViet CDP RemoteObject trích xuấtnoiDungTiengVietdữ liệu，noiDungTiengViet objectId tránhnoiDungTiengViet
  */
 function extractArgPreview(arg: unknown): unknown {
   const a = arg as Record<string, unknown>;
   if (!a || typeof a !== 'object') return arg;
 
-  // 只保留安全的字段，丢弃 objectId
+  // noiDungTiengViettrường，noiDungTiengViet objectId
   const preview: Record<string, unknown> = {
     type: a.type,
   };
@@ -157,14 +157,14 @@ class ConsoleBuffer {
   }
 
   /**
-   * 检查指定 tab 是否正在进行 buffer 模式的捕获
+   * kiểm trachỉ định tab có/khôngđangnoiDungTiengViet buffer schemanoiDungTiengViet
    */
   isCapturing(tabId: number): boolean {
     return this.buffers.has(tabId);
   }
 
   /**
-   * 确保指定 tab 的 buffer 捕获已启动
+   * đảm bảochỉ định tab noiDungTiengViet buffer noiDungTiengVietkhởi động
    */
   async ensureStarted(tabId: number): Promise<void> {
     if (this.buffers.has(tabId)) return;
@@ -180,7 +180,7 @@ class ConsoleBuffer {
   }
 
   /**
-   * 清空指定 tab 的缓冲区
+   * làm trốngchỉ định tab noiDungTiengVietvùng đệm
    */
   clear(
     tabId: number,
@@ -207,7 +207,7 @@ class ConsoleBuffer {
   }
 
   /**
-   * 读取指定 tab 的缓冲区内容
+   * đọcchỉ định tab noiDungTiengVietvùng đệmnoiDungTiengViet
    */
   read(tabId: number, options: ConsoleBufferReadOptions = {}): ConsoleBufferReadResult | null {
     const state = this.buffers.get(tabId);
@@ -218,7 +218,7 @@ class ConsoleBuffer {
     const totalBufferedMessages = state.messages.length;
     const totalBufferedExceptions = state.exceptions.length;
 
-    // 过滤消息
+    // noiDungTiengViettin nhắn
     let messages = state.messages;
     if (onlyErrors) {
       messages = messages.filter((m) => isErrorLevel(m.level));
@@ -227,20 +227,20 @@ class ConsoleBuffer {
       messages = messages.filter((m) => matchesPattern(pattern, m.text || ''));
     }
 
-    // 按时间排序
+    // noiDungTiengVietthời giansắp xếp
     messages = [...messages].sort((a, b) => a.timestamp - b.timestamp);
 
-    // 应用 limit
+    // noiDungTiengViet limit
     let messageLimitReached = false;
     const normalizedLimit =
       typeof limit === 'number' && Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : null;
     if (normalizedLimit !== null && messages.length > normalizedLimit) {
       messageLimitReached = true;
-      // 保留最新的消息
+      // noiDungTiengViettin nhắn
       messages = messages.slice(messages.length - normalizedLimit);
     }
 
-    // 过滤异常
+    // noiDungTiengVietngoại lệ
     let exceptions: BufferedConsoleException[] = [];
     if (includeExceptions) {
       exceptions = state.exceptions;
@@ -320,7 +320,7 @@ class ConsoleBuffer {
 
     if (typeof nextUrl === 'string') {
       const nextHost = extractHostname(nextUrl);
-      // 域名变化时清空缓冲
+      // tên miềnthay đổinoiDungTiengVietlàm trốngnoiDungTiengViet
       if (nextHost !== state.hostname) {
         this.clear(tabId, 'domain_changed');
         state.hostname = nextHost;
@@ -387,7 +387,7 @@ class ConsoleBuffer {
         url: safeString(callFrame?.url),
         lineNumber: safeNumber(callFrame?.lineNumber),
         stackTrace: stackTrace,
-        // 只存储安全的预览数据，避免内存泄漏
+        // noiDungTiengVietlưu trữnoiDungTiengVietdữ liệu，tránhnoiDungTiengViet
         args: rawArgs.map(extractArgPreview),
       });
       this.trimMessages(state);

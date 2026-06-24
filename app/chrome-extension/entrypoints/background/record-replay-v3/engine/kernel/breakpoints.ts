@@ -1,14 +1,14 @@
 /**
- * @fileoverview 断点管理器
- * @description 管理调试断点的添加、删除和命中检测
+ * @fileoverview điểm dừngquản lýnoiDungTiengViet
+ * @description quản lýgỡ lỗiđiểm dừngnoiDungTiengVietthêm、xóanoiDungTiengVietphát hiện
  */
 
 import type { NodeId, RunId } from '../../domain/ids';
 import type { Breakpoint, DebuggerState } from '../../domain/debug';
 
 /**
- * 断点管理器
- * @description 管理单个 Run 的断点
+ * điểm dừngquản lýnoiDungTiengViet
+ * @description quản lýđơn lẻ Run noiDungTiengVietđiểm dừng
  */
 export class BreakpointManager {
   private breakpoints = new Map<NodeId, Breakpoint>();
@@ -23,21 +23,21 @@ export class BreakpointManager {
   }
 
   /**
-   * 添加断点
+   * thêmđiểm dừng
    */
   add(nodeId: NodeId): void {
     this.breakpoints.set(nodeId, { nodeId, enabled: true });
   }
 
   /**
-   * 删除断点
+   * xóađiểm dừng
    */
   remove(nodeId: NodeId): void {
     this.breakpoints.delete(nodeId);
   }
 
   /**
-   * 设置断点列表（替换所有现有断点）
+   * cài đặtđiểm dừngdanh sách（noiDungTiengViettất cảhiện cóđiểm dừng）
    */
   setAll(nodeIds: NodeId[]): void {
     this.breakpoints.clear();
@@ -47,7 +47,7 @@ export class BreakpointManager {
   }
 
   /**
-   * 启用断点
+   * bậtđiểm dừng
    */
   enable(nodeId: NodeId): void {
     const bp = this.breakpoints.get(nodeId);
@@ -57,7 +57,7 @@ export class BreakpointManager {
   }
 
   /**
-   * 禁用断点
+   * vô hiệu hóađiểm dừng
    */
   disable(nodeId: NodeId): void {
     const bp = this.breakpoints.get(nodeId);
@@ -67,7 +67,7 @@ export class BreakpointManager {
   }
 
   /**
-   * 检查节点是否有启用的断点
+   * kiểm tranútcó/khôngnoiDungTiengVietbậtnoiDungTiengVietđiểm dừng
    */
   hasBreakpoint(nodeId: NodeId): boolean {
     const bp = this.breakpoints.get(nodeId);
@@ -75,48 +75,48 @@ export class BreakpointManager {
   }
 
   /**
-   * 检查是否应该在节点处暂停
-   * @description 考虑断点和单步模式
+   * kiểm tracó/khôngnoiDungTiengVietnútnoiDungTiengViettạm dừng
+   * @description noiDungTiengVietđiểm dừngnoiDungTiengVietmột bướcschema
    */
   shouldPauseAt(nodeId: NodeId): boolean {
-    // 如果在单步模式，总是暂停
+    // nếunoiDungTiengVietmột bướcschema，noiDungTiengViettạm dừng
     if (this.stepMode === 'stepOver') {
       return true;
     }
-    // 否则检查断点
+    // noiDungTiengVietkiểm trađiểm dừng
     return this.hasBreakpoint(nodeId);
   }
 
   /**
-   * 获取所有断点
+   * lấytất cảđiểm dừng
    */
   getAll(): Breakpoint[] {
     return Array.from(this.breakpoints.values());
   }
 
   /**
-   * 获取启用的断点
+   * lấybậtnoiDungTiengVietđiểm dừng
    */
   getEnabled(): Breakpoint[] {
     return this.getAll().filter((bp) => bp.enabled);
   }
 
   /**
-   * 设置单步模式
+   * cài đặtmột bướcschema
    */
   setStepMode(mode: 'none' | 'stepOver'): void {
     this.stepMode = mode;
   }
 
   /**
-   * 获取单步模式
+   * lấymột bướcschema
    */
   getStepMode(): 'none' | 'stepOver' {
     return this.stepMode;
   }
 
   /**
-   * 清除所有断点
+   * xóatất cảđiểm dừng
    */
   clear(): void {
     this.breakpoints.clear();
@@ -125,14 +125,14 @@ export class BreakpointManager {
 }
 
 /**
- * 断点管理器注册表
- * @description 管理多个 Run 的断点管理器
+ * điểm dừngquản lýnoiDungTiengVietđăng kýnoiDungTiengViet
+ * @description quản lýnoiDungTiengViet Run noiDungTiengVietđiểm dừngquản lýnoiDungTiengViet
  */
 export class BreakpointRegistry {
   private managers = new Map<RunId, BreakpointManager>();
 
   /**
-   * 获取或创建断点管理器
+   * lấynoiDungTiengViettạođiểm dừngquản lýnoiDungTiengViet
    */
   getOrCreate(runId: RunId, initialBreakpoints?: NodeId[]): BreakpointManager {
     let manager = this.managers.get(runId);
@@ -144,32 +144,32 @@ export class BreakpointRegistry {
   }
 
   /**
-   * 获取断点管理器
+   * lấyđiểm dừngquản lýnoiDungTiengViet
    */
   get(runId: RunId): BreakpointManager | undefined {
     return this.managers.get(runId);
   }
 
   /**
-   * 删除断点管理器
+   * xóađiểm dừngquản lýnoiDungTiengViet
    */
   remove(runId: RunId): void {
     this.managers.delete(runId);
   }
 
   /**
-   * 清空所有
+   * làm trốngtất cả
    */
   clear(): void {
     this.managers.clear();
   }
 }
 
-/** 全局断点注册表 */
+/** toàn cụcđiểm dừngđăng kýnoiDungTiengViet */
 let globalBreakpointRegistry: BreakpointRegistry | null = null;
 
 /**
- * 获取全局断点注册表
+ * lấytoàn cụcđiểm dừngđăng kýnoiDungTiengViet
  */
 export function getBreakpointRegistry(): BreakpointRegistry {
   if (!globalBreakpointRegistry) {
@@ -179,8 +179,8 @@ export function getBreakpointRegistry(): BreakpointRegistry {
 }
 
 /**
- * 重置全局断点注册表
- * @description 主要用于测试
+ * noiDungTiengViettoàn cụcđiểm dừngđăng kýnoiDungTiengViet
+ * @description chínhdùng chokiểm thử
  */
 export function resetBreakpointRegistry(): void {
   globalBreakpointRegistry = null;

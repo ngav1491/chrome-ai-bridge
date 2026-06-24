@@ -1,9 +1,17 @@
 <template>
   <div>
-    <SelectorEditor :node="node" :allowPick="true" title="起点选择器" targetKey="start" />
-    <SelectorEditor :node="node" :allowPick="true" title="终点选择器" targetKey="end" />
+    <SelectorEditor :node="node" :allowPick="true" title="điểm bắt đầubộ chọn" targetKey="start" />
+    <SelectorEditor
+      :node="node"
+      :allowPick="true"
+      title="noiDungTiengVietbộ chọn"
+      targetKey="end"
+    />
     <div class="hint">
-      <small>提示：路径（path）通常在录制时自动生成，手动创建时可留空。</small>
+      <small
+        >gợi ý：đường dẫn（path）noiDungTiengVietghinoiDungTiengViettự độngtạo，thủ
+        côngtạonoiDungTiengViet。</small
+      >
     </div>
   </div>
 </template>

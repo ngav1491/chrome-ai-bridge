@@ -75,7 +75,7 @@ withDefaults(defineProps<Props>(), {
   }
 }
 
-/* 响应式设计 */
+/* phản hồinoiDungTiengViet */
 @media (max-width: 420px) {
   .progress-indicator {
     padding: 12px;

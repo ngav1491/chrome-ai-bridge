@@ -1,6 +1,6 @@
 /**
- * @fileoverview RunQueue 接口定义
- * @description 定义 Run 队列的管理接口
+ * @fileoverview RunQueue giao diệnđịnh nghĩa
+ * @description định nghĩa Run hàng đợinoiDungTiengVietquản lýgiao diện
  */
 
 import type { JsonObject, UnixMillis } from '../../domain/json';
@@ -8,19 +8,19 @@ import type { FlowId, NodeId, RunId } from '../../domain/ids';
 import type { TriggerFireContext } from '../../domain/triggers';
 
 /**
- * RunQueue 配置
+ * RunQueue cấu hình
  */
 export interface RunQueueConfig {
-  /** 最大并行 Run 数量 */
+  /** tối đanoiDungTiengViet Run noiDungTiengViet */
   maxParallelRuns: number;
-  /** 租约 TTL（毫秒） */
+  /** lease TTL（mili giây） */
   leaseTtlMs: number;
-  /** 心跳间隔（毫秒） */
+  /** heartbeatkhoảng cách（mili giây） */
   heartbeatIntervalMs: number;
 }
 
 /**
- * 默认队列配置
+ * mặc địnhhàng đợicấu hình
  */
 export const DEFAULT_QUEUE_CONFIG: RunQueueConfig = {
   maxParallelRuns: 3,
@@ -29,111 +29,111 @@ export const DEFAULT_QUEUE_CONFIG: RunQueueConfig = {
 };
 
 /**
- * 队列项状态
+ * mục hàng đợitrạng thái
  */
 export type QueueItemStatus = 'queued' | 'running' | 'paused';
 
 /**
- * 租约信息
+ * leasethông tin
  */
 export interface Lease {
-  /** 持有者 ID */
+  /** người giữ ID */
   ownerId: string;
-  /** 过期时间 */
+  /** noiDungTiengVietthời gian */
   expiresAt: UnixMillis;
 }
 
 /**
- * RunQueue 队列项
+ * RunQueue mục hàng đợi
  */
 export interface RunQueueItem {
   /** Run ID */
   id: RunId;
   /** Flow ID */
   flowId: FlowId;
-  /** 状态 */
+  /** trạng thái */
   status: QueueItemStatus;
-  /** 创建时间 */
+  /** tạothời gian */
   createdAt: UnixMillis;
-  /** 更新时间 */
+  /** cập nhậtthời gian */
   updatedAt: UnixMillis;
-  /** 优先级（数字越大优先级越高） */
+  /** độ ưu tiên（sốnoiDungTiengVietđộ ưu tiênnoiDungTiengViet） */
   priority: number;
-  /** 当前尝试次数 */
+  /** hiện tạisố lần thử */
   attempt: number;
-  /** 最大尝试次数 */
+  /** số lần thử tối đa */
   maxAttempts: number;
   /** Tab ID */
   tabId?: number;
-  /** 运行参数 */
+  /** chạytham số */
   args?: JsonObject;
-  /** 触发器上下文 */
+  /** triggerngữ cảnh */
   trigger?: TriggerFireContext;
-  /** 租约信息 */
+  /** leasethông tin */
   lease?: Lease;
-  /** 调试配置 */
+  /** gỡ lỗicấu hình */
   debug?: { breakpoints?: NodeId[]; pauseOnStart?: boolean };
 }
 
 /**
- * 入队请求（不含自动生成的字段）
- * - priority 默认为 0
- * - maxAttempts 默认为 1
+ * vào hàng đợiyêu cầu（noiDungTiengViettự độngtạonoiDungTiengViettrường）
+ * - priority mặc địnhnoiDungTiengViet 0
+ * - maxAttempts mặc địnhnoiDungTiengViet 1
  */
 export type EnqueueInput = Omit<
   RunQueueItem,
   'status' | 'createdAt' | 'updatedAt' | 'attempt' | 'lease' | 'priority' | 'maxAttempts'
 > & {
   id: RunId;
-  /** 优先级（数字越大优先级越高，默认 0） */
+  /** độ ưu tiên（sốnoiDungTiengVietđộ ưu tiênnoiDungTiengViet，mặc định 0） */
   priority?: number;
-  /** 最大尝试次数（默认 1） */
+  /** số lần thử tối đa（mặc định 1） */
   maxAttempts?: number;
 };
 
 /**
- * RunQueue 接口
- * @description 管理 Run 的队列和调度
+ * RunQueue giao diện
+ * @description quản lý Run noiDungTiengViethàng đợinoiDungTiengVietlập lịch
  */
 export interface RunQueue {
   /**
-   * 入队
-   * @param input 入队请求
-   * @returns 队列项
+   * vào hàng đợi
+   * @param input vào hàng đợiyêu cầu
+   * @returns mục hàng đợi
    */
   enqueue(input: EnqueueInput): Promise<RunQueueItem>;
 
   /**
-   * 领取下一个可执行的 Run
-   * @param ownerId 领取者 ID
-   * @param now 当前时间
-   * @returns 队列项或 null
+   * noiDungTiengVietthực thinoiDungTiengViet Run
+   * @param ownerId noiDungTiengViet ID
+   * @param now hiện tạithời gian
+   * @returns mục hàng đợinoiDungTiengViet null
    */
   claimNext(ownerId: string, now: UnixMillis): Promise<RunQueueItem | null>;
 
   /**
-   * 续约心跳
-   * @param ownerId 领取者 ID
-   * @param now 当前时间
+   * noiDungTiengVietheartbeat
+   * @param ownerId noiDungTiengViet ID
+   * @param now hiện tạithời gian
    */
   heartbeat(ownerId: string, now: UnixMillis): Promise<void>;
 
   /**
-   * 回收过期租约
-   * @description 将 lease.expiresAt < now 的 running/paused 项回收为 queued
-   * @param now 当前时间
-   * @returns 被回收的 Run ID 列表
+   * thu hồinoiDungTiengVietlease
+   * @description noiDungTiengViet lease.expiresAt < now noiDungTiengViet running/paused noiDungTiengVietthu hồinoiDungTiengViet queued
+   * @param now hiện tạithời gian
+   * @returns noiDungTiengVietthu hồinoiDungTiengViet Run ID danh sách
    */
   reclaimExpiredLeases(now: UnixMillis): Promise<RunId[]>;
 
   /**
-   * 恢复孤儿租约（SW 重启后调用）
+   * khôi phụcmồ côilease（SW noiDungTiengVietgọi）
    * @description
-   * - 将孤儿 running 项回收为 queued（status -> queued，租约清除）
-   * - 将孤儿 paused 项接管（保持 status=paused，租约 ownerId 更新为新 ownerId）
-   * @param ownerId 新的 ownerId（当前 Service Worker 实例）
-   * @param now 当前时间
-   * @returns 受影响的 runId 列表（含原 ownerId 用于审计）
+   * - noiDungTiengVietmồ côi running noiDungTiengVietthu hồinoiDungTiengViet queued（status -> queued，leasexóa）
+   * - noiDungTiengVietmồ côi paused noiDungTiengViettiếp quản（duy trì status=paused，lease ownerId cập nhậtnoiDungTiengViet ownerId）
+   * @param ownerId noiDungTiengViet ownerId（hiện tại Service Worker thể hiện）
+   * @param now hiện tạithời gian
+   * @returns noiDungTiengViet runId danh sách（noiDungTiengViet ownerId dùng chonoiDungTiengViet）
    */
   recoverOrphanLeases(
     ownerId: string,
@@ -144,39 +144,39 @@ export interface RunQueue {
   }>;
 
   /**
-   * 标记为 running
+   * đánh dấu là running
    */
   markRunning(runId: RunId, ownerId: string, now: UnixMillis): Promise<void>;
 
   /**
-   * 标记为 paused
+   * đánh dấu là paused
    */
   markPaused(runId: RunId, ownerId: string, now: UnixMillis): Promise<void>;
 
   /**
-   * 标记为完成（从队列移除）
+   * đánh dấu làhoàn tất（noiDungTiengViethàng đợigỡ bỏ）
    */
   markDone(runId: RunId, now: UnixMillis): Promise<void>;
 
   /**
-   * 取消 Run
+   * hủy Run
    */
   cancel(runId: RunId, now: UnixMillis, reason?: string): Promise<void>;
 
   /**
-   * 获取队列项
+   * lấymục hàng đợi
    */
   get(runId: RunId): Promise<RunQueueItem | null>;
 
   /**
-   * 列出队列项
+   * liệt kêmục hàng đợi
    */
   list(status?: QueueItemStatus): Promise<RunQueueItem[]>;
 }
 
 /**
- * 创建 NotImplemented 的 RunQueue
- * @description Phase 0 占位实现
+ * tạo NotImplemented noiDungTiengViet RunQueue
+ * @description Phase 0 giữ chỗtriển khai
  */
 export function createNotImplementedQueue(): RunQueue {
   const notImplemented = () => {

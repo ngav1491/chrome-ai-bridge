@@ -3,78 +3,78 @@ import fs from 'fs';
 import path from 'path';
 
 const distDir = path.join(__dirname, '..', '..', 'dist');
-// 清理上次构建
-console.log('清理上次构建...');
+// dọn dẹpnoiDungTiengVietxây dựng
+console.log('dọn dẹpnoiDungTiengVietxây dựng...');
 try {
   fs.rmSync(distDir, { recursive: true, force: true });
 } catch (err) {
-  // 忽略目录不存在的错误
+  // bỏ quathư mụckhông tồn tạinoiDungTiengVietlỗi
   console.log(err);
 }
 
-// 创建dist目录
+// tạodistthư mục
 fs.mkdirSync(distDir, { recursive: true });
-fs.mkdirSync(path.join(distDir, 'logs'), { recursive: true }); // 创建logs目录
-console.log('dist 和 dist/logs 目录已创建/确认存在');
+fs.mkdirSync(path.join(distDir, 'logs'), { recursive: true }); // tạologsthư mục
+console.log('dist noiDungTiengViet dist/logs thư mụcnoiDungTiengViettạo/xác nhậntồn tại');
 
-// 编译TypeScript
-console.log('编译TypeScript...');
+// noiDungTiengVietTypeScript
+console.log('noiDungTiengVietTypeScript...');
 execSync('tsc', { stdio: 'inherit' });
 
-// 复制配置文件
-console.log('复制配置文件...');
+// sao chépcấu hìnhtệp
+console.log('sao chépcấu hìnhtệp...');
 const configSourcePath = path.join(__dirname, '..', 'mcp', 'stdio-config.json');
 const configDestPath = path.join(distDir, 'mcp', 'stdio-config.json');
 
 try {
-  // 确保目标目录存在
+  // đảm bảomục tiêuthư mụctồn tại
   fs.mkdirSync(path.dirname(configDestPath), { recursive: true });
 
   if (fs.existsSync(configSourcePath)) {
     fs.copyFileSync(configSourcePath, configDestPath);
-    console.log(`已将 stdio-config.json 复制到 ${configDestPath}`);
+    console.log(`đã stdio-config.json sao chépnoiDungTiengViet ${configDestPath}`);
   } else {
-    console.error(`错误: 配置文件未找到: ${configSourcePath}`);
+    console.error(`lỗi: cấu hìnhtệpkhông tìm thấy: ${configSourcePath}`);
   }
 } catch (error) {
-  console.error('复制配置文件时出错:', error);
+  console.error('sao chépcấu hìnhtệpnoiDungTiengViet:', error);
 }
 
-// 复制package.json并更新其内容
-console.log('准备package.json...');
+// sao chéppackage.jsonnoiDungTiengVietcập nhậtnoiDungTiengViet
+console.log('noiDungTiengVietpackage.json...');
 const packageJson = require('../../package.json');
 
-// 创建安装说明
+// tạocài đặtnoiDungTiengViet
 const readmeContent = `# ${packageJson.name}
 
-本程序为Chrome扩展的Native Messaging主机端。
+noiDungTiengVietChromenoiDungTiengVietNative MessaginghostnoiDungTiengViet。
 
-## 安装说明
+## cài đặtnoiDungTiengViet
 
-1. 确保已安装Node.js
-2. 全局安装本程序:
+1. đảm bảonoiDungTiengVietcài đặtNode.js
+2. toàn cụccài đặtnoiDungTiengViet:
    \`\`\`
    npm install -g ${packageJson.name}
    \`\`\`
-3. 注册Native Messaging主机:
+3. đăng kýNative Messaginghost:
    \`\`\`
-   # 用户级别安装（推荐）
+   # noiDungTiengVietcài đặt（khuyến nghị）
    ${packageJson.name} register
 
-   # 如果用户级别安装失败，可以尝试系统级别安装
+   # nếunoiDungTiengVietcài đặtthất bại，noiDungTiengVietthửhệ thốngnoiDungTiengVietcài đặt
    ${packageJson.name} register --system
-   # 或者使用管理员权限
+   # hoặcsử dụngquản lýnoiDungTiengVietquyền
    sudo ${packageJson.name} register
    \`\`\`
 
-## 使用方法
+## sử dụngphương thức
 
-此应用程序由Chrome扩展自动启动，无需手动运行。
+noiDungTiengVietChromenoiDungTiengViettự độngkhởi động，noiDungTiengVietthủ côngchạy。
 `;
 
 fs.writeFileSync(path.join(distDir, 'README.md'), readmeContent);
 
-console.log('复制包装脚本...');
+console.log('sao chépnoiDungTiengVietscript...');
 const scriptsSourceDir = path.join(__dirname, '.');
 const macOsWrapperSourcePath = path.join(scriptsSourceDir, 'run_host.sh');
 const windowsWrapperSourcePath = path.join(scriptsSourceDir, 'run_host.bat');
@@ -85,45 +85,56 @@ const windowsWrapperDestPath = path.join(distDir, 'run_host.bat');
 try {
   if (fs.existsSync(macOsWrapperSourcePath)) {
     fs.copyFileSync(macOsWrapperSourcePath, macOsWrapperDestPath);
-    console.log(`已将 ${macOsWrapperSourcePath} 复制到 ${macOsWrapperDestPath}`);
+    console.log(`đã ${macOsWrapperSourcePath} sao chépnoiDungTiengViet ${macOsWrapperDestPath}`);
   } else {
-    console.error(`错误: macOS 包装脚本源文件未找到: ${macOsWrapperSourcePath}`);
+    console.error(
+      `lỗi: macOS noiDungTiengVietscriptnoiDungTiengViettệpkhông tìm thấy: ${macOsWrapperSourcePath}`,
+    );
   }
 
   if (fs.existsSync(windowsWrapperSourcePath)) {
     fs.copyFileSync(windowsWrapperSourcePath, windowsWrapperDestPath);
-    console.log(`已将 ${windowsWrapperSourcePath} 复制到 ${windowsWrapperDestPath}`);
+    console.log(
+      `đã ${windowsWrapperSourcePath} sao chépnoiDungTiengViet ${windowsWrapperDestPath}`,
+    );
   } else {
-    console.error(`错误: Windows 包装脚本源文件未找到: ${windowsWrapperSourcePath}`);
+    console.error(
+      `lỗi: Windows noiDungTiengVietscriptnoiDungTiengViettệpkhông tìm thấy: ${windowsWrapperSourcePath}`,
+    );
   }
 } catch (error) {
-  console.error('复制包装脚本时出错:', error);
+  console.error('sao chépnoiDungTiengVietscriptnoiDungTiengViet:', error);
 }
 
-// 为关键JavaScript文件和macOS包装脚本添加可执行权限
-console.log('添加可执行权限...');
-const filesToMakeExecutable = ['index.js', 'cli.js', 'run_host.sh']; // cli.js 假设在 dist 根目录
+// noiDungTiengVietJavaScripttệpnoiDungTiengVietmacOSnoiDungTiengVietscriptthêmnoiDungTiengVietthực thiquyền
+console.log('thêmnoiDungTiengVietthực thiquyền...');
+const filesToMakeExecutable = ['index.js', 'cli.js', 'run_host.sh']; // cli.js noiDungTiengViet dist noiDungTiengVietthư mục
 
 filesToMakeExecutable.forEach((file) => {
-  const filePath = path.join(distDir, file); // filePath 现在是目标路径
+  const filePath = path.join(distDir, file); // filePath noiDungTiengVietmục tiêuđường dẫn
   try {
     if (fs.existsSync(filePath)) {
       fs.chmodSync(filePath, '755');
-      console.log(`已为 ${file} 添加可执行权限 (755)`);
+      console.log(`noiDungTiengViet ${file} thêmnoiDungTiengVietthực thiquyền (755)`);
     } else {
-      console.warn(`警告: ${filePath} 不存在，无法添加可执行权限`);
+      console.warn(
+        `cảnh báo: ${filePath} không tồn tại，không thểthêmnoiDungTiengVietthực thiquyền`,
+      );
     }
   } catch (error) {
-    console.error(`为 ${file} 添加可执行权限时出错:`, error);
+    console.error(
+      `noiDungTiengViet ${file} thêmnoiDungTiengVietthực thiquyềnnoiDungTiengViet:`,
+      error,
+    );
   }
 });
 
 // Write node_path.txt immediately after build to ensure Chrome uses the correct Node.js version.
 // This is critical for development mode where dist is deleted on each rebuild.
 // The file points to the same Node.js that compiled the native modules (better-sqlite3 etc.)
-console.log('写入 node_path.txt...');
+console.log('ghi node_path.txt...');
 const nodePathFile = path.join(distDir, 'node_path.txt');
 fs.writeFileSync(nodePathFile, process.execPath, 'utf8');
-console.log(`已写入 Node.js 路径: ${process.execPath}`);
+console.log(`noiDungTiengVietghi Node.js đường dẫn: ${process.execPath}`);
 
-console.log('✅ 构建完成');
+console.log('✅ xây dựnghoàn tất');

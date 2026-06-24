@@ -1,19 +1,26 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">按 URL 包含匹配（优先）</label>
+      <label class="form-label">noiDungTiengViet URL bao gồmkhớp（ưu tiên）</label>
       <input
         class="form-input"
         v-model="(node as any).config.frame.urlContains"
-        placeholder="frame URL 包含的字符串"
+        placeholder="frame URL bao gồmnoiDungTiengVietchuỗi"
       />
     </div>
     <div class="form-group">
-      <label class="form-label">按索引匹配（从 0 起，仅子 frame）</label>
-      <input class="form-input" v-model="(node as any).config.frame.index" placeholder="索引数字" />
+      <label class="form-label"
+        >noiDungTiengVietchỉ mụckhớp（noiDungTiengViet 0 noiDungTiengViet，noiDungTiengViet
+        frame）</label
+      >
+      <input
+        class="form-input"
+        v-model="(node as any).config.frame.index"
+        placeholder="chỉ mụcsố"
+      />
     </div>
     <div class="text-xs text-slate-500" style="padding: 0 20px"
-      >同源/可注入 frame 可用；留空则回到顶级页面</div
+      >noiDungTiengViet/noiDungTiengViet frame có sẵn；noiDungTiengViettrang</div
     >
   </div>
 </template>

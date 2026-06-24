@@ -245,9 +245,9 @@
                       :style="{ color: 'var(--ac-text-muted)' }"
                     >
                       <div class="flex items-center gap-2">
-                        <span>状态: {{ getRunStatusText(run) }}</span>
+                        <span>trạng thái: {{ getRunStatusText(run) }}</span>
                         <span v-if="run.finishedAt"
-                          >• 耗时:
+                          >• noiDungTiengViet:
                           {{
                             Math.round(
                               (new Date(run.finishedAt).getTime() -
@@ -521,17 +521,17 @@ function getRunStatusColor(run: RunLite): string {
 function getRunStatusText(run: RunLite): string {
   if (run.status) {
     const statusMap: Record<string, string> = {
-      queued: '排队中',
-      running: '运行中',
-      paused: '已暂停',
-      succeeded: '成功',
-      failed: '失败',
-      canceled: '已取消',
+      queued: 'noiDungTiengViet',
+      running: 'chạynoiDungTiengViet',
+      paused: 'noiDungTiengViettạm dừng',
+      succeeded: 'thành công',
+      failed: 'thất bại',
+      canceled: 'noiDungTiengViethủy',
     };
     return statusMap[run.status] || run.status;
   }
   // V2 fallback
-  return run.success ? '成功' : '失败';
+  return run.success ? 'thành công' : 'thất bại';
 }
 
 function formatTime(dateStr: string): string {

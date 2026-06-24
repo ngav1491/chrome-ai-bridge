@@ -1,6 +1,6 @@
 /**
- * @fileoverview RunRunner 接口和实现
- * @description 定义和实现单个 Run 的顺序执行器
+ * @fileoverview RunRunner giao diệnnoiDungTiengViettriển khai
+ * @description định nghĩanoiDungTiengViettriển khaiđơn lẻ Run noiDungTiengVietthứ tựthực thinoiDungTiengViet
  */
 
 import type { NodeId, RunId } from '../../domain/ids';
@@ -35,72 +35,72 @@ import type { RunResult } from './kernel';
 // ==================== Types ====================
 
 /**
- * RunRunner 运行时状态
+ * RunRunner chạynoiDungTiengViettrạng thái
  */
 export interface RunnerRuntimeState {
   /** Run ID */
   runId: RunId;
-  /** 当前节点 ID */
+  /** hiện tạinút ID */
   currentNodeId: NodeId | null;
-  /** 当前尝试次数 */
+  /** hiện tạisố lần thử */
   attempt: number;
-  /** 变量表 */
+  /** biếnnoiDungTiengViet */
   vars: Record<string, JsonValue>;
-  /** 是否暂停 */
+  /** có/khôngtạm dừng */
   paused: boolean;
-  /** 是否取消 */
+  /** có/khônghủy */
   canceled: boolean;
 }
 
 /**
- * RunRunner 配置
+ * RunRunner cấu hình
  */
 export interface RunnerConfig {
-  /** Flow 快照 */
+  /** Flow snapshot */
   flow: FlowV3;
   /** Tab ID */
   tabId: number;
-  /** 初始参数 */
+  /** noiDungTiengViettham số */
   args?: JsonObject;
-  /** 起始节点 ID */
+  /** bắt đầunút ID */
   startNodeId?: NodeId;
-  /** 调试配置 */
+  /** gỡ lỗicấu hình */
   debug?: { breakpoints?: NodeId[]; pauseOnStart?: boolean };
 }
 
 /**
- * RunRunner 接口
+ * RunRunner giao diện
  */
 export interface RunRunner {
   /** Run ID */
   readonly runId: RunId;
-  /** 当前状态 */
+  /** hiện tạitrạng thái */
   readonly state: RunnerRuntimeState;
-  /** 订阅事件 */
+  /** đăng kýsự kiện */
   onEvent(listener: (event: RunEvent) => void): Unsubscribe;
-  /** 开始执行 */
+  /** bắt đầuthực thi */
   start(): Promise<RunResult>;
-  /** 暂停执行 */
+  /** tạm dừngthực thi */
   pause(): void;
-  /** 恢复执行 */
+  /** khôi phụcthực thi */
   resume(): void;
-  /** 取消执行 */
+  /** hủythực thi */
   cancel(reason?: string): void;
-  /** 获取变量值 */
+  /** lấybiếnnoiDungTiengViet */
   getVar(name: string): JsonValue | undefined;
-  /** 设置变量值 */
+  /** cài đặtbiếnnoiDungTiengViet */
   setVar(name: string, value: JsonValue): void;
 }
 
 /**
- * RunRunner 工厂接口
+ * RunRunner factorygiao diện
  */
 export interface RunRunnerFactory {
   create(runId: RunId, config: RunnerConfig): RunRunner;
 }
 
 /**
- * RunRunner 工厂依赖
+ * RunRunner factoryphụ thuộc
  */
 export interface RunRunnerFactoryDeps {
   storage: StoragePort;
@@ -225,7 +225,7 @@ class SerialQueue {
 // ==================== Factory ====================
 
 /**
- * 创建 NotImplemented 的 RunRunnerFactory
+ * tạo NotImplemented noiDungTiengViet RunRunnerFactory
  */
 export function createNotImplementedRunnerFactory(): RunRunnerFactory {
   return {
@@ -236,7 +236,7 @@ export function createNotImplementedRunnerFactory(): RunRunnerFactory {
 }
 
 /**
- * 创建 RunRunner 工厂
+ * tạo RunRunner factory
  */
 export function createRunRunnerFactory(deps: RunRunnerFactoryDeps): RunRunnerFactory {
   const plugins = deps.plugins ?? getPluginRegistry();

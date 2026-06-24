@@ -1,25 +1,25 @@
 /**
- * @fileoverview V2 数据读取器
- * @description 读取 V2 格式的数据（占位实现）
+ * @fileoverview V2 dữ liệuđọcnoiDungTiengViet
+ * @description đọc V2 định dạngnoiDungTiengVietdữ liệu（giữ chỗtriển khai）
  */
 
 /**
- * V2 数据读取器接口
- * @description Phase 5+ 实现
+ * V2 dữ liệuđọcnoiDungTiengVietgiao diện
+ * @description Phase 5+ triển khai
  */
 export interface V2Reader {
-  /** 读取 V2 Flows */
+  /** đọc V2 Flows */
   readFlows(): Promise<unknown[]>;
-  /** 读取 V2 Runs */
+  /** đọc V2 Runs */
   readRuns(): Promise<unknown[]>;
-  /** 读取 V2 Triggers */
+  /** đọc V2 Triggers */
   readTriggers(): Promise<unknown[]>;
-  /** 读取 V2 Schedules */
+  /** đọc V2 Schedules */
   readSchedules(): Promise<unknown[]>;
 }
 
 /**
- * 创建 NotImplemented 的 V2Reader
+ * tạo NotImplemented noiDungTiengViet V2Reader
  */
 export function createNotImplementedV2Reader(): V2Reader {
   const notImplemented = async () => {

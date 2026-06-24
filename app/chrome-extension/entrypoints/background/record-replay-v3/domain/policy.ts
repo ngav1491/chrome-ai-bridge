@@ -1,6 +1,6 @@
 /**
- * @fileoverview 策略类型定义
- * @description 定义 Record-Replay V3 中使用的超时、重试、错误处理和工件策略
+ * @fileoverview chiến lượckiểuđịnh nghĩa
+ * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengViethết thời gian、thử lại、lỗixử lýnoiDungTiengVietartifactchiến lược
  */
 
 import type { EdgeLabel, NodeId } from './ids';
@@ -8,38 +8,38 @@ import type { RRErrorCode } from './errors';
 import type { UnixMillis } from './json';
 
 /**
- * 超时策略
- * @description 定义操作的超时时间和作用范围
+ * hết thời gianchiến lược
+ * @description định nghĩathao tácnoiDungTiengViethết thời gianthời giannoiDungTiengViet
  */
 export interface TimeoutPolicy {
-  /** 超时时间（毫秒） */
+  /** hết thời gianthời gian（mili giây） */
   ms: UnixMillis;
-  /** 超时范围：attempt=每次尝试, node=整个节点执行 */
+  /** hết thời giannoiDungTiengViet：attempt=noiDungTiengVietthử, node=toàn bộnútthực thi */
   scope?: 'attempt' | 'node';
 }
 
 /**
- * 重试策略
- * @description 定义失败后的重试行为
+ * thử lạichiến lược
+ * @description định nghĩathất bạinoiDungTiengVietthử lạihành vi
  */
 export interface RetryPolicy {
-  /** 最大重试次数 */
+  /** tối đathử lạinoiDungTiengViet */
   retries: number;
-  /** 重试间隔（毫秒） */
+  /** thử lạikhoảng cách（mili giây） */
   intervalMs: UnixMillis;
-  /** 退避策略：none=固定间隔, exp=指数退避, linear=线性增长 */
+  /** noiDungTiengVietchiến lược：none=cố địnhkhoảng cách, exp=noiDungTiengViet, linear=noiDungTiengViet */
   backoff?: 'none' | 'exp' | 'linear';
-  /** 最大重试间隔（毫秒） */
+  /** tối đathử lạikhoảng cách（mili giây） */
   maxIntervalMs?: UnixMillis;
-  /** 抖动策略：none=无抖动, full=完全随机 */
+  /** noiDungTiengVietchiến lược：none=noiDungTiengViet, full=noiDungTiengVietngẫu nhiên */
   jitter?: 'none' | 'full';
-  /** 仅在这些错误码时重试 */
+  /** noiDungTiengVietlỗinoiDungTiengVietthử lại */
   retryOn?: ReadonlyArray<RRErrorCode>;
 }
 
 /**
- * 错误处理策略
- * @description 定义节点执行失败后的处理方式
+ * lỗixử lýchiến lược
+ * @description định nghĩanútthực thithất bạinoiDungTiengVietxử lýphương thức
  */
 export type OnErrorPolicy =
   | { kind: 'stop' }
@@ -51,51 +51,51 @@ export type OnErrorPolicy =
   | { kind: 'retry'; override?: Partial<RetryPolicy> };
 
 /**
- * 工件策略
- * @description 定义截图和日志收集的行为
+ * artifactchiến lược
+ * @description định nghĩaảnh chụp màn hìnhnoiDungTiengVietnhật kýnoiDungTiengViethành vi
  */
 export interface ArtifactPolicy {
-  /** 截图策略：never=从不, onFailure=失败时, always=总是 */
+  /** ảnh chụp màn hìnhchiến lược：never=noiDungTiengViet, onFailure=thất bạinoiDungTiengViet, always=noiDungTiengViet */
   screenshot?: 'never' | 'onFailure' | 'always';
-  /** 截图保存路径模板 */
+  /** ảnh chụp màn hìnhlưuđường dẫnmẫu */
   saveScreenshotAs?: string;
-  /** 是否包含控制台日志 */
+  /** có/khôngbao gồmđiều khiểnnoiDungTiengVietnhật ký */
   includeConsole?: boolean;
-  /** 是否包含网络请求 */
+  /** có/khôngbao gồmnoiDungTiengVietyêu cầu */
   includeNetwork?: boolean;
 }
 
 /**
- * 节点级策略
- * @description 单个节点的执行策略配置
+ * nútnoiDungTiengVietchiến lược
+ * @description đơn lẻnútnoiDungTiengVietthực thichiến lượccấu hình
  */
 export interface NodePolicy {
-  /** 超时策略 */
+  /** hết thời gianchiến lược */
   timeout?: TimeoutPolicy;
-  /** 重试策略 */
+  /** thử lạichiến lược */
   retry?: RetryPolicy;
-  /** 错误处理策略 */
+  /** lỗixử lýchiến lược */
   onError?: OnErrorPolicy;
-  /** 工件策略 */
+  /** artifactchiến lược */
   artifacts?: ArtifactPolicy;
 }
 
 /**
- * Flow 级策略
- * @description 整个 Flow 的执行策略配置
+ * Flow noiDungTiengVietchiến lược
+ * @description toàn bộ Flow noiDungTiengVietthực thichiến lượccấu hình
  */
 export interface FlowPolicy {
-  /** 默认节点策略 */
+  /** mặc địnhnútchiến lược */
   defaultNodePolicy?: NodePolicy;
-  /** 不支持节点的处理策略 */
+  /** noiDungTiengViethỗ trợnútnoiDungTiengVietxử lýchiến lược */
   unsupportedNodePolicy?: OnErrorPolicy;
-  /** Run 总超时时间（毫秒） */
+  /** Run noiDungTiengViethết thời gianthời gian（mili giây） */
   runTimeoutMs?: UnixMillis;
 }
 
 /**
- * 合并节点策略
- * @description 将 Flow 级默认策略与节点级策略合并
+ * noiDungTiengVietnútchiến lược
+ * @description noiDungTiengViet Flow noiDungTiengVietmặc địnhchiến lượcnoiDungTiengVietnútnoiDungTiengVietchiến lượcnoiDungTiengViet
  */
 export function mergeNodePolicy(
   flowDefault: NodePolicy | undefined,

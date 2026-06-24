@@ -5,13 +5,13 @@
       <button class="btn-sm" @click="addIfCase">+ Add</button>
     </div>
     <div class="text-xs text-slate-500" style="padding: 0 20px"
-      >使用表达式定义分支，支持变量与常见比较运算符。</div
+      >sử dụngbiểu thứcđịnh nghĩanhánh，hỗ trợbiếnnoiDungTiengViet。</div
     >
     <div class="if-case-list" data-field="if.branches">
       <div class="if-case-item" v-for="(c, i) in ifBranches" :key="c.id">
         <div class="if-case-header">
-          <input class="form-input-sm flex-1" v-model="c.name" placeholder="分支名称（可选）" />
-          <button class="btn-icon-sm danger" @click="removeIfCase(i)" title="删除">×</button>
+          <input class="form-input-sm flex-1" v-model="c.name" placeholder="nhánhtên（tùy chọn）" />
+          <button class="btn-icon-sm danger" @click="removeIfCase(i)" title="xóa">×</button>
         </div>
         <div class="if-case-expr">
           <VarInput
@@ -26,7 +26,7 @@
               @change="(e: any) => insertVar(e.target.value, i)"
               :value="''"
             >
-              <option value="" disabled>插入变量</option>
+              <option value="" disabled>noiDungTiengVietbiến</option>
               <option v-for="v in variables" :key="v.key" :value="v.key">{{ v.key }}</option>
             </select>
             <select
@@ -34,14 +34,17 @@
               @change="(e: any) => insertOp(e.target.value, i)"
               :value="''"
             >
-              <option value="" disabled>运算符</option>
+              <option value="" disabled>noiDungTiengViet</option>
               <option v-for="op in ops" :key="op" :value="op">{{ op }}</option>
             </select>
           </div>
         </div>
       </div>
       <div class="if-case-else" v-if="elseEnabled">
-        <div class="text-xs text-slate-500">Else 分支（无需表达式，将匹配以上条件都不成立时）</div>
+        <div class="text-xs text-slate-500"
+          >Else nhánh（noiDungTiengVietbiểu thức，noiDungTiengVietkhớpnoiDungTiengVietđiều
+          kiệnnoiDungTiengViet）</div
+        >
       </div>
     </div>
   </div>
