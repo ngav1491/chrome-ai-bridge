@@ -8,7 +8,7 @@
           <span class="status-text" style="opacity: 0.85">{{ currentUrl }}</span>
         </div>
         <div class="status-header">
-          <p class="status-label">noiDungTiengVietchú thíchphần tử</p>
+          <p class="status-label">chú thíchphần tử</p>
           <span class="status-text">{{ markers.length }}</span>
         </div>
       </div>
@@ -18,18 +18,14 @@
           <p class="mcp-config-label">thêm mớichú thích</p>
         </div>
         <div style="display: flex; gap: 8px; margin-bottom: 8px">
-          <input
-            v-model="form.name"
-            placeholder="tên，noiDungTiengViet đăng nhậpnút"
-            class="port-input"
-          />
+          <input v-model="form.name" placeholder="tên,  đăng nhậpnút" class="port-input" />
           <select v-model="form.selectorType" class="port-input" style="max-width: 120px">
             <option value="css">CSS</option>
             <option value="xpath">XPath</option>
           </select>
           <select v-model="form.matchType" class="port-input" style="max-width: 120px">
             <option value="prefix">đường dẫntiền tố</option>
-            <option value="exact">noiDungTiengVietkhớp</option>
+            <option value="exact">khớp</option>
             <option value="host">tên miền</option>
           </select>
         </div>

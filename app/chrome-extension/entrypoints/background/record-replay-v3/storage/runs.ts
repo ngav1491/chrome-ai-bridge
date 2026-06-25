@@ -1,6 +1,6 @@
 /**
  * @fileoverview RunRecordV3 lưu trữ lâu dài
- * @description triển khai Run ghinoiDungTiengViet CRUD thao tác
+ * @description triển khai Run ghi CRUD thao tác
  */
 
 import type { RunId } from '../domain/ids';
@@ -79,7 +79,7 @@ export function createRunsStore(): RunsStore {
       return withTransaction(RR_V3_STORES.RUNS, 'readwrite', async (stores) => {
         const store = stores[RR_V3_STORES.RUNS];
 
-        // noiDungTiengVietđọchiện cóghi
+        // đọchiện cóghi
         const existing = await new Promise<RunRecordV3 | null>((resolve, reject) => {
           const request = store.get(id);
           request.onsuccess = () => resolve((request.result as RunRecordV3) ?? null);
@@ -90,12 +90,12 @@ export function createRunsStore(): RunsStore {
           throw createRRError(RR_ERROR_CODES.INTERNAL, `Run "${id}" not found`);
         }
 
-        // noiDungTiengVietcập nhật
+        // cập nhật
         const updated: RunRecordV3 = {
           ...existing,
           ...patch,
-          id: existing.id, // đảm bảo id noiDungTiengViet
-          schemaVersion: existing.schemaVersion, // đảm bảophiên bảnnoiDungTiengViet
+          id: existing.id, // đảm bảo id
+          schemaVersion: existing.schemaVersion, // đảm bảophiên bản
           updatedAt: Date.now(),
         };
 

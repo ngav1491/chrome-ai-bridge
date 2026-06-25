@@ -13,7 +13,7 @@ describe('máy chủkiểm thử', () => {
     await Server.stop();
   });
 
-  test('GET /ping noiDungTiengViettrả vềnoiDungTiengVietphản hồi', async () => {
+  test('GET /ping trả vềphản hồi', async () => {
     const response = await supertest(Server.getInstance().server)
       .get('/ping')
       .expect(200)

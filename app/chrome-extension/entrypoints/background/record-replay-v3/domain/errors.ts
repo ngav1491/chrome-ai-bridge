@@ -1,81 +1,81 @@
 /**
- * @fileoverview lỗikiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengVietlỗinoiDungTiengVietlỗikiểu
+ * @fileoverview Định nghĩa kiểu lỗi
+ * @description Định nghĩa mã lỗi và kiểu lỗi sử dụng trong Record-Replay V3
  */
 
 import type { JsonValue } from './json';
 
-/** lỗinoiDungTiengViet */
+/** Hằng số mã lỗi */
 export const RR_ERROR_CODES = {
-  // ===== xác thựclỗi =====
-  /** chungxác thựclỗi */
+  // ===== Lỗi xác thực =====
+  /** Lỗi xác thực chung */
   VALIDATION_ERROR: 'VALIDATION_ERROR',
-  /** noiDungTiengViethỗ trợnoiDungTiengVietnútkiểu */
+  /** Kiểu nút không được hỗ trợ */
   UNSUPPORTED_NODE: 'UNSUPPORTED_NODE',
-  /** DAG cấu trúckhông hợp lệ */
+  /** Cấu trúc DAG không hợp lệ */
   DAG_INVALID: 'DAG_INVALID',
-  /** DAG tồn tạivòng lặp */
+  /** DAG tồn tại chu trình */
   DAG_CYCLE: 'DAG_CYCLE',
 
-  // ===== chạynoiDungTiengVietlỗi =====
-  /** thao táchết thời gian */
+  // ===== Lỗi runtime =====
+  /** Thao tác hết thời gian chờ */
   TIMEOUT: 'TIMEOUT',
-  /** Tab không tìm thấy */
+  /** Không tìm thấy Tab */
   TAB_NOT_FOUND: 'TAB_NOT_FOUND',
-  /** Frame không tìm thấy */
+  /** Không tìm thấy Frame */
   FRAME_NOT_FOUND: 'FRAME_NOT_FOUND',
-  /** mục tiêuphần tửkhông tìm thấy */
+  /** Không tìm thấy phần tử mục tiêu */
   TARGET_NOT_FOUND: 'TARGET_NOT_FOUND',
-  /** phần tửnoiDungTiengViet */
+  /** Phần tử không hiển thị */
   ELEMENT_NOT_VISIBLE: 'ELEMENT_NOT_VISIBLE',
-  /** điều hướngthất bại */
+  /** Điều hướng thất bại */
   NAVIGATION_FAILED: 'NAVIGATION_FAILED',
-  /** noiDungTiengVietyêu cầuthất bại */
+  /** Yêu cầu mạng thất bại */
   NETWORK_REQUEST_FAILED: 'NETWORK_REQUEST_FAILED',
 
-  // ===== script/công cụlỗi =====
-  /** scriptthực thithất bại */
+  // ===== Lỗi script/công cụ =====
+  /** Thực thi script thất bại */
   SCRIPT_FAILED: 'SCRIPT_FAILED',
-  /** quyềnnoiDungTiengViet */
+  /** Quyền bị từ chối */
   PERMISSION_DENIED: 'PERMISSION_DENIED',
-  /** công cụthực thilỗi */
+  /** Lỗi thực thi công cụ */
   TOOL_ERROR: 'TOOL_ERROR',
 
-  // ===== điều khiểnlỗi =====
-  /** Run noiDungTiengViethủy */
+  // ===== Lỗi điều khiển =====
+  /** Run bị hủy */
   RUN_CANCELED: 'RUN_CANCELED',
-  /** Run noiDungTiengViettạm dừng */
+  /** Run bị tạm dừng */
   RUN_PAUSED: 'RUN_PAUSED',
 
-  // ===== bên tronglỗi =====
-  /** bên tronglỗi */
+  // ===== Lỗi nội bộ =====
+  /** Lỗi nội bộ */
   INTERNAL: 'INTERNAL',
-  /** noiDungTiengVietbiếnnoiDungTiengViet */
+  /** Vi phạm bất biến */
   INVARIANT_VIOLATION: 'INVARIANT_VIOLATION',
 } as const;
 
-/** lỗinoiDungTiengVietkiểu */
+/** Kiểu mã lỗi */
 export type RRErrorCode = (typeof RR_ERROR_CODES)[keyof typeof RR_ERROR_CODES];
 
 /**
- * Record-Replay lỗigiao diện
- * @description noiDungTiengVietlỗibiểu thị，hỗ trợlỗinoiDungTiengVietthử lạinoiDungTiengViet
+ * Giao diện lỗi Record-Replay
+ * @description Biểu diễn lỗi thống nhất, hỗ trợ chuỗi lỗi và đánh dấu có thể thử lại
  */
 export interface RRError {
-  /** lỗinoiDungTiengViet */
+  /** Mã lỗi */
   code: RRErrorCode;
-  /** lỗitin nhắn */
+  /** Thông điệp lỗi */
   message: string;
-  /** noiDungTiengVietdữ liệu */
+  /** Dữ liệu đính kèm */
   data?: JsonValue;
-  /** có/khôngnoiDungTiengVietthử lại */
+  /** Có thể thử lại hay không */
   retryable?: boolean;
-  /** nguyên nhânlỗi（lỗinoiDungTiengViet） */
+  /** Lỗi nguyên nhân (chuỗi lỗi) */
   cause?: RRError;
 }
 
 /**
- * tạo RRError noiDungTiengVietfactoryhàm
+ * Hàm factory tạo RRError
  */
 export function createRRError(
   code: RRErrorCode,

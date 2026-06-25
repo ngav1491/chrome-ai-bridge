@@ -37,7 +37,7 @@
       ></textarea>
     </div>
     <div class="form-group">
-      <label class="form-label">FormData (JSON，tùy chọn，noiDungTiengVietbao phủ Body)</label>
+      <label class="form-label">FormData (JSON, tùy chọn, bao phủ Body)</label>
       <textarea
         class="form-textarea"
         v-model="formDataJson"
@@ -45,8 +45,7 @@
         placeholder='{"fields":{"k":"v"},"files":[{"name":"file","fileUrl":"https://...","filename":"a.png"}]}'
       ></textarea>
       <div class="text-xs text-slate-500" style="margin-top: 6px"
-        >hỗ
-        trợnoiDungTiengVietmảngnoiDungTiengViet：[["file","url:https://...","a.png"],["metadata","value"]]</div
+        >hỗ trợmảng: [["file","url:https://...","a.png"],["metadata","value"]]</div
       >
     </div>
   </div>

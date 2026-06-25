@@ -1,7 +1,7 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">Tab ID（tùy chọn）</label>
+      <label class="form-label">Tab ID(tùy chọn)</label>
       <input
         class="form-input"
         type="number"
@@ -10,26 +10,18 @@
       />
     </div>
     <div class="form-group" :class="{ invalid: needOne && !hasAny }">
-      <label class="form-label">URL bao gồm（tùy chọn）</label>
-      <input
-        class="form-input"
-        v-model="(node as any).config.urlContains"
-        placeholder="noiDungTiengVietkhớp"
-      />
+      <label class="form-label">URL bao gồm(tùy chọn)</label>
+      <input class="form-input" v-model="(node as any).config.urlContains" placeholder="khớp" />
     </div>
     <div class="form-group" :class="{ invalid: needOne && !hasAny }">
-      <label class="form-label">tiêu đềbao gồm（tùy chọn）</label>
-      <input
-        class="form-input"
-        v-model="(node as any).config.titleContains"
-        placeholder="noiDungTiengVietkhớp"
-      />
+      <label class="form-label">tiêu đềbao gồm(tùy chọn)</label>
+      <input class="form-input" v-model="(node as any).config.titleContains" placeholder="khớp" />
     </div>
     <div
       v-if="needOne && !hasAny"
       class="text-xs text-slate-500"
       style="padding: 0 20px; color: var(--rr-danger)"
-      >cần cung cấp tabId noiDungTiengViet URL/tiêu đềbao gồm</div
+      >cần cung cấp tabId URL/tiêu đềbao gồm</div
     >
   </div>
 </template>

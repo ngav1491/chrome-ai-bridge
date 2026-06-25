@@ -1,5 +1,5 @@
 /**
- * Selector Locator - phần tửđịnh vịnoiDungTiengViet
+ * Selector Locator - phần tửđịnh vị
  * sử dụngbộ chọnứng viêndanh sáchđịnh vị DOM phần tử
  */
 
@@ -59,7 +59,7 @@ type VerifyFingerprintResponse =
   | { success: false; error?: string };
 
 // ================================
-// truyền tảinoiDungTiengVietgiao diện
+// truyền tảigiao diện
 // ================================
 
 export interface SelectorLocatorTransport {
@@ -213,7 +213,7 @@ function ariaToCssSelectors(role: string | undefined, name: string | undefined):
 }
 
 // ================================
-// SelectorLocator noiDungTiengViet
+// SelectorLocator
 // ================================
 
 export class SelectorLocator {
@@ -262,7 +262,7 @@ export class SelectorLocator {
   }
 
   /**
-   * xác thựcphần tửcó/khôngkhớpnoiDungTiengVietvân tay
+   * xác thựcphần tửcó/khôngkhớpvân tay
    */
   private async verifyElementFingerprint(
     tabId: number,
@@ -321,7 +321,7 @@ export class SelectorLocator {
         const mappedFrameId = await this.mapHrefToFrameId(tabId, ensured.href);
         const resolvedFrameId = mappedFrameId ?? options.frameId;
 
-        // vân tayxác thực：noiDungTiengVietkhớpnoiDungTiengViet，tiếp tụcthửkhácứng viên
+        // vân tayxác thực: khớp, tiếp tụcthửkhácứng viên
         const fingerprintOk =
           !fingerprintToVerify ||
           (await this.verifyElementFingerprint(
@@ -340,7 +340,7 @@ export class SelectorLocator {
             selectorUsed: sel,
           };
         }
-        // vân taynoiDungTiengVietkhớp，tiếp tụcthửứng viênbộ chọn
+        // vân taykhớp, tiếp tụcthửứng viênbộ chọn
       }
     }
 
@@ -519,7 +519,7 @@ export class SelectorLocator {
 // ================================
 
 /**
- * tạo Chrome noiDungTiengViettruyền tảinoiDungTiengViet
+ * tạo Chrome truyền tải
  */
 export function createChromeSelectorLocatorTransport(): SelectorLocatorTransport {
   return {
@@ -537,7 +537,7 @@ export function createChromeSelectorLocatorTransport(): SelectorLocatorTransport
 }
 
 /**
- * tạo Chrome noiDungTiengVietbộ chọnđịnh vịnoiDungTiengViet
+ * tạo Chrome bộ chọnđịnh vị
  */
 export function createChromeSelectorLocator(): SelectorLocator {
   return new SelectorLocator(createChromeSelectorLocatorTransport());

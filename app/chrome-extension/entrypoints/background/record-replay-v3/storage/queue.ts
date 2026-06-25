@@ -1,6 +1,6 @@
 /**
  * @fileoverview RunQueue lưu trữ lâu dài
- * @description triển khaihàng đợinoiDungTiengViet CRUD thao tácnoiDungTiengViet claim
+ * @description triển khaihàng đợi CRUD thao tác claim
  */
 
 import type { RunId } from '../domain/ids';
@@ -25,7 +25,7 @@ const IDB_NUMBER_MAX = Number.MAX_VALUE;
 
 /**
  * tạo RunQueue lưu trữ lâu dàitriển khai
- * @description triển khaihàng đợilưu trữ lâu dài，noiDungTiengViet Phase 3 noiDungTiengViet claim
+ * @description triển khaihàng đợilưu trữ lâu dài,  Phase 3  claim
  */
 export function createQueueStore(): RunQueue {
   return {
@@ -300,10 +300,10 @@ export function createQueueStore(): RunQueue {
         const adoptedPaused: Array<{ runId: RunId; prevOwnerId?: string }> = [];
 
         /**
-         * noiDungTiengVietthu hồimồ côi running noiDungTiengViet
+         * thu hồimồ côi running
          * @description
-         * - mồ côiđịnh nghĩa：noiDungTiengVietleasenoiDungTiengViet lease.ownerId !== currentOwnerId
-         * - thu hồichiến lược：status -> queued，xóa lease，noiDungTiengViet attempt
+         * - mồ côiđịnh nghĩa: lease lease.ownerId !== currentOwnerId
+         * - thu hồichiến lược: status -> queued, xóa lease,  attempt
          */
         const recoverRunningItems = (): Promise<void> =>
           new Promise<void>((resolve, reject) => {
@@ -319,14 +319,14 @@ export function createQueueStore(): RunQueue {
               const item = cursor.value as RunQueueItem;
               const prevOwnerId = item.lease?.ownerId;
 
-              // noiDungTiengVietmồ côi：lease tồn tạinoiDungTiengViethiện tại ownerId
+              // mồ côi: lease tồn tạihiện tại ownerId
               const isOrphan = !item.lease || item.lease.ownerId !== ownerId;
               if (!isOrphan) {
                 cursor.continue();
                 return;
               }
 
-              // thu hồi：gỡ bỏ lease，trạng tháinoiDungTiengViet queued
+              // thu hồi: gỡ bỏ lease, trạng thái queued
               const { lease: _droppedLease, ...itemWithoutLease } = item;
               const updated: RunQueueItem = {
                 ...itemWithoutLease,
@@ -347,10 +347,10 @@ export function createQueueStore(): RunQueue {
           });
 
         /**
-         * noiDungTiengViettiếp quảnmồ côi paused noiDungTiengViet
+         * tiếp quảnmồ côi paused
          * @description
-         * - mồ côiđịnh nghĩa：noiDungTiengVietleasenoiDungTiengViet lease.ownerId !== currentOwnerId
-         * - tiếp quảnchiến lược：duy trì status=paused，cập nhật lease.ownerId noiDungTiengViet ownerId，noiDungTiengViet TTL
+         * - mồ côiđịnh nghĩa: lease lease.ownerId !== currentOwnerId
+         * - tiếp quảnchiến lược: duy trì status=paused, cập nhật lease.ownerId  ownerId,  TTL
          */
         const recoverPausedItems = (): Promise<void> =>
           new Promise<void>((resolve, reject) => {
@@ -366,14 +366,14 @@ export function createQueueStore(): RunQueue {
               const item = cursor.value as RunQueueItem;
               const prevOwnerId = item.lease?.ownerId;
 
-              // noiDungTiengVietmồ côi：lease tồn tạinoiDungTiengViethiện tại ownerId
+              // mồ côi: lease tồn tạihiện tại ownerId
               const isOrphan = !item.lease || item.lease.ownerId !== ownerId;
               if (!isOrphan) {
                 cursor.continue();
                 return;
               }
 
-              // tiếp quản：cập nhật lease noiDungTiengViet ownerId，noiDungTiengViet TTL
+              // tiếp quản: cập nhật lease  ownerId,  TTL
               const updated: RunQueueItem = {
                 ...item,
                 updatedAt: now,
@@ -395,7 +395,7 @@ export function createQueueStore(): RunQueue {
             };
           });
 
-        // thứ tựthực thi：noiDungTiengVietxử lý running，noiDungTiengVietxử lý paused
+        // thứ tựthực thi: xử lý running, xử lý paused
         await recoverRunningItems();
         await recoverPausedItems();
 
@@ -485,7 +485,7 @@ export function createQueueStore(): RunQueue {
     },
 
     async cancel(runId: RunId, _now: number, _reason?: string): Promise<void> {
-      // noiDungTiengViethàng đợinoiDungTiengVietxóa
+      // hàng đợixóa
       await this.markDone(runId, _now);
     },
 

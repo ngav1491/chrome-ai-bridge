@@ -1,6 +1,6 @@
 /**
  * @fileoverview lưu trữ lâu dàibiếnlưu trữ
- * @description triển khai $ tiền tốbiếnnoiDungTiengVietlưu trữ lâu dài，sử dụng LWW（Last-Write-Wins）chiến lược
+ * @description triển khai $ tiền tốbiếnlưu trữ lâu dài, sử dụng LWW(Last-Write-Wins)chiến lược
  */
 
 import type { PersistentVarRecord, PersistentVariableName } from '../domain/variables';
@@ -28,7 +28,7 @@ export function createPersistentVarsStore(): PersistentVarsStore {
       return withTransaction(RR_V3_STORES.PERSISTENT_VARS, 'readwrite', async (stores) => {
         const store = stores[RR_V3_STORES.PERSISTENT_VARS];
 
-        // noiDungTiengVietđọchiện cóghi（dùng cho version tăng dần）
+        // đọchiện cóghi(dùng cho version tăng dần)
         const existing = await new Promise<PersistentVarRecord | undefined>((resolve, reject) => {
           const request = store.get(key);
           request.onsuccess = () => resolve(request.result as PersistentVarRecord | undefined);
@@ -73,7 +73,7 @@ export function createPersistentVarsStore(): PersistentVarsStore {
           request.onsuccess = () => {
             let results = request.result as PersistentVarRecord[];
 
-            // nếuchỉ địnhnoiDungTiengViettiền tố，noiDungTiengVietkết quả
+            // nếuchỉ địnhtiền tố, kết quả
             if (prefix) {
               results = results.filter((r) => r.key.startsWith(prefix));
             }

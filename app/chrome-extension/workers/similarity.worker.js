@@ -1,22 +1,22 @@
 /* eslint-disable */
 // js/similarity.worker.js
-importScripts('../libs/ort.min.js'); // noiDungTiengVietđường dẫnnoiDungTiengVietkhớpnoiDungTiengViettệpcấu trúc
+importScripts('../libs/ort.min.js'); // đường dẫnkhớptệpcấu trúc
 
 // toàn cụcWorkertrạng thái
 let session = null;
 let modelPathInternal = null;
 let ortEnvConfigured = false;
 let sessionOptions = null;
-let modelInputNames = null; // lưu trữmô hìnhnoiDungTiengVietđầu vàotên
+let modelInputNames = null; // lưu trữmô hìnhđầu vàotên
 
-// tái sử dụngnoiDungTiengViet TypedArray vùng đệm，giảm cấp phát bộ nhớ
+// tái sử dụng TypedArray vùng đệm, giảm cấp phát bộ nhớ
 let reusableBuffers = {
   inputIds: null,
   attentionMask: null,
   tokenTypeIds: null,
 };
 
-// noiDungTiengViet
+//
 let workerStats = {
   totalInferences: 0,
   totalInferenceTime: 0,
@@ -24,13 +24,13 @@ let workerStats = {
   memoryAllocations: 0,
 };
 
-// cấu hình ONNX Runtime noiDungTiengViet (noiDungTiengVietmột lần)
+// cấu hình ONNX Runtime  (một lần)
 function configureOrtEnv(numThreads = 1, executionProviders = ['wasm']) {
   if (ortEnvConfigured) return;
   try {
     ort.env.wasm.numThreads = numThreads;
-    ort.env.wasm.simd = true; // noiDungTiengVietbậtSIMD
-    ort.env.wasm.proxy = false; // noiDungTiengVietWorkernoiDungTiengViet，noiDungTiengVietkhông cầnnoiDungTiengViet
+    ort.env.wasm.simd = true; // bậtSIMD
+    ort.env.wasm.proxy = false; // Worker, không cần
     ort.env.logLevel = 'warning'; // 'verbose', 'info', 'warning', 'error', 'fatal'
     ortEnvConfigured = true;
 
@@ -39,17 +39,17 @@ function configureOrtEnv(numThreads = 1, executionProviders = ['wasm']) {
       graphOptimizationLevel: 'all',
       enableCpuMemArena: true,
       enableMemPattern: true,
-      // executionMode: 'sequential' // noiDungTiengVietworkerbên trongnoiDungTiengVietthứ tựthực thinoiDungTiengViet
+      // executionMode: 'sequential' // workerbên trongthứ tựthực thi
     };
   } catch (error) {
     console.error('Worker: Failed to configure ORT environment', error);
-    throw error; // noiDungTiengVietlỗi，noiDungTiengVietluồng chínhnoiDungTiengViet
+    throw error; // lỗi, luồng chính
   }
 }
 
 async function initializeModel(modelPathOrData, numThreads, executionProviders) {
   try {
-    configureOrtEnv(numThreads, executionProviders); // đảm bảonoiDungTiengVietcấu hình
+    configureOrtEnv(numThreads, executionProviders); // đảm bảocấu hình
 
     if (!modelPathOrData) {
       throw new Error('Worker: Model path or data is not provided.');
@@ -64,11 +64,11 @@ async function initializeModel(modelPathOrData, numThreads, executionProviders) 
       modelPathInternal = '[Cached ArrayBuffer]'; // For debugging purposes
     } else {
       console.log(`Worker: Initializing model from URL: ${modelPathOrData}`);
-      modelPathInternal = modelPathOrData; // lưu trữmô hìnhđường dẫnnoiDungTiengVietgỡ lỗinoiDungTiengViet（nếucần）
+      modelPathInternal = modelPathOrData; // lưu trữmô hìnhđường dẫngỡ lỗi(nếucần)
       session = await ort.InferenceSession.create(modelPathInternal, sessionOptions);
     }
 
-    // lấymô hìnhnoiDungTiengVietđầu vàotên，dùng chophán đoáncó/khôngcầntoken_type_ids
+    // lấymô hìnhđầu vàotên, dùng chophán đoáncó/khôngcầntoken_type_ids
     modelInputNames = session.inputNames;
     console.log(`Worker: ONNX session created successfully for model: ${modelPathInternal}`);
     console.log(`Worker: Model input names:`, modelInputNames);
@@ -76,14 +76,14 @@ async function initializeModel(modelPathOrData, numThreads, executionProviders) 
     return { status: 'success', message: 'Model initialized' };
   } catch (error) {
     console.error(`Worker: Model initialization failed:`, error);
-    session = null; // dọn dẹpsessionnoiDungTiengVietkhởi tạo
+    session = null; // dọn dẹpsessionkhởi tạo
     modelInputNames = null;
-    // noiDungTiengVietlỗithông tintuần tự hóa，noiDungTiengVietErrorđối tượngnoiDungTiengVietkhông thểtrực tiếppostMessage
+    // lỗithông tintuần tự hóa, Errorđối tượngkhông thểtrực tiếppostMessage
     throw new Error(`Worker: Model initialization failed - ${error.message}`);
   }
 }
 
-// tối ưu hóanoiDungTiengVietvùng đệmquản lýhàm
+// tối ưu hóavùng đệmquản lýhàm
 function getOrCreateBuffer(name, requiredLength, type = BigInt64Array) {
   if (!reusableBuffers[name] || reusableBuffers[name].length < requiredLength) {
     reusableBuffers[name] = new type(requiredLength);
@@ -92,7 +92,7 @@ function getOrCreateBuffer(name, requiredLength, type = BigInt64Array) {
   return reusableBuffers[name];
 }
 
-// tối ưu hóanoiDungTiengVietxử lýsuy luậnhàm
+// tối ưu hóaxử lýsuy luậnhàm
 async function runBatchInference(batchData) {
   if (!session) {
     throw new Error("Worker: Session not initialized. Call 'initializeModel' first.");
@@ -105,15 +105,15 @@ async function runBatchInference(batchData) {
     const batchSize = batchData.dims.input_ids[0];
     const seqLength = batchData.dims.input_ids[1];
 
-    // tối ưu hóa：tái sử dụngvùng đệm，giảm cấp phát bộ nhớ
+    // tối ưu hóa: tái sử dụngvùng đệm, giảm cấp phát bộ nhớ
     const inputIdsLength = batchData.input_ids.length;
     const attentionMaskLength = batchData.attention_mask.length;
 
-    // tái sử dụngnoiDungTiengViettạo BigInt64Array vùng đệm
+    // tái sử dụngtạo BigInt64Array vùng đệm
     const inputIdsBuffer = getOrCreateBuffer('inputIds', inputIdsLength);
     const attentionMaskBuffer = getOrCreateBuffer('attentionMask', attentionMaskLength);
 
-    // hàng loạtđiềndữ liệu（tránh map thao tác）
+    // hàng loạtđiềndữ liệu(tránh map thao tác)
     for (let i = 0; i < inputIdsLength; i++) {
       inputIdsBuffer[i] = BigInt(batchData.input_ids[i]);
     }
@@ -132,7 +132,7 @@ async function runBatchInference(batchData) {
       batchData.dims.attention_mask,
     );
 
-    // xử lý token_type_ids - noiDungTiengVietmô hìnhcầnnoiDungTiengViet
+    // xử lý token_type_ids - mô hìnhcần
     if (modelInputNames && modelInputNames.includes('token_type_ids')) {
       if (batchData.token_type_ids && batchData.dims.token_type_ids) {
         const tokenTypeIdsLength = batchData.token_type_ids.length;
@@ -148,7 +148,7 @@ async function runBatchInference(batchData) {
           batchData.dims.token_type_ids,
         );
       } else {
-        // tạomặc địnhnoiDungTiengViet token_type_ids
+        // tạomặc định token_type_ids
         const tokenTypeIdsBuffer = getOrCreateBuffer('tokenTypeIds', inputIdsLength);
         tokenTypeIdsBuffer.fill(0n, 0, inputIdsLength);
 
@@ -162,7 +162,7 @@ async function runBatchInference(batchData) {
       console.log('Worker: Skipping token_type_ids as model does not require it');
     }
 
-    // thực thinoiDungTiengVietxử lýsuy luận
+    // thực thixử lýsuy luận
     const results = await session.run(feeds);
     const outputTensor = results.last_hidden_state || results[Object.keys(results)[0]];
 
@@ -170,7 +170,7 @@ async function runBatchInference(batchData) {
     const outputData = new Float32Array(outputTensor.data);
 
     // cập nhậtthông tin thống kê
-    workerStats.totalInferences += batchSize; // noiDungTiengVietxử lýtính toánnoiDungTiengVietsuy luận
+    workerStats.totalInferences += batchSize; // xử lýtính toánsuy luận
     const inferenceTime = performance.now() - startTime;
     workerStats.totalInferenceTime += inferenceTime;
     workerStats.averageInferenceTime = workerStats.totalInferenceTime / workerStats.totalInferences;
@@ -208,15 +208,15 @@ async function runInference(inputData) {
   try {
     const feeds = {};
 
-    // tối ưu hóa：tái sử dụngvùng đệm，giảm cấp phát bộ nhớ
+    // tối ưu hóa: tái sử dụngvùng đệm, giảm cấp phát bộ nhớ
     const inputIdsLength = inputData.input_ids.length;
     const attentionMaskLength = inputData.attention_mask.length;
 
-    // tái sử dụngnoiDungTiengViettạo BigInt64Array vùng đệm
+    // tái sử dụngtạo BigInt64Array vùng đệm
     const inputIdsBuffer = getOrCreateBuffer('inputIds', inputIdsLength);
     const attentionMaskBuffer = getOrCreateBuffer('attentionMask', attentionMaskLength);
 
-    // điềndữ liệu（tránh map thao tác）
+    // điềndữ liệu(tránh map thao tác)
     for (let i = 0; i < inputIdsLength; i++) {
       inputIdsBuffer[i] = BigInt(inputData.input_ids[i]);
     }
@@ -235,7 +235,7 @@ async function runInference(inputData) {
       inputData.dims.attention_mask,
     );
 
-    // xử lý token_type_ids - noiDungTiengVietmô hìnhcầnnoiDungTiengViet
+    // xử lý token_type_ids - mô hìnhcần
     if (modelInputNames && modelInputNames.includes('token_type_ids')) {
       if (inputData.token_type_ids && inputData.dims.token_type_ids) {
         const tokenTypeIdsLength = inputData.token_type_ids.length;
@@ -251,7 +251,7 @@ async function runInference(inputData) {
           inputData.dims.token_type_ids,
         );
       } else {
-        // tạomặc địnhnoiDungTiengViet token_type_ids
+        // tạomặc định token_type_ids
         const tokenTypeIdsBuffer = getOrCreateBuffer('tokenTypeIds', inputIdsLength);
         tokenTypeIdsBuffer.fill(0n, 0, inputIdsLength);
 
@@ -283,7 +283,7 @@ async function runInference(inputData) {
         data: outputData, // trực tiếptrả về Float32Array
         dims: outputTensor.dims,
       },
-      transferList: [outputData.buffer], // đánh dấu lànoiDungTiengVietđối tượng
+      transferList: [outputData.buffer], // đánh dấu làđối tượng
       stats: {
         inferenceTime,
         totalInferences: workerStats.totalInferences,
@@ -345,7 +345,7 @@ self.onmessage = async (event) => {
         });
         break;
       case 'clearBuffers':
-        // dọn dẹpvùng đệm，noiDungTiengViet
+        // dọn dẹpvùng đệm,
         reusableBuffers = {
           inputIds: null,
           attentionMask: null,
@@ -369,14 +369,14 @@ self.onmessage = async (event) => {
         });
     }
   } catch (error) {
-    // đảm bảonoiDungTiengVietlỗinoiDungTiengVietđối tượnggửi，noiDungTiengVietErrorđối tượngnoiDungTiengVietkhông thểnoiDungTiengViettuần tự hóa
+    // đảm bảolỗiđối tượnggửi, Errorđối tượngkhông thểtuần tự hóa
     self.postMessage({
       id,
-      type: `${type}_error`, // noiDungTiengViet 'init_error' noiDungTiengViet 'infer_error'
+      type: `${type}_error`, //  'init_error'  'infer_error'
       status: 'error',
       payload: {
         message: error.message,
-        stack: error.stack, // tùy chọn，dùng chogỡ lỗi
+        stack: error.stack, // tùy chọn, dùng chogỡ lỗi
         name: error.name,
       },
     });

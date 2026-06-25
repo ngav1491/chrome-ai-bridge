@@ -2,9 +2,7 @@
   <div class="form-section">
     <div class="section-header">
       <span class="section-title">{{ title || 'bộ chọn' }}</span>
-      <button v-if="allowPick" class="btn-sm btn-primary" @click="pickFromPage"
-        >noiDungTiengViettrangnoiDungTiengViet</button
-      >
+      <button v-if="allowPick" class="btn-sm btn-primary" @click="pickFromPage">trang</button>
     </div>
     <div class="selector-list" data-field="target.candidates">
       <div class="selector-item" v-for="(c, i) in list" :key="i">
@@ -15,11 +13,7 @@
           <option value="text">Text</option>
           <option value="xpath">XPath</option>
         </select>
-        <input
-          class="form-input-sm flex-1"
-          v-model="c.value"
-          placeholder="bộ chọnnoiDungTiengViet"
-        />
+        <input class="form-input-sm flex-1" v-model="c.value" placeholder="bộ chọn" />
         <button class="btn-icon-sm" @click="move(i, -1)" :disabled="i === 0">↑</button>
         <button class="btn-icon-sm" @click="move(i, 1)" :disabled="i === list.length - 1">↓</button>
         <button class="btn-icon-sm danger" @click="remove(i)">×</button>

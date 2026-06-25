@@ -1,5 +1,5 @@
 /**
- * CSS Unique Strategy - noiDungTiengViet ID noiDungTiengViet class noiDungTiengVietbộ chọnchiến lược
+ * CSS Unique Strategy -  ID  class bộ chọnchiến lược
  */
 
 import type { SelectorCandidate, SelectorStrategy } from '../types';

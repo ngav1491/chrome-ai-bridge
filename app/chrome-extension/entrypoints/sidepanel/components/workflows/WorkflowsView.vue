@@ -247,7 +247,7 @@
                       <div class="flex items-center gap-2">
                         <span>trạng thái: {{ getRunStatusText(run) }}</span>
                         <span v-if="run.finishedAt"
-                          >• noiDungTiengViet:
+                          >• :
                           {{
                             Math.round(
                               (new Date(run.finishedAt).getTime() -
@@ -521,12 +521,12 @@ function getRunStatusColor(run: RunLite): string {
 function getRunStatusText(run: RunLite): string {
   if (run.status) {
     const statusMap: Record<string, string> = {
-      queued: 'noiDungTiengViet',
-      running: 'chạynoiDungTiengViet',
-      paused: 'noiDungTiengViettạm dừng',
+      queued: '',
+      running: 'chạy',
+      paused: 'tạm dừng',
       succeeded: 'thành công',
       failed: 'thất bại',
-      canceled: 'noiDungTiengViethủy',
+      canceled: 'hủy',
     };
     return statusMap[run.status] || run.status;
   }

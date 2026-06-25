@@ -1049,7 +1049,7 @@ interface EffectItemBase {
   enabled: boolean;
 }
 
-// Shadow kiểuhiệu ứng（Drop Shadow / Inner Shadow）
+// Shadow kiểuhiệu ứng(Drop Shadow / Inner Shadow)
 interface ShadowEffectItem extends EffectItemBase {
   type: 'drop-shadow' | 'inner-shadow';
   kind: 'parsed';
@@ -1061,14 +1061,14 @@ interface ShadowEffectItem extends EffectItemBase {
   color: string;
 }
 
-// Blur kiểuhiệu ứng（Layer Blur / Backdrop Blur）
+// Blur kiểuhiệu ứng(Layer Blur / Backdrop Blur)
 interface BlurEffectItem extends EffectItemBase {
   type: 'layer-blur' | 'backdrop-blur';
   kind: 'parsed';
   radius: string;
 }
 
-// không thểphân tích cú phápnoiDungTiengVietthôhiệu ứng
+// không thểphân tích cú phápthôhiệu ứng
 interface RawEffectItem extends EffectItemBase {
   type: 'raw';
   kind: 'raw';
@@ -1443,11 +1443,11 @@ export function createEffectsControl(options: EffectsControlOptions): DesignCont
   const { container, transactionManager, tokensService, headerActionsContainer } = options;
   const disposer = new Disposer();
 
-  // mỗiphần tửnoiDungTiengViet effect items bộ nhớ đệm（noiDungTiengViethiện tạichỉnh sửaphiên）
-  // sử dụng WeakMap noiDungTiengVietnguyên nhân：
-  // 1. noiDungTiengViet effect noiDungTiengVietghi CSS（enabled=false），noiDungTiengVietcầnnoiDungTiengVietphiênnoiDungTiengVietkhôi phục
-  // 2. WeakMap noiDungTiengVietphần tửnoiDungTiengVietgỡ bỏnoiDungTiengViettự độngnoiDungTiengViet，noiDungTiengVietthủ côngdọn dẹp
-  // 3. noiDungTiengVietđọc inline style（noiDungTiengViet computed），noiDungTiengVietbộ nhớ đệmnoiDungTiengVietdùng chonoiDungTiengVietthao tác
+  // mỗiphần tử effect items bộ nhớ đệm(hiện tạichỉnh sửaphiên)
+  // sử dụng WeakMap nguyên nhân:
+  // 1.  effect ghi CSS(enabled=false), cầnphiênkhôi phục
+  // 2. WeakMap phần tửgỡ bỏtự động, thủ côngdọn dẹp
+  // 3. đọc inline style( computed), bộ nhớ đệmdùng chothao tác
   const perTargetItems = new WeakMap<Element, EffectItem[]>();
 
   let currentTarget: Element | null = null;
@@ -1471,11 +1471,11 @@ export function createEffectsControl(options: EffectsControlOptions): DesignCont
   addBtn.append(createPlusIcon());
 
   if (headerActionsContainer) {
-    // noiDungTiengViet + nútnoiDungTiengViet group header noiDungTiengViet（chevron noiDungTiengViet）
+    //  + nút group header (chevron )
     headerActionsContainer.insertBefore(addBtn, headerActionsContainer.firstChild);
     disposer.add(() => addBtn.remove());
   } else {
-    // noiDungTiengViet：noiDungTiengViethiển thị toolbar
+    // : hiển thị toolbar
     const toolbar = document.createElement('div');
     toolbar.className = 'we-effects-toolbar';
     toolbar.append(addBtn);
@@ -1537,8 +1537,8 @@ export function createEffectsControl(options: EffectsControlOptions): DesignCont
   }
 
   function isEditing(): boolean {
-    // noiDungTiengViet popover noiDungTiengVietđangnoiDungTiengVietlàm mới
-    // tránhnoiDungTiengViet focus phát hiệnnoiDungTiengVietthay đổikhông thểđồng bộ
+    //  popover đanglàm mới
+    // tránh focus phát hiệnthay đổikhông thểđồng bộ
     return activeHandle !== null || openItemId !== null;
   }
 
@@ -1632,8 +1632,8 @@ export function createEffectsControl(options: EffectsControlOptions): DesignCont
     openItemId = null;
     for (const view of views.values()) view.setOpen(false);
 
-    // đóngnoiDungTiengVietđồng bộmột lần，đảm bảo currentItems noiDungTiengViet inline noiDungTiengViet
-    // tránhnoiDungTiengViet/noiDungTiengViet
+    // đóngđồng bộmột lần, đảm bảo currentItems  inline
+    // tránh/
     if (wasOpen && !rollback) {
       syncFromTarget(true);
     }
@@ -2318,7 +2318,7 @@ export function createEffectsControl(options: EffectsControlOptions): DesignCont
   });
 
   // Close popover when clicking outside the open item
-  // sử dụng document noiDungTiengVietlắng nghe，đảm bảonhấp Effects noiDungTiengVietđóng
+  // sử dụng document lắng nghe, đảm bảonhấp Effects đóng
   const handleClickOutside = (e: MouseEvent) => {
     const openId = openItemId;
     if (!openId) return;
@@ -2339,13 +2339,13 @@ export function createEffectsControl(options: EffectsControlOptions): DesignCont
     closePopover({ commit: true });
   };
 
-  // noiDungTiengViet document noiDungTiengVietlắng nghenoiDungTiengVietnhấpsự kiện
+  //  document lắng nghenhấpsự kiện
   const doc = root.ownerDocument;
   doc.addEventListener('click', handleClickOutside, true);
   disposer.add(() => doc.removeEventListener('click', handleClickOutside, true));
 
   // Escape closes the popover and rolls back the current preview transaction
-  // noiDungTiengViet root noiDungTiengVietlắng nghenoiDungTiengVietsự kiện
+  //  root lắng nghesự kiện
   const handleEscape = (e: KeyboardEvent) => {
     if (e.key !== 'Escape') return;
     if (!openItemId) return;

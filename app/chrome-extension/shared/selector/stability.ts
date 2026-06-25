@@ -1,5 +1,5 @@
 /**
- * Selector Stability - bộ chọnnoiDungTiengViet
+ * Selector Stability - bộ chọn
  */
 
 import type {
@@ -146,7 +146,7 @@ export function computeSelectorStability(candidate: SelectorCandidate): Selector
 }
 
 /**
- * noiDungTiengVietbộ chọnứng viênthêmđiểm ổn định
+ * bộ chọnứng viênthêmđiểm ổn định
  */
 export function withStability(candidate: SelectorCandidate): SelectorCandidate {
   if (candidate.stability) return candidate;
@@ -171,11 +171,11 @@ function typePriority(type: SelectorType): number {
 }
 
 /**
- * noiDungTiengViethaibộ chọnứng viênnoiDungTiengVietđộ ưu tiên
- * trả vềnoiDungTiengVietbiểu thị a ưu tiên，noiDungTiengVietbiểu thị b ưu tiên
+ * haibộ chọnứng viênđộ ưu tiên
+ * trả vềbiểu thị a ưu tiên, biểu thị b ưu tiên
  */
 export function compareSelectorCandidates(a: SelectorCandidate, b: SelectorCandidate): number {
-  // 1. noiDungTiengVietchỉ địnhnoiDungTiengViettrọng sốưu tiên
+  // 1. chỉ địnhtrọng sốưu tiên
   const aw = a.weight ?? 0;
   const bw = b.weight ?? 0;
   if (aw !== bw) return bw - aw;
@@ -190,7 +190,7 @@ export function compareSelectorCandidates(a: SelectorCandidate, b: SelectorCandi
   const bp = typePriority(b.type);
   if (ap !== bp) return bp - ap;
 
-  // 4. độ dài（noiDungTiengViet）
+  // 4. độ dài()
   const alen = String(a.value || '').length;
   const blen = String(b.value || '').length;
   return alen - blen;

@@ -1,10 +1,10 @@
 /**
- * @fileoverview V2 dữ liệuđọcnoiDungTiengViet
- * @description đọc V2 định dạngnoiDungTiengVietdữ liệu（giữ chỗtriển khai）
+ * @fileoverview V2 dữ liệuđọc
+ * @description đọc V2 định dạngdữ liệu(giữ chỗtriển khai)
  */
 
 /**
- * V2 dữ liệuđọcnoiDungTiengVietgiao diện
+ * V2 dữ liệuđọcgiao diện
  * @description Phase 5+ triển khai
  */
 export interface V2Reader {
@@ -19,7 +19,7 @@ export interface V2Reader {
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet V2Reader
+ * tạo NotImplemented  V2Reader
  */
 export function createNotImplementedV2Reader(): V2Reader {
   const notImplemented = async () => {

@@ -28,7 +28,7 @@
 
       <div class="divider"></div>
 
-      <!-- thuộc tínhbiểu mẫu：noiDungTiengVietsử dụng NodeSpec noiDungTiengVietbiểu mẫuenginenoiDungTiengViet -->
+      <!-- thuộc tínhbiểu mẫu: sử dụng NodeSpec biểu mẫuengine -->
       <PropertyFromSpec
         v-if="node"
         :key="node.type + ':' + node.id"
@@ -53,7 +53,7 @@
         <div class="form-group checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" v-model="(node.config as any).screenshotOnFail" />
-            <span>thất bạinoiDungTiengVietảnh chụp màn hình</span>
+            <span>thất bạiảnh chụp màn hình</span>
           </label>
         </div>
       </div>
@@ -83,7 +83,7 @@
           opacity="0.3"
         />
       </svg>
-      <div class="empty-text">noiDungTiengVietnút<br />noiDungTiengVietchỉnh sửathuộc tính</div>
+      <div class="empty-text">nút<br />chỉnh sửathuộc tính</div>
     </div>
   </aside>
 </template>
@@ -260,7 +260,7 @@ const whileJson = computed({
 });
 
 function onCreateSubflow() {
-  const id = prompt('noiDungTiengVietđầu vàonoiDungTiengVietID');
+  const id = prompt('đầu vàoID');
   if (!id) return;
   // Emit kebab-case event to match parent template listener
   emit('create-subflow', id);
@@ -273,8 +273,8 @@ const extractErrors = computed(() => {
   const n = props.node;
   if (!n || n.type !== 'extract') return [] as string[];
   const errs: string[] = [];
-  if (!n.config?.saveAs) errs.push('cần điềnlưubiếnnoiDungTiengViet');
-  if (!n.config?.selector && !n.config?.js) errs.push('cần cung cấp selector noiDungTiengViet js');
+  if (!n.config?.saveAs) errs.push('cần điềnlưubiến');
+  if (!n.config?.selector && !n.config?.js) errs.push('cần cung cấp selector  js');
   return errs;
 });
 const switchTabError = computed(() => {
@@ -474,7 +474,7 @@ onMounted(async () => {
     if (res && res.success) flows.value = res.flows || [];
   } catch {}
 });
-// noiDungTiengVietcuộnnoiDungTiengVietchỉ địnhtrường
+// cuộnchỉ địnhtrường
 watch(
   () => props.highlightField,
   (field) => {
@@ -518,7 +518,7 @@ watch(
   scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
 }
 
-/* noiDungTiengViet */
+/*  */
 .panel-header {
   padding: 12px 12px 12px 20px;
   border-bottom: 1px solid var(--rr-border);
@@ -557,7 +557,7 @@ watch(
   border-color: rgba(239, 68, 68, 0.3);
 }
 
-/* noiDungTiengViet */
+/*  */
 .panel-content {
   display: flex;
   flex-direction: column;
@@ -597,7 +597,7 @@ watch(
   color: var(--rr-text-secondary);
 }
 
-/* biểu mẫunoiDungTiengViet */
+/* biểu mẫu */
 .panel-content :deep(.form-section) {
   padding: 16px 20px;
   display: flex;
@@ -605,7 +605,7 @@ watch(
   gap: 14px;
 }
 
-/* noiDungTiengViet */
+/*  */
 .panel-content :deep(.section-header) {
   display: flex;
   align-items: center;
@@ -618,7 +618,7 @@ watch(
   color: var(--rr-text);
 }
 
-/* biểu mẫunoiDungTiengViet */
+/* biểu mẫu */
 .panel-content :deep(.form-group) {
   display: flex;
   flex-direction: column;
@@ -769,7 +769,7 @@ watch(
   color: var(--rr-danger);
 }
 
-/* noiDungTiengViet */
+/*  */
 .divider {
   height: 1px;
   background: var(--rr-border);
@@ -796,7 +796,7 @@ watch(
   margin: 4px 0;
 }
 
-/* noiDungTiengViettrạng thái */
+/* trạng thái */
 .panel-empty {
   flex: 1;
   display: flex;
@@ -816,7 +816,7 @@ watch(
   line-height: 1.6;
 }
 
-/* noiDungTiengViettrường */
+/* trường */
 .panel-content :where([data-field].hl) {
   outline: 2px solid var(--rr-warn);
   background: rgba(245, 158, 11, 0.08);

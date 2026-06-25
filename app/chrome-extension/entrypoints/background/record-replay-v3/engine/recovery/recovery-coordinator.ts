@@ -1,17 +1,17 @@
 /**
- * @fileoverview sậpkhôi phụcnoiDungTiengViet (P3-06)
+ * @fileoverview sậpkhôi phục (P3-06)
  * @description
- * MV3 Service Worker noiDungTiengViet。noiDungTiengViet SW khởi độngnoiDungTiengViethàng đợitrạng tháinoiDungTiengViet Run ghi，
- * noiDungTiengViet Run noiDungTiengVietkhôi phụcthực thi。
+ * MV3 Service Worker . SW khởi độnghàng đợitrạng thái Run ghi,
+ *  Run khôi phụcthực thi.
  *
- * khôi phụcchiến lược：
- * - mồ côi running noiDungTiengViet：thu hồinoiDungTiengViet queued，chờnoiDungTiengVietlập lịch（noiDungTiengViet）
- * - mồ côi paused noiDungTiengViet：tiếp quản lease，duy trì paused trạng thái
- * - noiDungTiengViet Run noiDungTiengViethàng đợinoiDungTiengViet：dọn dẹp
+ * khôi phụcchiến lược:
+ * - mồ côi running : thu hồi queued, chờlập lịch()
+ * - mồ côi paused : tiếp quản lease, duy trì paused trạng thái
+ * -  Run hàng đợi: dọn dẹp
  *
- * gọithời điểm：
- * - bắt buộcnoiDungTiengViet scheduler.start() trướcgọi
- * - noiDungTiengViet SW khởi độngnoiDungTiengVietgọimột lần
+ * gọithời điểm:
+ * - bắt buộc scheduler.start() trướcgọi
+ * -  SW khởi độnggọimột lần
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -26,23 +26,23 @@ import type { EventsBus } from '../transport/events-bus';
  * khôi phụckết quả
  */
 export interface RecoveryResult {
-  /** noiDungTiengVietthu hồinoiDungTiengViet queued noiDungTiengViet running Run ID */
+  /** thu hồi queued  running Run ID */
   requeuedRunning: RunId[];
-  /** noiDungTiengViettiếp quảnnoiDungTiengViet paused Run ID */
+  /** tiếp quản paused Run ID */
   adoptedPaused: RunId[];
-  /** noiDungTiengVietdọn dẹpnoiDungTiengViet Run ID */
+  /** dọn dẹp Run ID */
   cleanedTerminal: RunId[];
 }
 
 /**
- * khôi phụcnoiDungTiengVietphụ thuộc
+ * khôi phụcphụ thuộc
  */
 export interface RecoveryCoordinatorDeps {
-  /** lưu trữnoiDungTiengViet */
+  /** lưu trữ */
   storage: StoragePort;
   /** sự kiệnbus */
   events: EventsBus;
-  /** hiện tại Service Worker noiDungTiengViet ownerId */
+  /** hiện tại Service Worker  ownerId */
   ownerId: string;
   /** nguồn thời gian */
   now: () => UnixMillis;
@@ -55,13 +55,13 @@ export interface RecoveryCoordinatorDeps {
 /**
  * thực thisậpkhôi phục
  * @description
- * noiDungTiengViet SW khởi độngnoiDungTiengVietgọi，noiDungTiengViethàng đợitrạng tháinoiDungTiengViet Run ghi。
+ *  SW khởi độnggọi, hàng đợitrạng thái Run ghi.
  *
- * thực thithứ tự：
- * 1. noiDungTiengVietdọn dẹp：kiểm trahàng đợitrongtất cảnoiDungTiengViet，dọn dẹpnoiDungTiengViet RunRecord noiDungTiengViet
- * 2. khôi phụcmồ côilease：thu hồi running，tiếp quản paused
- * 3. đồng bộ RunRecord trạng thái：đảm bảo RunRecord noiDungTiengViethàng đợitrạng tháinoiDungTiengViet
- * 4. gửikhôi phụcsự kiện：noiDungTiengViet requeued running noiDungTiengVietgửi run.recovered sự kiện
+ * thực thithứ tự:
+ * 1. dọn dẹp: kiểm trahàng đợitrongtất cả, dọn dẹp RunRecord
+ * 2. khôi phụcmồ côilease: thu hồi running, tiếp quản paused
+ * 3. đồng bộ RunRecord trạng thái: đảm bảo RunRecord hàng đợitrạng thái
+ * 4. gửikhôi phụcsự kiện:  requeued running gửi run.recovered sự kiện
  */
 export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<RecoveryResult> {
   const logger = deps.logger ?? console;
@@ -72,18 +72,18 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
 
   const now = deps.now();
 
-  // lý do thiết kế：khôi phụcnoiDungTiengVietbắt buộc"noiDungTiengVietdọn dẹpnoiDungTiengViettiếp quản/thu hồi"，noiDungTiengViet Run noiDungTiengVietthực thi
+  // lý do thiết kế: khôi phụcbắt buộc"dọn dẹptiếp quản/thu hồi",  Run thực thi
   const cleanedTerminalSet = new Set<RunId>();
 
-  // ==================== Step 1: noiDungTiengVietdọn dẹp ====================
-  // kiểm trahàng đợitrongtất cảnoiDungTiengViet，dọn dẹpnoiDungTiengViet RunRecord noiDungTiengViet
+  // ==================== Step 1: dọn dẹp ====================
+  // kiểm trahàng đợitrongtất cả, dọn dẹp RunRecord
   try {
     const items = await deps.storage.queue.list();
     for (const item of items) {
       const runId = item.id;
       const run = await deps.storage.runs.get(runId);
 
-      // phòng thủdọn dẹp：noiDungTiengViet RunRecord noiDungTiengVietmục hàng đợikhông thểthực thi
+      // phòng thủdọn dẹp:  RunRecord mục hàng đợikhông thểthực thi
       if (!run) {
         try {
           await deps.storage.queue.markDone(runId, now);
@@ -95,7 +95,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
         continue;
       }
 
-      // dọn dẹpnoiDungTiengViet Run（SW noiDungTiengViet runner hoàn tấtnoiDungTiengViet、scheduler markDone noiDungTiengVietsập）
+      // dọn dẹp Run(SW  runner hoàn tất, scheduler markDone sập)
       if (isTerminalStatus(run.status)) {
         try {
           await deps.storage.queue.markDone(runId, now);
@@ -111,7 +111,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
   }
 
   // ==================== Step 2: khôi phụcmồ côilease ====================
-  // Best-effort：noiDungTiengVietthất bạinoiDungTiengVietkhởi động
+  // Best-effort: thất bạikhởi động
   let requeuedRunning: Array<{ runId: RunId; prevOwnerId?: string }> = [];
   let adoptedPaused: Array<{ runId: RunId; prevOwnerId?: string }> = [];
   try {
@@ -120,7 +120,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
     adoptedPaused = result.adoptedPaused;
   } catch (e) {
     logger.error('[Recovery] recoverOrphanLeases failed:', e);
-    // tiếp tụcthực thi，noiDungTiengVietkhởi động
+    // tiếp tụcthực thi, khởi động
   }
 
   // ==================== Step 3: đồng bộ RunRecord trạng thái ====================
@@ -129,7 +129,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
     const runId = entry.runId;
     requeuedRunningIds.push(runId);
 
-    // noiDungTiengViet Step 1 noiDungTiengVietdọn dẹpnoiDungTiengViet
+    //  Step 1 dọn dẹp
     if (cleanedTerminalSet.has(runId)) {
       continue;
     }
@@ -137,7 +137,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
     try {
       const run = await deps.storage.runs.get(runId);
       if (!run) {
-        // RunRecord không tồn tại，dọn dẹpmục hàng đợi（phòng thủ）
+        // RunRecord không tồn tại, dọn dẹpmục hàng đợi(phòng thủ)
         try {
           await deps.storage.queue.markDone(runId, now);
           cleanedTerminalSet.add(runId);
@@ -151,8 +151,8 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
         continue;
       }
 
-      // noiDungTiengViet Run（noiDungTiengVietkhôi phụcnoiDungTiengVietkháclogiccập nhật）
-      // noiDungTiengVietdọn dẹpmục hàng đợi，noiDungTiengViet
+      //  Run(khôi phụckháclogiccập nhật)
+      // dọn dẹpmục hàng đợi,
       if (isTerminalStatus(run.status)) {
         try {
           await deps.storage.queue.markDone(runId, now);
@@ -166,10 +166,10 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
         continue;
       }
 
-      // cập nhật RunRecord trạng tháinoiDungTiengViet queued
+      // cập nhật RunRecord trạng thái queued
       await deps.storage.runs.patch(runId, { status: 'queued', updatedAt: now });
 
-      // gửikhôi phụcsự kiện（best-effort，thất bạikhông ảnh hưởngkhôi phụcquy trình）
+      // gửikhôi phụcsự kiện(best-effort, thất bạikhông ảnh hưởngkhôi phụcquy trình)
       try {
         const fromStatus: 'running' | 'paused' = run.status === 'paused' ? 'paused' : 'running';
         await deps.events.append({
@@ -184,20 +184,20 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
         logger.info(`[Recovery] Requeued orphan running run: ${runId} (from=${fromStatus})`);
       } catch (eventErr) {
         logger.warn('[Recovery] Failed to emit run.recovered event:', runId, eventErr);
-        // tiếp tụcthực thi，không ảnh hưởngkhôi phụcquy trình
+        // tiếp tụcthực thi, không ảnh hưởngkhôi phụcquy trình
       }
     } catch (e) {
       logger.warn('[Recovery] Reconcile requeued running failed:', runId, e);
     }
   }
 
-  // ==================== Step 4: đồng bộ adopted paused noiDungTiengViet RunRecord ====================
+  // ==================== Step 4: đồng bộ adopted paused  RunRecord ====================
   const adoptedPausedIds: RunId[] = [];
   for (const entry of adoptedPaused) {
     const runId = entry.runId;
     adoptedPausedIds.push(runId);
 
-    // noiDungTiengViet Step 1 noiDungTiengVietdọn dẹpnoiDungTiengViet
+    //  Step 1 dọn dẹp
     if (cleanedTerminalSet.has(runId)) {
       continue;
     }
@@ -205,7 +205,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
     try {
       const run = await deps.storage.runs.get(runId);
       if (!run) {
-        // RunRecord không tồn tại，dọn dẹpmục hàng đợi（phòng thủ）
+        // RunRecord không tồn tại, dọn dẹpmục hàng đợi(phòng thủ)
         try {
           await deps.storage.queue.markDone(runId, now);
           cleanedTerminalSet.add(runId);
@@ -219,7 +219,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
         continue;
       }
 
-      // noiDungTiengViet Run，noiDungTiengVietdọn dẹpmục hàng đợi
+      //  Run, dọn dẹpmục hàng đợi
       if (isTerminalStatus(run.status)) {
         try {
           await deps.storage.queue.markDone(runId, now);
@@ -233,7 +233,7 @@ export async function recoverFromCrash(deps: RecoveryCoordinatorDeps): Promise<R
         continue;
       }
 
-      // nếu RunRecord trạng tháinoiDungTiengViet paused，đồng bộcập nhật
+      // nếu RunRecord trạng thái paused, đồng bộcập nhật
       if (run.status !== 'paused') {
         await deps.storage.runs.patch(runId, { status: 'paused' as RunStatus, updatedAt: now });
       }

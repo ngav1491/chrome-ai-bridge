@@ -1,6 +1,6 @@
 /**
  * @fileoverview tiện íchkiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 trongnútnoiDungTiengViettriggertiện íchgiao diện
+ * @description định nghĩa Record-Replay V3 trongnúttriggertiện íchgiao diện
  */
 
 import { z } from 'zod';
@@ -15,28 +15,28 @@ import type { TriggerKind } from '../../domain/triggers';
 
 /**
  * Schema kiểu
- * @description sử dụng Zod noiDungTiengVietcấu hìnhxác thực
+ * @description sử dụng Zod cấu hìnhxác thực
  */
 export type Schema<T> = z.ZodType<T, z.ZodTypeDef, unknown>;
 
 /**
  * nútthực thingữ cảnh
- * @description noiDungTiengVietnútthực thinoiDungTiengVietchạynoiDungTiengVietngữ cảnh
+ * @description nútthực thichạyngữ cảnh
  */
 export interface NodeExecutionContext {
   /** Run ID */
   runId: RunId;
-  /** Flow định nghĩa（snapshot） */
+  /** Flow định nghĩa(snapshot) */
   flow: FlowV3;
   /** hiện tạinút ID */
   nodeId: NodeId;
 
-  /** noiDungTiengViet Tab ID（noiDungTiengViet Run độc quyền） */
+  /**  Tab ID( Run độc quyền) */
   tabId: number;
-  /** Frame ID（mặc định 0 noiDungTiengViet） */
+  /** Frame ID(mặc định 0 ) */
   frameId?: number;
 
-  /** hiện tạibiếnnoiDungTiengViet */
+  /** hiện tạibiến */
   vars: Record<string, JsonValue>;
 
   /**
@@ -45,7 +45,7 @@ export interface NodeExecutionContext {
   log: (level: 'debug' | 'info' | 'warn' | 'error', message: string, data?: JsonValue) => void;
 
   /**
-   * noiDungTiengViet
+   *
    * @description dùng chođiều kiệnnhánhnút
    */
   chooseNext: (label: string) => { kind: 'edgeLabel'; label: string };
@@ -54,7 +54,7 @@ export interface NodeExecutionContext {
    * artifactthao tác
    */
   artifacts: {
-    /** noiDungTiengViethiện tạitrangảnh chụp màn hình */
+    /** hiện tạitrangảnh chụp màn hình */
     screenshot: () => Promise<{ ok: true; base64: string } | { ok: false; error: RRError }>;
   };
 
@@ -72,7 +72,7 @@ export interface NodeExecutionContext {
 }
 
 /**
- * biếnnoiDungTiengVietthao tác
+ * biếnthao tác
  */
 export interface VarsPatchOp {
   op: 'set' | 'delete';
@@ -86,18 +86,18 @@ export interface VarsPatchOp {
 export type NodeExecutionResult =
   | {
       status: 'succeeded';
-      /** noiDungTiengVietthực thinoiDungTiengViet */
+      /** thực thi */
       next?: { kind: 'edgeLabel'; label: string } | { kind: 'end' };
       /** đầu rakết quả */
       outputs?: JsonObject;
-      /** biếnnoiDungTiengViet */
+      /** biến */
       varsPatch?: VarsPatchOp[];
     }
   | { status: 'failed'; error: RRError };
 
 /**
  * nútđịnh nghĩa
- * @description định nghĩanoiDungTiengVietnútkiểunoiDungTiengVietthực thilogic
+ * @description định nghĩanútkiểuthực thilogic
  */
 export interface NodeDefinition<
   TKind extends NodeKind = NodeKind,
@@ -112,7 +112,7 @@ export interface NodeDefinition<
   /**
    * thực thinút
    * @param ctx thực thingữ cảnh
-   * @param node nútđịnh nghĩa（noiDungTiengVietcấu hình）
+   * @param node nútđịnh nghĩa(cấu hình)
    */
   execute(
     ctx: NodeExecutionContext,
@@ -137,13 +137,13 @@ export interface TriggerInstallContext<
   flowId: FlowId;
   /** triggercấu hình */
   config: TConfig;
-  /** truyền cho Flow noiDungTiengViettham số */
+  /** truyền cho Flow tham số */
   args?: JsonObject;
 }
 
 /**
  * triggerđịnh nghĩa
- * @description định nghĩanoiDungTiengVietkiểu triggernoiDungTiengVietcài đặtnoiDungTiengVietgỡ cài đặtlogic
+ * @description định nghĩakiểu triggercài đặtgỡ cài đặtlogic
  */
 export interface TriggerDefinition<
   TKind extends TriggerKind = TriggerKind,
@@ -171,11 +171,11 @@ export interface PluginRegistrationContext {
 
 /**
  * tiện íchgiao diện
- * @description Record-Replay tiện íchnoiDungTiengVietgiao diện
+ * @description Record-Replay tiện íchgiao diện
  */
 export interface RRPlugin {
   /** tiện íchtên */
   name: string;
-  /** đăng kýtiện íchnoiDungTiengViet */
+  /** đăng kýtiện ích */
   register(ctx: PluginRegistrationContext): void;
 }

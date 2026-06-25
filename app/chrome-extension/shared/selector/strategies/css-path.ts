@@ -1,5 +1,5 @@
 /**
- * CSS Path Strategy - noiDungTiengViet DOM đường dẫnnoiDungTiengVietbộ chọnchiến lược
+ * CSS Path Strategy -  DOM đường dẫnbộ chọnchiến lược
  * sử dụng nth-of-type tạođầy đủ CSS đường dẫn
  */
 

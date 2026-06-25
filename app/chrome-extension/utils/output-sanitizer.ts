@@ -1,10 +1,10 @@
 /**
- * Output Sanitizer - đầu ranoiDungTiengVietcông cụ
+ * Output Sanitizer - đầu racông cụ
  *
- * noiDungTiengViet JavaScript thực thikết quảnoiDungTiengVietxử lý：
- * 1. nhạy cảmthông tinnoiDungTiengViet（cookie/token/password noiDungTiengViet）
- * 2. đầu rađộ dàinoiDungTiengViet（mặc định 50KB）
- * 3. noiDungTiengVietđối tượngtuần tự hóa
+ *  JavaScript thực thikết quảxử lý:
+ * 1. nhạy cảmthông tin(cookie/token/password )
+ * 2. đầu rađộ dài(mặc định 50KB)
+ * 3. đối tượngtuần tự hóa
  */
 
 export const DEFAULT_MAX_OUTPUT_BYTES = 50 * 1024;
@@ -29,8 +29,8 @@ const DEFAULT_MAX_ARRAY_LENGTH = 200;
 const DEFAULT_MAX_OBJECT_KEYS = 200;
 const DEFAULT_MAX_STRING_LENGTH = 10_000;
 
-// nhạy cảm key định danhnoiDungTiengViet（noiDungTiengViet）
-// tham chiếu mcp-tools.js noiDungTiengVietnhạy cảm key danh sách
+// nhạy cảm key định danh()
+// tham chiếu mcp-tools.js nhạy cảm key danh sách
 const SENSITIVE_KEY_MARKERS = [
   'cookie',
   'setcookie',
@@ -52,7 +52,7 @@ const SENSITIVE_KEY_MARKERS = [
   'sid',
   'csrf',
   'xsrf',
-  // noiDungTiengViet mcp-tools.js trongnhạy cảm key
+  //  mcp-tools.js trongnhạy cảm key
   'credential',
   'privatekey',
   'accesskey',
@@ -61,7 +61,7 @@ const SENSITIVE_KEY_MARKERS = [
 ] as const;
 
 /**
- * noiDungTiengVietxử lý
+ * xử lý
  */
 export function sanitizeAndLimitOutput(
   value: unknown,
@@ -92,8 +92,8 @@ export function sanitizeAndLimitOutput(
 }
 
 /**
- * noiDungTiengVietchuỗinoiDungTiengVietnhạy cảmthông tinnoiDungTiengViet
- * tham chiếu mcp-tools.js noiDungTiengVietlogic，noiDungTiengViet Base64/Hex/cookie-query noiDungTiengViet
+ * chuỗinhạy cảmthông tin
+ * tham chiếu mcp-tools.js logic,  Base64/Hex/cookie-query
  */
 export function sanitizeText(text: string): { text: string; redacted: boolean } {
   let out = text;
@@ -110,25 +110,25 @@ export function sanitizeText(text: string): { text: string; redacted: boolean } 
     }
   };
 
-  // 1. noiDungTiengVietchuỗiphát hiện（mcp-tools.js phong cách）
-  // Cookie/query string noiDungTiengVietphát hiện（bao gồm = noiDungTiengViet ; noiDungTiengViet &）
+  // 1. chuỗiphát hiện(mcp-tools.js phong cách)
+  // Cookie/query string phát hiện(bao gồm =  ;  &)
   if (out.includes('=') && (out.includes(';') || out.includes('&'))) {
     // phát hiện cookie chuỗi
     if (looksLikeCookieString(out)) {
       return { text: '[BLOCKED: Cookie/query string data]', redacted: true };
     }
-    // phát hiện query string (key=value&key2=value2 noiDungTiengViet)
+    // phát hiện query string (key=value&key2=value2 )
     if (looksLikeQueryString(out)) {
       return { text: '[BLOCKED: Cookie/query string data]', redacted: true };
     }
   }
 
-  // Base64 noiDungTiengVietdữ liệuphát hiện（20+ noiDungTiengViet Base64 chuỗi）
+  // Base64 dữ liệuphát hiện(20+  Base64 chuỗi)
   if (/^[A-Za-z0-9+/]{20,}={0,2}$/.test(out)) {
     return { text: '[BLOCKED: Base64 encoded data]', redacted: true };
   }
 
-  // Hex credential phát hiện（32+ noiDungTiengViet）
+  // Hex credential phát hiện(32+ )
   if (/^[a-f0-9]{32,}$/i.test(out)) {
     return { text: '[BLOCKED: Hex credential]', redacted: true };
   }
@@ -136,32 +136,32 @@ export function sanitizeText(text: string): { text: string; redacted: boolean } 
   // 2. Bearer token
   replace(/\bBearer\s+([A-Za-z0-9._~+/=-]+)\b/gi, 'Bearer <redacted>');
 
-  // 3. JWT (noiDungTiengViet)
+  // 3. JWT ()
   replace(/\b[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/g, '<redacted_jwt>');
 
-  // 4. URL query tham sốtrongnhạy cảmnoiDungTiengViet
+  // 4. URL query tham sốtrongnhạy cảm
   replace(
     /(^|[?&])(access_token|refresh_token|id_token|token|api_key|apikey|password|passwd|pwd|secret|session|sid|credential|auth|oauth)=([^&#\s]+)/gi,
     (_m, p1, p2) => `${p1}${p2}=<redacted>`,
   );
 
-  // 5. Header-like noiDungTiengViet
+  // 5. Header-like
   replace(
     /\b(authorization|cookie|set-cookie|x-api-key|api_key|apikey|password|passwd|pwd|secret|token|access_token|refresh_token|id_token|session|sid|credential|private_key|oauth)\b\s*[:=]\s*([^\s,;"']+)/gi,
     (_m, key) => `${key}=<redacted>`,
   );
 
-  // 6. noiDungTiengViet Base64 dữ liệu（noiDungTiengViet）
+  // 6.  Base64 dữ liệu()
   replace(/\b[A-Za-z0-9+/]{40,}={0,2}\b/g, '<redacted_base64>');
 
-  // 7. noiDungTiengViet Hex chuỗi（noiDungTiengViet API key、hash noiDungTiengViet）
+  // 7.  Hex chuỗi( API key, hash )
   replace(/\b[a-f0-9]{40,}\b/gi, '<redacted_hex>');
 
   return { text: out, redacted };
 }
 
 /**
- * phát hiệnchuỗicó/khôngnoiDungTiengViet query string (key=value&key2=value2)
+ * phát hiệnchuỗicó/không query string (key=value&key2=value2)
  */
 function looksLikeQueryString(text: string): boolean {
   const s = (text || '').trim();
@@ -266,7 +266,7 @@ function normalizeKey(key: string): string {
 }
 
 /**
- * phát hiệnchuỗicó/khôngnoiDungTiengViet cookie chuỗi (key=value; key2=value2)
+ * phát hiệnchuỗicó/không cookie chuỗi (key=value; key2=value2)
  */
 function looksLikeCookieString(text: string): boolean {
   const s = (text || '').trim();
@@ -322,7 +322,7 @@ function truncateTextBytes(
   const suffixBytes = byteLength(suffix);
   const budget = Math.max(0, maxBytes - suffixBytes);
 
-  // noiDungTiengVietđiểm dừng
+  // điểm dừng
   let lo = 0;
   let hi = text.length;
 

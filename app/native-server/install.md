@@ -1,333 +1,341 @@
-# Chrome MCP Bridge noiDungTiengViet
+# Hướng dẫn cài đặt chrome-ai-bridge
 
-noiDungTiengViet Chrome MCP Bridge noiDungTiengViet。
+Tài liệu này mô tả chi tiết quy trình build và đăng ký chrome-ai-bridge Native Messaging host.
 
-## noiDungTiengViet
+> Gói npm hiện chưa publish. Luồng cài đặt khuyến nghị hiện tại là build trực tiếp từ source, sau đó chạy CLI trong thư mục `dist` để đăng ký Native Messaging host.
 
-Chrome MCP Bridge noiDungTiengViet：
+## Tổng quan quy trình cài đặt từ source
+
+Quy trình build và đăng ký từ source như sau:
 
 ```
-npm install -g chrome-ai-bridge
-└─ postinstall.js
-   ├─ noiDungTiengViet npm_prefix/bin   ← noiDungTiengViet（noiDungTiengVietrootnoiDungTiengViet）
-   ├─ noiDungTiengViet                  ← noiDungTiengVietsudo，noiDungTiengViet
-   └─ noiDungTiengViet ➜ noiDungTiengViet chrome-ai-bridge register --system
-      └─ noiDungTiengViet
+corepack pnpm build:native
+└─ app/native-server/dist/
+   ├─ cli.js
+   ├─ run_host.sh / run_host.bat
+   ├─ node_path.txt
+   └─ mcp/mcp-server-stdio.js
+node app/native-server/dist/cli.js register
+└─ Tạo manifest Native Messaging cấp người dùng (không cần sudo)
+   └─ Nếu thất bại ➜ Chạy thủ công với --system bằng quyền quản trị
 ```
 
-noiDungTiengViet，noiDungTiengViet。
+Sơ đồ trên minh họa toàn bộ quá trình từ khi build native server đến khi hoàn tất đăng ký.
 
-## noiDungTiengViet
+## Các bước cài đặt chi tiết
 
-### 1. noiDungTiengViet
+### 1. Build từ source
 
 ```bash
-npm install -g chrome-ai-bridge
+git clone https://github.com/ngav1491/chrome-ai-bridge.git
+cd chrome-ai-bridge
+corepack enable
+corepack pnpm install
+corepack pnpm build:native
 ```
 
-noiDungTiengViet，noiDungTiengViet Native Messaging noiDungTiengViet。noiDungTiengViet，noiDungTiengViet。
+Sau khi build xong, đăng ký máy chủ Native Messaging trong thư mục người dùng. Việc này không cần quyền quản trị và là cách cài đặt được khuyến nghị:
 
-### 2. noiDungTiengViet
+```bash
+node app/native-server/dist/cli.js register
+```
 
-noiDungTiengViet：
+### 2. Đăng ký cấp người dùng
+
+Đăng ký cấp người dùng sẽ tạo tệp manifest tại các vị trí sau:
 
 ```
-noiDungTiengViet
-├─ noiDungTiengViet（noiDungTiengViet）
+Vị trí tệp manifest
+├─ Cấp người dùng (không cần quyền quản trị)
 │  ├─ Windows: %APPDATA%\Google\Chrome\NativeMessagingHosts\
 │  ├─ macOS:   ~/Library/Application Support/Google/Chrome/NativeMessagingHosts/
 │  └─ Linux:   ~/.config/google-chrome/NativeMessagingHosts/
 │
-└─ noiDungTiengViet（noiDungTiengViet）
+└─ Cấp hệ thống (cần quyền quản trị)
    ├─ Windows: %ProgramFiles%\Google\Chrome\NativeMessagingHosts\
    ├─ macOS:   /Library/Google/Chrome/NativeMessagingHosts/
    └─ Linux:   /etc/opt/chrome/native-messaging-hosts/
 ```
 
-noiDungTiengViet，noiDungTiengViet，noiDungTiengViet：
+Nếu đăng ký tự động thất bại, hoặc bạn muốn đăng ký thủ công, có thể chạy:
 
 ```bash
 chrome-ai-bridge register
 ```
 
-**noiDungTiengViet：noiDungTiengViet：**
+**Khuyến nghị: Chạy công cụ chẩn đoán để kiểm tra vấn đề:**
 
 ```bash
 chrome-ai-bridge doctor
 ```
 
-### 3. noiDungTiengViet
+### 3. Đăng ký cấp hệ thống
 
-noiDungTiengViet（noiDungTiengViet，noiDungTiengViet），noiDungTiengViet。noiDungTiengViet，noiDungTiengViet。
+Nếu đăng ký cấp người dùng thất bại (ví dụ do vấn đề về quyền), bạn có thể thử đăng ký cấp hệ thống. Đăng ký cấp hệ thống cần quyền quản trị, nhưng chúng tôi cung cấp hai cách tiện lợi để hoàn tất quá trình này.
 
-noiDungTiengViet：
+Đăng ký cấp hệ thống có hai cách:
 
-#### noiDungTiengViet：noiDungTiengViet `--system` noiDungTiengViet（noiDungTiengViet）
+#### Cách 1: Sử dụng tham số `--system` (khuyến nghị)
 
 ```bash
 # macOS/Linux
 sudo chrome-ai-bridge register --system
 
-# Windows (noiDungTiengViet)
+# Windows (chạy Command Prompt với quyền quản trị)
 chrome-ai-bridge register --system
 ```
 
-noiDungTiengViet。
+Cài đặt cấp hệ thống cần quyền quản trị để ghi vào thư mục hệ thống và registry.
 
-#### noiDungTiengViet：noiDungTiengViet
+#### Cách 2: Sử dụng trực tiếp quyền quản trị
 
-**Windows**：
-noiDungTiengViet PowerShell，noiDungTiengViet：
+**Windows**:
+Chạy Command Prompt hoặc PowerShell với quyền quản trị, sau đó thực thi:
 
 ```
 chrome-ai-bridge register
 ```
 
-**macOS/Linux**：
-noiDungTiengViet sudo noiDungTiengViet：
+**macOS/Linux**:
+Sử dụng lệnh sudo:
 
 ```
 sudo chrome-ai-bridge register
 ```
 
-## noiDungTiengViet
+## Chi tiết quy trình đăng ký
 
-### noiDungTiengViet
+### Sơ đồ quy trình đăng ký
 
 ```
-noiDungTiengViet
-├─ noiDungTiengViet (chrome-ai-bridge register)
-│  ├─ noiDungTiengViet
-│  ├─ noiDungTiengViet
-│  ├─ noiDungTiengViet
-│  ├─ noiDungTiengViet
-│  └─ WindowsnoiDungTiengViet：noiDungTiengViet
+Quy trình đăng ký
+├─ Đăng ký cấp người dùng (chrome-ai-bridge register)
+│  ├─ Lấy đường dẫn manifest cấp người dùng
+│  ├─ Tạo thư mục người dùng
+│  ├─ Tạo nội dung manifest
+│  ├─ Ghi tệp manifest
+│  └─ Nền tảng Windows: tạo mục registry cấp người dùng
 │
-└─ noiDungTiengViet (chrome-ai-bridge register --system)
-   ├─ noiDungTiengViet
-   │  ├─ noiDungTiengViet → noiDungTiengViet
-   │  └─ noiDungTiengViet → noiDungTiengViet
-   └─ WindowsnoiDungTiengViet：noiDungTiengViet
+└─ Đăng ký cấp hệ thống (chrome-ai-bridge register --system)
+   ├─ Kiểm tra có quyền quản trị hay không
+   │  ├─ Có quyền → Trực tiếp tạo thư mục hệ thống và ghi manifest
+   │  └─ Không quyền → Nhắc người dùng chạy với quyền quản trị
+   └─ Nền tảng Windows: tạo mục registry cấp hệ thống
 ```
 
-### noiDungTiengViet
+### Cấu trúc tệp manifest
 
 ```
 manifest.json
-├─ name: "com.chromemcp.nativehost"
-├─ description: "Node.js Host for Browser Bridge Extension"
-├─ path: "/path/to/run_host.sh"       ← noiDungTiengViet
-├─ type: "stdio"                      ← noiDungTiengViet
-└─ allowed_origins: [                 ← noiDungTiengViet
-   "chrome-extension://noiDungTiengVietID/"
+├─ name: "com.ngav1491.chrome_ai_bridge.nativehost"
+├─ description: "chrome-ai-bridge Native Messaging host"
+├─ path: "/path/to/run_host.sh"       ← Đường dẫn script khởi động
+├─ type: "stdio"                      ← Kiểu giao tiếp
+└─ allowed_origins: [                 ← Tiện ích mở rộng được phép kết nối
+   "chrome-extension://ID-tiện-ích-mở-rộng/"
 ]
 ```
 
-### noiDungTiengViet
+### Quy trình đăng ký cấp người dùng
 
-1. noiDungTiengViet
-2. noiDungTiengViet
-3. noiDungTiengViet，noiDungTiengViet：
-   - noiDungTiengViet
-   - noiDungTiengViet
-   - Node.js noiDungTiengViet
-   - noiDungTiengViet（stdio）
-   - noiDungTiengViet ID
-   - noiDungTiengViet
-4. noiDungTiengViet
-5. noiDungTiengViet Windows noiDungTiengViet，noiDungTiengViet
+1. Xác định đường dẫn tệp manifest cấp người dùng
+2. Tạo các thư mục cần thiết
+3. Tạo nội dung manifest, bao gồm:
+   - Tên máy chủ
+   - Mô tả
+   - Đường dẫn tệp thực thi Node.js
+   - Kiểu giao tiếp (stdio)
+   - ID tiện ích mở rộng được phép
+   - Tham số khởi động
+4. Ghi tệp manifest
+5. Trên Windows, còn tạo mục registry tương ứng
 
-### noiDungTiengViet
+### Quy trình đăng ký cấp hệ thống
 
-1. noiDungTiengViet
-2. noiDungTiengViet：
-   - noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet Windows noiDungTiengViet
-3. noiDungTiengViet：
-   - noiDungTiengViet
+1. Kiểm tra đã có quyền quản trị hay chưa
+2. Nếu đã có quyền quản trị:
+   - Trực tiếp tạo thư mục cấp hệ thống
+   - Ghi tệp manifest
+   - Thiết lập quyền phù hợp
+   - Trên Windows tạo mục registry cấp hệ thống
+3. Nếu không có quyền quản trị:
+   - Nhắc người dùng chạy lại lệnh với quyền quản trị
    - macOS/Linux: `sudo chrome-ai-bridge register --system`
-   - Windows: noiDungTiengViet
+   - Windows: Chạy Command Prompt với quyền quản trị
 
-## noiDungTiengViet
+## Xác minh cài đặt
 
-### noiDungTiengViet
+### Sơ đồ quy trình xác minh
 
 ```
-noiDungTiengViet
-├─ noiDungTiengViet
-│  ├─ noiDungTiengViet → noiDungTiengViet
-│  └─ noiDungTiengViet → noiDungTiengViet
+Xác minh cài đặt
+├─ Kiểm tra tệp manifest
+│  ├─ Tệp tồn tại → Kiểm tra nội dung có đúng không
+│  └─ Tệp không tồn tại → Cài đặt lại
 │
-├─ noiDungTiengVietChromenoiDungTiengViet
-│  ├─ noiDungTiengViet → noiDungTiengViet
-│  └─ noiDungTiengViet → noiDungTiengViet
+├─ Kiểm tra tiện ích mở rộng Chrome
+│  ├─ Tiện ích đã cài → Kiểm tra quyền tiện ích
+│  └─ Tiện ích chưa cài → Cài đặt tiện ích
 │
-└─ noiDungTiengViet
-   ├─ noiDungTiengViet → noiDungTiengViet
-   └─ noiDungTiengViet → noiDungTiengViet → noiDungTiengViet
+└─ Kiểm tra kết nối
+   ├─ Kết nối thành công → Cài đặt hoàn tất
+   └─ Kết nối thất bại → Kiểm tra log lỗi → Tham khảo phần khắc phục sự cố
 ```
 
-### noiDungTiengViet
+### Các bước xác minh
 
-noiDungTiengViet，noiDungTiengViet：
+Sau khi cài đặt xong, bạn có thể xác minh cài đặt có thành công hay không qua các cách sau:
 
-1. noiDungTiengViet
-   - noiDungTiengViet：noiDungTiengViet
-   - noiDungTiengViet：noiDungTiengViet
-   - noiDungTiengViet
+1. Kiểm tra tệp manifest có tồn tại trong thư mục tương ứng
+   - Cấp người dùng: kiểm tra tệp manifest trong thư mục người dùng
+   - Cấp hệ thống: kiểm tra tệp manifest trong thư mục hệ thống
+   - Xác nhận nội dung tệp manifest có đúng không
 
-2. noiDungTiengViet Chrome noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet `nativeMessaging` noiDungTiengViet
+2. Cài đặt tiện ích mở rộng tương ứng trong Chrome
+   - Đảm bảo tiện ích đã được cài đặt đúng
+   - Đảm bảo tiện ích có quyền `nativeMessaging`
 
-3. noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet Chrome noiDungTiengViet
+3. Thử kết nối tới dịch vụ nội bộ thông qua tiện ích mở rộng
+   - Sử dụng chức năng kiểm tra của tiện ích để thử kết nối
+   - Kiểm tra log tiện ích của Chrome xem có thông báo lỗi không
 
-## noiDungTiengViet
+## Khắc phục sự cố
 
-### noiDungTiengViet
+### Sơ đồ quy trình khắc phục sự cố
 
 ```
-noiDungTiengViet
-├─ noiDungTiengViet
-│  ├─ noiDungTiengViet
-│  │  ├─ noiDungTiengViet → noiDungTiengViet
-│  │  └─ noiDungTiengViet → noiDungTiengViet
+Khắc phục sự cố
+├─ Vấn đề về quyền
+│  ├─ Kiểm tra quyền người dùng
+│  │  ├─ Đủ quyền → Kiểm tra quyền thư mục
+│  │  └─ Không đủ quyền → Thử cài đặt cấp hệ thống
 │  │
-│  ├─ noiDungTiengViet (macOS/Linux)
-│  │  ├─ "Permission denied" noiDungTiengViet
-│  │  ├─ "Native host has exited" noiDungTiengViet
-│  │  └─ noiDungTiengViet chrome-ai-bridge fix-permissions
+│  ├─ Vấn đề quyền thực thi (macOS/Linux)
+│  │  ├─ Lỗi "Permission denied"
+│  │  ├─ Lỗi "Native host has exited"
+│  │  └─ Chạy chrome-ai-bridge fix-permissions
 │  │
-│  └─ noiDungTiengViet chrome-ai-bridge register --system
+│  └─ Thử chrome-ai-bridge register --system
 │
-├─ noiDungTiengViet
-│  ├─ noiDungTiengVietNode.jsnoiDungTiengViet (node -v)
-│  └─ noiDungTiengVietNPMnoiDungTiengViet (npm root -g)
+├─ Vấn đề về đường dẫn
+│  ├─ Kiểm tra cài đặt Node.js (node -v)
+│  └─ Kiểm tra đường dẫn NPM toàn cục (npm root -g)
 │
-├─ noiDungTiengViet (Windows)
-│  ├─ noiDungTiengViet
-│  └─ noiDungTiengViet
+├─ Vấn đề registry (Windows)
+│  ├─ Kiểm tra quyền truy cập registry
+│  └─ Thử tạo mục registry thủ công
 │
-└─ noiDungTiengViet
-   ├─ noiDungTiengViet
-   └─ noiDungTiengVietIssuenoiDungTiengViet
+└─ Vấn đề khác
+   ├─ Kiểm tra thông báo lỗi trong console
+   └─ Gửi issue tới kho dự án
 ```
 
-### noiDungTiengViet
+### Các bước giải quyết vấn đề thường gặp
 
-noiDungTiengViet，noiDungTiengViet：
+Nếu gặp vấn đề trong quá trình cài đặt, hãy thử các bước sau:
 
-1. noiDungTiengViet Node.js noiDungTiengViet
-   - noiDungTiengViet `node -v` noiDungTiengViet `npm -v` noiDungTiengViet
-   - noiDungTiengViet Node.js noiDungTiengViet >= 20.x
+1. Đảm bảo Node.js đã được cài đặt đúng
+   - Chạy `node -v` và `npm -v` để kiểm tra phiên bản
+   - Đảm bảo phiên bản Node.js >= 20.x
 
-2. noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet/rootnoiDungTiengViet
+2. Kiểm tra có đủ quyền tạo tệp và thư mục hay không
+   - Cài đặt cấp người dùng cần quyền ghi vào thư mục người dùng
+   - Cài đặt cấp hệ thống cần quyền quản trị/root
 
-3. **noiDungTiengViet**
+3. **Khắc phục vấn đề quyền thực thi**
 
-   **macOS/Linux noiDungTiengViet**：
+   **Nền tảng macOS/Linux**:
 
-   **noiDungTiengViet**：
-   - npm noiDungTiengViet，noiDungTiengViet pnpm noiDungTiengViet
-   - noiDungTiengViet "Permission denied" noiDungTiengViet "Native host has exited" noiDungTiengViet
-   - Chrome noiDungTiengViet native host noiDungTiengViet
+   **Mô tả vấn đề**:
+   - npm thường giữ nguyên quyền tệp khi cài đặt, nhưng pnpm có thể không
+   - Có thể gặp lỗi "Permission denied" hoặc "Native host has exited"
+   - Tiện ích Chrome không thể khởi động tiến trình native host
 
-   **noiDungTiengViet**：
+   **Giải pháp**:
 
-   a) **noiDungTiengViet（noiDungTiengViet）**：
+   a) **Sử dụng lệnh sửa chữa tích hợp (khuyến nghị)**:
 
    ```bash
    chrome-ai-bridge fix-permissions
    ```
 
-   b) **noiDungTiengViet**：
+   b) **Chạy công cụ chẩn đoán để tự động sửa chữa**:
 
    ```bash
    chrome-ai-bridge doctor --fix
    ```
 
-   c) **noiDungTiengViet**：
+   c) **Thiết lập quyền thủ công**:
 
    ```bash
-   # noiDungTiengViet
+   # Tìm đường dẫn cài đặt
    npm list -g chrome-ai-bridge
-   # noiDungTiengViet pnpm
+   # Hoặc với pnpm
    pnpm list -g chrome-ai-bridge
 
-   # noiDungTiengViet（noiDungTiengViet）
+   # Thiết lập quyền thực thi (thay bằng đường dẫn thực tế)
    chmod +x /path/to/node_modules/chrome-ai-bridge/run_host.sh
    chmod +x /path/to/node_modules/chrome-ai-bridge/index.js
    chmod +x /path/to/node_modules/chrome-ai-bridge/cli.js
    ```
 
-   **Windows noiDungTiengViet**：
+   **Nền tảng Windows**:
 
-   **noiDungTiengViet**：
-   - Windows noiDungTiengViet `.bat` noiDungTiengViet，noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet "Access denied" noiDungTiengViet
+   **Mô tả vấn đề**:
+   - Trên Windows, tệp `.bat` thường không cần quyền thực thi, nhưng có thể gặp vấn đề khác
+   - Tệp có thể bị đánh dấu là chỉ đọc
+   - Có thể gặp lỗi "Access denied" hoặc tệp không thể thực thi
 
-   **noiDungTiengViet**：
+   **Giải pháp**:
 
-   a) **noiDungTiengViet（noiDungTiengViet）**：
+   a) **Sử dụng lệnh sửa chữa tích hợp (khuyến nghị)**:
 
    ```cmd
    chrome-ai-bridge fix-permissions
    ```
 
-   b) **noiDungTiengViet**：
+   b) **Chạy công cụ chẩn đoán để tự động sửa chữa**:
 
    ```cmd
    chrome-ai-bridge doctor --fix
    ```
 
-   c) **noiDungTiengViet**：
+   c) **Kiểm tra thuộc tính tệp thủ công**:
 
    ```cmd
-   # noiDungTiengViet
-   npm list -g chrome-ai-bridge
+   # Tệp build nằm trong source
+   dir app\native-server\dist
 
-   # noiDungTiengViet（noiDungTiengViet -> noiDungTiengViet）
-   # noiDungTiengViet run_host.bat noiDungTiengViet
+   # Kiểm tra thuộc tính tệp (trong File Explorer, nhấp chuột phải -> Properties)
+   # Đảm bảo run_host.bat không phải là tệp chỉ đọc
    ```
 
-   d) **noiDungTiengViet**：
+   d) **Cài đặt lại và ép buộc quyền**:
 
    ```bash
-   # noiDungTiengViet
-   npm uninstall -g chrome-ai-bridge
-   # noiDungTiengViet pnpm uninstall -g chrome-ai-bridge
+   # Build lại từ source
+   corepack pnpm build:native
 
-   # noiDungTiengViet
-   npm install -g chrome-ai-bridge
-   # noiDungTiengViet pnpm install -g chrome-ai-bridge
-
-   # noiDungTiengViet，noiDungTiengViet
-   chrome-ai-bridge fix-permissions
+   # Nếu vẫn còn vấn đề, chạy sửa chữa quyền trực tiếp từ dist
+   node app/native-server/dist/cli.js fix-permissions
    ```
 
-4. noiDungTiengViet Windows noiDungTiengViet，noiDungTiengViet
-   - noiDungTiengViet `HKCU\Software\Google\Chrome\NativeMessagingHosts\`
-   - noiDungTiengViet，noiDungTiengViet `HKLM\Software\Google\Chrome\NativeMessagingHosts\`
+4. Trên Windows, đảm bảo truy cập registry không bị hạn chế
+   - Kiểm tra xem có thể truy cập `HKCU\Software\Google\Chrome\NativeMessagingHosts\` hay không
+   - Đối với cấp hệ thống, kiểm tra `HKLM\Software\Google\Chrome\NativeMessagingHosts\`
 
-5. noiDungTiengViet
-   - noiDungTiengViet `chrome-ai-bridge register --system` noiDungTiengViet
-   - noiDungTiengViet
+5. Thử sử dụng cài đặt cấp hệ thống
+   - Sử dụng lệnh `chrome-ai-bridge register --system`
+   - Hoặc chạy trực tiếp với quyền quản trị
 
-6. noiDungTiengViet
-   - noiDungTiengViet
-   - noiDungTiengViet `--verbose` noiDungTiengViet
+6. Kiểm tra thông báo lỗi trong console
+   - Thông báo lỗi chi tiết thường chỉ ra vấn đề
+   - Có thể thêm tham số `--verbose` để lấy thêm thông tin log
 
-noiDungTiengViet，noiDungTiengViet issue noiDungTiengViet，noiDungTiengViet：
+Nếu vấn đề vẫn còn, hãy gửi issue tới kho dự án và đính kèm các thông tin sau:
 
-- noiDungTiengViet
-- Node.js noiDungTiengViet
-- noiDungTiengViet
-- noiDungTiengViet
-- noiDungTiengViet
+- Phiên bản hệ điều hành
+- Phiên bản Node.js
+- Lệnh cài đặt
+- Thông báo lỗi
+- Các cách giải quyết đã thử

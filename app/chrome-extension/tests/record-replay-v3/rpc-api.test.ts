@@ -892,7 +892,7 @@ describe('V3 RPC Flow CRUD APIs', () => {
                 { id: 'node-1', kind: 'test', config: {}, name: 'Start Node', disabled: false },
               ],
               edges: [],
-              // tuân theo VariableDefinition kiểu：name bắt buộc，description/default/label tùy chọn
+              // Tuân theo kiểu VariableDefinition: name bắt buộc, description/default/label tùy chọn
               variables: [
                 { name: 'url', description: 'Target URL', default: 'https://example.com' },
               ],

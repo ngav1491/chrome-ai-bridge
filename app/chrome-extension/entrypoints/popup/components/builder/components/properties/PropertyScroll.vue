@@ -3,8 +3,8 @@
     <div class="form-row">
       <label class="form-label">schema</label>
       <select v-model="cfg.mode" class="form-select-sm">
-        <option value="element">cuộnnoiDungTiengVietphần tử</option>
-        <option value="offset">noiDungTiengVietoffset</option>
+        <option value="element">cuộnphần tử</option>
+        <option value="offset">offset</option>
         <option value="container">vùng chứaoffset</option>
       </select>
     </div>
@@ -34,7 +34,7 @@
           title="vùng chứabộ chọn"
           targetKey="target"
         />
-        <div class="hint"><small>vùng chứanoiDungTiengViethỗ trợ scrollTo(top,left)</small></div>
+        <div class="hint"><small>vùng chứahỗ trợ scrollTo(top,left)</small></div>
       </div>
     </div>
   </div>

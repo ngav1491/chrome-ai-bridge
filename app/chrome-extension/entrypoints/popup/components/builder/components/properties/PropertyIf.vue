@@ -5,12 +5,12 @@
       <button class="btn-sm" @click="addIfCase">+ Add</button>
     </div>
     <div class="text-xs text-slate-500" style="padding: 0 20px"
-      >sử dụngbiểu thứcđịnh nghĩanhánh，hỗ trợbiếnnoiDungTiengViet。</div
-    >
+      >sử dụngbiểu thứcđịnh nghĩanhánh, hỗ trợbiến.
+    </div>
     <div class="if-case-list" data-field="if.branches">
       <div class="if-case-item" v-for="(c, i) in ifBranches" :key="c.id">
         <div class="if-case-header">
-          <input class="form-input-sm flex-1" v-model="c.name" placeholder="nhánhtên（tùy chọn）" />
+          <input class="form-input-sm flex-1" v-model="c.name" placeholder="nhánhtên(tùy chọn)" />
           <button class="btn-icon-sm danger" @click="removeIfCase(i)" title="xóa">×</button>
         </div>
         <div class="if-case-expr">
@@ -26,7 +26,7 @@
               @change="(e: any) => insertVar(e.target.value, i)"
               :value="''"
             >
-              <option value="" disabled>noiDungTiengVietbiến</option>
+              <option value="" disabled>biến</option>
               <option v-for="v in variables" :key="v.key" :value="v.key">{{ v.key }}</option>
             </select>
             <select
@@ -34,17 +34,14 @@
               @change="(e: any) => insertOp(e.target.value, i)"
               :value="''"
             >
-              <option value="" disabled>noiDungTiengViet</option>
+              <option value="" disabled></option>
               <option v-for="op in ops" :key="op" :value="op">{{ op }}</option>
             </select>
           </div>
         </div>
       </div>
       <div class="if-case-else" v-if="elseEnabled">
-        <div class="text-xs text-slate-500"
-          >Else nhánh（noiDungTiengVietbiểu thức，noiDungTiengVietkhớpnoiDungTiengVietđiều
-          kiệnnoiDungTiengViet）</div
-        >
+        <div class="text-xs text-slate-500">Else nhánh(biểu thức, khớpđiều kiện)</div>
       </div>
     </div>
   </div>

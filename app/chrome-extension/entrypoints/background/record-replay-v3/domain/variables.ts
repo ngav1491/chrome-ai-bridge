@@ -1,6 +1,6 @@
 /**
  * @fileoverview biếnkiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengVietbiếnnoiDungTiengVietlưu trữ lâu dàibiến
+ * @description định nghĩa Record-Replay V3 sử dụngbiếnlưu trữ lâu dàibiến
  */
 
 import type { JsonValue, UnixMillis } from './json';
@@ -8,28 +8,28 @@ import type { JsonValue, UnixMillis } from './json';
 /** biếntên */
 export type VariableName = string;
 
-/** lưu trữ lâu dàibiếntên（noiDungTiengViet $ noiDungTiengViet） */
+/** lưu trữ lâu dàibiếntên( $ ) */
 export type PersistentVariableName = `$${string}`;
 
 /** biếnphạm vi */
 export type VariableScope = 'run' | 'flow' | 'persistent';
 
 /**
- * biếnnoiDungTiengViet
- * @description trỏ đếnbiếnnoiDungTiengViet，hỗ trợ JSON path truy cập
+ * biến
+ * @description trỏ đếnbiến, hỗ trợ JSON path truy cập
  */
 export interface VariablePointer {
   /** biếnphạm vi */
   scope: VariableScope;
   /** biếntên */
   name: VariableName;
-  /** JSON path（dùng chotruy cậpnoiDungTiengVietthuộc tính） */
+  /** JSON path(dùng chotruy cậpthuộc tính) */
   path?: ReadonlyArray<string | number>;
 }
 
 /**
  * biếnđịnh nghĩa
- * @description Flow noiDungTiengVietbiến
+ * @description Flow biến
  */
 export interface VariableDefinition {
   /** biếntên */
@@ -38,40 +38,40 @@ export interface VariableDefinition {
   label?: string;
   /** mô tả */
   description?: string;
-  /** có/khôngnhạy cảm（noiDungTiengViethiển thị/xuất） */
+  /** có/khôngnhạy cảm(hiển thị/xuất) */
   sensitive?: boolean;
-  /** có/khôngnoiDungTiengViet */
+  /** có/không */
   required?: boolean;
-  /** mặc địnhnoiDungTiengViet */
+  /** mặc định */
   default?: JsonValue;
-  /** phạm vi（noiDungTiengViet persistent，persistent thông qua $ tiền tốphán đoán） */
+  /** phạm vi( persistent, persistent thông qua $ tiền tốphán đoán) */
   scope?: Exclude<VariableScope, 'persistent'>;
 }
 
 /**
  * lưu trữ lâu dàibiếnghi
- * @description lưu trữnoiDungTiengViet IndexedDB tronglưu trữ lâu dàibiến
+ * @description lưu trữ IndexedDB tronglưu trữ lâu dàibiến
  */
 export interface PersistentVarRecord {
-  /** biếnnoiDungTiengViet（noiDungTiengViet $ noiDungTiengViet） */
+  /** biến( $ ) */
   key: PersistentVariableName;
-  /** biếnnoiDungTiengViet */
+  /** biến */
   value: JsonValue;
   /** cuối cùngcập nhậtthời gian */
   updatedAt: UnixMillis;
-  /** phiên bảnnoiDungTiengViet（noiDungTiengViettăng dần，dùng cho LWW noiDungTiengVietgỡ lỗi） */
+  /** phiên bản(tăng dần, dùng cho LWW gỡ lỗi) */
   version: number;
 }
 
 /**
- * phán đoánbiếnnoiDungTiengVietcó phải làlưu trữ lâu dàibiến
+ * phán đoánbiếncó phải làlưu trữ lâu dàibiến
  */
 export function isPersistentVariable(name: string): name is PersistentVariableName {
   return name.startsWith('$');
 }
 
 /**
- * phân tích cú phápbiếnnoiDungTiengVietchuỗi
+ * phân tích cú phápbiếnchuỗi
  * @example "$user.name" -> { scope: 'persistent', name: '$user', path: ['name'] }
  */
 export function parseVariablePointer(ref: string): VariablePointer | null {
@@ -89,7 +89,7 @@ export function parseVariablePointer(ref: string): VariablePointer | null {
     };
   }
 
-  // mặc địnhnoiDungTiengViet run phạm vi
+  // mặc định run phạm vi
   return {
     scope: 'run',
     name,

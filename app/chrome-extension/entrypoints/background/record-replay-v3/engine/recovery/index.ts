@@ -1,6 +1,6 @@
 /**
  * @fileoverview Recovery module exports
- * @description sậpkhôi phụcnoiDungTiengVietxuất
+ * @description sậpkhôi phụcxuất
  */
 
 export * from './recovery-coordinator';

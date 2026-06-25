@@ -184,7 +184,7 @@ function onConnectInternal(conn: Connection) {
   // Prefer sourceHandle as label so conditional branches can be identified
   const lab = (conn as any).sourceHandle || 'default';
   emit('connect', conn.source, conn.target, String(lab));
-  // noiDungTiengVietcập nhậtnoiDungTiengViettrạng tháinoiDungTiengViet，noiDungTiengViettrực tiếpnoiDungTiengVietcục bộ vfEdges
+  // cập nhậttrạng thái, trực tiếpcục bộ vfEdges
 }
 
 function onDragOver(e: DragEvent) {
@@ -353,7 +353,7 @@ defineExpose({ zoomIn, zoomOut, fitAll });
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* noiDungTiengVietphương án - tham chiếunoiDungTiengVietphong cách */
+/* phương án - tham chiếuphong cách */
 /* Solid color icon backgrounds (no gradients) */
 :deep(.icon-navigate) {
   background: #667eea;
@@ -447,7 +447,7 @@ defineExpose({ zoomIn, zoomOut, fitAll });
   background: #34d399;
 }
 
-/* nútnoiDungTiengViet */
+/* nút */
 :deep(.node-body) {
   flex: 1;
   min-width: 0;
@@ -520,7 +520,7 @@ defineExpose({ zoomIn, zoomOut, fitAll });
   stroke: #8f8f8f !important;
 }
 
-/* noiDungTiengViet */
+/*  */
 :deep(.vue-flow__background) {
   background-color: #ededed;
 }

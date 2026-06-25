@@ -1,6 +1,6 @@
 /**
- * ARIA Strategy - noiDungTiengVietthuộc tínhnoiDungTiengVietbộ chọnchiến lược
- * sử dụng aria-label, role noiDungTiengVietthuộc tínhtạobộ chọn
+ * ARIA Strategy - thuộc tínhbộ chọnchiến lược
+ * sử dụng aria-label, role thuộc tínhtạobộ chọn
  */
 
 import type { SelectorCandidate, SelectorStrategy } from '../types';

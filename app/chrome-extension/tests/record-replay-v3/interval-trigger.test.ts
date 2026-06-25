@@ -1,6 +1,6 @@
 /**
  * @fileoverview Interval Trigger Handler Tests
- * @description kiểm thử interval triggernoiDungTiengVietcài đặt、gỡ cài đặtnoiDungTiengVietkích hoạthành vi
+ * @description kiểm thử interval triggercài đặt, gỡ cài đặtkích hoạthành vi
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';

@@ -1,6 +1,6 @@
 /**
  * @fileoverview RunQueue giao diệnđịnh nghĩa
- * @description định nghĩa Run hàng đợinoiDungTiengVietquản lýgiao diện
+ * @description định nghĩa Run hàng đợiquản lýgiao diện
  */
 
 import type { JsonObject, UnixMillis } from '../../domain/json';
@@ -11,11 +11,11 @@ import type { TriggerFireContext } from '../../domain/triggers';
  * RunQueue cấu hình
  */
 export interface RunQueueConfig {
-  /** tối đanoiDungTiengViet Run noiDungTiengViet */
+  /** tối đa Run  */
   maxParallelRuns: number;
-  /** lease TTL（mili giây） */
+  /** lease TTL(mili giây) */
   leaseTtlMs: number;
-  /** heartbeatkhoảng cách（mili giây） */
+  /** heartbeatkhoảng cách(mili giây) */
   heartbeatIntervalMs: number;
 }
 
@@ -39,7 +39,7 @@ export type QueueItemStatus = 'queued' | 'running' | 'paused';
 export interface Lease {
   /** người giữ ID */
   ownerId: string;
-  /** noiDungTiengVietthời gian */
+  /** thời gian */
   expiresAt: UnixMillis;
 }
 
@@ -57,7 +57,7 @@ export interface RunQueueItem {
   createdAt: UnixMillis;
   /** cập nhậtthời gian */
   updatedAt: UnixMillis;
-  /** độ ưu tiên（sốnoiDungTiengVietđộ ưu tiênnoiDungTiengViet） */
+  /** độ ưu tiên(sốđộ ưu tiên) */
   priority: number;
   /** hiện tạisố lần thử */
   attempt: number;
@@ -76,24 +76,24 @@ export interface RunQueueItem {
 }
 
 /**
- * vào hàng đợiyêu cầu（noiDungTiengViettự độngtạonoiDungTiengViettrường）
- * - priority mặc địnhnoiDungTiengViet 0
- * - maxAttempts mặc địnhnoiDungTiengViet 1
+ * vào hàng đợiyêu cầu(tự độngtạotrường)
+ * - priority mặc định 0
+ * - maxAttempts mặc định 1
  */
 export type EnqueueInput = Omit<
   RunQueueItem,
   'status' | 'createdAt' | 'updatedAt' | 'attempt' | 'lease' | 'priority' | 'maxAttempts'
 > & {
   id: RunId;
-  /** độ ưu tiên（sốnoiDungTiengVietđộ ưu tiênnoiDungTiengViet，mặc định 0） */
+  /** độ ưu tiên(sốđộ ưu tiên, mặc định 0) */
   priority?: number;
-  /** số lần thử tối đa（mặc định 1） */
+  /** số lần thử tối đa(mặc định 1) */
   maxAttempts?: number;
 };
 
 /**
  * RunQueue giao diện
- * @description quản lý Run noiDungTiengViethàng đợinoiDungTiengVietlập lịch
+ * @description quản lý Run hàng đợilập lịch
  */
 export interface RunQueue {
   /**
@@ -104,36 +104,36 @@ export interface RunQueue {
   enqueue(input: EnqueueInput): Promise<RunQueueItem>;
 
   /**
-   * noiDungTiengVietthực thinoiDungTiengViet Run
-   * @param ownerId noiDungTiengViet ID
+   * thực thi Run
+   * @param ownerId  ID
    * @param now hiện tạithời gian
-   * @returns mục hàng đợinoiDungTiengViet null
+   * @returns mục hàng đợi null
    */
   claimNext(ownerId: string, now: UnixMillis): Promise<RunQueueItem | null>;
 
   /**
-   * noiDungTiengVietheartbeat
-   * @param ownerId noiDungTiengViet ID
+   * heartbeat
+   * @param ownerId  ID
    * @param now hiện tạithời gian
    */
   heartbeat(ownerId: string, now: UnixMillis): Promise<void>;
 
   /**
-   * thu hồinoiDungTiengVietlease
-   * @description noiDungTiengViet lease.expiresAt < now noiDungTiengViet running/paused noiDungTiengVietthu hồinoiDungTiengViet queued
+   * thu hồilease
+   * @description  lease.expiresAt < now  running/paused thu hồi queued
    * @param now hiện tạithời gian
-   * @returns noiDungTiengVietthu hồinoiDungTiengViet Run ID danh sách
+   * @returns thu hồi Run ID danh sách
    */
   reclaimExpiredLeases(now: UnixMillis): Promise<RunId[]>;
 
   /**
-   * khôi phụcmồ côilease（SW noiDungTiengVietgọi）
+   * khôi phụcmồ côilease(SW gọi)
    * @description
-   * - noiDungTiengVietmồ côi running noiDungTiengVietthu hồinoiDungTiengViet queued（status -> queued，leasexóa）
-   * - noiDungTiengVietmồ côi paused noiDungTiengViettiếp quản（duy trì status=paused，lease ownerId cập nhậtnoiDungTiengViet ownerId）
-   * @param ownerId noiDungTiengViet ownerId（hiện tại Service Worker thể hiện）
+   * - mồ côi running thu hồi queued(status -> queued, leasexóa)
+   * - mồ côi paused tiếp quản(duy trì status=paused, lease ownerId cập nhật ownerId)
+   * @param ownerId  ownerId(hiện tại Service Worker thể hiện)
    * @param now hiện tạithời gian
-   * @returns noiDungTiengViet runId danh sách（noiDungTiengViet ownerId dùng chonoiDungTiengViet）
+   * @returns  runId danh sách( ownerId dùng cho)
    */
   recoverOrphanLeases(
     ownerId: string,
@@ -154,7 +154,7 @@ export interface RunQueue {
   markPaused(runId: RunId, ownerId: string, now: UnixMillis): Promise<void>;
 
   /**
-   * đánh dấu làhoàn tất（noiDungTiengViethàng đợigỡ bỏ）
+   * đánh dấu làhoàn tất(hàng đợigỡ bỏ)
    */
   markDone(runId: RunId, now: UnixMillis): Promise<void>;
 
@@ -175,7 +175,7 @@ export interface RunQueue {
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet RunQueue
+ * tạo NotImplemented  RunQueue
  * @description Phase 0 giữ chỗtriển khai
  */
 export function createNotImplementedQueue(): RunQueue {

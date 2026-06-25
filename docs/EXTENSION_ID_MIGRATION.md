@@ -54,7 +54,7 @@ Ship `chrome-ai-bridge@0.3.0` that contains the new `EXTENSION_ID`. The
 manifests with `allowed_origins: ["chrome-extension://<new-id>/"]`.
 
 It MUST also continue to write the legacy manifest under the legacy
-host name (`com.chromemcp.nativehost`) for users on the old extension
+host name (`com.ngav1491.chrome_ai_bridge.nativehost`) for users on the current extension
 id. Implement this in `register.ts` by writing both manifests when
 the new id is non-empty.
 

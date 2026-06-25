@@ -43,17 +43,23 @@ The extension uses your existing Chrome profile, so any logged-in sites, saved p
 
 ### Step 3 — Install the native messaging host
 
-The extension requires a small native host binary on your machine so Chrome can communicate with the MCP server. Install it once via npm:
+The extension requires a small native host binary on your machine so Chrome can communicate with the MCP server. The npm package has not been published yet, so build and register directly from source:
+
+```bash
+git clone https://github.com/ngav1491/chrome-ai-bridge.git
+cd chrome-ai-bridge
+corepack enable
+corepack pnpm install
+corepack pnpm build:native
+node app/native-server/dist/cli.js register
+```
+
+After registration succeeds, you can move to Step 4.
+
+After the npm package is published, the global install flow will be:
 
 ```bash
 npm install -g chrome-ai-bridge
-```
-
-The postinstall script automatically registers the Chrome Native Messaging manifest. If the install is silent and the command exits with code `0`, you can move to Step 4.
-
-If the postinstall script was skipped (some package managers disable postinstall scripts), register manually:
-
-```bash
 chrome-ai-bridge register
 ```
 
@@ -193,7 +199,7 @@ Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your
 
 ## 6. Updating
 
-- **End users**: download the latest release ZIP, replace the old extension folder with the new one, then click **Reload** on the extension card at `chrome://extensions/`. Run `npm install -g chrome-ai-bridge@latest` to update the CLI host.
+- **End users**: download the latest release ZIP, replace the old extension folder with the new one, then click **Reload** on the extension card at `chrome://extensions/`. Because the npm package has not been published yet, update the source and run `corepack pnpm install && corepack pnpm build:native && node app/native-server/dist/cli.js register`.
 - **Developers**: `git pull`, then re-run `corepack pnpm install --frozen-lockfile && corepack pnpm build`, and click **Reload** on the extension card.
 
 ---

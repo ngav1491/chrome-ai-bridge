@@ -1,6 +1,6 @@
 /**
  * @fileoverview Once Trigger Handler Tests
- * @description kiểm thử once triggernoiDungTiengVietcài đặt、gỡ cài đặt、kích hoạtnoiDungTiengViettự độngvô hiệu hóahành vi
+ * @description kiểm thử once triggercài đặt, gỡ cài đặt, kích hoạttự độngvô hiệu hóahành vi
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';

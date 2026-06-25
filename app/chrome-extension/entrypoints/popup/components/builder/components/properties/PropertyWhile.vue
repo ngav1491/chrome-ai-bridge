@@ -10,18 +10,12 @@
       ></textarea>
     </div>
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet ID</label>
-      <input
-        class="form-input"
-        v-model="(node as any).config.subflowId"
-        placeholder="noiDungTiengViet"
-      />
-      <button class="btn-sm" style="margin-top: 8px" @click="onCreateSubflow"
-        >noiDungTiengViet</button
-      >
+      <label class="form-label"> ID</label>
+      <input class="form-input" v-model="(node as any).config.subflowId" placeholder="" />
+      <button class="btn-sm" style="margin-top: 8px" @click="onCreateSubflow"></button>
     </div>
     <div class="form-group">
-      <label class="form-label">tối đanoiDungTiengViet（tùy chọn）</label>
+      <label class="form-label">tối đa(tùy chọn)</label>
       <input
         class="form-input"
         type="number"
@@ -59,7 +53,7 @@ const whileJson = computed({
 });
 
 function onCreateSubflow() {
-  const id = prompt('noiDungTiengVietđầu vàonoiDungTiengVietID');
+  const id = prompt('đầu vàoID');
   if (!id) return;
   emit('create-subflow', id);
   const n = props.node as any;

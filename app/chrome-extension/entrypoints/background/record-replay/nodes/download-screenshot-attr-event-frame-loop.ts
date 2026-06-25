@@ -44,7 +44,7 @@ export const triggerEventNode: NodeRuntime<any> = {
   validate: (step) => {
     const s: any = step;
     const ok = !!s?.target?.candidates?.length && typeof s?.event === 'string' && s.event;
-    return ok ? { ok } : { ok, errors: ['thiếumục tiêubộ chọnnoiDungTiengVietsự kiệnkiểu'] };
+    return ok ? { ok } : { ok, errors: ['thiếumục tiêubộ chọnsự kiệnkiểu'] };
   },
   run: async (ctx, step) => {
     const s: any = expandTemplatesDeep(step as any, ctx.vars);
@@ -99,9 +99,7 @@ export const setAttributeNode: NodeRuntime<any> = {
   validate: (step) => {
     const s: any = step;
     const ok = !!s?.target?.candidates?.length && typeof s?.name === 'string' && s.name;
-    return ok
-      ? { ok }
-      : { ok, errors: ['cần cung cấpmục tiêubộ chọnnoiDungTiengVietthuộc tínhnoiDungTiengViet'] };
+    return ok ? { ok } : { ok, errors: ['cần cung cấpmục tiêubộ chọnthuộc tính'] };
   },
   run: async (ctx, step) => {
     const s: any = expandTemplatesDeep(step as any, ctx.vars);
@@ -192,7 +190,7 @@ export const loopElementsNode: NodeRuntime<any> = {
       s.selector &&
       typeof s?.subflowId === 'string' &&
       s.subflowId;
-    return ok ? { ok } : { ok, errors: ['cần cung cấp selector noiDungTiengViet subflowId'] };
+    return ok ? { ok } : { ok, errors: ['cần cung cấp selector  subflowId'] };
   },
   run: async (ctx, step) => {
     const s: any = expandTemplatesDeep(step as any, ctx.vars);

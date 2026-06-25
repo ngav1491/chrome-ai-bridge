@@ -1,5 +1,5 @@
 /**
- * @fileoverview Domain noiDungTiengVietxuấtđiểm vào
+ * @fileoverview Domain xuấtđiểm vào
  * @description xuấttất cả Domain kiểuđịnh nghĩa
  */
 
@@ -24,7 +24,7 @@ export * from './flow';
 // sự kiệnkiểu
 export * from './events';
 
-// gỡ lỗinoiDungTiengVietkiểu
+// gỡ lỗikiểu
 export * from './debug';
 
 // kiểu trigger

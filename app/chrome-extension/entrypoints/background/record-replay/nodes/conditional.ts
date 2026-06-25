@@ -6,7 +6,7 @@ export const ifNode: NodeRuntime<any> = {
     const s = step as any;
     const hasBranches = Array.isArray(s.branches) && s.branches.length > 0;
     const ok = hasBranches || !!s.condition;
-    return ok ? { ok } : { ok, errors: ['thiếuđiều kiệnnoiDungTiengVietnhánh'] };
+    return ok ? { ok } : { ok, errors: ['thiếuđiều kiệnnhánh'] };
   },
   run: async (ctx: ExecCtx, step: Step) => {
     const s: any = step;

@@ -1,6 +1,6 @@
 /**
- * @fileoverview tiện íchđăng kýnoiDungTiengViet
- * @description quản lýnútnoiDungTiengViettriggertiện íchnoiDungTiengVietđăng kýnoiDungTiengViettruy vấn
+ * @fileoverview tiện íchđăng ký
+ * @description quản lýnúttriggertiện íchđăng kýtruy vấn
  */
 
 import type { NodeKind } from '../../domain/flow';
@@ -14,8 +14,8 @@ import type {
 } from './types';
 
 /**
- * tiện íchđăng kýnoiDungTiengViet
- * @description noiDungTiengVietschema，quản lýtất cảnoiDungTiengVietđăng kýnoiDungTiengVietnútnoiDungTiengViettrigger
+ * tiện íchđăng ký
+ * @description schema, quản lýtất cảđăng kýnúttrigger
  */
 export class PluginRegistry implements PluginRegistrationContext {
   private nodes = new Map<NodeKind, NodeDefinition>();
@@ -23,7 +23,7 @@ export class PluginRegistry implements PluginRegistrationContext {
 
   /**
    * đăng kýnútđịnh nghĩa
-   * @description nếunoiDungTiengViettồn tạinoiDungTiengVietnút，noiDungTiengVietbao phủ
+   * @description nếutồn tạinút, bao phủ
    */
   registerNode(def: NodeDefinition): void {
     this.nodes.set(def.kind, def);
@@ -31,7 +31,7 @@ export class PluginRegistry implements PluginRegistrationContext {
 
   /**
    * đăng kýtriggerđịnh nghĩa
-   * @description nếunoiDungTiengViettồn tạinoiDungTiengViettrigger，noiDungTiengVietbao phủ
+   * @description nếutồn tạitrigger, bao phủ
    */
   registerTrigger(def: TriggerDefinition): void {
     this.triggers.set(def.kind, def);
@@ -39,15 +39,15 @@ export class PluginRegistry implements PluginRegistrationContext {
 
   /**
    * lấynútđịnh nghĩa
-   * @returns nútđịnh nghĩanoiDungTiengViet undefined
+   * @returns nútđịnh nghĩa undefined
    */
   getNode(kind: NodeKind): NodeDefinition | undefined {
     return this.nodes.get(kind);
   }
 
   /**
-   * lấynútđịnh nghĩa（bắt buộctồn tại）
-   * @throws RRError nếunútnoiDungTiengVietđăng ký
+   * lấynútđịnh nghĩa(bắt buộctồn tại)
+   * @throws RRError nếunútđăng ký
    */
   getNodeOrThrow(kind: NodeKind): NodeDefinition {
     const def = this.nodes.get(kind);
@@ -59,15 +59,15 @@ export class PluginRegistry implements PluginRegistrationContext {
 
   /**
    * lấytriggerđịnh nghĩa
-   * @returns triggerđịnh nghĩanoiDungTiengViet undefined
+   * @returns triggerđịnh nghĩa undefined
    */
   getTrigger(kind: TriggerKind): TriggerDefinition | undefined {
     return this.triggers.get(kind);
   }
 
   /**
-   * lấytriggerđịnh nghĩa（bắt buộctồn tại）
-   * @throws RRError nếutriggernoiDungTiengVietđăng ký
+   * lấytriggerđịnh nghĩa(bắt buộctồn tại)
+   * @throws RRError nếutriggerđăng ký
    */
   getTriggerOrThrow(kind: TriggerKind): TriggerDefinition {
     const def = this.triggers.get(kind);
@@ -81,28 +81,28 @@ export class PluginRegistry implements PluginRegistrationContext {
   }
 
   /**
-   * kiểm tranútcó/khôngnoiDungTiengVietđăng ký
+   * kiểm tranútcó/khôngđăng ký
    */
   hasNode(kind: NodeKind): boolean {
     return this.nodes.has(kind);
   }
 
   /**
-   * kiểm tratriggercó/khôngnoiDungTiengVietđăng ký
+   * kiểm tratriggercó/khôngđăng ký
    */
   hasTrigger(kind: TriggerKind): boolean {
     return this.triggers.has(kind);
   }
 
   /**
-   * lấytất cảnoiDungTiengVietđăng kýnoiDungTiengVietnútkiểu
+   * lấytất cảđăng kýnútkiểu
    */
   listNodeKinds(): NodeKind[] {
     return Array.from(this.nodes.keys());
   }
 
   /**
-   * lấytất cảnoiDungTiengVietđăng kýnoiDungTiengVietkiểu trigger
+   * lấytất cảđăng kýkiểu trigger
    */
   listTriggerKinds(): TriggerKind[] {
     return Array.from(this.triggers.keys());
@@ -110,7 +110,7 @@ export class PluginRegistry implements PluginRegistrationContext {
 
   /**
    * đăng kýtiện ích
-   * @description gọitiện íchnoiDungTiengViet register phương thức
+   * @description gọitiện ích register phương thức
    */
   registerPlugin(plugin: RRPlugin): void {
     plugin.register(this);
@@ -135,11 +135,11 @@ export class PluginRegistry implements PluginRegistrationContext {
   }
 }
 
-/** toàn cụctiện íchđăng kýnoiDungTiengVietthể hiện */
+/** toàn cụctiện íchđăng kýthể hiện */
 let globalRegistry: PluginRegistry | null = null;
 
 /**
- * lấytoàn cụctiện íchđăng kýnoiDungTiengViet
+ * lấytoàn cụctiện íchđăng ký
  */
 export function getPluginRegistry(): PluginRegistry {
   if (!globalRegistry) {
@@ -149,7 +149,7 @@ export function getPluginRegistry(): PluginRegistry {
 }
 
 /**
- * noiDungTiengViettoàn cụctiện íchđăng kýnoiDungTiengViet
+ * toàn cụctiện íchđăng ký
  * @description chínhdùng chokiểm thử
  */
 export function resetPluginRegistry(): void {

@@ -1,27 +1,22 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet URL bao gồmkhớp（ưu tiên）</label>
+      <label class="form-label"> URL bao gồmkhớp(ưu tiên)</label>
       <input
         class="form-input"
         v-model="(node as any).config.frame.urlContains"
-        placeholder="frame URL bao gồmnoiDungTiengVietchuỗi"
+        placeholder="frame URL bao gồmchuỗi"
       />
     </div>
     <div class="form-group">
-      <label class="form-label"
-        >noiDungTiengVietchỉ mụckhớp（noiDungTiengViet 0 noiDungTiengViet，noiDungTiengViet
-        frame）</label
-      >
+      <label class="form-label">chỉ mụckhớp( 0 , frame)</label>
       <input
         class="form-input"
         v-model="(node as any).config.frame.index"
         placeholder="chỉ mụcsố"
       />
     </div>
-    <div class="text-xs text-slate-500" style="padding: 0 20px"
-      >noiDungTiengViet/noiDungTiengViet frame có sẵn；noiDungTiengViettrang</div
-    >
+    <div class="text-xs text-slate-500" style="padding: 0 20px">/ frame có sẵn; trang</div>
   </div>
 </template>
 

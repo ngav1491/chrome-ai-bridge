@@ -391,14 +391,14 @@ function createPositionIcon(position: PositionValue): SVGElement {
 
   switch (position) {
     case 'static':
-      // noiDungTiengVietmụcnoiDungTiengVietbiểu thịnoiDungTiengViet
+      // mụcbiểu thị
       addLine(3.5, 4.5, 8);
       addLine(3.5, 7.5, 8);
       addLine(3.5, 10.5, 8);
       break;
 
     case 'relative': {
-      // noiDungTiengVietbiểu thịnoiDungTiengViet，noiDungTiengVietbiểu thịoffsetnoiDungTiengViet
+      // biểu thị, biểu thịoffset
       const ghost = document.createElementNS(SVG_NS, 'rect');
       ghost.setAttribute('x', '3.5');
       ghost.setAttribute('y', '3.5');
@@ -411,37 +411,37 @@ function createPositionIcon(position: PositionValue): SVGElement {
       ghost.setAttribute('fill', 'none');
       ghost.setAttribute('opacity', '0.5');
       svg.append(ghost);
-      // offsetnoiDungTiengViet
+      // offset
       addBlock(7.5, 7.5, 4, 4);
-      // kết nốinoiDungTiengViet
+      // kết nối
       addPath('M5.5 7.5L7.5 9.5');
       break;
     }
 
     case 'absolute':
-      // định vịtham chiếunoiDungTiengViet（noiDungTiengVietvùng chứanoiDungTiengVietphần tử）
+      // định vịtham chiếu(vùng chứaphần tử)
       addPath('M3 5.5H6M8 3V6', '0.8');
-      // phần tửnoiDungTiengViet
+      // phần tử
       addBlock(6, 6, 5, 5);
       break;
 
     case 'fixed': {
-      // noiDungTiengVietbiểu thịcố định
+      // biểu thịcố định
       const pin = document.createElementNS(SVG_NS, 'circle');
       pin.setAttribute('cx', '7.5');
       pin.setAttribute('cy', '4');
       pin.setAttribute('r', '1.5');
       pin.setAttribute('fill', 'currentColor');
       svg.append(pin);
-      // noiDungTiengViet
+      //
       addPath('M7.5 5.5V8');
-      // cố địnhnoiDungTiengVietphần tử
+      // cố địnhphần tử
       addBlock(4.5, 8, 6, 4);
       break;
     }
 
     case 'sticky': {
-      // noiDungTiengViet
+      //
       const stickyLine = document.createElementNS(SVG_NS, 'rect');
       stickyLine.setAttribute('x', '3');
       stickyLine.setAttribute('y', '3');
@@ -451,7 +451,7 @@ function createPositionIcon(position: PositionValue): SVGElement {
       stickyLine.setAttribute('fill', 'currentColor');
       stickyLine.setAttribute('opacity', '0.4');
       svg.append(stickyLine);
-      // noiDungTiengVietphần tử
+      // phần tử
       addBlock(4.5, 5, 6, 6);
       break;
     }
@@ -483,7 +483,7 @@ function createRotateIcon(): SVGElement {
 function createFlipXIcon(): SVGElement {
   const svg = createBaseIconSvg();
 
-  // noiDungTiengViet（noiDungTiengVietbiểu thịthô）
+  // (biểu thịthô)
   const leftBlock = document.createElementNS(SVG_NS, 'rect');
   leftBlock.setAttribute('x', '3.5');
   leftBlock.setAttribute('y', '5');
@@ -493,7 +493,7 @@ function createFlipXIcon(): SVGElement {
   leftBlock.setAttribute('fill', 'currentColor');
   leftBlock.setAttribute('opacity', '0.4');
 
-  // noiDungTiengViet（noiDungTiengVietbiểu thịnoiDungTiengViet）
+  // (biểu thị)
   const rightBlock = document.createElementNS(SVG_NS, 'rect');
   rightBlock.setAttribute('x', '8.5');
   rightBlock.setAttribute('y', '5');
@@ -502,7 +502,7 @@ function createFlipXIcon(): SVGElement {
   rightBlock.setAttribute('rx', '0.5');
   rightBlock.setAttribute('fill', 'currentColor');
 
-  // noiDungTiengViet
+  //
   const axis = document.createElementNS(SVG_NS, 'path');
   axis.setAttribute('d', 'M7.5 3V12');
   axis.setAttribute('stroke', 'currentColor');
@@ -518,7 +518,7 @@ function createFlipXIcon(): SVGElement {
 function createFlipYIcon(): SVGElement {
   const svg = createBaseIconSvg();
 
-  // noiDungTiengViet（noiDungTiengVietbiểu thịthô）
+  // (biểu thịthô)
   const topBlock = document.createElementNS(SVG_NS, 'rect');
   topBlock.setAttribute('x', '5');
   topBlock.setAttribute('y', '3.5');
@@ -528,7 +528,7 @@ function createFlipYIcon(): SVGElement {
   topBlock.setAttribute('fill', 'currentColor');
   topBlock.setAttribute('opacity', '0.4');
 
-  // noiDungTiengViet（noiDungTiengVietbiểu thịnoiDungTiengViet）
+  // (biểu thị)
   const bottomBlock = document.createElementNS(SVG_NS, 'rect');
   bottomBlock.setAttribute('x', '5');
   bottomBlock.setAttribute('y', '8.5');
@@ -537,7 +537,7 @@ function createFlipYIcon(): SVGElement {
   bottomBlock.setAttribute('rx', '0.5');
   bottomBlock.setAttribute('fill', 'currentColor');
 
-  // noiDungTiengViet
+  //
   const axis = document.createElementNS(SVG_NS, 'path');
   axis.setAttribute('d', 'M3 7.5H12');
   axis.setAttribute('stroke', 'currentColor');

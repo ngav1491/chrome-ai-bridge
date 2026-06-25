@@ -174,7 +174,7 @@ if (window.__NETWORK_CAPTURE_HELPER_INITIALIZED__) {
         options.body = body;
       }
 
-      // tạonoiDungTiengViethết thời giannoiDungTiengViet fetch
+      // tạohết thời gian fetch
       const fetchWithTimeout = async (url, options, timeout) => {
         const controller = new AbortController();
         const signal = controller.signal;
@@ -192,7 +192,7 @@ if (window.__NETWORK_CAPTURE_HELPER_INITIALIZED__) {
         }
       };
 
-      // gửinoiDungTiengViethết thời giannoiDungTiengVietyêu cầu
+      // gửihết thời gianyêu cầu
       const response = await fetchWithTimeout(url, options, timeout);
 
       // Process response

@@ -90,7 +90,7 @@ export function autoChainEdges(nodes: NodeBase[]): EdgeV2[] {
 export function summarizeNode(n?: NodeBase | null): string {
   if (!n) return '';
   if (n.type === STEP_TYPES.CLICK || n.type === STEP_TYPES.FILL)
-    return n.config?.target?.candidates?.[0]?.value || 'noiDungTiengVietcấu hìnhbộ chọn';
+    return n.config?.target?.candidates?.[0]?.value || 'cấu hìnhbộ chọn';
   if (n.type === STEP_TYPES.NAVIGATE) return n.config?.url || '';
   if (n.type === STEP_TYPES.KEY) return n.config?.keys || '';
   if (n.type === STEP_TYPES.DELAY) return `${Number(n.config?.ms || 0)}ms`;
@@ -120,7 +120,7 @@ export function summarizeNode(n?: NodeBase | null): string {
   if (n.type === STEP_TYPES.ASSERT) return JSON.stringify(n.config?.assert || {});
   if (n.type === STEP_TYPES.IF) {
     const cnt = Array.isArray(n.config?.branches) ? n.config.branches.length : 0;
-    return `if/else nhánhnoiDungTiengViet ${cnt}${n.config?.else === false ? '' : ' + else'}`;
+    return `if/else nhánh ${cnt}${n.config?.else === false ? '' : ' + else'}`;
   }
   if (n.type === STEP_TYPES.SCRIPT) return (n.config?.code || '').slice(0, 30);
   if (n.type === STEP_TYPES.DRAG) {

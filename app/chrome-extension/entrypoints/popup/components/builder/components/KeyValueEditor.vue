@@ -1,15 +1,11 @@
 <template>
   <div class="kve">
     <div v-for="(item, i) in rows" :key="i" class="kve-row">
-      <input class="kve-key" v-model="item.k" placeholder="biếnnoiDungTiengViet" />
-      <input
-        class="kve-val"
-        v-model="item.v"
-        placeholder="kết quảđường dẫn（noiDungTiengViet data.items[0].id）"
-      />
+      <input class="kve-key" v-model="item.k" placeholder="biến" />
+      <input class="kve-val" v-model="item.v" placeholder="kết quảđường dẫn( data.items[0].id)" />
       <button class="mini" @click="move(i, -1)" :disabled="i === 0">↑</button>
       <button class="mini" @click="move(i, 1)" :disabled="i === rows.length - 1">↓</button>
-      <button class="mini danger" @click="remove(i)">noiDungTiengViet</button>
+      <button class="mini danger" @click="remove(i)"></button>
     </div>
     <button class="mini" @click="add">thêmánh xạ</button>
   </div>

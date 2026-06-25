@@ -17,9 +17,9 @@ interface ConsoleToolParams {
   maxMessages?: number;
   // thêm mớitham số
   mode?: ConsoleMode;
-  buffer?: boolean; // mode="buffer" noiDungTiengViet
-  clear?: boolean; // đọcnoiDungTiengVietlàm trống
-  clearAfterRead?: boolean; // đọcnoiDungTiengVietlàm trống（mcp-tools.js phong cách）
+  buffer?: boolean; // mode="buffer"
+  clear?: boolean; // đọclàm trống
+  clearAfterRead?: boolean; // đọclàm trống(mcp-tools.js phong cách)
   pattern?: string;
   onlyErrors?: boolean;
   limit?: number;
@@ -64,7 +64,7 @@ interface ConsoleResult {
   droppedExceptionCount: number;
 }
 
-// noiDungTiengViethàm
+// hàm
 
 function normalizeLimit(value: unknown, fallback: number): number {
   const n = typeof value === 'number' && Number.isFinite(value) ? Math.floor(value) : fallback;
@@ -75,7 +75,7 @@ function parseRegexPattern(pattern?: string): RegExp | undefined {
   if (typeof pattern !== 'string') return undefined;
   const trimmed = pattern.trim();
   if (!trimmed) return undefined;
-  // hỗ trợ /pattern/flags noiDungTiengViet
+  // hỗ trợ /pattern/flags
   const match = trimmed.match(/^\/(.+)\/([gimsuy]*)$/);
   try {
     return match ? new RegExp(match[1], match[2]) : new RegExp(trimmed);
@@ -162,7 +162,7 @@ class ConsoleTool extends BaseBrowserToolExecutor {
     let targetTab: chrome.tabs.Tab;
     let targetTabId: number | undefined;
 
-    // phân tích cú phápnoiDungTiengVietbiểu thức
+    // phân tích cú phápbiểu thức
     let compiledPattern: RegExp | undefined;
     try {
       compiledPattern = parseRegexPattern(pattern);
@@ -198,11 +198,11 @@ class ConsoleTool extends BaseBrowserToolExecutor {
 
       targetTabId = targetTab.id;
 
-      // noiDungTiengVietschema：buffer tham sốnoiDungTiengViet mode="buffer" noiDungTiengViet
+      // schema: buffer tham số mode="buffer"
       const resolvedMode: ConsoleMode =
         mode === 'buffer' || buffer === true ? 'buffer' : 'snapshot';
 
-      // tính toánnoiDungTiengViettin nhắnnoiDungTiengViet
+      // tính toántin nhắn
       const normalizedMaxMessages = normalizeLimit(maxMessages, DEFAULT_MAX_MESSAGES);
       const effectiveLimit =
         typeof limit === 'number'
@@ -221,7 +221,7 @@ class ConsoleTool extends BaseBrowserToolExecutor {
           throw error;
         }
 
-        // xử lýđọcnoiDungTiengVietlàm trốngyêu cầu
+        // xử lýđọclàm trốngyêu cầu
         let clearedBefore: { clearedMessages: number; clearedExceptions: number } | null = null;
         if (clear === true) {
           clearedBefore = consoleBuffer.clear(targetTabId, 'manual');
@@ -239,13 +239,13 @@ class ConsoleTool extends BaseBrowserToolExecutor {
           return createErrorResponse('Console buffer is not available for this tab.');
         }
 
-        // xử lýđọcnoiDungTiengVietlàm trốngyêu cầu（mcp-tools.js phong cách，tránhlặp lạiđọc）
+        // xử lýđọclàm trốngyêu cầu(mcp-tools.js phong cách, tránhlặp lạiđọc)
         let clearedAfter: { clearedMessages: number; clearedExceptions: number } | null = null;
         if (clearAfterRead === true) {
           clearedAfter = consoleBuffer.clear(targetTabId, 'manual');
         }
 
-        // xây dựnglàm trốngnoiDungTiengViet
+        // xây dựnglàm trống
         let clearedSummary = '';
         if (clearedBefore) {
           clearedSummary += ` Cleared ${clearedBefore.clearedMessages} messages and ${clearedBefore.clearedExceptions} exceptions before reading.`;
@@ -281,13 +281,13 @@ class ConsoleTool extends BaseBrowserToolExecutor {
         };
       }
 
-      // Snapshot schema（một lầnnoiDungTiengViet）
+      // Snapshot schema(một lần)
       const result = await this.captureConsoleMessages(targetTabId, {
         includeExceptions,
         maxMessages: effectiveLimit,
       });
 
-      // noiDungTiengVietbộ lọc
+      // bộ lọc
       const filtered = applyResultFilters(result, {
         pattern: compiledPattern,
         onlyErrors,
@@ -572,7 +572,7 @@ class ConsoleTool extends BaseBrowserToolExecutor {
         // Clean up
         chrome.debugger.onEvent.removeListener(eventListener);
 
-        // nếu buffer schemađangsử dụngnoiDungTiengViet tab，noiDungTiengVietđóng Runtime/Log noiDungTiengViet
+        // nếu buffer schemađangsử dụng tab, đóng Runtime/Log
         const keepDomainsEnabled = consoleBuffer.isCapturing(tabId);
         if (!keepDomainsEnabled) {
           try {

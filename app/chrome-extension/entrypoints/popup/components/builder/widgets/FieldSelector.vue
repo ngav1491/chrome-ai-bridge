@@ -2,14 +2,9 @@
   <div class="selector">
     <div class="row">
       <input class="form-input" :placeholder="placeholder" :value="text" @input="onInput" />
-      <button class="btn-mini" type="button" title="noiDungTiengViettrangnhặt" @click="onPick"
-        >nhặt</button
-      >
+      <button class="btn-mini" type="button" title="trangnhặt" @click="onPick">nhặt</button>
     </div>
-    <div class="help"
-      >noiDungTiengVietđầu vào CSS bộ
-      chọn，noiDungTiengVietnhấp“nhặt”noiDungTiengViettrangnoiDungTiengVietphần tử</div
-    >
+    <div class="help">đầu vào CSS bộ chọn, nhấp"nhặt"trangphần tử</div>
     <div v-if="err" class="error-item">{{ err }}</div>
   </div>
 </template>
@@ -49,7 +44,7 @@ async function onPick() {
     err.value = '';
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     const tabId = tabs?.[0]?.id;
-    if (!tabId) throw new Error('không tìm thấynoiDungTiengViet');
+    if (!tabId) throw new Error('không tìm thấy');
     await ensurePickerInjected(tabId);
     const res: any = await chrome.tabs.sendMessage(tabId, { action: 'rr_picker_start' } as any);
     if (!res || !res.success) {
@@ -71,7 +66,7 @@ async function onPick() {
       text.value = sel;
       emit('update:modelValue', sel);
     } else {
-      err.value = 'noiDungTiengViettạonoiDungTiengVietbộ chọn，noiDungTiengVietthủ côngđầu vào';
+      err.value = 'tạobộ chọn, thủ côngđầu vào';
     }
   } catch (e: any) {
     err.value = e?.message || String(e);

@@ -1,6 +1,6 @@
 /**
  * @fileoverview triggerlưu trữ
- * @description triển khaitriggernoiDungTiengViet CRUD thao tác（Phase 4 đầy đủtriển khai）
+ * @description triển khaitrigger CRUD thao tác(Phase 4 đầy đủtriển khai)
  */
 
 import type { TriggerId } from '../domain/ids';

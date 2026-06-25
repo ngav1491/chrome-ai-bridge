@@ -2,8 +2,8 @@
   <!-- rr-theme container provides CSS variables; data-theme for light/dark -->
   <div class="builder-page rr-theme" :data-theme="theme">
     <div v-if="fallbackNotice" class="notice-top">
-      <span>noiDungTiengVietgợi ý：noiDungTiengViet {{ fallbackNotice.type }} độ ưu tiên</span>
-      <button class="mini" @click="undoFallbackPromotion">noiDungTiengViet</button>
+      <span>Đã áp dụng gợi ý dự phòng: nâng ưu tiên {{ fallbackNotice.type }}</span>
+      <button class="mini" @click="undoFallbackPromotion">Hoàn tác</button>
     </div>
 
     <div class="main">
@@ -26,10 +26,10 @@
       <div class="topbar rr-topbar backdrop-blur">
         <div class="left">
           <strong class="text-[var(--rr-text)]">{{ title }}</strong>
-          <span class="tip">quy trình làm việcnoiDungTiengViet</span>
+          <span class="tip">Soạn thảo luồng công việc trực quan</span>
         </div>
         <div class="right">
-          <button class="top-btn" @click="exportFlow" title="xuất JSON">
+          <button class="top-btn" @click="exportFlow" title="Xuất JSON">
             <svg
               width="14"
               height="14"
@@ -40,9 +40,9 @@
             >
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
             </svg>
-            xuất
+            Xuất
           </button>
-          <label class="top-btn import" title="nhập JSON">
+          <label class="top-btn import" title="Nhập JSON">
             <svg
               width="14"
               height="14"
@@ -53,10 +53,10 @@
             >
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
             </svg>
-            nhập
+            Nhập
             <input type="file" accept="application/json" @change="onImport" />
           </label>
-          <button class="top-btn" @click="openRename" title="noiDungTiengVietquy trình làm việc">
+          <button class="top-btn" @click="openRename" title="Đổi tên luồng công việc">
             <svg
               width="14"
               height="14"
@@ -74,7 +74,7 @@
             class="top-btn"
             :class="{ active: triggerPanelVisible }"
             @click="triggerPanelVisible = !triggerPanelVisible"
-            title="quản lýtrigger"
+            title="Quản lý bộ kích hoạt"
           >
             <svg
               width="14"
@@ -93,7 +93,7 @@
             class="top-btn"
             :disabled="!selectedId"
             @click="runFromSelected"
-            title="noiDungTiengVietnútphát lại"
+            title="Phát lại từ nút đã chọn"
           >
             <svg
               width="14"
@@ -105,13 +105,9 @@
             >
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
-            noiDungTiengVietchạy
+            Chạy từ nút đã chọn
           </button>
-          <button
-            class="top-btn primary"
-            @click="runAll"
-            title="noiDungTiengVietphát lạinoiDungTiengViet"
-          >
+          <button class="top-btn primary" @click="runAll" title="Phát lại toàn bộ luồng từ đầu">
             <svg
               width="14"
               height="14"
@@ -122,7 +118,7 @@
             >
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
-            chạy
+            Chạy
           </button>
           <span class="divider-vert" />
           <span class="status" :data-state="saveState">{{ saveLabel }}</span>
@@ -140,7 +136,7 @@
               <polyline points="17 21 17 13 7 13 7 21" />
               <polyline points="7 3 7 8 15 8" />
             </svg>
-            lưu
+            Lưu
           </button>
         </div>
       </div>
@@ -185,7 +181,7 @@
       />
 
       <div class="bottom-toolbar">
-        <button class="toolbar-btn" @click="store.undo" title="noiDungTiengViet (⌘/Ctrl+Z)">
+        <button class="toolbar-btn" @click="store.undo" title="Hoàn tác (⌘/Ctrl+Z)">
           <svg
             width="16"
             height="16"
@@ -197,7 +193,7 @@
             <path d="M3 7v6h6M21 17a9 9 0 00-9-9 9 9 0 00-9 9" />
           </svg>
         </button>
-        <button class="toolbar-btn" @click="store.redo" title="noiDungTiengViet (⌘/Ctrl+Shift+Z)">
+        <button class="toolbar-btn" @click="store.redo" title="Làm lại (⌘/Ctrl+Shift+Z)">
           <svg
             width="16"
             height="16"
@@ -210,7 +206,7 @@
           </svg>
         </button>
         <span class="toolbar-divider" />
-        <button class="toolbar-btn" @click="store.layoutAuto" title="tự độngnoiDungTiengViet">
+        <button class="toolbar-btn" @click="store.layoutAuto" title="Tự động sắp xếp">
           <svg
             width="16"
             height="16"
@@ -225,7 +221,7 @@
             <rect x="3" y="14" width="7" height="7" rx="1" />
           </svg>
         </button>
-        <button class="toolbar-btn" @click="fitAll" title="noiDungTiengViet">
+        <button class="toolbar-btn" @click="fitAll" title="Vừa khung hiển thị">
           <svg
             width="16"
             height="16"
@@ -252,21 +248,21 @@
   <div v-if="renameVisible" class="rr-modal">
     <div class="rr-dialog small">
       <div class="rr-header">
-        <div class="title">noiDungTiengVietquy trình làm việc</div>
+        <div class="title">Đổi tên luồng công việc</div>
         <button class="close" @click="renameVisible = false">✕</button>
       </div>
       <div class="rr-body">
         <div class="row">
-          <label>tên</label>
-          <input v-model="renameName" placeholder="quy trình làm việctên" />
+          <label>Tên</label>
+          <input v-model="renameName" placeholder="Tên luồng công việc" />
         </div>
         <div class="row">
-          <label>mô tả</label>
-          <textarea v-model="renameDesc" placeholder="tùy chọnmô tả"></textarea>
+          <label>Mô tả</label>
+          <textarea v-model="renameDesc" placeholder="Mô tả tùy chọn"></textarea>
         </div>
       </div>
       <div class="rr-footer">
-        <button class="primary" @click="applyRename">lưu</button>
+        <button class="primary" @click="applyRename">Lưu</button>
       </div>
     </div>
   </div>
@@ -300,7 +296,7 @@ import PropertyPanel from '@/entrypoints/popup/components/builder/components/Pro
 import EdgePropertyPanel from '@/entrypoints/popup/components/builder/components/EdgePropertyPanel.vue';
 import TriggerPanel from '@/entrypoints/popup/components/builder/components/TriggerPanel.vue';
 
-const title = ref('quy trình làm việcchỉnh sửanoiDungTiengViet');
+const title = ref('Trình soạn thảo luồng công việc');
 // theme state: persisted in localStorage and default to system preference
 const theme = ref<'light' | 'dark'>(
   (localStorage.getItem('rr-theme') as 'light' | 'dark' | null) ||
@@ -363,7 +359,7 @@ async function bootstrap() {
         const { flow: flowV2, warnings } = flowV3ToV2ForBuilder(flowV3);
         warnings.forEach((w) => pushToast(w, 'warn'));
         store.initFromFlow(flowV2);
-        title.value = `chỉnh sửa：${flowV2.name || flowV2.id}`;
+        title.value = `Chỉnh sửa: ${flowV2.name || flowV2.id}`;
 
         if (q.focus) {
           setTimeout(() => {
@@ -376,15 +372,12 @@ async function bootstrap() {
         }
       } else {
         // Flow not found - notify user and initialize empty flow
-        pushToast(
-          `quy trình làm việc "${q.flowId}" không tìm thấy，noiDungTiengViettạonoiDungTiengVietquy trình làm việc`,
-          'warn',
-        );
+        pushToast(`Luồng công việc "${q.flowId}" không tìm thấy, đã tạo luồng mới`, 'warn');
         initEmptyFlow();
       }
     } catch (e) {
       pushToast(
-        `noiDungTiengVietquy trình làm việcthất bại：${e instanceof Error ? e.message : String(e)}`,
+        `Tải luồng công việc thất bại: ${e instanceof Error ? e.message : String(e)}`,
         'error',
       );
       initEmptyFlow();
@@ -395,13 +388,13 @@ async function bootstrap() {
 }
 
 /**
- * khởi tạonoiDungTiengVietquy trình làm việc
+ * Khởi tạo một luồng công việc trống
  */
 function initEmptyFlow() {
   const now = Date.now();
   const empty: FlowV2 = {
     id: `flow_${now}`,
-    name: 'noiDungTiengVietquy trình làm việc',
+    name: 'Luồng công việc mới',
     version: 1,
     steps: [],
     variables: [],
@@ -411,7 +404,7 @@ function initEmptyFlow() {
     } as any,
   } as any;
   store.initFromFlow(empty);
-  title.value = 'noiDungTiengVietquy trình làm việc';
+  title.value = 'Luồng công việc mới';
 }
 
 // Builder helpers mostly ported from modal component
@@ -486,8 +479,8 @@ function applyRename() {
 }
 
 /**
- * lưu Flow noiDungTiengViet V3 RPC
- * @returns lưuthành côngtrả về FlowV3，thất bạitrả về null
+ * Lưu Flow vào V3 RPC
+ * @returns trả về FlowV3 nếu lưu thành công, trả về null nếu thất bại
  */
 async function save(): Promise<FlowV3 | null> {
   try {
@@ -521,7 +514,7 @@ async function save(): Promise<FlowV3 | null> {
 
     return saved;
   } catch (e) {
-    pushToast(`lưuthất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`Lưu thất bại: ${e instanceof Error ? e.message : String(e)}`, 'error');
     return null;
   }
 }
@@ -537,8 +530,8 @@ function schId(flowId: string, nodeId: string, idx: number): TriggerId {
 }
 
 /**
- * noiDungTiengViet V2 schedule cấu hìnhchuyển đổi thành cron biểu thức
- * @returns cron biểu thứcnoiDungTiengViet null（nếukhông thểchuyển đổi）
+ * Chuyển cấu hình schedule V2 thành biểu thức cron
+ * @returns biểu thức cron hoặc null (nếu không thể chuyển đổi)
  */
 function scheduleToCron(schedule: { type?: string; when?: string }): string | null {
   if (!schedule) return null;
@@ -565,13 +558,13 @@ function scheduleToCron(schedule: { type?: string; when?: string }): string | nu
     return `${minute} ${hour} * * *`;
   }
 
-  // V3 cron noiDungTiengViethỗ trợ 'once' một lầnnoiDungTiengVietđịnh thời
+  // V3 cron không hỗ trợ định thời một lần 'once'
   return null;
 }
 
 /**
- * noiDungTiengViet trigger nútcấu hìnhđồng bộtriggernoiDungTiengViet V3 lưu trữ
- * @description V2 schedules noiDungTiengVietchuyển đổi thành V3 cron triggers
+ * Đồng bộ bộ kích hoạt từ cấu hình nút trigger vào bộ lưu trữ V3
+ * @description V2 schedules sẽ được chuyển đổi thành V3 cron triggers
  */
 async function syncTriggersAndSchedules(flowId: string, nodes: unknown[]) {
   const triggersNeeded: TriggerSpec[] = [];
@@ -641,12 +634,12 @@ async function syncTriggersAndSchedules(flowId: string, nodes: unknown[]) {
           const scheduleType = String(s?.type || 'unknown');
           if (scheduleType === 'once') {
             pushToast(
-              `nút ${n.id} noiDungTiengVietđịnh thời #${i + 1}: V3 noiDungTiengViethỗ trợmột lầnnoiDungTiengVietđịnh thời（once），noiDungTiengViet`,
+              `Nút ${n.id} định thời #${i + 1}: V3 chưa hỗ trợ định thời một lần (once), đã bỏ qua`,
               'warn',
             );
           } else {
             pushToast(
-              `nút ${n.id} noiDungTiengVietđịnh thời #${i + 1}: không thểchuyển đổi thành cron（type=${scheduleType}），noiDungTiengViet`,
+              `Nút ${n.id} định thời #${i + 1}: không thể chuyển đổi thành cron (type=${scheduleType}), đã bỏ qua`,
               'warn',
             );
           }
@@ -720,7 +713,7 @@ async function exportFlow() {
     } as chrome.downloads.DownloadOptions);
     URL.revokeObjectURL(url);
   } catch (e) {
-    pushToast(`xuấtthất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`Xuất thất bại: ${e instanceof Error ? e.message : String(e)}`, 'error');
   }
 }
 
@@ -735,7 +728,7 @@ async function onImport(e: Event) {
     const candidates = extractFlowCandidates(parsed);
 
     if (!candidates.length) {
-      pushToast('nhậpthất bại：không tìm thấyquy trình làm việcdữ liệu', 'error');
+      pushToast('Nhập thất bại: không tìm thấy dữ liệu luồng công việc', 'error');
       return;
     }
 
@@ -751,7 +744,7 @@ async function onImport(e: Event) {
       const { flow: flowV2, warnings } = flowV3ToV2ForBuilder(saved);
       warnings.forEach((w) => pushToast(w, 'warn'));
       store.initFromFlow(flowV2);
-      title.value = `chỉnh sửa：${flowV2.name || flowV2.id}`;
+      title.value = `Chỉnh sửa: ${flowV2.name || flowV2.id}`;
 
       // Sync triggers
       try {
@@ -769,11 +762,11 @@ async function onImport(e: Event) {
         store.importFromSteps();
       }
 
-      title.value = `chỉnh sửa：${store.flowLocal.name || store.flowLocal.id}`;
+      title.value = `Chỉnh sửa: ${store.flowLocal.name || store.flowLocal.id}`;
       await save(); // Convert and save as V3
     }
   } catch (e) {
-    pushToast(`nhậpthất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`Nhập thất bại: ${e instanceof Error ? e.message : String(e)}`, 'error');
   } finally {
     input.value = '';
   }
@@ -797,7 +790,7 @@ async function runFromSelected() {
       ...(startNodeId ? { startNodeId: startNodeId as NodeId } : {}),
     });
   } catch (e) {
-    pushToast(`chạythất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`Chạy thất bại: ${e instanceof Error ? e.message : String(e)}`, 'error');
   }
 }
 
@@ -811,7 +804,7 @@ async function runAll() {
     await rpc.ensureConnected();
     await rpc.request('rr_v3.enqueueRun', { flowId: saved.id as FlowId });
   } catch (e) {
-    pushToast(`chạythất bại：${e instanceof Error ? e.message : String(e)}`, 'error');
+    pushToast(`Chạy thất bại: ${e instanceof Error ? e.message : String(e)}`, 'error');
   }
 }
 
@@ -859,11 +852,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKey));
 // Auto save debounced
 const saveState = ref<'idle' | 'saving' | 'saved'>('idle');
 const saveLabel = computed(() =>
-  saveState.value === 'saving'
-    ? 'lưunoiDungTiengViet…'
-    : saveState.value === 'saved'
-      ? 'noiDungTiengVietlưu'
-      : '',
+  saveState.value === 'saving' ? 'Đang lưu…' : saveState.value === 'saved' ? 'Đã lưu' : '',
 );
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
 let statusTimer: ReturnType<typeof setTimeout> | null = null;

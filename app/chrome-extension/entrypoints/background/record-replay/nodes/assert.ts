@@ -13,7 +13,7 @@ export const assertNode: NodeRuntime<StepAssert> = {
       if (!a.selector || !a.name)
         return {
           ok: false,
-          errors: ['assert.attribute: cần cung cấp selector noiDungTiengViet name'],
+          errors: ['assert.attribute: cần cung cấp selector  name'],
         };
     }
     return ok ? { ok } : { ok, errors: ['thiếukhẳng địnhđiều kiện'] };

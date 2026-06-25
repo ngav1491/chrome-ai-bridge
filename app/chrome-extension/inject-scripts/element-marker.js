@@ -632,7 +632,7 @@
               <option value="xpath">XPath</option>
             </select>
           </div>
-          <button class="em-square-btn" id="__em_toggle_list" title="danh sáchschema - hàng loạtchú thíchnoiDungTiengVietphần tử (noiDungTiengViethỗ trợCSS)">
+          <button class="em-square-btn" id="__em_toggle_list" title="danh sáchschema - hàng loạtchú thíchphần tử (hỗ trợCSS)">
             <svg viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -1108,7 +1108,7 @@
     return { init, destroy };
   })();
 
-  // [tiếp tụcnoiDungTiengViet...]
+  // [tiếp tục...]
   // ============================================================================
   // Selector Engine - Heuristic Selector Generation
   // ============================================================================
@@ -2251,7 +2251,7 @@
         StateStore.set({
           validation: {
             status: 'success',
-            message: `✓ xác thựcthành công (khớp ${filteredMatches.length} noiDungTiengVietphần tử)`,
+            message: `✓ xác thựcthành công (khớp ${filteredMatches.length} phần tử)`,
           },
           validationHistory: history,
         });
@@ -2400,7 +2400,7 @@
       navigator.clipboard?.writeText(sel).catch(() => {});
 
       StateStore.set({
-        validation: { status: 'success', message: '✓ noiDungTiengVietsao chépnoiDungTiengViet' },
+        validation: { status: 'success', message: '✓ sao chép' },
       });
 
       setTimeout(() => {

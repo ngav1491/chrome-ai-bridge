@@ -1,6 +1,6 @@
 /**
  * @fileoverview sự kiệnkiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 trongchạysự kiệnnoiDungTiengViettrạng thái
+ * @description định nghĩa Record-Replay V3 trongchạysự kiệntrạng thái
  */
 
 import type { JsonObject, JsonValue, UnixMillis } from './json';
@@ -16,20 +16,20 @@ export type RunStatus = 'queued' | 'running' | 'paused' | 'succeeded' | 'failed'
 
 /**
  * sự kiệncơ sởgiao diện
- * @description tất cảsự kiệnnoiDungTiengVietcông khaitrường
+ * @description tất cảsự kiệncông khaitrường
  */
 export interface EventBase {
-  /** noiDungTiengViet Run ID */
+  /**  Run ID */
   runId: RunId;
-  /** sự kiệnthời giannoiDungTiengViet */
+  /** sự kiệnthời gian */
   ts: UnixMillis;
-  /** noiDungTiengViettăng dầnnoiDungTiengViet */
+  /** tăng dần */
   seq: number;
 }
 
 /**
  * tạm dừngnguyên nhân
- * @description mô tả Run tạm dừngnoiDungTiengVietnguyên nhân
+ * @description mô tả Run tạm dừngnguyên nhân
  */
 export type PauseReason =
   | { kind: 'breakpoint'; nodeId: NodeId }
@@ -41,11 +41,11 @@ export type PauseReason =
 export type RecoveryReason = 'sw_restart' | 'lease_expired';
 
 /**
- * Run sự kiệnnoiDungTiengVietkiểu
- * @description tất cảnoiDungTiengVietchạynoiDungTiengVietsự kiện
+ * Run sự kiệnkiểu
+ * @description tất cảchạysự kiện
  */
 export type RunEvent =
-  // ===== Run noiDungTiengVietsự kiện =====
+  // ===== Run sự kiện =====
   | (EventBase & { type: 'run.queued'; flowId: FlowId })
   | (EventBase & { type: 'run.started'; flowId: FlowId; tabId: number })
   | (EventBase & { type: 'run.paused'; reason: PauseReason; nodeId?: NodeId })
@@ -54,11 +54,11 @@ export type RunEvent =
       type: 'run.recovered';
       /** khôi phụcnguyên nhân */
       reason: RecoveryReason;
-      /** khôi phụcnoiDungTiengViettrạng thái */
+      /** khôi phụctrạng thái */
       fromStatus: 'running' | 'paused';
-      /** khôi phụcnoiDungTiengViettrạng thái */
+      /** khôi phụctrạng thái */
       toStatus: 'queued';
-      /** noiDungTiengViet ownerId（dùng chonoiDungTiengViet） */
+      /**  ownerId(dùng cho) */
       prevOwnerId?: string;
     })
   | (EventBase & { type: 'run.canceled'; reason?: string })
@@ -83,7 +83,7 @@ export type RunEvent =
     })
   | (EventBase & { type: 'node.skipped'; nodeId: NodeId; reason: 'disabled' | 'unreachable' })
 
-  // ===== biếnnoiDungTiengVietnhật kýsự kiện =====
+  // ===== biếnnhật kýsự kiện =====
   | (EventBase & {
       type: 'vars.patch';
       patch: Array<{ op: 'set' | 'delete'; name: string; value?: JsonValue }>;
@@ -96,18 +96,18 @@ export type RunEvent =
       data?: JsonValue;
     });
 
-/** Run sự kiệnkiểu（noiDungTiengVietkiểutrích xuất） */
+/** Run sự kiệnkiểu(kiểutrích xuất) */
 export type RunEventType = RunEvent['type'];
 
 /**
- * noiDungTiengViet Omit（noiDungTiengVietkiểu）
+ *  Omit(kiểu)
  */
 type DistributiveOmit<T, K extends keyof T> = T extends unknown ? Omit<T, K> : never;
 
 /**
  * Run sự kiệnđầu vàokiểu
- * @description seq bắt buộcnoiDungTiengViet storage noiDungTiengViet（thông qua RunRecordV3.nextSeq）
- * ts tùy chọn，mặc địnhnoiDungTiengViet Date.now()
+ * @description seq bắt buộc storage (thông qua RunRecordV3.nextSeq)
+ * ts tùy chọn, mặc định Date.now()
  */
 export type RunEventInput = DistributiveOmit<RunEvent, 'seq' | 'ts'> & {
   ts?: UnixMillis;
@@ -118,7 +118,7 @@ export const RUN_SCHEMA_VERSION = 3 as const;
 
 /**
  * Run ghi V3
- * @description lưu trữnoiDungTiengViet IndexedDB trong Run noiDungTiengVietghi
+ * @description lưu trữ IndexedDB trong Run ghi
  */
 export interface RunRecordV3 {
   /** Schema phiên bản */
@@ -139,12 +139,12 @@ export interface RunRecordV3 {
   startedAt?: UnixMillis;
   /** kết thúcthời gian */
   finishedAt?: UnixMillis;
-  /** noiDungTiengViet（mili giây） */
+  /** (mili giây) */
   tookMs?: number;
 
-  /** noiDungTiengViet Tab ID（noiDungTiengViet Run độc quyền） */
+  /**  Tab ID( Run độc quyền) */
   tabId?: number;
-  /** bắt đầunút ID（nếunoiDungTiengVietmặc địnhđiểm vào） */
+  /** bắt đầunút ID(nếumặc địnhđiểm vào) */
   startNodeId?: NodeId;
   /** hiện tạithực thinút ID */
   currentNodeId?: NodeId;
@@ -161,17 +161,17 @@ export interface RunRecordV3 {
   /** gỡ lỗicấu hình */
   debug?: { breakpoints?: NodeId[]; pauseOnStart?: boolean };
 
-  /** lỗithông tin（nếuthất bại） */
+  /** lỗithông tin(nếuthất bại) */
   error?: RRError;
   /** đầu rakết quả */
   outputs?: JsonObject;
 
-  /** noiDungTiengVietsự kiệnnoiDungTiengViet（bộ nhớ đệmtrường） */
+  /** sự kiện(bộ nhớ đệmtrường) */
   nextSeq: number;
 }
 
 /**
- * phán đoán Run có/khôngnoiDungTiengViet
+ * phán đoán Run có/không
  */
 export function isTerminalStatus(status: RunStatus): boolean {
   return status === 'succeeded' || status === 'failed' || status === 'canceled';

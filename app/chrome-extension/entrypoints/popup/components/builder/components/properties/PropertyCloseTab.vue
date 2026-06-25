@@ -1,15 +1,11 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet URL đóng（tùy chọn）</label>
-      <input
-        class="form-input"
-        v-model="(node as any).config.url"
-        placeholder="noiDungTiengVietkhớp URL"
-      />
+      <label class="form-label"> URL đóng(tùy chọn)</label>
+      <input class="form-input" v-model="(node as any).config.url" placeholder="khớp URL" />
     </div>
     <div class="form-group">
-      <label class="form-label">Tab IDs（JSON mảng，tùy chọn）</label>
+      <label class="form-label">Tab IDs(JSON mảng, tùy chọn)</label>
       <textarea class="form-textarea" v-model="tabIdsJson" rows="2" placeholder="[1,2]"></textarea>
     </div>
   </div>

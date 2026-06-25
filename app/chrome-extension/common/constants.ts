@@ -5,7 +5,7 @@
 
 // Native Host Configuration
 export const NATIVE_HOST = {
-  NAME: 'com.chromemcp.nativehost',
+  NAME: 'com.ngav1491.chrome_ai_bridge.nativehost',
   DEFAULT_PORT: 12306,
 } as const;
 

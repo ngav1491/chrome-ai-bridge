@@ -1,6 +1,6 @@
 /**
  * @fileoverview RunEvent lưu trữ lâu dài
- * @description triển khaisự kiệnnoiDungTiengViet seq noiDungTiengVietlưu trữ
+ * @description triển khaisự kiện seq lưu trữ
  */
 
 import type { RunId } from '../domain/ids';
@@ -30,14 +30,14 @@ function idbRequest<T>(request: IDBRequest<T>, context: string): Promise<T> {
 /**
  * tạo EventsStore triển khai
  * @description
- * - append() noiDungTiengVietđơn lẻnoiDungTiengViet seq
- * - seq noiDungTiengViet RunRecordV3.nextSeq noiDungTiengVietnguồn
+ * - append() đơn lẻ seq
+ * - seq  RunRecordV3.nextSeq nguồn
  */
 export function createEventsStore(): EventsStore {
   return {
     /**
-     * noiDungTiengVietsự kiệnnoiDungTiengViet seq
-     * @description noiDungTiengVietđơn lẻnoiDungTiengViet：đọc RunRecordV3.nextSeq -> ghisự kiện -> tăng dần nextSeq
+     * sự kiện seq
+     * @description đơn lẻ: đọc RunRecordV3.nextSeq -> ghisự kiện -> tăng dần nextSeq
      */
     async append(input: RunEventInput): Promise<RunEvent> {
       return withTransaction(
@@ -99,7 +99,7 @@ export function createEventsStore(): EventsStore {
 
     /**
      * liệt kêsự kiện
-     * @description noiDungTiengVietkhóa chính [runId, seq] triển khainoiDungTiengViettruy vấn
+     * @description khóa chính [runId, seq] triển khaitruy vấn
      */
     async list(runId: RunId, opts?: { fromSeq?: number; limit?: number }): Promise<RunEvent[]> {
       return withTransaction(RR_V3_STORES.EVENTS, 'readonly', async (stores) => {

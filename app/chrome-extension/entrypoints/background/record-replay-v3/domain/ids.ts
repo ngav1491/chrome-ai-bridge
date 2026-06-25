@@ -1,6 +1,6 @@
 /**
  * @fileoverview ID kiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengViet ID kiểu
+ * @description định nghĩa Record-Replay V3 sử dụng ID kiểu
  */
 
 /** Flow mã định danh duy nhất */
@@ -21,17 +21,17 @@ export type TriggerId = string;
 /** Edge nhãnkiểu */
 export type EdgeLabel = string;
 
-/** noiDungTiengVietđịnh nghĩanoiDungTiengViet Edge nhãnnoiDungTiengViet */
+/** định nghĩa Edge nhãn */
 export const EDGE_LABELS = {
-  /** mặc địnhnoiDungTiengViet */
+  /** mặc định */
   DEFAULT: 'default',
-  /** lỗixử lýnoiDungTiengViet */
+  /** lỗixử lý */
   ON_ERROR: 'onError',
-  /** điều kiệnnoiDungTiengViet */
+  /** điều kiện */
   TRUE: 'true',
-  /** điều kiệnnoiDungTiengViet */
+  /** điều kiện */
   FALSE: 'false',
 } as const;
 
-/** Edge nhãnkiểu（noiDungTiengViet） */
+/** Edge nhãnkiểu() */
 export type EdgeLabelValue = (typeof EDGE_LABELS)[keyof typeof EDGE_LABELS];

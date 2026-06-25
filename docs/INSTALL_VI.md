@@ -43,17 +43,23 @@ Extension dùng chính profile Chrome hiện tại của bạn nên các phiên 
 
 ### Bước 3 — Cài đặt native messaging host
 
-Extension cần một binary nhỏ trên máy để Chrome có thể giao tiếp với MCP server. Cài đặt bằng npm:
+Extension cần một binary nhỏ trên máy để Chrome có thể giao tiếp với MCP server. Gói npm hiện chưa publish, nên hãy build và đăng ký trực tiếp từ source:
+
+```bash
+git clone https://github.com/ngav1491/chrome-ai-bridge.git
+cd chrome-ai-bridge
+corepack enable
+corepack pnpm install
+corepack pnpm build:native
+node app/native-server/dist/cli.js register
+```
+
+Sau khi đăng ký thành công, bạn có thể chuyển sang Bước 4.
+
+Khi gói npm được publish, có thể cài đặt toàn cục bằng:
 
 ```bash
 npm install -g chrome-ai-bridge
-```
-
-Postinstall script tự động đăng ký Chrome Native Messaging manifest. Nếu cài đặt im lặng và lệnh exit với mã `0`, bạn có thể chuyển sang Bước 4.
-
-Nếu postinstall script bị bỏ qua (một số package manager tắt postinstall script), hãy đăng ký thủ công:
-
-```bash
 chrome-ai-bridge register
 ```
 
@@ -193,7 +199,7 @@ Nối thêm `dist/mcp/mcp-server-stdio.js` để có đường dẫn cuối cùn
 
 ## 6. Cập nhật
 
-- **Người dùng cuối**: tải bản release ZIP mới, thay thư mục extension cũ bằng thư mục mới, rồi nhấp **Reload** trên thẻ extension tại `chrome://extensions/`. Chạy `npm install -g chrome-ai-bridge@latest` để cập nhật CLI host.
+- **Người dùng cuối**: tải bản release ZIP mới, thay thư mục extension cũ bằng thư mục mới, rồi nhấp **Reload** trên thẻ extension tại `chrome://extensions/`. Vì gói npm chưa publish, hãy cập nhật source rồi chạy lại `corepack pnpm install && corepack pnpm build:native && node app/native-server/dist/cli.js register`.
 - **Lập trình viên**: `git pull`, rồi chạy lại `corepack pnpm install --frozen-lockfile && corepack pnpm build`, và nhấp **Reload** trên thẻ extension.
 
 ---

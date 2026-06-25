@@ -6,9 +6,7 @@ export const foreachNode: NodeRuntime<any> = {
     const s = step as any;
     const ok =
       typeof s.listVar === 'string' && s.listVar && typeof s.subflowId === 'string' && s.subflowId;
-    return ok
-      ? { ok }
-      : { ok, errors: ['foreach: cần cung cấp listVar noiDungTiengViet subflowId'] };
+    return ok ? { ok } : { ok, errors: ['foreach: cần cung cấp listVar  subflowId'] };
   },
   run: async (_ctx: ExecCtx, step) => {
     const s: any = step;
@@ -32,9 +30,7 @@ export const whileNode: NodeRuntime<any> = {
   validate: (step) => {
     const s = step as any;
     const ok = !!s.condition && typeof s.subflowId === 'string' && s.subflowId;
-    return ok
-      ? { ok }
-      : { ok, errors: ['while: cần cung cấp condition noiDungTiengViet subflowId'] };
+    return ok ? { ok } : { ok, errors: ['while: cần cung cấp condition  subflowId'] };
   },
   run: async (_ctx: ExecCtx, step) => {
     const s: any = step;

@@ -253,7 +253,7 @@ function applyStroke(el: SVGElement, strokeWidth = '1.2'): void {
 function createDisplayIcon(value: DisplayValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
+  // viền vùng chứa(hình chữ nhật nét đứt biểu thị vùng chứa)
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -290,37 +290,37 @@ function createDisplayIcon(value: DisplayValue): SVGElement {
 
   switch (value) {
     case 'block':
-      // haitoàn chiều rộngnoiDungTiengVietphần tử，noiDungTiengViet
+      // haitoàn chiều rộngphần tử,
       addBlock(3.5, 3.5, 8, 3);
       addBlock(3.5, 8.5, 8, 3);
       break;
     case 'inline':
-      // noiDungTiengVietvăn bảnbiểu thịnoiDungTiengViet
+      // văn bảnbiểu thị
       addLine(3.5, 4.5, 8);
       addLine(3.5, 7.5, 5);
       addLine(3.5, 10.5, 6.5);
       break;
     case 'inline-block':
-      // noiDungTiengViet，noiDungTiengVietvăn bản
+      // , văn bản
       addBlock(3.5, 4.5, 3.5, 6);
       addLine(8, 5.5, 4);
       addLine(8, 8.5, 3);
       break;
     case 'flex':
-      // noiDungTiengViet
+      //
       addBlock(3.5, 4.5, 2.5, 6);
       addBlock(6.5, 4.5, 2.5, 6);
       addBlock(9.5, 4.5, 2.5, 6);
       break;
     case 'grid':
-      // 2x2 noiDungTiengViet
+      // 2x2
       addBlock(3.5, 3.5, 3.5, 3.5);
       addBlock(8, 3.5, 3.5, 3.5);
       addBlock(3.5, 8, 3.5, 3.5);
       addBlock(8, 8, 3.5, 3.5);
       break;
     case 'none': {
-      // vô hiệu hóanoiDungTiengViet：noiDungTiengViet
+      // vô hiệu hóa:
       const slash = document.createElementNS(SVG_NS, 'path');
       slash.setAttribute('d', 'M4 11L11 4');
       slash.setAttribute('stroke', 'currentColor');
@@ -355,7 +355,7 @@ function createFlowIcon(direction: FlexDirectionValue): SVGElement {
 function createHorizontalAlignIcon(value: AlignmentAxisValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
+  // viền vùng chứa(hình chữ nhật nét đứt biểu thị vùng chứa)
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -368,14 +368,14 @@ function createHorizontalAlignIcon(value: AlignmentAxisValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // noiDungTiengViet X tọa độdựa trêncách căn chỉnh khác nhau
+  //  X tọa độdựa trêncách căn chỉnh khác nhau
   const blockX: Record<AlignmentAxisValue, number> = {
-    'flex-start': 3.5, // noiDungTiengViet
+    'flex-start': 3.5, //
     center: 5.5, // căn giữa
-    'flex-end': 7.5, // noiDungTiengViet
+    'flex-end': 7.5, //
   };
 
-  // hainoiDungTiengVietbiểu thịnoiDungTiengVietphần tử（noiDungTiengViet）
+  // haibiểu thịphần tử()
   const block1 = document.createElementNS(SVG_NS, 'rect');
   block1.setAttribute('x', String(blockX[value]));
   block1.setAttribute('y', '4');
@@ -399,7 +399,7 @@ function createHorizontalAlignIcon(value: AlignmentAxisValue): SVGElement {
 function createVerticalAlignIcon(value: AlignmentAxisValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
+  // viền vùng chứa(hình chữ nhật nét đứt biểu thị vùng chứa)
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -412,14 +412,14 @@ function createVerticalAlignIcon(value: AlignmentAxisValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // noiDungTiengViet Y tọa độdựa trêncách căn chỉnh khác nhau
+  //  Y tọa độdựa trêncách căn chỉnh khác nhau
   const blockY: Record<AlignmentAxisValue, number> = {
-    'flex-start': 3.5, // noiDungTiengViet
+    'flex-start': 3.5, //
     center: 5.5, // căn giữa
-    'flex-end': 7.5, // noiDungTiengViet
+    'flex-end': 7.5, //
   };
 
-  // hainoiDungTiengVietbiểu thịnoiDungTiengVietphần tử
+  // haibiểu thịphần tử
   const block1 = document.createElementNS(SVG_NS, 'rect');
   block1.setAttribute('x', '4');
   block1.setAttribute('y', String(blockY[value]));

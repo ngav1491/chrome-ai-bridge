@@ -1,14 +1,14 @@
 /**
- * @fileoverview điểm dừngquản lýnoiDungTiengViet
- * @description quản lýgỡ lỗiđiểm dừngnoiDungTiengVietthêm、xóanoiDungTiengVietphát hiện
+ * @fileoverview điểm dừngquản lý
+ * @description quản lýgỡ lỗiđiểm dừngthêm, xóaphát hiện
  */
 
 import type { NodeId, RunId } from '../../domain/ids';
 import type { Breakpoint, DebuggerState } from '../../domain/debug';
 
 /**
- * điểm dừngquản lýnoiDungTiengViet
- * @description quản lýđơn lẻ Run noiDungTiengVietđiểm dừng
+ * điểm dừngquản lý
+ * @description quản lýđơn lẻ Run điểm dừng
  */
 export class BreakpointManager {
   private breakpoints = new Map<NodeId, Breakpoint>();
@@ -37,7 +37,7 @@ export class BreakpointManager {
   }
 
   /**
-   * cài đặtđiểm dừngdanh sách（noiDungTiengViettất cảhiện cóđiểm dừng）
+   * cài đặtđiểm dừngdanh sách(tất cảhiện cóđiểm dừng)
    */
   setAll(nodeIds: NodeId[]): void {
     this.breakpoints.clear();
@@ -67,7 +67,7 @@ export class BreakpointManager {
   }
 
   /**
-   * kiểm tranútcó/khôngnoiDungTiengVietbậtnoiDungTiengVietđiểm dừng
+   * kiểm tranútcó/khôngbậtđiểm dừng
    */
   hasBreakpoint(nodeId: NodeId): boolean {
     const bp = this.breakpoints.get(nodeId);
@@ -75,15 +75,15 @@ export class BreakpointManager {
   }
 
   /**
-   * kiểm tracó/khôngnoiDungTiengVietnútnoiDungTiengViettạm dừng
-   * @description noiDungTiengVietđiểm dừngnoiDungTiengVietmột bướcschema
+   * kiểm tracó/khôngnúttạm dừng
+   * @description điểm dừngmột bướcschema
    */
   shouldPauseAt(nodeId: NodeId): boolean {
-    // nếunoiDungTiengVietmột bướcschema，noiDungTiengViettạm dừng
+    // nếumột bướcschema, tạm dừng
     if (this.stepMode === 'stepOver') {
       return true;
     }
-    // noiDungTiengVietkiểm trađiểm dừng
+    // kiểm trađiểm dừng
     return this.hasBreakpoint(nodeId);
   }
 
@@ -95,7 +95,7 @@ export class BreakpointManager {
   }
 
   /**
-   * lấybậtnoiDungTiengVietđiểm dừng
+   * lấybậtđiểm dừng
    */
   getEnabled(): Breakpoint[] {
     return this.getAll().filter((bp) => bp.enabled);
@@ -125,14 +125,14 @@ export class BreakpointManager {
 }
 
 /**
- * điểm dừngquản lýnoiDungTiengVietđăng kýnoiDungTiengViet
- * @description quản lýnoiDungTiengViet Run noiDungTiengVietđiểm dừngquản lýnoiDungTiengViet
+ * điểm dừngquản lýđăng ký
+ * @description quản lý Run điểm dừngquản lý
  */
 export class BreakpointRegistry {
   private managers = new Map<RunId, BreakpointManager>();
 
   /**
-   * lấynoiDungTiengViettạođiểm dừngquản lýnoiDungTiengViet
+   * lấytạođiểm dừngquản lý
    */
   getOrCreate(runId: RunId, initialBreakpoints?: NodeId[]): BreakpointManager {
     let manager = this.managers.get(runId);
@@ -144,14 +144,14 @@ export class BreakpointRegistry {
   }
 
   /**
-   * lấyđiểm dừngquản lýnoiDungTiengViet
+   * lấyđiểm dừngquản lý
    */
   get(runId: RunId): BreakpointManager | undefined {
     return this.managers.get(runId);
   }
 
   /**
-   * xóađiểm dừngquản lýnoiDungTiengViet
+   * xóađiểm dừngquản lý
    */
   remove(runId: RunId): void {
     this.managers.delete(runId);
@@ -165,11 +165,11 @@ export class BreakpointRegistry {
   }
 }
 
-/** toàn cụcđiểm dừngđăng kýnoiDungTiengViet */
+/** toàn cụcđiểm dừngđăng ký */
 let globalBreakpointRegistry: BreakpointRegistry | null = null;
 
 /**
- * lấytoàn cụcđiểm dừngđăng kýnoiDungTiengViet
+ * lấytoàn cụcđiểm dừngđăng ký
  */
 export function getBreakpointRegistry(): BreakpointRegistry {
   if (!globalBreakpointRegistry) {
@@ -179,7 +179,7 @@ export function getBreakpointRegistry(): BreakpointRegistry {
 }
 
 /**
- * noiDungTiengViettoàn cụcđiểm dừngđăng kýnoiDungTiengViet
+ * toàn cụcđiểm dừngđăng ký
  * @description chínhdùng chokiểm thử
  */
 export function resetBreakpointRegistry(): void {

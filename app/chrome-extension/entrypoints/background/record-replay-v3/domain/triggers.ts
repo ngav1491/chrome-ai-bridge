@@ -29,7 +29,7 @@ export interface TriggerSpecBase {
   enabled: boolean;
   /** liên quan Flow ID */
   flowId: FlowId;
-  /** truyền cho Flow noiDungTiengViettham số */
+  /** truyền cho Flow tham số */
   args?: JsonObject;
 }
 
@@ -42,7 +42,7 @@ export interface UrlMatchRule {
 }
 
 /**
- * triggerquy tắcnoiDungTiengVietkiểu
+ * triggerquy tắckiểu
  */
 export type TriggerSpec =
   // thủ côngkích hoạt
@@ -61,17 +61,17 @@ export type TriggerSpec =
       timezone?: string;
     })
 
-  // Interval định thờikích hoạt（cố địnhkhoảng cáchlặp lại）
+  // Interval định thờikích hoạt(cố địnhkhoảng cáchlặp lại)
   | (TriggerSpecBase & {
       kind: 'interval';
-      /** khoảng cáchphútnoiDungTiengViet，noiDungTiengViet 1 */
+      /** khoảng cáchphút,  1 */
       periodMinutes: number;
     })
 
-  // Once định thờikích hoạt（chỉ địnhthời giankích hoạtmột lầnnoiDungTiengViettự độngvô hiệu hóa）
+  // Once định thờikích hoạt(chỉ địnhthời giankích hoạtmột lầntự độngvô hiệu hóa)
   | (TriggerSpecBase & {
       kind: 'once';
-      /** kích hoạtthời giannoiDungTiengViet (Unix milliseconds) */
+      /** kích hoạtthời gian (Unix milliseconds) */
       whenMs: UnixMillis;
     })
 
@@ -88,7 +88,7 @@ export type TriggerSpec =
       contexts?: ReadonlyArray<string>;
     })
 
-  // DOM phần tửnoiDungTiengVietkích hoạt
+  // DOM phần tửkích hoạt
   | (TriggerSpecBase & {
       kind: 'dom';
       selector: string;
@@ -99,7 +99,7 @@ export type TriggerSpec =
 
 /**
  * triggerkích hoạtngữ cảnh
- * @description mô tảtriggernoiDungTiengVietkích hoạtnoiDungTiengVietngữ cảnhthông tin
+ * @description mô tảtriggerkích hoạtngữ cảnhthông tin
  */
 export interface TriggerFireContext {
   /** trigger ID */
@@ -115,7 +115,7 @@ export interface TriggerFireContext {
 }
 
 /**
- * dựa trênkiểu triggerlấykiểunoiDungTiengViettriggerquy tắc
+ * dựa trênkiểu triggerlấykiểutriggerquy tắc
  */
 export type TriggerSpecByKind<K extends TriggerKind> = Extract<TriggerSpec, { kind: K }>;
 

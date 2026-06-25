@@ -188,7 +188,7 @@ const filtered = computed(() => {
   scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
 }
 
-/* tìm kiếmnoiDungTiengViet */
+/* tìm kiếm */
 .search-box {
   position: relative;
   display: flex;
@@ -216,7 +216,7 @@ const filtered = computed(() => {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.06);
 }
 
-/* nútnoiDungTiengViet */
+/* nút */
 .nodes-section {
   display: flex;
   flex-direction: column;
@@ -246,7 +246,7 @@ const filtered = computed(() => {
   transform: scale(0.98);
 }
 
-/* nútnoiDungTiengViet - noiDungTiengViet */
+/* nút -  */
 .btn-icon {
   width: 30px;
   height: 30px;
@@ -354,7 +354,7 @@ const filtered = computed(() => {
   flex: 1;
 }
 
-/* noiDungTiengViet */
+/*  */
 .section-divider {
   display: flex;
   align-items: center;

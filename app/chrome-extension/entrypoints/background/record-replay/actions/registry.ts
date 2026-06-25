@@ -1,11 +1,11 @@
 /**
- * Action Registry - Action thực thinoiDungTiengVietđăng kýnoiDungTiengVietthực thinoiDungTiengViet
+ * Action Registry - Action thực thiđăng kýthực thi
  *
- * noiDungTiengViet：
- * - noiDungTiengVietđăng ký/đăng xuất handler
- * - noiDungTiengViet/hooknoiDungTiengViet (beforeExecute, afterExecute)
- * - thử lạinoiDungTiengViethết thời gianchiến lược
- * - kiểunoiDungTiengViet
+ * :
+ * - đăng ký/đăng xuất handler
+ * - /hook (beforeExecute, afterExecute)
+ * - thử lạihết thời gianchiến lược
+ * - kiểu
  */
 
 import type {
@@ -135,7 +135,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 // ================================
-// Resolvable phân tích cú phápnoiDungTiengViet
+// Resolvable phân tích cú pháp
 // ================================
 
 function isVariablePointer(value: unknown): value is VariablePointer {
@@ -298,7 +298,7 @@ export function tryResolveNumber(
 export const tryResolveValue = tryResolveJson;
 
 // ================================
-// thử lạinoiDungTiengViethết thời gianlogic
+// thử lạihết thời gianlogic
 // ================================
 
 function shouldRetry(policy: RetryPolicy | undefined, error: ActionError | undefined): boolean {
@@ -357,7 +357,7 @@ async function runWithTimeout<T>(
 }
 
 // ================================
-// ActionRegistry noiDungTiengViet
+// ActionRegistry
 // ================================
 
 export class ActionRegistry {
@@ -406,7 +406,7 @@ export class ActionRegistry {
   }
 
   /**
-   * liệt kêtất cảnoiDungTiengVietđăng kýnoiDungTiengViet handler
+   * liệt kêtất cảđăng ký handler
    */
   list(): ReadonlyArray<AnyExecutableHandler> {
     const arr = Object.values(this.handlers).filter(
@@ -468,7 +468,7 @@ export class ActionRegistry {
   ): Promise<ActionExecutionResult<T>> {
     const startedAt = Date.now();
 
-    // noiDungTiengVietvô hiệu hóanoiDungTiengViet action
+    // vô hiệu hóa action
     if (action.disabled) {
       return { status: 'skipped', durationMs: Date.now() - startedAt };
     }
@@ -512,7 +512,7 @@ export class ActionRegistry {
       return result;
     }
 
-    // tính toánthử lạinoiDungTiengViethết thời giantham số
+    // tính toánthử lạihết thời giantham số
     const retryPolicy = action.policy?.retry;
     const timeoutPolicy = action.policy?.timeout;
     const maxAttempts = 1 + Math.max(0, Math.floor(retryPolicy?.retries ?? 0));
@@ -527,7 +527,7 @@ export class ActionRegistry {
 
     let last: ActionExecutionResult<T> | undefined;
 
-    // thực thivòng lặp（hỗ trợthử lại）
+    // thực thivòng lặp(hỗ trợthử lại)
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       const attemptTimeoutMs: number | undefined = (() => {
         if (!timeoutPolicy || timeoutPolicy.ms <= 0) return undefined;
@@ -541,7 +541,7 @@ export class ActionRegistry {
         break;
       }
 
-      // beforeExecute hook（noiDungTiengViet）
+      // beforeExecute hook()
       let shortCircuited: ActionExecutionResult<T> | undefined;
       for (const hook of this.beforeHooks) {
         try {
@@ -575,7 +575,7 @@ export class ActionRegistry {
 
       let result: ActionExecutionResult<T> = runOutcome;
 
-      // afterExecute hook（noiDungTiengVietkết quả）
+      // afterExecute hook(kết quả)
       for (const hook of this.afterHooks) {
         try {
           const maybe = await hook({ ctx, action, handler, result, attempt });
@@ -591,7 +591,7 @@ export class ActionRegistry {
 
       last = result;
 
-      // thành côngnoiDungTiengViet
+      // thành công
       if (result.status !== 'failed') break;
 
       // phán đoáncó/khôngthử lại
@@ -633,7 +633,7 @@ export class ActionRegistry {
 // ================================
 
 /**
- * tạomặc địnhnoiDungTiengViet ActionRegistry thể hiện
+ * tạomặc định ActionRegistry thể hiện
  */
 export function createActionRegistry(): ActionRegistry {
   return new ActionRegistry();

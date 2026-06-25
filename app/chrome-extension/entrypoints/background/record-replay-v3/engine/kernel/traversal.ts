@@ -1,6 +1,6 @@
 /**
- * @fileoverview DAG noiDungTiengVietxác thực
- * @description noiDungTiengViet Flow DAG noiDungTiengVietxác thực、noiDungTiengVietnútnoiDungTiengViet
+ * @fileoverview DAG xác thực
+ * @description  Flow DAG xác thực, nút
  */
 
 import type { NodeId, EdgeLabel } from '../../domain/ids';
@@ -32,7 +32,7 @@ export function validateFlowDAG(flow: FlowV3): ValidateFlowDAGResult {
     );
   }
 
-  // kiểm tranoiDungTiengVietnútcó/khôngtồn tại
+  // kiểm tranútcó/khôngtồn tại
   for (const edge of flow.edges) {
     if (!nodeIds.has(edge.from)) {
       errors.push(
@@ -66,7 +66,7 @@ export function validateFlowDAG(flow: FlowV3): ValidateFlowDAGResult {
 /**
  * phát hiện DAG trongvòng lặp
  * @param flow Flow định nghĩa
- * @returns vòng lặpđường dẫn（nếutồn tại）noiDungTiengViet null
+ * @returns vòng lặpđường dẫn(nếutồn tại) null
  */
 export function detectCycle(flow: FlowV3): NodeId[] | null {
   const adjacency = buildAdjacencyMap(flow);
@@ -86,10 +86,10 @@ export function detectCycle(flow: FlowV3): NodeId[] | null {
           return true;
         }
       } else if (recursionStack.has(neighbor)) {
-        // noiDungTiengVietvòng lặp
+        // vòng lặp
         const cycleStart = path.indexOf(neighbor);
-        path.push(neighbor); // noiDungTiengVietvòng lặp
-        path.splice(0, cycleStart); // gỡ bỏvòng lặpnoiDungTiengVietnút
+        path.push(neighbor); // vòng lặp
+        path.splice(0, cycleStart); // gỡ bỏvòng lặpnút
         return true;
       }
     }
@@ -111,11 +111,11 @@ export function detectCycle(flow: FlowV3): NodeId[] | null {
 }
 
 /**
- * noiDungTiengVietnút
+ * nút
  * @param flow Flow định nghĩa
  * @param currentNodeId hiện tạinút ID
- * @param label noiDungTiengVietnhãn（tùy chọn，mặc địnhsử dụng default）
- * @returns noiDungTiengVietnút ID noiDungTiengViet null（nếukhông cónoiDungTiengVietnút）
+ * @param label nhãn(tùy chọn, mặc địnhsử dụng default)
+ * @returns nút ID  null(nếukhông cónút)
  */
 export function findNextNode(
   flow: FlowV3,
@@ -128,7 +128,7 @@ export function findNextNode(
     return null;
   }
 
-  // nếuchỉ địnhnoiDungTiengViet label，ưu tiênkhớp
+  // nếuchỉ định label, ưu tiênkhớp
   if (label) {
     const matchedEdge = outEdges.find((e) => e.label === label);
     if (matchedEdge) {
@@ -136,7 +136,7 @@ export function findNextNode(
     }
   }
 
-  // noiDungTiengVietsử dụng default noiDungTiengViet
+  // sử dụng default
   const defaultEdge = outEdges.find(
     (e) => e.label === EDGE_LABELS.DEFAULT || e.label === undefined,
   );
@@ -144,7 +144,7 @@ export function findNextNode(
     return defaultEdge.to;
   }
 
-  // nếunoiDungTiengVietmụcnoiDungTiengViet，sử dụngnoiDungTiengViet
+  // nếumục, sử dụng
   if (outEdges.length === 1) {
     return outEdges[0].to;
   }
@@ -153,7 +153,7 @@ export function findNextNode(
 }
 
 /**
- * noiDungTiengVietchỉ địnhnhãnnoiDungTiengViet
+ * chỉ địnhnhãn
  */
 export function findEdgeByLabel(
   flow: FlowV3,
@@ -164,21 +164,21 @@ export function findEdgeByLabel(
 }
 
 /**
- * lấynútnoiDungTiengViettất cảnoiDungTiengViet
+ * lấynúttất cả
  */
 export function getOutEdges(flow: FlowV3, nodeId: NodeId): EdgeV3[] {
   return flow.edges.filter((e) => e.from === nodeId);
 }
 
 /**
- * lấynútnoiDungTiengViettất cảnoiDungTiengViet
+ * lấynúttất cả
  */
 export function getInEdges(flow: FlowV3, nodeId: NodeId): EdgeV3[] {
   return flow.edges.filter((e) => e.to === nodeId);
 }
 
 /**
- * xây dựngnoiDungTiengViet
+ * xây dựng
  */
 function buildAdjacencyMap(flow: FlowV3): Map<NodeId, NodeId[]> {
   const map = new Map<NodeId, NodeId[]>();
@@ -198,7 +198,7 @@ function buildAdjacencyMap(flow: FlowV3): Map<NodeId, NodeId[]> {
 }
 
 /**
- * lấynoiDungTiengVietđiểm vàonútnoiDungTiengViettất cảnút
+ * lấyđiểm vàonúttất cảnút
  */
 export function getReachableNodes(flow: FlowV3): Set<NodeId> {
   const reachable = new Set<NodeId>();
@@ -219,7 +219,7 @@ export function getReachableNodes(flow: FlowV3): Set<NodeId> {
 }
 
 /**
- * kiểm tranútcó/khôngnoiDungTiengViet
+ * kiểm tranútcó/không
  */
 export function isNodeReachable(flow: FlowV3, nodeId: NodeId): boolean {
   return getReachableNodes(flow).has(nodeId);

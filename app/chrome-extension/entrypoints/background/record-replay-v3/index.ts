@@ -1,6 +1,6 @@
 /**
  * @fileoverview Record-Replay V3 công khai API điểm vào
- * @description xuấttất cảcông khaikiểunoiDungTiengVietgiao diện
+ * @description xuấttất cảcông khaikiểugiao diện
  */
 
 // ==================== Domain ====================

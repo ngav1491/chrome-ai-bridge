@@ -1,11 +1,11 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet</label>
+      <label class="form-label"></label>
       <input
         class="form-input"
         v-model="(node as any).config.keys"
-        placeholder="noiDungTiengViet Backspace Enter noiDungTiengViet cmd+a"
+        placeholder=" Backspace Enter  cmd+a"
       />
     </div>
   </div>

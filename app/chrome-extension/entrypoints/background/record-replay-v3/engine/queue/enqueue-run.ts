@@ -1,12 +1,12 @@
 /**
- * @fileoverview noiDungTiengVietvào hàng đợidịch vụ
+ * @fileoverview vào hàng đợidịch vụ
  * @description
- * noiDungTiengViet Run vào hàng đợilogic，noiDungTiengViet RPC Server noiDungTiengViet TriggerManager noiDungTiengViet。
+ *  Run vào hàng đợilogic,  RPC Server  TriggerManager .
  *
- * lý do thiết kế：
- * - noiDungTiengViet RpcServer noiDungTiengVietvào hàng đợilogicnoiDungTiengVietdịch vụ
- * - tránh RPC noiDungTiengViet TriggerManager noiDungTiengViethành vinoiDungTiengViet
- * - noiDungTiengViettham sốxác thực、Run tạo、hàng đợivào hàng đợi、sự kiệnphát hànhquy trình
+ * lý do thiết kế:
+ * -  RpcServer vào hàng đợilogicdịch vụ
+ * - tránh RPC  TriggerManager hành vi
+ * - tham sốxác thực, Run tạo, hàng đợivào hàng đợi, sự kiệnphát hànhquy trình
  */
 
 import type { JsonObject, UnixMillis } from '../../domain/json';
@@ -23,7 +23,7 @@ import type { RunScheduler } from './scheduler';
  * vào hàng đợidịch vụphụ thuộc
  */
 export interface EnqueueRunDeps {
-  /** lưu trữnoiDungTiengViet (noiDungTiengViet flows/runs/queue) */
+  /** lưu trữ ( flows/runs/queue) */
   storage: Pick<StoragePort, 'flows' | 'runs' | 'queue'>;
   /** sự kiệnbus */
   events: Pick<EventsBus, 'append'>;
@@ -39,17 +39,17 @@ export interface EnqueueRunDeps {
  * vào hàng đợiyêu cầutham số
  */
 export interface EnqueueRunInput {
-  /** Flow ID (noiDungTiengViet) */
+  /** Flow ID () */
   flowId: FlowId;
-  /** bắt đầunút ID (tùy chọn，mặc địnhsử dụng Flow noiDungTiengViet entryNodeId) */
+  /** bắt đầunút ID (tùy chọn, mặc địnhsử dụng Flow  entryNodeId) */
   startNodeId?: NodeId;
   /** độ ưu tiên (mặc định 0) */
   priority?: number;
   /** số lần thử tối đa (mặc định 1) */
   maxAttempts?: number;
-  /** truyền cho Flow noiDungTiengViettham số */
+  /** truyền cho Flow tham số */
   args?: JsonObject;
-  /** kích hoạtngữ cảnh (noiDungTiengViet TriggerManager cài đặt) */
+  /** kích hoạtngữ cảnh ( TriggerManager cài đặt) */
   trigger?: TriggerFireContext;
   /** gỡ lỗitùy chọn */
   debug?: {
@@ -62,9 +62,9 @@ export interface EnqueueRunInput {
  * vào hàng đợikết quả
  */
 export interface EnqueueRunResult {
-  /** noiDungTiengViettạonoiDungTiengViet Run ID */
+  /** tạo Run ID */
   runId: RunId;
-  /** noiDungTiengViethàng đợitrongnoiDungTiengViet (1-based) */
+  /** hàng đợitrong (1-based) */
   position: number;
 }
 
@@ -78,7 +78,7 @@ function defaultGenerateRunId(): RunId {
 }
 
 /**
- * xác thựcnoiDungTiengViettham số
+ * xác thựctham số
  */
 function validateInt(
   value: unknown,
@@ -103,8 +103,8 @@ function validateInt(
 }
 
 /**
- * tính toán Run noiDungTiengViethàng đợitrongnoiDungTiengViet
- * @description noiDungTiengVietlập lịchthứ tự: priority DESC + createdAt ASC
+ * tính toán Run hàng đợitrong
+ * @description lập lịchthứ tự: priority DESC + createdAt ASC
  * @returns 1-based position, or -1 if run not found in queued items
  *
  * Note: Due to race conditions (scheduler may claim the run before this is called),
@@ -127,16 +127,16 @@ async function computeQueuePosition(
 // ==================== Main Function ====================
 
 /**
- * vào hàng đợithực thinoiDungTiengViet Run
+ * vào hàng đợithực thi Run
  * @description
- * thực thinoiDungTiengViet：
+ * thực thi:
  * 1. tham sốxác thực
  * 2. xác thực Flow tồn tại
  * 3. tạo RunRecordV3 (status=queued)
- * 4. vào hàng đợinoiDungTiengViet RunQueue
+ * 4. vào hàng đợi RunQueue
  * 5. phát hành run.queued sự kiện
  * 6. kích hoạtlập lịch (best-effort)
- * 7. tính toánhàng đợinoiDungTiengViet
+ * 7. tính toánhàng đợi
  */
 export async function enqueueRun(
   deps: EnqueueRunDeps,
@@ -160,7 +160,7 @@ export async function enqueueRun(
     throw new Error(`Flow "${flowId}" not found`);
   }
 
-  // xác thực startNodeId tồn tạinoiDungTiengViet Flow noiDungTiengViet
+  // xác thực startNodeId tồn tại Flow
   if (input.startNodeId) {
     const nodeExists = flow.nodes.some((n) => n.id === input.startNodeId);
     if (!nodeExists) {
@@ -207,10 +207,10 @@ export async function enqueueRun(
     flowId,
   });
 
-  // 4. tính toánhàng đợinoiDungTiengViet (noiDungTiengViet kick trướctính toán，noiDungTiengVietđiều kiệnnoiDungTiengViet position=-1 noiDungTiengViet)
+  // 4. tính toánhàng đợi ( kick trướctính toán, điều kiện position=-1 )
   const position = await computeQueuePosition(deps.storage, runId);
 
-  // 5. kích hoạtlập lịch (best-effort, noiDungTiengViettrả về)
+  // 5. kích hoạtlập lịch (best-effort, trả về)
   if (deps.scheduler) {
     void deps.scheduler.kick();
   }

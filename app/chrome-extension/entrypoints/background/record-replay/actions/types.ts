@@ -1,14 +1,14 @@
 /**
  * Action Type System for Record & Replay
- * noiDungTiengVietghiphát lạinoiDungTiengVietkiểuđịnh nghĩa
+ * ghiphát lạikiểuđịnh nghĩa
  *
- * noiDungTiengViet：
- * - kiểunoiDungTiengViet，noiDungTiengViet any
+ * :
+ * - kiểu,  any
  * - hỗ trợtất cảthao táckiểu
- * - hỗ trợthử lại、hết thời gian、lỗixử lýchiến lược
- * - hỗ trợbộ chọnứng viêndanh sáchnoiDungTiengVietđiểm ổn định
+ * - hỗ trợthử lại, hết thời gian, lỗixử lýchiến lược
+ * - hỗ trợbộ chọnứng viêndanh sáchđiểm ổn định
  * - hỗ trợbiếnhệ thống
- * - tuân theo SOLID noiDungTiengViet（giao diệnnoiDungTiengVietthông quanoiDungTiengViet）
+ * - tuân theo SOLID (giao diệnthông qua)
  */
 
 // ================================
@@ -78,24 +78,24 @@ export interface ActionError {
 
 export interface TimeoutPolicy {
   ms: Milliseconds;
-  /** 'attempt' = noiDungTiengVietthửnoiDungTiengViet, 'action' = toàn bộ action noiDungTiengViet */
+  /** 'attempt' = thử, 'action' = toàn bộ action  */
   scope?: 'attempt' | 'action';
 }
 
 export type BackoffKind = 'none' | 'exp' | 'linear';
 
 export interface RetryPolicy {
-  /** thử lạinoiDungTiengViet（noiDungTiengVietthử） */
+  /** thử lại(thử) */
   retries: number;
   /** thử lạikhoảng cách */
   intervalMs: Milliseconds;
-  /** noiDungTiengVietchiến lược */
+  /** chiến lược */
   backoff?: BackoffKind;
-  /** tối đakhoảng cách（dùng cho exp/linear） */
+  /** tối đakhoảng cách(dùng cho exp/linear) */
   maxIntervalMs?: Milliseconds;
-  /** noiDungTiengVietchiến lược */
+  /** chiến lược */
   jitter?: 'none' | 'full';
-  /** noiDungTiengVietlỗinoiDungTiengVietthử lại */
+  /** lỗithử lại */
   retryOn?: ReadonlyArray<ActionErrorCode>;
 }
 
@@ -184,7 +184,7 @@ export interface VariablePointer {
 }
 
 // ================================
-// biểu thứcnoiDungTiengVietmẫu
+// biểu thứcmẫu
 // ================================
 
 export type ExpressionLanguage = 'js' | 'rr';
@@ -321,7 +321,7 @@ export interface ElementTargetBase {
 
 export type ElementTarget =
   | (ElementTargetBase & {
-      /** noiDungTiengViet（noiDungTiengVietđường dẫn） */
+      /** (đường dẫn) */
       ref: string;
       candidates?: ReadonlyArray<SelectorCandidate>;
     })
@@ -336,7 +336,7 @@ export type ElementTarget =
 
 export type BrowserWorld = 'MAIN' | 'ISOLATED';
 
-// --- trangnoiDungTiengViet ---
+// --- trang ---
 
 export interface ClickParams {
   target: ElementTarget;
@@ -388,7 +388,7 @@ export interface NavigateParams {
   refresh?: boolean;
 }
 
-// --- chờnoiDungTiengVietkhẳng định ---
+// --- chờkhẳng định ---
 
 export type WaitCondition =
   | { kind: 'sleep'; sleep: Resolvable<Milliseconds> }
@@ -420,7 +420,7 @@ export interface AssertParams {
   failStrategy?: AssertFailStrategy;
 }
 
-// --- dữ liệunoiDungTiengVietscript ---
+// --- dữ liệuscript ---
 
 export type ExtractParams =
   | {
@@ -506,7 +506,7 @@ export interface LoopElementsParams {
   subflowId: SubflowId;
 }
 
-// --- nhãnnoiDungTiengVietquản lý ---
+// --- nhãnquản lý ---
 
 export interface OpenTabParams {
   url?: Resolvable<string>;
@@ -530,7 +530,7 @@ export interface HandleDownloadParams {
   saveAs?: VariableName;
 }
 
-// --- điều khiểnnoiDungTiengViet ---
+// --- điều khiển ---
 
 export interface ExecuteFlowParams {
   flowId: FlowId;
@@ -635,19 +635,19 @@ export interface TriggerParams {
 }
 
 // ================================
-// Action noiDungTiengVietđịnh nghĩa
+// Action định nghĩa
 // ================================
 
 /**
- * ActionParamsByType sử dụng interface noiDungTiengViet
- * noiDungTiengVietthông quanoiDungTiengViet Action kiểu（tuân theo OCP noiDungTiengViet）
+ * ActionParamsByType sử dụng interface
+ * thông qua Action kiểu(tuân theo OCP )
  */
 export interface ActionParamsByType {
-  // UI/xây dựngnoiDungTiengViet
+  // UI/xây dựng
   trigger: TriggerParams;
   delay: DelayParams;
 
-  // trangnoiDungTiengViet
+  // trang
   click: ClickParams;
   dblclick: ClickParams;
   fill: FillParams;
@@ -655,11 +655,11 @@ export interface ActionParamsByType {
   scroll: ScrollParams;
   drag: DragParams;
 
-  // đồng bộnoiDungTiengVietxác thực
+  // đồng bộxác thực
   wait: WaitParams;
   assert: AssertParams;
 
-  // dữ liệunoiDungTiengVietscript
+  // dữ liệuscript
   extract: ExtractParams;
   script: ScriptParams;
   http: HttpParams;
@@ -669,17 +669,17 @@ export interface ActionParamsByType {
   triggerEvent: TriggerEventParams;
   setAttribute: SetAttributeParams;
 
-  // noiDungTiengVietvòng lặp
+  // vòng lặp
   switchFrame: SwitchFrameParams;
   loopElements: LoopElementsParams;
 
-  // điều khiểnnoiDungTiengViet
+  // điều khiển
   if: IfParams;
   foreach: ForeachParams;
   while: WhileParams;
   executeFlow: ExecuteFlowParams;
 
-  // nhãnnoiDungTiengViet
+  // nhãn
   navigate: NavigateParams;
   openTab: OpenTabParams;
   switchTab: SwitchTabParams;
@@ -730,7 +730,7 @@ export interface DownloadInfo {
 }
 
 /**
- * Action đầu rakiểuánh xạ（noiDungTiengVietthông quanoiDungTiengViet）
+ * Action đầu rakiểuánh xạ(thông qua)
  */
 export interface ActionOutputsByType {
   screenshot: { base64Data: string };
@@ -803,11 +803,11 @@ export interface ActionExecutionResult<T extends ActionType = ActionType> {
   status: 'success' | 'failed' | 'skipped' | 'paused';
   output?: ActionOutput<T>;
   error?: ActionError;
-  /** noiDungTiengViet label（dùng chođiều kiệnnhánh） */
+  /**  label(dùng chođiều kiệnnhánh) */
   nextLabel?: EdgeLabel;
-  /** điều khiểnnoiDungTiengViet（foreach/while） */
+  /** điều khiển(foreach/while) */
   control?: ControlDirective;
-  /** thực thinoiDungTiengViet */
+  /** thực thi */
   durationMs?: Milliseconds;
   /**
    * New tab ID after tab operations (openTab/switchTab).
@@ -817,7 +817,7 @@ export interface ActionExecutionResult<T extends ActionType = ActionType> {
 }
 
 /**
- * Action thực thinoiDungTiengVietgiao diện
+ * Action thực thigiao diện
  */
 export interface ActionHandler<T extends ExecutableActionType = ExecutableActionType> {
   type: T;
@@ -825,12 +825,12 @@ export interface ActionHandler<T extends ExecutableActionType = ExecutableAction
   validate?: (action: Action<T>) => ValidationResult;
   /** thực thi action */
   run: (ctx: ActionExecutionContext, action: Action<T>) => Promise<ActionExecutionResult<T>>;
-  /** tạo action mô tả（dùng cho UI hiển thị） */
+  /** tạo action mô tả(dùng cho UI hiển thị) */
   describe?: (action: Action<T>) => string;
 }
 
 // ================================
-// Flow noiDungTiengVietcấu trúc
+// Flow cấu trúc
 // ================================
 
 export interface ActionEdge {
@@ -865,9 +865,9 @@ export interface Flow {
 
   /** DAG nút */
   nodes: ReadonlyArray<AnyAction>;
-  /** DAG noiDungTiengViet */
+  /** DAG  */
   edges: ReadonlyArray<ActionEdge>;
-  /** quy trình con（dùng cho foreach/while/loopElements） */
+  /** quy trình con(dùng cho foreach/while/loopElements) */
   subflows?: Record<
     SubflowId,
     { nodes: ReadonlyArray<AnyAction>; edges: ReadonlyArray<ActionEdge> }
@@ -875,7 +875,7 @@ export interface Flow {
 }
 
 // ================================
-// Action noiDungTiengViet（dùng cho UI）
+// Action (dùng cho UI)
 // ================================
 
 export type ActionCategory = 'Flow' | 'Actions' | 'Logic' | 'Tools' | 'Tabs' | 'Page';
@@ -901,12 +901,12 @@ export interface ActionSpec<T extends ActionType = ActionType> {
   display: ActionSpecDisplay;
   ports: ActionSpecPorts;
   defaults?: Partial<ActionParamsByType[T]>;
-  /** cầnnoiDungTiengVietmẫunoiDungTiengViettrườngđường dẫn */
+  /** cầnmẫutrườngđường dẫn */
   refDataKeys?: ReadonlyArray<string>;
 }
 
 // ================================
-// noiDungTiengVietxuất
+// xuất
 // ================================
 
 export const ACTION_TYPES: ReadonlyArray<ActionType> = [

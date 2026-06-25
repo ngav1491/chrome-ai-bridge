@@ -117,14 +117,14 @@ const handleToolCall = async (name: string, args: any): Promise<CallToolResult> 
         };
       }
     }
-    // gửiyêu cầunoiDungTiengVietChromenoiDungTiengVietchờphản hồi
+    // gửiyêu cầuChromechờphản hồi
     const response = await nativeMessagingHostInstance.sendRequestToExtensionAndWait(
       {
         name,
         args,
       },
       NativeMessageType.CALL_TOOL,
-      120000, // noiDungTiengViet 120 noiDungTiengViet，tránhnoiDungTiengViethết thời gian
+      120000, //  120 , tránhhết thời gian
     );
     if (response.status === 'success') {
       return response.data;

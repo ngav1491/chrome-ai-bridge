@@ -58,27 +58,31 @@ Chrome MCP Server is a Chrome extension-based **Model Context Protocol (MCP) ser
 
 Download link: https://github.com/ngav1491/chrome-ai-bridge/releases
 
-2. **Install chrome-ai-bridge globally** (CLI package; project name: `chrome-ai-bridge`)
+2. **Install and register chrome-ai-bridge from source**
 
-npm
+> The npm package has not been published yet. Install directly from this repository for now.
+
+```bash
+git clone https://github.com/ngav1491/chrome-ai-bridge.git
+cd chrome-ai-bridge
+corepack enable
+corepack pnpm install
+corepack pnpm build:native
+node app/native-server/dist/cli.js register
+```
+
+If you need a system-level Native Messaging registration:
+
+```bash
+sudo node app/native-server/dist/cli.js register --system
+```
+
+After the npm package is published, the global install flow will be:
 
 ```bash
 npm install -g chrome-ai-bridge
-```
-
-pnpm
-
-```bash
-# Method 1: Enable scripts globally (recommended)
-pnpm config set enable-pre-post-scripts true
-pnpm install -g chrome-ai-bridge
-
-# Method 2: Manual registration (if postinstall doesn't run)
-pnpm install -g chrome-ai-bridge
 chrome-ai-bridge register
 ```
-
-> Note: pnpm v7+ disables postinstall scripts by default for security. The `enable-pre-post-scripts` setting controls whether pre/post install scripts run. If automatic registration fails, use the manual registration command above.
 
 3. **Load Chrome Extension**
    - Open Chrome and go to `chrome://extensions/`
@@ -110,37 +114,34 @@ Add the following configuration to your MCP client configuration (using CherrySt
 
 If your client only supports stdio connection method, please use the following approach:
 
-1. First, check the installation location of the npm package you just installed
+1. Build the native server from source, then use the generated stdio server path:
 
 ```sh
-# npm check method
-npm list -g chrome-ai-bridge
-# pnpm check method
-pnpm list -g chrome-ai-bridge
+corepack pnpm build:native
 ```
 
-Assuming the command above outputs the path: /Users/xxx/Library/pnpm/global/5
-Then your final path would be: /Users/xxx/Library/pnpm/global/5/node_modules/chrome-ai-bridge/dist/mcp/mcp-server-stdio.js
+If your repository is at `/path/to/chrome-ai-bridge`, the stdio server path is:
 
-2. Replace the configuration below with the final path you just obtained
+```text
+/path/to/chrome-ai-bridge/app/native-server/dist/mcp/mcp-server-stdio.js
+```
+
+2. Replace the configuration below with your local source path
 
 ```json
 {
   "mcpServers": {
     "chrome-mcp-stdio": {
       "command": "npx",
-      "args": [
-        "node",
-        "/Users/xxx/Library/pnpm/global/5/node_modules/chrome-ai-bridge/dist/mcp/mcp-server-stdio.js"
-      ]
+      "args": ["node", "/path/to/chrome-ai-bridge/app/native-server/dist/mcp/mcp-server-stdio.js"]
     }
   }
 }
 ```
 
-eg：config in augment:
+eg: config in augment:
 
-<img width="494" alt="noiDungTiengViet2025-06-22 22 11 25" src="https://github.com/user-attachments/assets/48eefc0c-a257-4d3b-8bbe-d7ff716de2bf" />
+<img width="494" alt="Ảnh chụp màn hình 2025-06-22 22 11 25" src="https://github.com/user-attachments/assets/48eefc0c-a257-4d3b-8bbe-d7ff716de2bf" />
 
 ## 🛠️ Available Tools
 

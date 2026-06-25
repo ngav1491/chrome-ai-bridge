@@ -1,6 +1,6 @@
 /**
  * @fileoverview Flow kiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 trong Flow IR（noiDungTiengVietbiểu thị）
+ * @description định nghĩa Record-Replay V3 trong Flow IR(biểu thị)
  */
 
 import type { ISODateTimeString, JsonObject } from './json';
@@ -13,46 +13,46 @@ export const FLOW_SCHEMA_VERSION = 3 as const;
 
 /**
  * Edge V3
- * @description DAG trongnoiDungTiengViet，kết nốihainút
+ * @description DAG trong, kết nốihainút
  */
 export interface EdgeV3 {
   /** Edge mã định danh duy nhất */
   id: EdgeId;
-  /** noiDungTiengVietnút ID */
+  /** nút ID */
   from: NodeId;
   /** mục tiêunút ID */
   to: NodeId;
-  /** noiDungTiengVietnhãn（dùng chođiều kiệnnhánhnoiDungTiengVietlỗixử lý） */
+  /** nhãn(dùng chođiều kiệnnhánhlỗixử lý) */
   label?: EdgeLabel;
 }
 
-/** nútkiểu（noiDungTiengViet） */
+/** nútkiểu() */
 export type NodeKind = string;
 
 /**
  * Node V3
- * @description DAG trongnút，noiDungTiengVietthực thinoiDungTiengVietthao tác
+ * @description DAG trongnút, thực thithao tác
  */
 export interface NodeV3 {
   /** Node mã định danh duy nhất */
   id: NodeId;
   /** nútkiểu */
   kind: NodeKind;
-  /** núttên（dùng chohiển thị） */
+  /** núttên(dùng chohiển thị) */
   name?: string;
   /** có/khôngvô hiệu hóa */
   disabled?: boolean;
-  /** nútnoiDungTiengVietchiến lược */
+  /** nútchiến lược */
   policy?: NodePolicy;
-  /** nútcấu hình（kiểunoiDungTiengViet kind quyết định） */
+  /** nútcấu hình(kiểu kind quyết định) */
   config: JsonObject;
-  /** UI noiDungTiengVietthông tin */
+  /** UI thông tin */
   ui?: { x: number; y: number };
 }
 
 /**
- * Flow noiDungTiengVietdữ liệunoiDungTiengViet
- * @description định nghĩa Flow noiDungTiengViettên miền/đường dẫn/URL noiDungTiengViet
+ * Flow dữ liệu
+ * @description định nghĩa Flow tên miền/đường dẫn/URL
  */
 export interface FlowBinding {
   kind: 'domain' | 'path' | 'url';
@@ -61,7 +61,7 @@ export interface FlowBinding {
 
 /**
  * Flow V3
- * @description đầy đủ Flow định nghĩa，bao gồmnút、noiDungTiengVietcấu hình
+ * @description đầy đủ Flow định nghĩa, bao gồmnút, cấu hình
  */
 export interface FlowV3 {
   /** Schema phiên bản */
@@ -77,42 +77,42 @@ export interface FlowV3 {
   /** cập nhậtthời gian */
   updatedAt: ISODateTimeString;
 
-  /** điểm vàonút ID（noiDungTiengVietchỉ định，noiDungTiengVietphụ thuộcnoiDungTiengViet） */
+  /** điểm vàonút ID(chỉ định, phụ thuộc) */
   entryNodeId: NodeId;
   /** nútdanh sách */
   nodes: NodeV3[];
-  /** noiDungTiengVietdanh sách */
+  /** danh sách */
   edges: EdgeV3[];
 
   /** biếnđịnh nghĩa */
   variables?: VariableDefinition[];
-  /** Flow noiDungTiengVietchiến lược */
+  /** Flow chiến lược */
   policy?: FlowPolicy;
-  /** noiDungTiengVietdữ liệu */
+  /** dữ liệu */
   meta?: {
     /** nhãn */
     tags?: string[];
-    /** noiDungTiengVietquy tắc */
+    /** quy tắc */
     bindings?: FlowBinding[];
   };
 }
 
 /**
- * dựa trên ID noiDungTiengVietnút
+ * dựa trên ID nút
  */
 export function findNodeById(flow: FlowV3, nodeId: NodeId): NodeV3 | undefined {
   return flow.nodes.find((n) => n.id === nodeId);
 }
 
 /**
- * noiDungTiengVietchỉ địnhnútnoiDungTiengViettất cảnoiDungTiengViet
+ * chỉ địnhnúttất cả
  */
 export function findEdgesFrom(flow: FlowV3, nodeId: NodeId): EdgeV3[] {
   return flow.edges.filter((e) => e.from === nodeId);
 }
 
 /**
- * noiDungTiengViettrỏ đếnchỉ địnhnútnoiDungTiengViettất cảnoiDungTiengViet
+ * trỏ đếnchỉ địnhnúttất cả
  */
 export function findEdgesTo(flow: FlowV3, nodeId: NodeId): EdgeV3[] {
   return flow.edges.filter((e) => e.to === nodeId);

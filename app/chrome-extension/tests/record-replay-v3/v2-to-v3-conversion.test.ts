@@ -1,6 +1,6 @@
 /**
  * @fileoverview V2 to V3 Flow Conversion Tests
- * @description kiểm thử V2→V3 chuyển đổilogic，noiDungTiengViet entryNodeId tính toán
+ * @description kiểm thử V2→V3 chuyển đổilogic,  entryNodeId tính toán
  */
 
 import { describe, it, expect } from 'vitest';

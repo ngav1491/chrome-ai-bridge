@@ -1,11 +1,11 @@
 /**
  * @fileoverview Once Trigger Handler (M3.1)
  * @description
- * sử dụng chrome.alarms noiDungTiengViet when tham sốtriển khaimột lầnnoiDungTiengVietđịnh thờikích hoạt。
+ * sử dụng chrome.alarms  when tham sốtriển khaimột lầnđịnh thờikích hoạt.
  *
- * hành vi：
- * - mỗitriggernoiDungTiengVietmột lầnnoiDungTiengViet alarm
- * - kích hoạtnoiDungTiengViettự độngnoiDungTiengViettriggervô hiệu hóa (enabled=false) noiDungTiengVietgỡ cài đặt
+ * hành vi:
+ * - mỗitriggermột lần alarm
+ * - kích hoạttự độngtriggervô hiệu hóa (enabled=false) gỡ cài đặt
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -21,8 +21,8 @@ type OnceTriggerSpec = TriggerSpecByKind<'once'>;
 export interface OnceTriggerHandlerDeps {
   logger?: Pick<Console, 'debug' | 'info' | 'warn' | 'error'>;
   /**
-   * tùy chọn：noiDungTiengVietđịnh nghĩavô hiệu hóatriggernoiDungTiengVietphương thức
-   * nếunoiDungTiengViet，noiDungTiengViettrực tiếpcập nhật TriggerStore
+   * tùy chọn: định nghĩavô hiệu hóatriggerphương thức
+   * nếu, trực tiếpcập nhật TriggerStore
    */
   disableTrigger?: (triggerId: TriggerId) => Promise<void>;
 }
@@ -40,7 +40,7 @@ const ALARM_PREFIX = 'rr_v3_once_';
 // ==================== Utilities ====================
 
 /**
- * xác thựcnoiDungTiengVietchuẩn hóa whenMs
+ * xác thựcchuẩn hóa whenMs
  */
 function normalizeWhenMs(value: unknown): UnixMillis {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
@@ -57,7 +57,7 @@ function alarmNameForTrigger(triggerId: TriggerId): string {
 }
 
 /**
- * noiDungTiengViet alarm tênphân tích cú pháp triggerId
+ *  alarm tênphân tích cú pháp triggerId
  */
 function parseTriggerIdFromAlarmName(name: string): TriggerId | null {
   if (!name.startsWith(ALARM_PREFIX)) return null;
@@ -68,7 +68,7 @@ function parseTriggerIdFromAlarmName(name: string): TriggerId | null {
 // ==================== Handler Implementation ====================
 
 /**
- * tạo once triggerxử lýnoiDungTiengVietfactory
+ * tạo once triggerxử lýfactory
  */
 export function createOnceTriggerHandlerFactory(
   deps?: OnceTriggerHandlerDeps,
@@ -77,7 +77,7 @@ export function createOnceTriggerHandlerFactory(
 }
 
 /**
- * tạo once triggerxử lýnoiDungTiengViet
+ * tạo once triggerxử lý
  */
 export function createOnceTriggerHandler(
   fireCallback: TriggerFireCallback,
@@ -85,7 +85,7 @@ export function createOnceTriggerHandler(
 ): TriggerHandler<'once'> {
   const logger = deps?.logger ?? console;
 
-  // độ trễtạo store，tránhnoiDungTiengVietkiểm thửnoiDungTiengViet
+  // độ trễtạo store, tránhkiểm thử
   let triggersStore: ReturnType<typeof createTriggersStore> | null = null;
   const getTriggersStore = () => {
     if (!triggersStore) {
@@ -109,7 +109,7 @@ export function createOnceTriggerHandler(
   let listening = false;
 
   /**
-   * tăng dầnphiên bảnnoiDungTiengVietthao tácnoiDungTiengViet
+   * tăng dầnphiên bảnthao tác
    */
   function bumpVersion(triggerId: TriggerId): number {
     const next = (versions.get(triggerId) ?? 0) + 1;
@@ -167,7 +167,7 @@ export function createOnceTriggerHandler(
   }
 
   /**
-   * bên tronggỡ cài đặtlogic（noiDungTiengVietkích hoạtnoiDungTiengViet uninstall）
+   * bên tronggỡ cài đặtlogic(kích hoạt uninstall)
    */
   async function uninstallInternal(triggerId: TriggerId): Promise<void> {
     bumpVersion(triggerId);
@@ -200,7 +200,7 @@ export function createOnceTriggerHandler(
       } catch (e) {
         logger.error(`[OnceTriggerHandler] onFire failed for trigger "${triggerId}":`, e);
       } finally {
-        // kiểm traphiên bảncó/khôngnoiDungTiengViet
+        // kiểm traphiên bảncó/không
         if (installed.get(triggerId)?.version === expectedVersion) {
           // vô hiệu hóatrigger
           try {

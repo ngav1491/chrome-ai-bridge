@@ -89,14 +89,14 @@
             <button
               class="rr-icon-btn rr-icon-btn-edit has-tooltip"
               @click="toggleWebEditor"
-              data-tooltip="noiDungTiengViettrangchỉnh sửaschema"
+              data-tooltip="trangchỉnh sửaschema"
             >
               <EditIcon />
             </button>
             <button
               class="rr-icon-btn rr-icon-btn-marker has-tooltip"
               @click="toggleElementMarker"
-              data-tooltip="noiDungTiengVietphần tửchú thích"
+              data-tooltip="phần tửchú thích"
             >
               <MarkerIcon />
             </button>
@@ -126,7 +126,7 @@
               </div>
               <div class="entry-content">
                 <span class="entry-title">trợ lý thông minh</span>
-                <span class="entry-desc">AI Agent noiDungTiengViet</span>
+                <span class="entry-desc">AI Agent </span>
               </div>
               <svg
                 class="entry-arrow"
@@ -149,9 +149,7 @@
                   quy trình làm việcquản lý
                   <span class="coming-soon-badge">Coming Soon</span>
                 </span>
-                <span class="entry-desc"
-                  >ghinoiDungTiengVietphát lạitự độngnoiDungTiengVietquy trình</span
-                >
+                <span class="entry-desc">ghiphát lạitự độngquy trình</span>
               </div>
               <svg
                 class="entry-arrow"
@@ -217,7 +215,7 @@
               </div>
               <div class="entry-content">
                 <span class="entry-title">cục bộmô hình</span>
-                <span class="entry-desc">công cụ ngữ nghĩanoiDungTiengVietmô hìnhquản lý</span>
+                <span class="entry-desc">công cụ ngữ nghĩamô hìnhquản lý</span>
               </div>
               <svg
                 class="entry-arrow"
@@ -264,7 +262,7 @@
       </div>
     </div>
 
-    <!-- cục bộmô hìnhnoiDungTiengViettrang -->
+    <!-- cục bộmô hìnhtrang -->
     <LocalModelPage
       v-show="currentView === 'local-model'"
       :semantic-engine-status="semanticEngineStatus"
@@ -312,7 +310,7 @@
       @cancel="hideClearDataConfirmation"
     />
 
-    <!-- noiDungTiengVietquy trình làm việcquản lý；chỉnh sửanoiDungTiengViet -->
+    <!-- quy trình làm việcquản lý; chỉnh sửa -->
 
     <!-- Coming Soon Toast -->
     <Transition name="toast">
@@ -327,7 +325,7 @@
           <circle cx="12" cy="12" r="10" />
           <path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span>{{ comingSoonToast.feature }} tính năng đang phát triển，noiDungTiengViet</span>
+        <span>{{ comingSoonToast.feature }} tính năng đang phát triển, </span>
       </div>
     </Transition>
   </div>
@@ -368,10 +366,10 @@ import {
   MarkerIcon,
 } from './components/icons';
 
-// AgentChat theme - noiDungTiengVietpreloadnoiDungTiengVietlấy，duy trìnoiDungTiengVietsidepanelnoiDungTiengViet
+// AgentChat theme - preloadlấy, duy trìsidepanel
 const { theme: agentTheme, initTheme } = useAgentTheme();
 
-// hiện tạinoiDungTiengViettrạng thái：trang chủ or cục bộmô hìnhnoiDungTiengViet
+// hiện tạitrạng thái: trang chủ or cục bộmô hình
 const currentView = ref<'home' | 'local-model'>('home');
 
 // Coming Soon Toast
@@ -404,7 +402,7 @@ const filteredRrFlows = computed(() => {
   });
 });
 
-// Flow editornoiDungTiengViet；noiDungTiengVietpopupnoiDungTiengVietdanh sách
+// Flow editor; popupdanh sách
 
 const loadFlows = async () => {
   try {
@@ -432,16 +430,16 @@ function isFlowBoundToCurrent(flow: any) {
   }
 }
 
-// chạyghinoiDungTiengVietbao phủnoiDungTiengViettrangnoiDungTiengViet
+// chạyghibao phủtrang
 const startRecording = async () => {
-  // TODO: ghiphát lạitính năng đang phát triển，tạm chặn
+  // TODO: ghiphát lạitính năng đang phát triển, tạm chặn
   showComingSoonToast('ghiphát lại');
   return;
   // if (rrRecording.value) return;
   // try {
   //   const res = await chrome.runtime.sendMessage({
   //     type: BACKGROUND_MESSAGE_TYPES.RR_START_RECORDING,
-  //     meta: { name: 'noiDungTiengVietghi' },
+  //     meta: { name: 'ghi' },
   //   });
   //   rrRecording.value = !!(res && res.success);
   // } catch (e) {
@@ -451,7 +449,7 @@ const startRecording = async () => {
 };
 
 const stopRecording = async () => {
-  // TODO: ghiphát lạitính năng đang phát triển，tạm chặn
+  // TODO: ghiphát lạitính năng đang phát triển, tạm chặn
   showComingSoonToast('ghiphát lại');
   return;
   // if (!rrRecording.value) return;
@@ -497,7 +495,7 @@ const runFlow = async (flowId: string) => {
         const logs = result.logs || [];
         const failed = logs.find((l: any) => l.status === 'failed');
         if (failed && failed.stepId) {
-          // noiDungTiengVietchỉnh sửanoiDungTiengVietđịnh vịthất bạinút
+          // chỉnh sửađịnh vịthất bạinút
           if (flow) openBuilderWindow(flow.id, String(failed.stepId));
         }
       } else if (result && result.success === true) {
@@ -512,7 +510,7 @@ const runFlow = async (flowId: string) => {
   }
 };
 
-// noiDungTiengViet“noiDungTiengViet/phát hành/định thời/bao phủnoiDungTiengViet”noiDungTiengVietchỉnh sửanoiDungTiengVietxử lý
+// "/phát hành/định thời/bao phủ"chỉnh sửaxử lý
 
 const nativeConnectionStatus = ref<'unknown' | 'connected' | 'disconnected'>('unknown');
 const isConnecting = ref(false);
@@ -636,7 +634,7 @@ async function openSidepanelAndClose(tab: string) {
 
 // Open sidepanel from popup for workflow management
 function openWorkflowSidepanel() {
-  // TODO: quy trình làm việctính năng đang phát triển，tạm chặn
+  // TODO: quy trình làm việctính năng đang phát triển, tạm chặn
   showComingSoonToast('quy trình làm việcquản lý');
   // openSidepanelAndClose('workflows');
 }
@@ -655,26 +653,26 @@ async function toggleWebEditor() {
   try {
     await chrome.runtime.sendMessage({ type: BACKGROUND_MESSAGE_TYPES.WEB_EDITOR_TOGGLE });
   } catch (error) {
-    console.warn('chuyển đổinoiDungTiengVietchỉnh sửaschemathất bại:', error);
+    console.warn('chuyển đổichỉnh sửaschemathất bại:', error);
   }
 }
 
 async function toggleElementMarker() {
   try {
-    // lấyhiện tạinoiDungTiengViettab
+    // lấyhiện tạitab
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab?.id) {
       console.warn('không thểlấyhiện tạitab');
       return;
     }
 
-    // noiDungTiengVietbackgroundgửitin nhắn，khởi độngphần tửchú thích
+    // backgroundgửitin nhắn, khởi độngphần tửchú thích
     await chrome.runtime.sendMessage({
       type: BACKGROUND_MESSAGE_TYPES.ELEMENT_MARKER_START,
       tabId: tab.id,
     });
   } catch (error) {
-    console.warn('noiDungTiengVietphần tửchú thíchthất bại:', error);
+    console.warn('phần tửchú thíchthất bại:', error);
   }
 }
 
@@ -1067,7 +1065,7 @@ const testNativeConnection = async () => {
       await chrome.runtime.sendMessage({ type: 'disconnect_native' });
       nativeConnectionStatus.value = 'disconnected';
     } else {
-      console.log(`thửkết nốinoiDungTiengViet: ${nativeServerPort.value}`);
+      console.log(`thửkết nối: ${nativeServerPort.value}`);
       // eslint-disable-next-line no-undef
       const response = await chrome.runtime.sendMessage({
         type: 'connectNative',
@@ -1160,7 +1158,7 @@ const loadModelPreference = async () => {
       semanticEngineStatus.value = 'idle';
     }
   } catch (error) {
-    console.error('❌ noiDungTiengVietmô hìnhtùy chọnthất bại:', error);
+    console.error('❌ mô hìnhtùy chọnthất bại:', error);
   }
 };
 
@@ -1186,9 +1184,9 @@ const savePortPreference = async (port: number) => {
   try {
     // eslint-disable-next-line no-undef
     await chrome.storage.local.set({ nativeServerPort: port });
-    console.log(`noiDungTiengViettùy chọnnoiDungTiengVietlưu: ${port}`);
+    console.log(`tùy chọnlưu: ${port}`);
   } catch (error) {
-    console.error('lưunoiDungTiengViettùy chọnthất bại:', error);
+    console.error('lưutùy chọnthất bại:', error);
   }
 };
 
@@ -1198,10 +1196,10 @@ const loadPortPreference = async () => {
     const result = await chrome.storage.local.get(['nativeServerPort']);
     if (result.nativeServerPort) {
       nativeServerPort.value = result.nativeServerPort;
-      console.log(`noiDungTiengViettùy chọnnoiDungTiengViet: ${result.nativeServerPort}`);
+      console.log(`tùy chọn: ${result.nativeServerPort}`);
     }
   } catch (error) {
-    console.error('noiDungTiengViettùy chọnthất bại:', error);
+    console.error('tùy chọnthất bại:', error);
   }
 };
 
@@ -1466,7 +1464,7 @@ const switchModel = async (newModel: ModelPreset) => {
     modelInitializationStatus.value = 'error';
     isModelDownloading.value = false;
 
-    const errorMessage = error?.message || 'noiDungTiengVietlỗi';
+    const errorMessage = error?.message || 'lỗi';
     if (
       errorMessage.includes('network') ||
       errorMessage.includes('fetch') ||
@@ -1515,7 +1513,7 @@ const setupServerStatusListener = () => {
 };
 
 onMounted(async () => {
-  // khởi tạonoiDungTiengViet
+  // khởi tạo
   await initTheme();
   await loadPortPreference();
   await loadModelPreference();
@@ -2361,7 +2359,7 @@ onUnmounted(() => {
   }
 }
 
-/* nhanhcông cụiconnútnoiDungTiengViet */
+/* nhanhcông cụiconnút */
 .rr-icon-buttons {
   display: flex;
   gap: 12px;
@@ -2401,7 +2399,7 @@ onUnmounted(() => {
   height: 24px;
 }
 
-/* ghinút - noiDungTiengViet */
+/* ghinút -  */
 .rr-icon-btn-record {
   background: rgba(239, 68, 68, 0.1);
   color: #ef4444;
@@ -2412,7 +2410,7 @@ onUnmounted(() => {
   color: #dc2626;
 }
 
-/* ghinoiDungTiengViettrạng thái - noiDungTiengViet */
+/* ghitrạng thái -  */
 .rr-icon-btn-recording {
   animation: pulse-recording 1.5s ease-in-out infinite;
 }
@@ -2427,7 +2425,7 @@ onUnmounted(() => {
   }
 }
 
-/* dừngnút - noiDungTiengViet */
+/* dừngnút -  */
 .rr-icon-btn-stop {
   background: rgba(185, 28, 28, 0.1);
   color: #b91c1c;
@@ -2438,7 +2436,7 @@ onUnmounted(() => {
   color: #991b1b;
 }
 
-/* chỉnh sửanút - noiDungTiengViet */
+/* chỉnh sửanút -  */
 .rr-icon-btn-edit {
   background: rgba(37, 99, 235, 0.1);
   color: #2563eb;
@@ -2449,7 +2447,7 @@ onUnmounted(() => {
   color: #1d4ed8;
 }
 
-/* chú thíchnút - noiDungTiengViet */
+/* chú thíchnút -  */
 .rr-icon-btn-marker {
   background: rgba(16, 185, 129, 0.1);
   color: #10b981;
@@ -2460,7 +2458,7 @@ onUnmounted(() => {
   color: #059669;
 }
 
-/* Coming Soon nútnoiDungTiengViet */
+/* Coming Soon nút */
 .rr-icon-btn-coming-soon {
   opacity: 0.5;
   cursor: default !important;
@@ -2523,14 +2521,14 @@ onUnmounted(() => {
   visibility: visible;
 }
 
-/* trang chủnoiDungTiengViet */
+/* trang chủ */
 .home-view {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-/* quản lýđiểm vàothẻnoiDungTiengViet */
+/* quản lýđiểm vàothẻ */
 .entry-card {
   background: var(--ac-surface, white);
   border-radius: var(--ac-radius-card, 12px);

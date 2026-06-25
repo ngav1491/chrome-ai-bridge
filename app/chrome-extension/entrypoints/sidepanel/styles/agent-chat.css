@@ -696,7 +696,7 @@
      Loading Animation - Shimmer Text & Scribble Icon
      ============================================================ */
 
-  /* noiDungTiengViet shimmer noiDungTiengViet - noiDungTiengViet */
+  /*  shimmer  -  */
   .agent-theme .text-shimmer {
     display: inline-block;
     background: linear-gradient(
@@ -725,7 +725,7 @@
     }
   }
 
-  /* noiDungTiengViet - noiDungTiengViet */
+  /*  -  */
   .agent-theme .loading-scribble path {
     stroke-dasharray: 300;
     stroke-dashoffset: 300;

@@ -1,10 +1,10 @@
 import { cdpSessionManager } from '@/utils/cdp-session-manager';
 
 /**
- * ConsoleBuffer - lưu trữ lâu dàinoiDungTiengVietđiều khiểnnoiDungTiengVietnhật kýnoiDungTiengVietquản lýnoiDungTiengViet
+ * ConsoleBuffer - lưu trữ lâu dàiđiều khiểnnhật kýquản lý
  *
- * noiDungTiengVietmỗi tab noiDungTiengVietcuộnvùng đệm，noiDungTiengVietđiều khiểnnoiDungTiengVietsự kiện。
- * noiDungTiengViet tab điều hướngnoiDungTiengViettên miềnnoiDungTiengViettự độnglàm trốngnoiDungTiengViet，tránhnoiDungTiengVietnhật kýnoiDungTiengViet。
+ * mỗi tab cuộnvùng đệm, điều khiểnsự kiện.
+ *  tab điều hướngtên miềntự độnglàm trống, tránhnhật ký.
  */
 
 const DEFAULT_MAX_BUFFER_MESSAGES = 2000;
@@ -104,13 +104,13 @@ function formatConsoleArgs(args: unknown[]): string {
 }
 
 /**
- * noiDungTiengViet CDP RemoteObject trích xuấtnoiDungTiengVietdữ liệu，noiDungTiengViet objectId tránhnoiDungTiengViet
+ *  CDP RemoteObject trích xuấtdữ liệu,  objectId tránh
  */
 function extractArgPreview(arg: unknown): unknown {
   const a = arg as Record<string, unknown>;
   if (!a || typeof a !== 'object') return arg;
 
-  // noiDungTiengViettrường，noiDungTiengViet objectId
+  // trường,  objectId
   const preview: Record<string, unknown> = {
     type: a.type,
   };
@@ -157,14 +157,14 @@ class ConsoleBuffer {
   }
 
   /**
-   * kiểm trachỉ định tab có/khôngđangnoiDungTiengViet buffer schemanoiDungTiengViet
+   * kiểm trachỉ định tab có/khôngđang buffer schema
    */
   isCapturing(tabId: number): boolean {
     return this.buffers.has(tabId);
   }
 
   /**
-   * đảm bảochỉ định tab noiDungTiengViet buffer noiDungTiengVietkhởi động
+   * đảm bảochỉ định tab  buffer khởi động
    */
   async ensureStarted(tabId: number): Promise<void> {
     if (this.buffers.has(tabId)) return;
@@ -180,7 +180,7 @@ class ConsoleBuffer {
   }
 
   /**
-   * làm trốngchỉ định tab noiDungTiengVietvùng đệm
+   * làm trốngchỉ định tab vùng đệm
    */
   clear(
     tabId: number,
@@ -207,7 +207,7 @@ class ConsoleBuffer {
   }
 
   /**
-   * đọcchỉ định tab noiDungTiengVietvùng đệmnoiDungTiengViet
+   * đọcchỉ định tab vùng đệm
    */
   read(tabId: number, options: ConsoleBufferReadOptions = {}): ConsoleBufferReadResult | null {
     const state = this.buffers.get(tabId);
@@ -218,7 +218,7 @@ class ConsoleBuffer {
     const totalBufferedMessages = state.messages.length;
     const totalBufferedExceptions = state.exceptions.length;
 
-    // noiDungTiengViettin nhắn
+    // tin nhắn
     let messages = state.messages;
     if (onlyErrors) {
       messages = messages.filter((m) => isErrorLevel(m.level));
@@ -227,20 +227,20 @@ class ConsoleBuffer {
       messages = messages.filter((m) => matchesPattern(pattern, m.text || ''));
     }
 
-    // noiDungTiengVietthời giansắp xếp
+    // thời giansắp xếp
     messages = [...messages].sort((a, b) => a.timestamp - b.timestamp);
 
-    // noiDungTiengViet limit
+    //  limit
     let messageLimitReached = false;
     const normalizedLimit =
       typeof limit === 'number' && Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : null;
     if (normalizedLimit !== null && messages.length > normalizedLimit) {
       messageLimitReached = true;
-      // noiDungTiengViettin nhắn
+      // tin nhắn
       messages = messages.slice(messages.length - normalizedLimit);
     }
 
-    // noiDungTiengVietngoại lệ
+    // ngoại lệ
     let exceptions: BufferedConsoleException[] = [];
     if (includeExceptions) {
       exceptions = state.exceptions;
@@ -320,7 +320,7 @@ class ConsoleBuffer {
 
     if (typeof nextUrl === 'string') {
       const nextHost = extractHostname(nextUrl);
-      // tên miềnthay đổinoiDungTiengVietlàm trốngnoiDungTiengViet
+      // tên miềnthay đổilàm trống
       if (nextHost !== state.hostname) {
         this.clear(tabId, 'domain_changed');
         state.hostname = nextHost;
@@ -387,7 +387,7 @@ class ConsoleBuffer {
         url: safeString(callFrame?.url),
         lineNumber: safeNumber(callFrame?.lineNumber),
         stackTrace: stackTrace,
-        // noiDungTiengVietlưu trữnoiDungTiengVietdữ liệu，tránhnoiDungTiengViet
+        // lưu trữdữ liệu, tránh
         args: rawArgs.map(extractArgPreview),
       });
       this.trimMessages(state);

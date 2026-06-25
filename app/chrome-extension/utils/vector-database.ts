@@ -718,15 +718,15 @@ export class VectorDatabase {
     let totalSize = 0;
 
     try {
-      // 1. tính toánnoiDungTiengVietánh xạnoiDungTiengViet
+      // 1. tính toánánh xạ
       const documentsSize = this.calculateDocumentMappingsSize();
       totalSize += documentsSize;
 
-      // 2. tính toánnoiDungTiengVietdữ liệunoiDungTiengViet
+      // 2. tính toándữ liệu
       const vectorsSize = this.calculateVectorsSize();
       totalSize += vectorsSize;
 
-      // 3. noiDungTiengVietchỉ mụccấu trúcnoiDungTiengViet
+      // 3. chỉ mụccấu trúc
       const indexStructureSize = this.calculateIndexStructureSize();
       totalSize += indexStructureSize;
 
@@ -735,8 +735,8 @@ export class VectorDatabase {
       );
     } catch (error) {
       console.warn('VectorDatabase: Failed to calculate storage size:', error);
-      // trả vềnoiDungTiengViet
-      totalSize = this.documents.size * 1024; // mỗinoiDungTiengViet1KB
+      // trả về
+      totalSize = this.documents.size * 1024; // mỗi1KB
     }
 
     return totalSize;
@@ -1067,7 +1067,7 @@ export class VectorDatabase {
     }
   }
 
-  // noiDungTiengVietphương thức
+  // phương thức
 
   private generateDocumentId(tabId: number, chunkIndex: number): string {
     return `tab_${tabId}_chunk_${chunkIndex}_${Date.now()}`;

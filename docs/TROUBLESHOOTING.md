@@ -36,15 +36,15 @@ By default, usernames, paths, and tokens are redacted. Use `--no-redact` if you'
 1. **Run the diagnostic tool first**
 
 ```bash
-chrome-ai-bridge doctor
+node app/native-server/dist/cli.js doctor
 ```
 
 This will check installation, manifest, permissions, and Node.js path.
 
-2. **Check if chrome-ai-bridge is installed successfully**, ensure it's globally installed
+2. **Check if chrome-ai-bridge has been built successfully from source**
 
 ```bash
-chrome-ai-bridge -V
+node app/native-server/dist/cli.js -V
 ```
 
 <img width="612" alt="Screenshot 2025-06-11 15 09 57" src="https://github.com/user-attachments/assets/59458532-e6e1-457c-8c82-3756a5dbb28e" />
@@ -55,7 +55,7 @@ Windows path: C:\Users\xxx\AppData\Roaming\Google\Chrome\NativeMessagingHosts
 
 Mac path: /Users/xxx/Library/Application\ Support/Google/Chrome/NativeMessagingHosts
 
-If the npm package is installed correctly, a file named `com.chromemcp.nativehost.json` should be generated in this directory
+If source registration succeeds, a file named `com.ngav1491.chrome_ai_bridge.nativehost.json` should be generated in this directory
 
 3. **Check logs**
    Logs are now stored in user-writable directories:
@@ -69,12 +69,12 @@ If the npm package is installed correctly, a file named `com.chromemcp.nativehos
 4. **Check if you have execution permissions**
    You need to check your installation path (if unclear, open the manifest file in step 2, the path field shows the installation directory). For example, if the Mac installation path is as follows:
 
-`xxx/node_modules/chrome-ai-bridge/dist/run_host.sh`
+`/path/to/chrome-ai-bridge/app/native-server/dist/run_host.sh`
 
 Check if this script has execution permissions. Run to fix:
 
 ```bash
-chrome-ai-bridge fix-permissions
+node app/native-server/dist/cli.js fix-permissions
 ```
 
 5. **Node.js not found**

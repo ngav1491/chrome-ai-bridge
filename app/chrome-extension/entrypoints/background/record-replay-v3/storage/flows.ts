@@ -1,6 +1,6 @@
 /**
  * @fileoverview FlowV3 lưu trữ lâu dài
- * @description triển khai Flow noiDungTiengViet CRUD thao tác
+ * @description triển khai Flow  CRUD thao tác
  */
 
 import type { FlowId } from '../domain/ids';
@@ -42,7 +42,7 @@ function validateFlow(flow: FlowV3): void {
     );
   }
 
-  // xác thựcnoiDungTiengViet
+  // xác thực
   for (const edge of flow.edges) {
     if (!nodeIds.has(edge.from)) {
       throw createRRError(

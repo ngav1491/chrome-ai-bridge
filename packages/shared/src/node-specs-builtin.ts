@@ -16,7 +16,7 @@ export function registerBuiltinSpecs() {
         type: 'string',
         required: true,
         placeholder: 'https://example.com',
-        help: 'mục tiêuđịa chỉ，hỗ trợbiếnmẫu {var}',
+        help: 'mục tiêuđịa chỉ, hỗ trợbiếnmẫu {var}',
         default: '',
       },
     ],
@@ -41,20 +41,20 @@ export function registerBuiltinSpecs() {
         label: 'mục tiêu',
         type: 'json',
         widget: 'targetlocator',
-        help: 'noiDungTiengVietđầu vàophần tửbộ chọn',
+        help: 'đầu vàophần tửbộ chọn',
       },
       {
         key: 'before',
-        label: 'thực thinoiDungTiengViet',
+        label: 'thực thi',
         type: 'object',
         fields: [
-          { key: 'scrollIntoView', label: 'cuộnnoiDungTiengViet', type: 'boolean', default: true },
+          { key: 'scrollIntoView', label: 'cuộn', type: 'boolean', default: true },
           { key: 'waitForSelector', label: 'chờbộ chọn', type: 'boolean', default: true },
         ],
       },
       {
         key: 'after',
-        label: 'thực thinoiDungTiengViet',
+        label: 'thực thi',
         type: 'object',
         fields: [
           {
@@ -65,7 +65,7 @@ export function registerBuiltinSpecs() {
           },
           {
             key: 'waitForNetworkIdle',
-            label: 'chờnoiDungTiengViet',
+            label: 'chờ',
             type: 'boolean',
             default: false,
           },
@@ -83,16 +83,16 @@ export function registerBuiltinSpecs() {
       { key: 'target', label: 'mục tiêu', type: 'json', widget: 'targetlocator' },
       {
         key: 'before',
-        label: 'thực thinoiDungTiengViet',
+        label: 'thực thi',
         type: 'object',
         fields: [
-          { key: 'scrollIntoView', label: 'cuộnnoiDungTiengViet', type: 'boolean', default: true },
+          { key: 'scrollIntoView', label: 'cuộn', type: 'boolean', default: true },
           { key: 'waitForSelector', label: 'chờbộ chọn', type: 'boolean', default: true },
         ],
       },
       {
         key: 'after',
-        label: 'thực thinoiDungTiengViet',
+        label: 'thực thi',
         type: 'object',
         fields: [
           {
@@ -103,7 +103,7 @@ export function registerBuiltinSpecs() {
           },
           {
             key: 'waitForNetworkIdle',
-            label: 'chờnoiDungTiengViet',
+            label: 'chờ',
             type: 'boolean',
             default: false,
           },
@@ -123,7 +123,7 @@ export function registerBuiltinSpecs() {
       { key: 'target', label: 'mục tiêu', type: 'json', widget: 'targetlocator' },
       {
         key: 'value',
-        label: 'đầu vàonoiDungTiengViet',
+        label: 'đầu vào',
         type: 'string',
         required: true,
         help: 'hỗ trợ {var} mẫu',
@@ -136,20 +136,20 @@ export function registerBuiltinSpecs() {
   registerNodeSpec({
     type: STEP_TYPES.KEY,
     version: 1,
-    display: { label: 'noiDungTiengViet', iconClass: 'icon-key', category: 'Actions' },
+    display: { label: '', iconClass: 'icon-key', category: 'Actions' },
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
       {
         key: 'keys',
-        label: 'noiDungTiengViet',
+        label: '',
         type: 'string',
         widget: 'keysequence',
         required: true,
-        help: 'noiDungTiengViet Backspace Enter noiDungTiengViet cmd+a',
+        help: ' Backspace Enter  cmd+a',
       },
       {
         key: 'target',
-        label: 'noiDungTiengVietmục tiêu(tùy chọn)',
+        label: 'mục tiêu(tùy chọn)',
         type: 'json',
         widget: 'targetlocator',
       },
@@ -177,7 +177,7 @@ export function registerBuiltinSpecs() {
       },
       {
         key: 'target',
-        label: 'mục tiêu(noiDungTiengVietphần tử/vùng chứa)',
+        label: 'mục tiêu(phần tử/vùng chứa)',
         type: 'json',
         widget: 'targetlocator',
       },
@@ -202,14 +202,14 @@ export function registerBuiltinSpecs() {
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
       { key: 'start', label: 'điểm bắt đầu', type: 'json', widget: 'targetlocator' },
-      { key: 'end', label: 'noiDungTiengViet', type: 'json', widget: 'targetlocator' },
+      { key: 'end', label: '', type: 'json', widget: 'targetlocator' },
       {
         key: 'path',
         label: 'đường dẫntọa độ',
         type: 'array',
         item: {
           key: 'p',
-          label: 'noiDungTiengViet',
+          label: '',
           type: 'object',
           fields: [
             { key: 'x', label: 'X', type: 'number' },
@@ -232,7 +232,7 @@ export function registerBuiltinSpecs() {
         key: 'condition',
         label: 'điều kiện(JSON)',
         type: 'json',
-        help: 'noiDungTiengViet {"sleep":1000} noiDungTiengViet {"text":"Hello","appear":true}',
+        help: ' {"sleep":1000}  {"text":"Hello","appear":true}',
       },
     ],
     defaults: { condition: { sleep: 500 } },
@@ -249,7 +249,7 @@ export function registerBuiltinSpecs() {
         key: 'assert',
         label: 'khẳng định(JSON)',
         type: 'json',
-        help: 'noiDungTiengViet {"exists":"#id"} / {"visible":".btn"}',
+        help: ' {"exists":"#id"} / {"visible":".btn"}',
       },
       {
         key: 'failStrategy',
@@ -284,10 +284,10 @@ export function registerBuiltinSpecs() {
         default: 'GET',
       },
       { key: 'url', label: 'URL', type: 'string', required: true },
-      { key: 'headers', label: 'yêu cầunoiDungTiengViet(JSON)', type: 'json' },
-      { key: 'body', label: 'yêu cầunoiDungTiengViet(JSON)', type: 'json' },
+      { key: 'headers', label: 'yêu cầu(JSON)', type: 'json' },
+      { key: 'body', label: 'yêu cầu(JSON)', type: 'json' },
       { key: 'formData', label: 'biểu mẫu(JSON)', type: 'json' },
-      { key: 'saveAs', label: 'lưunoiDungTiengVietbiến', type: 'string' },
+      { key: 'saveAs', label: 'lưubiến', type: 'string' },
       { key: 'assign', label: 'ánh xạ(JSON)', type: 'json' },
     ],
     defaults: { method: 'GET' },
@@ -308,14 +308,14 @@ export function registerBuiltinSpecs() {
         options: [
           { label: 'văn bản(text)', value: 'text' },
           { label: 'văn bản(textContent)', value: 'textContent' },
-          { label: 'noiDungTiengVietđịnh nghĩathuộc tínhnoiDungTiengViet', value: 'attr' },
+          { label: 'định nghĩathuộc tính', value: 'attr' },
         ] as any,
       },
       {
         key: 'js',
-        label: 'noiDungTiengVietđịnh nghĩaJS',
+        label: 'định nghĩaJS',
         type: 'string',
-        help: 'noiDungTiengViettrangnoiDungTiengVietthực thinoiDungTiengViettrả vềnoiDungTiengViet',
+        help: 'trangthực thitrả về',
       },
       { key: 'saveAs', label: 'lưubiến', type: 'string', required: true },
     ],
@@ -332,7 +332,7 @@ export function registerBuiltinSpecs() {
       { key: 'selector', label: 'mục tiêubộ chọn', type: 'string' },
       {
         key: 'fullPage',
-        label: 'noiDungTiengVietảnh chụp màn hình',
+        label: 'ảnh chụp màn hình',
         type: 'boolean',
         default: false,
       },
@@ -350,8 +350,8 @@ export function registerBuiltinSpecs() {
     schema: [
       { key: 'target', label: 'mục tiêu', type: 'json', widget: 'targetlocator' },
       { key: 'event', label: 'sự kiệnkiểu', type: 'string', required: true },
-      { key: 'bubbles', label: 'noiDungTiengViet', type: 'boolean', default: true },
-      { key: 'cancelable', label: 'noiDungTiengViethủy', type: 'boolean', default: false },
+      { key: 'bubbles', label: '', type: 'boolean', default: true },
+      { key: 'cancelable', label: 'hủy', type: 'boolean', default: false },
     ],
     defaults: { event: '' },
   });
@@ -364,8 +364,8 @@ export function registerBuiltinSpecs() {
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
       { key: 'target', label: 'mục tiêu', type: 'json', widget: 'targetlocator' },
-      { key: 'name', label: 'thuộc tínhnoiDungTiengViet', type: 'string', required: true },
-      { key: 'value', label: 'thuộc tínhnoiDungTiengViet', type: 'string' },
+      { key: 'name', label: 'thuộc tính', type: 'string', required: true },
+      { key: 'value', label: 'thuộc tính', type: 'string' },
       { key: 'remove', label: 'gỡ bỏthuộc tính', type: 'boolean', default: false },
     ],
     defaults: { remove: false },
@@ -381,13 +381,13 @@ export function registerBuiltinSpecs() {
       { key: 'selector', label: 'bộ chọn', type: 'string', required: true },
       {
         key: 'saveAs',
-        label: 'danh sáchbiếnnoiDungTiengViet',
+        label: 'danh sáchbiến',
         type: 'string',
         default: 'elements',
       },
       {
         key: 'itemVar',
-        label: 'noiDungTiengVietbiếnnoiDungTiengViet',
+        label: 'biến',
         type: 'string',
         default: 'item',
       },
@@ -423,7 +423,7 @@ export function registerBuiltinSpecs() {
     display: { label: 'tải xuốngxử lý', iconClass: 'icon-download', category: 'Tools' },
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
-      { key: 'filenameContains', label: 'tệpnoiDungTiengVietbao gồm', type: 'string' },
+      { key: 'filenameContains', label: 'tệpbao gồm', type: 'string' },
       { key: 'waitForComplete', label: 'chờhoàn tất', type: 'boolean', default: true },
       { key: 'timeoutMs', label: 'hết thời gian(ms)', type: 'number', default: 60000 },
       { key: 'saveAs', label: 'lưubiến', type: 'string' },
@@ -450,7 +450,7 @@ export function registerBuiltinSpecs() {
       },
       {
         key: 'code',
-        label: 'scriptnoiDungTiengViet',
+        label: 'script',
         type: 'string',
         widget: 'code',
         required: true,
@@ -475,11 +475,11 @@ export function registerBuiltinSpecs() {
   registerNodeSpec({
     type: STEP_TYPES.OPEN_TAB,
     version: 1,
-    display: { label: 'noiDungTiengVietnhãn', iconClass: 'icon-openTab', category: 'Tabs' },
+    display: { label: 'nhãn', iconClass: 'icon-openTab', category: 'Tabs' },
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
       { key: 'url', label: 'URL', type: 'string' },
-      { key: 'newWindow', label: 'noiDungTiengViet', type: 'boolean', default: false },
+      { key: 'newWindow', label: '', type: 'boolean', default: false },
     ],
     defaults: { newWindow: false },
   });
@@ -490,7 +490,7 @@ export function registerBuiltinSpecs() {
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
       { key: 'flowId', label: 'quy trìnhID', type: 'string', required: true },
-      { key: 'inline', label: 'noiDungTiengVietthực thi', type: 'boolean', default: false },
+      { key: 'inline', label: 'thực thi', type: 'boolean', default: false },
       { key: 'args', label: 'tham số(JSON)', type: 'json' },
     ],
     defaults: { inline: false },
@@ -535,7 +535,7 @@ export function registerBuiltinSpecs() {
         key: 'condition',
         label: 'điều kiệnbiểu thức(JSON)',
         type: 'json',
-        help: 'noiDungTiengViet {"expression":"vars.a>0"} noiDungTiengViet',
+        help: ' {"expression":"vars.a>0"} ',
       },
       {
         key: 'branches',
@@ -563,14 +563,14 @@ export function registerBuiltinSpecs() {
     ports: { inputs: 1, outputs: [{ label: 'default' }] },
     schema: [
       { key: 'listVar', label: 'danh sáchbiến', type: 'string', required: true },
-      { key: 'itemVar', label: 'noiDungTiengVietbiến', type: 'string', default: 'item' },
+      { key: 'itemVar', label: 'biến', type: 'string', default: 'item' },
       { key: 'subflowId', label: 'quy trình conID', type: 'string', required: true },
       {
         key: 'concurrency',
-        label: 'noiDungTiengViet',
+        label: '',
         type: 'number',
         default: 1,
-        help: 'noiDungTiengVietthực thiquy trình con（noiDungTiengVietbiến，noiDungTiengViettự độngnoiDungTiengViet）',
+        help: 'thực thiquy trình con(biến, tự động)',
       },
     ],
     defaults: { itemVar: 'item' },
@@ -583,7 +583,7 @@ export function registerBuiltinSpecs() {
     schema: [
       { key: 'condition', label: 'điều kiện(JSON)', type: 'json' },
       { key: 'subflowId', label: 'quy trình conID', type: 'string', required: true },
-      { key: 'maxIterations', label: 'tối đanoiDungTiengViet', type: 'number', default: 100 },
+      { key: 'maxIterations', label: 'tối đa', type: 'number', default: 100 },
     ],
     defaults: { maxIterations: 100 },
   });
@@ -654,7 +654,7 @@ export function registerBuiltinSpecs() {
                   ] as any,
                   default: 'url',
                 },
-                { key: 'value', label: 'noiDungTiengViet', type: 'string' },
+                { key: 'value', label: '', type: 'string' },
               ],
             } as any,
           },
@@ -684,9 +684,9 @@ export function registerBuiltinSpecs() {
         type: 'object',
         fields: [
           { key: 'selector', label: 'bộ chọn', type: 'string' },
-          { key: 'appear', label: 'noiDungTiengViet', type: 'boolean', default: true },
+          { key: 'appear', label: '', type: 'boolean', default: true },
           { key: 'once', label: 'một lần', type: 'boolean', default: true },
-          { key: 'debounceMs', label: 'noiDungTiengViet(ms)', type: 'number', default: 800 },
+          { key: 'debounceMs', label: '(ms)', type: 'number', default: 800 },
           { key: 'enabled', label: 'bật', type: 'boolean', default: false },
         ],
       },
@@ -696,7 +696,7 @@ export function registerBuiltinSpecs() {
         type: 'array',
         item: {
           key: 'sched',
-          label: 'noiDungTiengViet',
+          label: '',
           type: 'object',
           fields: [
             { key: 'id', label: 'ID', type: 'string' },
@@ -707,7 +707,7 @@ export function registerBuiltinSpecs() {
               options: [
                 { label: 'một lần', value: 'once' },
                 { label: 'khoảng cách', value: 'interval' },
-                { label: 'noiDungTiengViet', value: 'daily' },
+                { label: '', value: 'daily' },
               ] as any,
             },
             { key: 'when', label: 'thời gian(ISO/cron)', type: 'string' },

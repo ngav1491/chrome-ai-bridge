@@ -1,10 +1,10 @@
 /**
- * DOM Path - DOM đường dẫntính toánnoiDungTiengVietđịnh vị
+ * DOM Path - DOM đường dẫntính toánđịnh vị
  *
- * DOM đường dẫnnoiDungTiengVietphần tửnoiDungTiengViet DOM noiDungTiengViettrongchỉ mụcđường dẫn，dùng cho：
- * - phần tửnoiDungTiengViettheo dõi
- * - bộ chọnnoiDungTiengVietkhôi phục
- * - phần tửnoiDungTiengVietxác thực
+ * DOM đường dẫnphần tử DOM trongchỉ mụcđường dẫn, dùng cho:
+ * - phần tửtheo dõi
+ * - bộ chọnkhôi phục
+ * - phần tửxác thực
  */
 
 // =============================================================================
@@ -12,7 +12,7 @@
 // =============================================================================
 
 /**
- * DOM đường dẫn：noiDungTiengVietmục tiêuphần tửnoiDungTiengVietphần tửchỉ mụcmảng
+ * DOM đường dẫn: mục tiêuphần tửphần tửchỉ mụcmảng
  *
  * @example
  * ```
@@ -30,15 +30,15 @@ export type DomPath = number[];
 // =============================================================================
 
 /**
- * tính toánphần tửnoiDungTiengViet DOM noiDungTiengViettrongđường dẫn
+ * tính toánphần tử DOM trongđường dẫn
  *
- * noiDungTiengVietmục tiêuphần tửnoiDungTiengVietnút（Document noiDungTiengViet ShadowRoot），
- * ghinoiDungTiengVietphần tử children trongchỉ mục。
+ * mục tiêuphần tửnút(Document  ShadowRoot),
+ * ghiphần tử children trongchỉ mục.
  *
  * @example
  * ```ts
  * const path = computeDomPath(button);
- * // => [0, 2, 1] - noiDungTiengViet body/shadowRoot bắt đầunoiDungTiengVietđường dẫn
+ * // => [0, 2, 1] -  body/shadowRoot bắt đầuđường dẫn
  * ```
  */
 export function computeDomPath(element: Element): DomPath {
@@ -49,7 +49,7 @@ export function computeDomPath(element: Element): DomPath {
     const parent: Element | null = current.parentElement;
 
     if (parent) {
-      // noiDungTiengVietphần tử
+      // phần tử
       const siblings = Array.from(parent.children);
       const index = siblings.indexOf(current);
       if (index >= 0) {
@@ -59,7 +59,7 @@ export function computeDomPath(element: Element): DomPath {
       continue;
     }
 
-    // kiểm tracó/khôngnoiDungTiengViet ShadowRoot noiDungTiengViet Document noiDungTiengViettrực tiếpnoiDungTiengVietphần tử
+    // kiểm tracó/không ShadowRoot  Document trực tiếpphần tử
     const parentNode = current.parentNode;
     if (parentNode instanceof ShadowRoot || parentNode instanceof Document) {
       const children = Array.from(parentNode.children);
@@ -69,7 +69,7 @@ export function computeDomPath(element: Element): DomPath {
       }
     }
 
-    // noiDungTiengVietnút，dừngnoiDungTiengViet
+    // nút, dừng
     break;
   }
 
@@ -79,9 +79,9 @@ export function computeDomPath(element: Element): DomPath {
 /**
  * dựa trên DOM đường dẫnđịnh vịphần tử
  *
- * @param root - truy vấnnoiDungTiengVietnút（Document noiDungTiengViet ShadowRoot）
+ * @param root - truy vấnnút(Document  ShadowRoot)
  * @param path - DOM đường dẫn
- * @returns noiDungTiengVietphần tử，nếuđường dẫnkhông hợp lệnoiDungTiengViettrả về null
+ * @returns phần tử, nếuđường dẫnkhông hợp lệtrả về null
  *
  * @example
  * ```ts
@@ -105,9 +105,9 @@ export function locateByDomPath(root: Document | ShadowRoot, path: DomPath): Ele
 }
 
 /**
- * noiDungTiengViethai DOM đường dẫn
+ * hai DOM đường dẫn
  *
- * @returns bao gồmcó/khôngnoiDungTiengVietcông khaitiền tốđộ dàinoiDungTiengVietkết quả
+ * @returns bao gồmcó/khôngcông khaitiền tốđộ dàikết quả
  *
  * @example
  * ```ts
@@ -136,7 +136,7 @@ export function compareDomPaths(
 }
 
 /**
- * kiểm trađường dẫn A có/khôngnoiDungTiengVietđường dẫn B noiDungTiengViettổ tiên
+ * kiểm trađường dẫn A có/khôngđường dẫn B tổ tiên
  *
  * @example
  * ```ts
@@ -159,7 +159,7 @@ export function isAncestorPath(ancestor: DomPath, descendant: DomPath): boolean 
 }
 
 /**
- * lấynoiDungTiengViettổ tiênđường dẫnnoiDungTiengVietđường dẫnnoiDungTiengVietđường dẫn
+ * lấytổ tiênđường dẫnđường dẫnđường dẫn
  *
  * @example
  * ```ts

@@ -1,10 +1,10 @@
 /**
- * Element Fingerprint - phần tửvân taytạonoiDungTiengVietxác thực
+ * Element Fingerprint - phần tửvân taytạoxác thực
  *
- * vân taydùng chophần tửnoiDungTiengVietkhớpnoiDungTiengVietxác thực，noiDungTiengViet：
- * - bộ chọnkhớpnoiDungTiengVietphần tửnoiDungTiengViet，xác thựccó/khôngnoiDungTiengVietphần tử
- * - HMR noiDungTiengVietphần tửkhôi phục
- * - noiDungTiengViet"noiDungTiengVietbộ chọnnoiDungTiengVietphần tử"noiDungTiengVietkhớp
+ * vân taydùng chophần tửkhớpxác thực, :
+ * - bộ chọnkhớpphần tử, xác thựccó/khôngphần tử
+ * - HMR phần tửkhôi phục
+ * - "bộ chọnphần tử"khớp
  */
 
 // =============================================================================
@@ -37,7 +37,7 @@ export interface FingerprintOptions {
 // =============================================================================
 
 /**
- * noiDungTiengVietvăn bảnnoiDungTiengViet：noiDungTiengViet
+ * văn bản:
  */
 function normalizeText(text: string, maxLength: number): string {
   return text.replace(/\s+/g, ' ').trim().slice(0, maxLength);
@@ -48,7 +48,7 @@ function normalizeText(text: string, maxLength: number): string {
 // =============================================================================
 
 /**
- * noiDungTiengViet DOM phần tửtính toáncấu trúcnoiDungTiengVietvân tay
+ *  DOM phần tửtính toáncấu trúcvân tay
  *
  * vân tayđịnh dạng: `tag|id=xxx|class=a.b.c|text=xxx`
  *
@@ -74,13 +74,13 @@ export function computeFingerprint(element: Element, options?: FingerprintOption
     parts.push(`id=${id}`);
   }
 
-  // 3. Class names (noiDungTiengViet maxClasses noiDungTiengViet)
+  // 3. Class names ( maxClasses )
   const classes = Array.from(element.classList).slice(0, maxClasses);
   if (classes.length > 0) {
     parts.push(`class=${classes.join('.')}`);
   }
 
-  // 4. Text content hint (noiDungTiengViet)
+  // 4. Text content hint ()
   const text = normalizeText(element.textContent ?? '', textMaxLength);
   if (text) {
     parts.push(`text=${text}`);
@@ -90,7 +90,7 @@ export function computeFingerprint(element: Element, options?: FingerprintOption
 }
 
 /**
- * phân tích cú phápvân taychuỗinoiDungTiengVietcấu trúcnoiDungTiengVietđối tượng
+ * phân tích cú phápvân taychuỗicấu trúcđối tượng
  *
  * @example
  * ```ts
@@ -120,17 +120,17 @@ export function parseFingerprint(fingerprint: string): ElementFingerprint {
 }
 
 /**
- * xác thựcphần tửcó/khôngkhớpnoiDungTiengVietvân tay
+ * xác thựcphần tửcó/khôngkhớpvân tay
  *
- * xác thựcquy tắc：
- * - tag bắt buộcnoiDungTiengVietkhớp
- * - nếulưu trữnoiDungTiengVietvân taynoiDungTiengViet id，hiện tạiphần tửnoiDungTiengViet id bắt buộckhớp
- * - class noiDungTiengViet text noiDungTiengVietbắt buộckhớp（dùng chotính toánnoiDungTiengViet）
+ * xác thựcquy tắc:
+ * - tag bắt buộckhớp
+ * - nếulưu trữvân tay id, hiện tạiphần tử id bắt buộckhớp
+ * - class  text bắt buộckhớp(dùng chotính toán)
  *
  * @example
  * ```ts
  * const stored = computeFingerprint(element);
- * // ... trangthay đổinoiDungTiengViet
+ * // ... trangthay đổi
  * const stillMatches = verifyFingerprint(element, stored);
  * ```
  */
@@ -143,7 +143,7 @@ export function verifyFingerprint(element: Element, fingerprint: string): boolea
     return false;
   }
 
-  // nếulưu trữnoiDungTiengVietvân taynoiDungTiengViet id，hiện tạiphần tửbắt buộcnoiDungTiengViet id
+  // nếulưu trữvân tay id, hiện tạiphần tửbắt buộc id
   if (stored.id) {
     const currentId = element.id?.trim();
     if (stored.id !== currentId) {
@@ -155,15 +155,15 @@ export function verifyFingerprint(element: Element, fingerprint: string): boolea
 }
 
 /**
- * tính toánhaivân taynoiDungTiengViet
+ * tính toánhaivân tay
  *
- * @returns noiDungTiengViet 0-1，1 biểu thịnoiDungTiengVietkhớp
+ * @returns  0-1, 1 biểu thịkhớp
  *
  * @example
  * ```ts
  * const score = fingerprintSimilarity(fpA, fpB);
  * if (score > 0.8) {
- *   // noiDungTiengViet，noiDungTiengVietphần tử
+ *   // , phần tử
  * }
  * ```
  */
@@ -180,7 +180,7 @@ export function fingerprintSimilarity(a: string, b: string): number {
   if (fpA.tag === fpB.tag) {
     score += tagWeight;
   } else {
-    // Tag noiDungTiengVietkhớp，trực tiếptrả về 0
+    // Tag khớp, trực tiếptrả về 0
     return 0;
   }
 
@@ -193,7 +193,7 @@ export function fingerprintSimilarity(a: string, b: string): number {
     }
   }
 
-  // Class khớp (trọng số 0.2) - sử dụng Jaccard noiDungTiengViet
+  // Class khớp (trọng số 0.2) - sử dụng Jaccard
   const classWeight = 0.2;
   if ((fpA.classes?.length ?? 0) > 0 || (fpB.classes?.length ?? 0) > 0) {
     weights += classWeight;
@@ -206,12 +206,12 @@ export function fingerprintSimilarity(a: string, b: string): number {
     }
   }
 
-  // Text khớp (trọng số 0.1) - noiDungTiengVietbao gồmkiểm tra
+  // Text khớp (trọng số 0.1) - bao gồmkiểm tra
   const textWeight = 0.1;
   if (fpA.text || fpB.text) {
     weights += textWeight;
     if (fpA.text && fpB.text) {
-      // kiểm tracó/khôngnoiDungTiengViet
+      // kiểm tracó/không
       const textA = fpA.text.toLowerCase();
       const textB = fpB.text.toLowerCase();
       if (textA === textB) {
@@ -226,9 +226,9 @@ export function fingerprintSimilarity(a: string, b: string): number {
 }
 
 /**
- * kiểm trahaivân taycó/khôngbiểu thịnoiDungTiengVietphần tử
+ * kiểm trahaivân taycó/khôngbiểu thịphần tử
  *
- * noiDungTiengVietphán đoán，mặc địnhnoiDungTiengViet 0.7
+ * phán đoán, mặc định 0.7
  */
 export function fingerprintMatches(
   a: string,

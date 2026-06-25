@@ -45,12 +45,12 @@ chrome-ai-bridge doctor
 
 Quy trình khắc phục sự cố cốt lõi
 
-1. Sau khi cài đặt gói npm trên toàn cục, xác nhận vị trí của tệp manifest `com.chromemcp.nativehost.json`, bên trong có một trường **path** trỏ đến một script khởi động:
+1. Sau khi build và đăng ký từ source, xác nhận vị trí của tệp manifest `com.ngav1491.chrome_ai_bridge.nativehost.json`, bên trong có một trường **path** trỏ đến script khởi động trong `app/native-server/dist`:
 
-1.1 **Kiểm tra xem chrome-ai-bridge đã được cài đặt thành công chưa**, đảm bảo nó được cài đặt **toàn cục**
+1.1 **Kiểm tra xem chrome-ai-bridge đã build thành công chưa**
 
 ```bash
-chrome-ai-bridge -V
+node app/native-server/dist/cli.js -V
 ```
 
 <img width="612" alt="Ảnh chụp màn hình 2025-06-11 15 09 57" src="https://github.com/user-attachments/assets/59458532-e6e1-457c-8c82-3756a5dbb28e" />
@@ -61,19 +61,19 @@ chrome-ai-bridge -V
 
 Đường dẫn Mac: `/Users/xxx/Library/Application\ Support/Google/Chrome/NativeMessagingHosts`
 
-Nếu gói npm được cài đặt bình thường, một tệp `com.chromemcp.nativehost.json` sẽ được tạo trong thư mục này
+Nếu đăng ký từ source thành công, một tệp `com.ngav1491.chrome_ai_bridge.nativehost.json` sẽ được tạo trong thư mục này
 
 ```json
 {
-  "name": "com.chromemcp.nativehost",
-  "description": "Node.js Host for Browser Bridge Extension",
-  "path": "/Users/xxx/Library/pnpm/global/5/.pnpm/chrome-ai-bridge@1.0.23/node_modules/chrome-ai-bridge/dist/run_host.sh",
+  "name": "com.ngav1491.chrome_ai_bridge.nativehost",
+  "description": "chrome-ai-bridge Native Messaging host",
+  "path": "/path/to/chrome-ai-bridge/app/native-server/dist/run_host.sh",
   "type": "stdio",
   "allowed_origins": ["chrome-extension://hbdgbgagpkpjffpklnamcljpakneikee/"]
 }
 ```
 
-> Nếu phát hiện không có tệp manifest này, bạn có thể thử thực thi dòng lệnh: `chrome-ai-bridge register`
+> Nếu phát hiện không có tệp manifest này, bạn có thể thử thực thi dòng lệnh: `node app/native-server/dist/cli.js register`
 
 2. **Kiểm tra nhật ký**
 

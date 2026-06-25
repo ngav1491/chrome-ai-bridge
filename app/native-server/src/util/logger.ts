@@ -6,7 +6,7 @@
 // const LOG_DIR = path.join(
 //   '/Users/hang/code/ai/chrome-mcp-server/app/native-server/dist/',
 //   '.debug-log',
-// ); // sử dụngnoiDungTiengVietthư mụcnoiDungTiengViet
+// ); // sử dụngthư mục
 // const LOG_FILE = path.join(
 //   LOG_DIR,
 //   `native-host-${new Date().toISOString().replace(/:/g, '-')}.log`,
@@ -25,18 +25,18 @@
 //   const timestamp = new Date().toISOString();
 //   const logMessage = `[${timestamp}] [${level}] ${message}\n`;
 
-//   // ghinoiDungTiengViettệp
+//   // ghitệp
 //   try {
 //     fs.appendFileSync(LOG_FILE, logMessage);
 //   } catch (err) {
 //     stderr.write(`[ERROR] ghinhật kýthất bại: ${err}\n`);
 //   }
 
-//   // noiDungTiengVietđầu ranoiDungTiengVietstderr（không ảnh hưởngnative messaginggiao thức）
+//   // đầu rastderr(không ảnh hưởngnative messaginggiao thức)
 //   stderr.write(logMessage);
 // }
 
-// // nhật kýnoiDungTiengViethàm
+// // nhật kýhàm
 // export const logger = {
 //   debug: (message: string) => writeLog('DEBUG', message),
 //   info: (message: string) => writeLog('INFO', message),

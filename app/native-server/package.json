@@ -1,6 +1,6 @@
 {
   "name": "chrome-ai-bridge",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "chrome-ai-bridge Native Messaging host (Node)",
   "main": "dist/index.js",
   "bin": {

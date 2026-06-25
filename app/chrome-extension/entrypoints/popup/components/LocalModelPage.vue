@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <!-- Embeddingmô hìnhnoiDungTiengViet -->
+      <!-- Embeddingmô hình -->
       <div class="section">
         <h3 class="section-title">{{ getMessage('embeddingModelLabel') }}</h3>
 
@@ -227,7 +227,7 @@ interface Props {
   modelInitializationStatus: string;
   modelErrorMessage: string;
   modelErrorType: string;
-  // lưu trữnoiDungTiengViet
+  // lưu trữ
   storageStats: {
     indexedPages: number;
     totalDocuments: number;
@@ -612,7 +612,7 @@ const formatIndexSize = () => {
   color: var(--ac-text-muted, #4b5563);
 }
 
-/* noiDungTiengViet */
+/*  */
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -13,9 +13,9 @@
         <div class="row">
           <label>kiểu</label>
           <select v-model="type">
-            <option value="interval">noiDungTiengViet N phút</option>
+            <option value="interval"> N phút</option>
             <option value="daily">mỗi ngàycố địnhthời gian</option>
-            <option value="once">noiDungTiengVietthực thimột lần</option>
+            <option value="once">thực thimột lần</option>
           </select>
         </div>
         <div class="row" v-if="type === 'interval'">
@@ -35,7 +35,7 @@
           <textarea v-model="argsJson" placeholder='{ "username": "xx" }'></textarea>
         </div>
         <div class="section">
-          <div class="section-title">noiDungTiengViet</div>
+          <div class="section-title"></div>
           <div class="sched-list">
             <div class="sched-row" v-for="s in schedules" :key="s.id">
               <div class="meta">
@@ -111,7 +111,7 @@ function safeParse(s: string) {
 }
 
 function describe(s: any) {
-  if (s.type === 'interval') return `noiDungTiengViet ${s.when} phút`;
+  if (s.type === 'interval') return ` ${s.when} phút`;
   if (s.type === 'daily') return `mỗi ngày ${s.when}`;
   if (s.type === 'once') return `một lần ${s.when}`;
   return '';

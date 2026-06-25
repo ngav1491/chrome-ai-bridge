@@ -47,7 +47,7 @@ export function getLogDir(): string {
 }
 
 /**
- * noiDungTiengVietvăn bản
+ * In văn bản màu
  */
 export function colorText(text: string, color: string): string {
   const colors: Record<string, string> = {
@@ -157,19 +157,19 @@ export function writeNodePathFile(distDir: string, nodeExecPath = process.execPa
 }
 
 /**
- * đảm bảonoiDungTiengViettệpnoiDungTiengVietthực thiquyền
+ * Đảm bảo các tệp quan trọng có quyền thực thi
  */
 export async function ensureExecutionPermissions(): Promise<void> {
   try {
     const packageDistDir = path.join(__dirname, '..');
 
     if (process.platform === 'win32') {
-      // Windows nền tảngxử lý
+      // Xử lý nền tảng Windows
       await ensureWindowsFilePermissions(packageDistDir);
       return;
     }
 
-    // Unix/Linux nền tảngxử lý
+    // Xử lý nền tảng Unix/Linux
     const filesToCheck = [
       path.join(packageDistDir, 'index.js'),
       path.join(packageDistDir, 'run_host.sh'),
@@ -201,7 +201,7 @@ export async function ensureExecutionPermissions(): Promise<void> {
 }
 
 /**
- * Windows nền tảngtệpquyềnxử lý
+ * Xử lý quyền tệp nền tảng Windows
  */
 async function ensureWindowsFilePermissions(packageDistDir: string): Promise<void> {
   const filesToCheck = [
@@ -213,18 +213,18 @@ async function ensureWindowsFilePermissions(packageDistDir: string): Promise<voi
   for (const filePath of filesToCheck) {
     if (fs.existsSync(filePath)) {
       try {
-        // kiểm tratệpcó phải lànoiDungTiengViet，nếunoiDungTiengVietgỡ bỏnoiDungTiengVietthuộc tính
+        // Kiểm tra tệp có phải là chỉ đọc hay không, nếu phải thì gỡ bỏ thuộc tính chỉ đọc
         const stats = fs.statSync(filePath);
         if (!(stats.mode & parseInt('200', 8))) {
-          // kiểm tranoiDungTiengVietquyền
-          // thửgỡ bỏnoiDungTiengVietthuộc tính
+          // Kiểm tra quyền ghi
+          // Thử gỡ bỏ thuộc tính chỉ đọc
           fs.chmodSync(filePath, stats.mode | parseInt('200', 8));
           console.log(
             colorText(`✓ Removed read-only attribute from ${path.basename(filePath)}`, 'green'),
           );
         }
 
-        // xác thựctệpnoiDungTiengViet
+        // Xác thực tệp có thể đọc
         fs.accessSync(filePath, fs.constants.R_OK);
         console.log(
           colorText(`✓ Verified file accessibility for ${path.basename(filePath)}`, 'green'),
@@ -252,18 +252,18 @@ export async function createManifestContent(): Promise<any> {
   return {
     name: HOST_NAME,
     description: DESCRIPTION,
-    path: mainPath, // Node.jsnoiDungTiengVietthực thitệpđường dẫn
+    path: mainPath, // Đường dẫn tệp thực thi Node.js
     type: 'stdio',
     allowed_origins: [`chrome-extension://${EXTENSION_ID}/`],
   };
 }
 
 /**
- * xác thựcWindowsđăng kýmụccó/khôngtồn tạinoiDungTiengViettrỏ đếnnoiDungTiengVietđường dẫn
+ * Xác thực mục đăng ký Windows có tồn tại và trỏ đến đúng đường dẫn hay không
  */
 function verifyWindowsRegistryEntry(registryKey: string, expectedPath: string): boolean {
   if (os.platform() !== 'win32') {
-    return true; // noiDungTiengVietWindowsnền tảngnoiDungTiengVietxác thực
+    return true; // Bỏ qua xác thực trên nền tảng không phải Windows
   }
 
   const normalizeForCompare = (filePath: string): string => path.normalize(filePath).toLowerCase();
@@ -307,19 +307,19 @@ export async function registerUserLevelHostWithNodePath(
 }
 
 /**
- * thửđăng kýnoiDungTiengVietNative Messaginghost
+ * Thử đăng ký Native Messaging host cấp người dùng
  */
 export async function tryRegisterUserLevelHost(targetBrowsers?: BrowserType[]): Promise<boolean> {
   try {
     console.log(colorText('Attempting to register user-level Native Messaging host...', 'blue'));
 
-    // 1. đảm bảothực thiquyền
+    // 1. Đảm bảo quyền thực thi
     await ensureExecutionPermissions();
 
-    // 2. xác nhận muốnđăng kýnoiDungTiengViet
+    // 2. Xác nhận các trình duyệt muốn đăng ký
     const browsersToRegister = targetBrowsers || detectInstalledBrowsers();
     if (browsersToRegister.length === 0) {
-      // nếukhông cóphát hiệnnoiDungTiengViet，mặc địnhđăng kýChromenoiDungTiengVietChromium
+      // Nếu không phát hiện trình duyệt, mặc định đăng ký Chrome và Chromium
       browsersToRegister.push(BrowserType.CHROME, BrowserType.CHROMIUM);
       console.log(
         colorText('No browsers detected, registering for Chrome and Chromium by default', 'yellow'),
@@ -328,29 +328,29 @@ export async function tryRegisterUserLevelHost(targetBrowsers?: BrowserType[]): 
       console.log(colorText(`Detected browsers: ${browsersToRegister.join(', ')}`, 'blue'));
     }
 
-    // 3. tạonoiDungTiengViet
+    // 3. Tạo nội dung manifest
     const manifest = await createManifestContent();
 
     let successCount = 0;
     const results: { browser: string; success: boolean; error?: string }[] = [];
 
-    // 4. noiDungTiengVietmỗinoiDungTiengVietđăng ký
+    // 4. Lần lượt đăng ký cho từng trình duyệt
     for (const browserType of browsersToRegister) {
       const config = getBrowserConfig(browserType);
       console.log(colorText(`\nRegistering for ${config.displayName}...`, 'blue'));
 
       try {
-        // đảm bảothư mụctồn tại
+        // Đảm bảo thư mục tồn tại
         await mkdir(path.dirname(config.userManifestPath), { recursive: true });
 
-        // ghinoiDungTiengViettệp
+        // Ghi tệp manifest
         await writeFile(config.userManifestPath, JSON.stringify(manifest, null, 2));
         console.log(colorText(`✓ Manifest written to ${config.userManifestPath}`, 'green'));
 
-        // WindowscầnnoiDungTiengVietđăng kýmục
+        // Windows cần tạo mục đăng ký
         if (os.platform() === 'win32' && config.registryKey) {
           try {
-            // lưu ý：không cầnthủ côngnoiDungTiengViet，reg lệnhnoiDungTiengVietxử lý Windows đường dẫn
+            // Lưu ý: không cần tự viết kép dấu gạch chéo ngược, lệnh reg xử lý đúng đường dẫn Windows
             const regCommand = `reg add "${config.registryKey}" /ve /t REG_SZ /d "${config.userManifestPath}" /f`;
             execSync(regCommand, { stdio: 'pipe' });
 
@@ -375,7 +375,7 @@ export async function tryRegisterUserLevelHost(targetBrowsers?: BrowserType[]): 
       }
     }
 
-    // 5. noiDungTiengVietkết quả
+    // 5. Báo cáo kết quả
     console.log(colorText('\n===== Registration Summary =====', 'blue'));
     for (const result of results) {
       if (result.success) {
@@ -397,62 +397,62 @@ export async function tryRegisterUserLevelHost(targetBrowsers?: BrowserType[]): 
   }
 }
 
-// nhậpis-adminnoiDungTiengViet（noiDungTiengVietWindowsnền tảngsử dụng）
+// Nhập gói is-admin (chỉ dùng trên nền tảng Windows)
 let isAdmin: () => boolean = () => false;
 if (process.platform === 'win32') {
   try {
     isAdmin = require('is-admin');
   } catch (error) {
     console.warn(
-      'thiếuis-adminphụ thuộc，Windowsnền tảngnoiDungTiengVietkhông thểnoiDungTiengVietphát hiệnquản lýnoiDungTiengVietquyền',
+      'Thiếu dependency is-admin, trên nền tảng Windows có thể không phát hiện đúng quyền quản trị',
     );
     console.warn(error);
   }
 }
 
 /**
- * sử dụngnoiDungTiengVietquyềnđăng kýhệ thốngnoiDungTiengViet
+ * Dùng quyền nâng cao để đăng ký manifest cấp hệ thống
  */
 export async function registerWithElevatedPermissions(): Promise<void> {
   try {
     console.log(colorText('Attempting to register system-level manifest...', 'blue'));
 
-    // 1. đảm bảothực thiquyền
+    // 1. Đảm bảo quyền thực thi
     await ensureExecutionPermissions();
 
-    // 2. noiDungTiengViet
+    // 2. Chuẩn bị nội dung manifest
     const manifest = await createManifestContent();
 
-    // 3. lấyhệ thốngnoiDungTiengVietđường dẫn
+    // 3. Lấy đường dẫn manifest cấp hệ thống
     const manifestPath = getSystemManifestPath();
 
-    // 4. tạonoiDungTiengViettệp
+    // 4. Tạo tệp manifest tạm
     const tempManifestPath = path.join(os.tmpdir(), `${HOST_NAME}.json`);
     await writeFile(tempManifestPath, JSON.stringify(manifest, null, 2));
 
-    // 5. phát hiệncó/khôngđã cóquản lýnoiDungTiengVietquyền
+    // 5. Phát hiện đã có quyền quản trị hay chưa
     const isRoot = process.getuid && process.getuid() === 0; // Unix/Linux/Mac
-    const hasAdminRights = process.platform === 'win32' ? isAdmin() : false; // Windowsnền tảngphát hiệnquản lýnoiDungTiengVietquyền
+    const hasAdminRights = process.platform === 'win32' ? isAdmin() : false; // Nền tảng Windows phát hiện quyền quản trị
     const hasElevatedPermissions = isRoot || hasAdminRights;
 
-    // noiDungTiengVietlệnh
+    // Chuẩn bị lệnh
     const command =
       os.platform() === 'win32'
         ? `if not exist "${path.dirname(manifestPath)}" mkdir "${path.dirname(manifestPath)}" && copy "${tempManifestPath}" "${manifestPath}"`
         : `mkdir -p "${path.dirname(manifestPath)}" && cp "${tempManifestPath}" "${manifestPath}" && chmod 644 "${manifestPath}"`;
 
     if (hasElevatedPermissions) {
-      // đã cóquản lýnoiDungTiengVietquyền，trực tiếpthực thilệnh
+      // Đã có quyền quản trị, thực thi lệnh trực tiếp
       try {
-        // tạothư mục
+        // Tạo thư mục
         if (!fs.existsSync(path.dirname(manifestPath))) {
           fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
         }
 
-        // sao chéptệp
+        // Sao chép tệp
         fs.copyFileSync(tempManifestPath, manifestPath);
 
-        // cài đặtquyền（noiDungTiengVietWindowsnền tảng）
+        // Cài đặt quyền (nền tảng không phải Windows)
         if (os.platform() !== 'win32') {
           fs.chmodSync(manifestPath, '644');
         }
@@ -465,7 +465,7 @@ export async function registerWithElevatedPermissions(): Promise<void> {
         throw error;
       }
     } else {
-      // không cóquản lýnoiDungTiengVietquyền，noiDungTiengVietthủ côngthao tácgợi ý
+      // Không có quyền quản trị, in gợi ý thao tác thủ công
       console.log(
         colorText('⚠️ Administrator privileges required for system-level installation', 'yellow'),
       );
@@ -492,21 +492,21 @@ export async function registerWithElevatedPermissions(): Promise<void> {
       throw new Error('Administrator privileges required for system-level installation');
     }
 
-    // 6. WindowsnoiDungTiengVietxử lý - cài đặthệ thốngnoiDungTiengVietđăng kýnoiDungTiengViet
+    // 6. Xử lý đặc biệt Windows - cài đặt mục đăng ký hệ thống
     if (os.platform() === 'win32') {
       const registryKey = `HKLM\\Software\\Google\\Chrome\\NativeMessagingHosts\\${HOST_NAME}`;
-      // lưu ý：không cầnthủ côngnoiDungTiengViet，reg lệnhnoiDungTiengVietxử lý Windows đường dẫn
+      // Lưu ý: không cần tự viết kép dấu gạch chéo ngược, lệnh reg xử lý đúng đường dẫn Windows
       const regCommand = `reg add "${registryKey}" /ve /t REG_SZ /d "${manifestPath}" /f`;
 
       console.log(colorText(`Creating system registry entry: ${registryKey}`, 'blue'));
       console.log(colorText(`Manifest path: ${manifestPath}`, 'blue'));
 
       if (hasElevatedPermissions) {
-        // đã cóquản lýnoiDungTiengVietquyền，trực tiếpthực thiđăng kýnoiDungTiengVietlệnh
+        // Đã có quyền quản trị, thực thi lệnh đăng ký trực tiếp
         try {
           execSync(regCommand, { stdio: 'pipe' });
 
-          // xác thựcđăng kýmụccó/khôngtạothành công
+          // Xác thực mục đăng ký đã tạo thành công
           if (verifyWindowsRegistryEntry(registryKey, manifestPath)) {
             console.log(colorText('Windows registry entry created successfully!', 'green'));
           } else {
@@ -520,7 +520,7 @@ export async function registerWithElevatedPermissions(): Promise<void> {
           throw error;
         }
       } else {
-        // không cóquản lýnoiDungTiengVietquyền，noiDungTiengVietthủ côngthao tácgợi ý
+        // Không có quyền quản trị, in gợi ý thao tác thủ công
         console.log(
           colorText(
             '⚠️ Administrator privileges required for Windows registry modification',
@@ -541,7 +541,7 @@ export async function registerWithElevatedPermissions(): Promise<void> {
       }
     }
   } catch (error: any) {
-    console.error(colorText(`đăng kýthất bại: ${error.message}`, 'red'));
+    console.error(colorText(`Đăng ký thất bại: ${error.message}`, 'red'));
     throw error;
   }
 }

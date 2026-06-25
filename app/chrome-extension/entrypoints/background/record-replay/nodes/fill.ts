@@ -8,9 +8,7 @@ import type { ExecCtx, ExecResult, NodeRuntime } from './types';
 export const fillNode: NodeRuntime<StepFill> = {
   validate: (step) => {
     const ok = !!(step as any).target?.candidates?.length && 'value' in (step as any);
-    return ok
-      ? { ok }
-      : { ok, errors: ['thiếumục tiêubộ chọnứng viênnoiDungTiengVietđầu vàonoiDungTiengViet'] };
+    return ok ? { ok } : { ok, errors: ['thiếumục tiêubộ chọnứng viênđầu vào'] };
   },
   run: async (ctx: ExecCtx, step: StepFill) => {
     const s: any = step;

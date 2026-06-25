@@ -1,6 +1,6 @@
 /**
  * Selector Generator - bộ chọntrình tạo
- * noiDungTiengViet DOM phần tửtạonoiDungTiengVietứng viênbộ chọn
+ *  DOM phần tửtạoứng viênbộ chọn
  */
 
 import type {
@@ -41,7 +41,7 @@ function clampInt(value: number, min: number, max: number): number {
 }
 
 /**
- * noiDungTiengVietbộ chọntạotùy chọn
+ * bộ chọntạotùy chọn
  */
 export function normalizeSelectorGenerationOptions(
   options: SelectorGenerationOptions | undefined,
@@ -59,7 +59,7 @@ export function normalizeSelectorGenerationOptions(
 }
 
 /**
- * CSS chuỗinoiDungTiengViet
+ * CSS chuỗi
  * Uses native CSS.escape when available; otherwise falls back to a spec-inspired polyfill.
  */
 export function cssEscape(value: string): string {
@@ -149,7 +149,7 @@ export interface GenerateSelectorTargetOptions extends SelectorGenerationOptions
 }
 
 /**
- * noiDungTiengViet DOM phần tửtạobộ chọnmục tiêu
+ *  DOM phần tửtạobộ chọnmục tiêu
  */
 export function generateSelectorTarget(
   element: Element,

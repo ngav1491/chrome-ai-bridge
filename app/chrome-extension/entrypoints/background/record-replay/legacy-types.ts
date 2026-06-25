@@ -133,7 +133,7 @@ export interface StepAssert extends StepBase {
     | { visible: string }
     | { textPresent: string }
     | { attribute: { selector: string; name: string; equals?: string; matches?: string } };
-  // thất bạichiến lược：stop=thất bạinoiDungTiengViet（mặc định）、warn=noiDungTiengViettiếp tục、retry=kích hoạtthử lạinoiDungTiengViet
+  // thất bạichiến lược: stop=thất bại(mặc định), warn=tiếp tục, retry=kích hoạtthử lại
   failStrategy?: 'stop' | 'warn' | 'retry';
 }
 

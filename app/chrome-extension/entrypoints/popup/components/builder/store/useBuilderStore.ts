@@ -212,7 +212,7 @@ export function useBuilderStore(initial?: FlowV2 | null) {
     const n = nodes.find((n) => n.id === id);
     if (!n) return;
     n.ui = { x: Math.round(x), y: Math.round(y) };
-    // noiDungTiengViet，tránhnoiDungTiengVietghi；noiDungTiengVietkích hoạtthao tác（kết nối/thêm mới/xóanoiDungTiengViet）ghi。
+    // , tránhghi; kích hoạtthao tác(kết nối/thêm mới/xóa)ghi.
   }
 
   function connectFrom(id: string, label: string = 'default') {
@@ -223,7 +223,7 @@ export function useBuilderStore(initial?: FlowV2 | null) {
   function onConnect(sourceId: string, targetId: string, label: string = 'default') {
     // prevent self-loop
     if (sourceId === targetId) {
-      toast('không thểkết nốinoiDungTiengViet', 'warn');
+      toast('không thểkết nối', 'warn');
       return;
     }
     // IO constraints
@@ -236,19 +236,19 @@ export function useBuilderStore(initial?: FlowV2 | null) {
       // Inputs: respect numeric maximum; 'any' means unlimited
       const incoming = edges.filter((e) => e.to === targetId).length;
       if (dstIo.inputs !== 'any' && incoming >= (dstIo.inputs as number)) {
-        toast(`noiDungTiengVietnútnoiDungTiengViet ${dstIo.inputs} mụcnoiDungTiengViet`, 'warn');
+        toast(`nút ${dstIo.inputs} mục`, 'warn');
         return;
       }
       // Outputs: respect numeric maximum when defined
       if (srcIo.outputs !== 'any') {
         const outgoing = edges.filter((e) => e.from === sourceId).length;
         if (outgoing >= (srcIo.outputs as number)) {
-          toast(`noiDungTiengVietnútnoiDungTiengViet ${srcIo.outputs} mụcnoiDungTiengViet`, 'warn');
+          toast(`nút ${srcIo.outputs} mục`, 'warn');
           return;
         }
       }
     } catch {}
-    // noiDungTiengVietnhãnnoiDungTiengViet：xóanoiDungTiengViet + noiDungTiengVietnhãnnoiDungTiengViet
+    // Nhãn: xóa cạnh cũ cùng nhãn trước khi thêm cạnh mới
     for (let i = edges.length - 1; i >= 0; i--) {
       const e = edges[i];
       const lab = e.label || 'default';
@@ -418,7 +418,7 @@ export function useBuilderStore(initial?: FlowV2 | null) {
     return summarizeNode(n || null);
   }
 
-  // noiDungTiengViet：noiDungTiengViet + noiDungTiengVietsắp xếp（noiDungTiengVietphụ thuộcnoiDungTiengViet）
+  // :  + sắp xếp(phụ thuộc)
   function layoutFallback() {
     const idMap = new Map<string, NodeBase>();
     nodes.forEach((n) => idMap.set(n.id, n));
@@ -518,9 +518,8 @@ export function useBuilderStore(initial?: FlowV2 | null) {
     recordChange();
   }
 
-  // tự độngnoiDungTiengViet（ELK ưu tiên）：
-  // - noiDungTiengViet elkjs，tránhnoiDungTiengViet
-  // - thất bạinoiDungTiengViet layoutFallback()
+  // tự động(ELK ưu tiên):
+  // -  elkjs, tránh  // - thất bại layoutFallback()
   async function layoutAuto() {
     try {
       // Dynamic import of bundled build to avoid 'web-worker' resolution issues
@@ -571,7 +570,7 @@ export function useBuilderStore(initial?: FlowV2 | null) {
       // Fallback without dependency
       try {
         layoutFallback();
-        toast('ELK tự độngnoiDungTiengVietcó sẵn，noiDungTiengVietsử dụngnoiDungTiengViet', 'warn');
+        toast('ELK tự độngcó sẵn, sử dụng', 'warn');
       } catch {}
     }
   }

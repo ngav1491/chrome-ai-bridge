@@ -83,7 +83,7 @@ export async function locateElement(
         const ensured = await ensureRefForSelector(tabId, String(c.value || ''), frameId);
         if (ensured) return { ...ensured, resolvedBy: c.type };
       } else if (c.type === 'aria') {
-        // Minimal ARIA role+name parser like: "button[name=gửi]" or "textbox[name=noiDungTiengViet]"
+        // Minimal ARIA role+name parser like: "button[name=gửi]" or "textbox[name=]"
         const v = String(c.value || '').trim();
         const m = v.match(/^(\w+)\s*\[\s*name\s*=\s*([^\]]+)\]$/);
         const role = m ? m[1] : '';

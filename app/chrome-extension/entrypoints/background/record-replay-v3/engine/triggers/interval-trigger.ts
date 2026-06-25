@@ -1,11 +1,11 @@
 /**
  * @fileoverview Interval Trigger Handler (M3.1)
  * @description
- * sử dụng chrome.alarms noiDungTiengViet periodInMinutes triển khaicố địnhkhoảng cáchkích hoạt。
+ * Sử dụng periodInMinutes của chrome.alarms để triển khai kích hoạt khoảng thời gian cố định.
  *
- * chiến lược：
- * - mỗitriggernoiDungTiengVietlặp lại alarm
- * - sử dụng delayInMinutes noiDungTiengVietkích hoạtnoiDungTiengVietcấu hìnhnoiDungTiengVietkhoảng cáchnoiDungTiengViet
+ * Chiến lược:
+ * - Mỗi trigger tương ứng với một alarm lặp lại
+ * - Dùng delayInMinutes để lần kích hoạt đầu tiên sau khoảng thời gian đã cấu hình
  */
 
 import type { TriggerId } from '../../domain/ids';
@@ -33,7 +33,7 @@ const ALARM_PREFIX = 'rr_v3_interval_';
 // ==================== Utilities ====================
 
 /**
- * xác thựcnoiDungTiengVietchuẩn hóa periodMinutes
+ * Xác thực và chuẩn hóa periodMinutes
  */
 function normalizePeriodMinutes(value: unknown): number {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
@@ -46,14 +46,14 @@ function normalizePeriodMinutes(value: unknown): number {
 }
 
 /**
- * tạo alarm tên
+ * Tạo tên alarm
  */
 function alarmNameForTrigger(triggerId: TriggerId): string {
   return `${ALARM_PREFIX}${triggerId}`;
 }
 
 /**
- * noiDungTiengViet alarm tênphân tích cú pháp triggerId
+ * Phân tích triggerId từ tên alarm
  */
 function parseTriggerIdFromAlarmName(name: string): TriggerId | null {
   if (!name.startsWith(ALARM_PREFIX)) return null;
@@ -64,7 +64,7 @@ function parseTriggerIdFromAlarmName(name: string): TriggerId | null {
 // ==================== Handler Implementation ====================
 
 /**
- * tạo interval triggerxử lýnoiDungTiengVietfactory
+ * Tạo factory xử lý trigger khoảng thời gian
  */
 export function createIntervalTriggerHandlerFactory(
   deps?: IntervalTriggerHandlerDeps,
@@ -73,7 +73,7 @@ export function createIntervalTriggerHandlerFactory(
 }
 
 /**
- * tạo interval triggerxử lýnoiDungTiengViet
+ * Tạo bộ xử lý trigger khoảng thời gian
  */
 export function createIntervalTriggerHandler(
   fireCallback: TriggerFireCallback,
@@ -86,7 +86,7 @@ export function createIntervalTriggerHandler(
   let listening = false;
 
   /**
-   * tăng dầnphiên bảnnoiDungTiengVietthao tácnoiDungTiengViet
+   * Tăng phiên bản để làm hiệu lực các thao tác đang chờ
    */
   function bumpVersion(triggerId: TriggerId): number {
     const next = (versions.get(triggerId) ?? 0) + 1;
@@ -95,7 +95,7 @@ export function createIntervalTriggerHandler(
   }
 
   /**
-   * xóachỉ định alarm
+   * Xóa alarm chỉ định
    */
   async function clearAlarmByName(name: string): Promise<void> {
     if (!chrome.alarms?.clear) return;
@@ -107,7 +107,7 @@ export function createIntervalTriggerHandler(
   }
 
   /**
-   * xóatất cả interval alarms
+   * Xóa tất cả alarm khoảng thời gian
    */
   async function clearAllIntervalAlarms(): Promise<void> {
     if (!chrome.alarms?.getAll || !chrome.alarms?.clear) return;
@@ -123,7 +123,7 @@ export function createIntervalTriggerHandler(
   }
 
   /**
-   * lập lịch alarm
+   * Lập lịch alarm
    */
   async function schedule(triggerId: TriggerId, expectedVersion: number): Promise<void> {
     if (!chrome.alarms?.create) {
@@ -138,8 +138,8 @@ export function createIntervalTriggerHandler(
     const periodInMinutes = entry.periodMinutes;
 
     try {
-      // sử dụng delayInMinutes noiDungTiengViet periodInMinutes tạolặp lại alarm
-      // noiDungTiengVietkích hoạtnoiDungTiengViet periodInMinutes noiDungTiengViet，saunoiDungTiengViet periodInMinutes kích hoạt
+      // Sử dụng delayInMinutes và periodInMinutes để tạo alarm lặp lại
+      // Lần kích hoạt đầu tiên sau periodInMinutes, sau đó kích hoạt mỗi periodInMinutes
       await Promise.resolve(
         chrome.alarms.create(name, {
           delayInMinutes: periodInMinutes,
@@ -152,7 +152,7 @@ export function createIntervalTriggerHandler(
   }
 
   /**
-   * Alarm sự kiệnxử lý
+   * Xử lý sự kiện Alarm
    */
   const onAlarm = (alarm: chrome.alarms.Alarm): void => {
     const triggerId = parseTriggerIdFromAlarmName(alarm?.name ?? '');
@@ -161,7 +161,7 @@ export function createIntervalTriggerHandler(
     const entry = installed.get(triggerId);
     if (!entry) return;
 
-    // kích hoạtcallback
+    // Kích hoạt callback
     Promise.resolve(
       fireCallback.onFire(triggerId, {
         sourceTabId: undefined,
@@ -173,7 +173,7 @@ export function createIntervalTriggerHandler(
   };
 
   /**
-   * đảm bảođanglắng nghe alarm sự kiện
+   * Đảm bảo đang lắng nghe sự kiện alarm
    */
   function ensureListening(): void {
     if (listening) return;
@@ -186,7 +186,7 @@ export function createIntervalTriggerHandler(
   }
 
   /**
-   * dừnglắng nghe alarm sự kiện
+   * Dừng lắng nghe sự kiện alarm
    */
   function stopListening(): void {
     if (!listening) return;

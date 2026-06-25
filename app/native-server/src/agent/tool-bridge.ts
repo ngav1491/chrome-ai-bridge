@@ -31,8 +31,8 @@ export interface AgentToolBridgeOptions {
  * AgentToolBridge maps CLI tool events (Codex, etc.) to MCP tool calls
  * against the local chrome MCP server via the official MCP SDK client.
  *
- * mô tả tiếng Việt：noiDungTiengViet CLI noiDungTiengVietcông cụgọinoiDungTiengViet MCP CallTool yêu cầu，
- * tái sử dụnghiện có /mcp HTTP server，noiDungTiengVietgiao thức。
+ * mô tả tiếng Việt:  CLI công cụgọi MCP CallTool yêu cầu,
+ * tái sử dụnghiện có /mcp HTTP server, giao thức.
  */
 export class AgentToolBridge {
   private readonly client: Client;

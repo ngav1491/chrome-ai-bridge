@@ -28,10 +28,10 @@ interface TodoListItem {
  * it focuses on streaming Codex JSON events into RealtimeEvent envelopes that the
  * sidepanel UI can consume.
  *
- * mô tả tiếng Việt：noiDungTiengVietenginenoiDungTiengViet other/cweb noiDungTiengViet Codex adapternoiDungTiengVietsự kiệngiao thức，đầy đủxử lý
- * item.started/item.delta/item.completed/item.failed/error noiDungTiengVietsự kiện，noiDungTiengViet
- * thông qua AgentStreamManager noiDungTiengViet RealtimeEvent noiDungTiengViet sidepanel，
- * đảm bảodữ liệunoiDungTiengViet「Sidepanel → Native Server → Codex CLI → Sidepanel」noiDungTiengViet。
+ * mô tả tiếng Việt: engine other/cweb  Codex adaptersự kiệngiao thức, đầy đủxử lý
+ * item.started/item.delta/item.completed/item.failed/error sự kiện,
+ * thông qua AgentStreamManager  RealtimeEvent  sidepanel,
+ * đảm bảodữ liệu"Sidepanel → Native Server → Codex CLI → Sidepanel".
  */
 export class CodexEngine implements AgentEngine {
   public readonly name = 'codex' as const;

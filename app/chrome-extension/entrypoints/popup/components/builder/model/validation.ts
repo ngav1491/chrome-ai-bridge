@@ -12,7 +12,7 @@ export function validateNode(n: NodeBase): string[] {
       const hasCandidate = !!c?.target?.candidates?.length;
       if (!hasCandidate) errs.push('thiếumục tiêubộ chọnứng viên');
       if (n.type === 'fill' && (!('value' in c) || c.value === undefined))
-        errs.push('thiếuđầu vàonoiDungTiengViet');
+        errs.push('thiếuđầu vào');
       break;
     }
     case STEP_TYPES.WAIT: {
@@ -33,7 +33,7 @@ export function validateNode(n: NodeBase): string[] {
         const pathRe = /^[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+|\[\d+\])*$/;
         for (const v of Object.values(c.assign)) {
           const s = String(v);
-          if (!pathRe.test(s)) errs.push(`Assign: đường dẫnnoiDungTiengViet ${s}`);
+          if (!pathRe.test(s)) errs.push(`Assign: đường dẫn ${s}`);
         }
       }
       break;
@@ -43,17 +43,17 @@ export function validateNode(n: NodeBase): string[] {
       break;
     }
     case STEP_TYPES.EXTRACT: {
-      if (!c?.saveAs) errs.push('Extract: cần điềnlưubiếnnoiDungTiengViet');
-      if (!c?.selector && !c?.js) errs.push('Extract: cần cung cấp selector noiDungTiengViet js');
+      if (!c?.saveAs) errs.push('Extract: cần điềnlưubiến');
+      if (!c?.selector && !c?.js) errs.push('Extract: cần cung cấp selector  js');
       break;
     }
     case STEP_TYPES.SWITCH_TAB: {
       if (!c?.tabId && !c?.urlContains && !c?.titleContains)
-        errs.push('SwitchTab: cần cung cấp tabId noiDungTiengViet URL/tiêu đềbao gồm');
+        errs.push('SwitchTab: cần cung cấp tabId  URL/tiêu đềbao gồm');
       break;
     }
     case STEP_TYPES.SCREENSHOT: {
-      // selector noiDungTiengViet（noiDungTiengViet/noiDungTiengViet），noiDungTiengVietbắt buộc
+      // selector (/), bắt buộc
       break;
     }
     case STEP_TYPES.TRIGGER_EVENT: {
@@ -64,7 +64,7 @@ export function validateNode(n: NodeBase): string[] {
     }
     case STEP_TYPES.IF: {
       const arr = Array.isArray(c?.branches) ? c.branches : [];
-      if (arr.length === 0) errs.push('noiDungTiengVietthêmnoiDungTiengVietđiều kiệnnhánh');
+      if (arr.length === 0) errs.push('thêmđiều kiệnnhánh');
       for (let i = 0; i < arr.length; i++) {
         if (!String(arr[i]?.expr || '').trim())
           errs.push(`nhánh${i + 1}: cần điềnđiều kiệnbiểu thức`);
@@ -74,12 +74,12 @@ export function validateNode(n: NodeBase): string[] {
     case STEP_TYPES.SET_ATTRIBUTE: {
       const hasCandidate = !!c?.target?.candidates?.length;
       if (!hasCandidate) errs.push('thiếumục tiêubộ chọnứng viên');
-      if (!String(c?.name || '').trim()) errs.push('cần cung cấpthuộc tínhnoiDungTiengViet');
+      if (!String(c?.name || '').trim()) errs.push('cần cung cấpthuộc tính');
       break;
     }
     case STEP_TYPES.LOOP_ELEMENTS: {
       if (!String(c?.selector || '').trim()) errs.push('cần cung cấpphần tửbộ chọn');
-      if (!String(c?.subflowId || '').trim()) errs.push('cần cung cấpnoiDungTiengViet ID');
+      if (!String(c?.subflowId || '').trim()) errs.push('cần cung cấp ID');
       break;
     }
     case STEP_TYPES.SWITCH_FRAME: {
@@ -87,26 +87,23 @@ export function validateNode(n: NodeBase): string[] {
       break;
     }
     case STEP_TYPES.EXECUTE_FLOW: {
-      if (!String(c?.flowId || '').trim())
-        errs.push('noiDungTiengVietthực thinoiDungTiengVietquy trình làm việc');
+      if (!String(c?.flowId || '').trim()) errs.push('thực thiquy trình làm việc');
       break;
     }
     case STEP_TYPES.CLOSE_TAB: {
-      // noiDungTiengViet（đónghiện tạinhãnnoiDungTiengViet），noiDungTiengVietbắt buộc
+      // (đónghiện tạinhãn), bắt buộc
       break;
     }
     case STEP_TYPES.SCRIPT: {
-      // noiDungTiengVietcấu hìnhnoiDungTiengViet saveAs/assign，noiDungTiengViet code
+      // cấu hình saveAs/assign,  code
       const hasAssign = c?.assign && Object.keys(c.assign).length > 0;
       if ((c?.saveAs || hasAssign) && !String(c?.code || '').trim())
-        errs.push(
-          'Script: cấu hìnhnoiDungTiengVietlưu/ánh xạnoiDungTiengVietthiếunoiDungTiengViet',
-        );
+        errs.push('Script: cấu hìnhlưu/ánh xạthiếu');
       if (hasAssign) {
         const pathRe = /^[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+|\[\d+\])*$/;
         for (const v of Object.values(c.assign || {})) {
           const s = String(v);
-          if (!pathRe.test(s)) errs.push(`Assign: đường dẫnnoiDungTiengViet ${s}`);
+          if (!pathRe.test(s)) errs.push(`Assign: đường dẫn ${s}`);
         }
       }
       break;

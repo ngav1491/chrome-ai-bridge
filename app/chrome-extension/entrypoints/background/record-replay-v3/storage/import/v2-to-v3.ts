@@ -1,6 +1,6 @@
 /**
- * @fileoverview V2 noiDungTiengViet V3 dữ liệuchuyển đổinoiDungTiengViet
- * @description noiDungTiengViet V2 định dạngdữ liệuchuyển đổi thành V3 định dạng，hỗ trợhai chiềuchuyển đổi
+ * @fileoverview V2  V3 dữ liệuchuyển đổi
+ * @description  V2 định dạngdữ liệuchuyển đổi thành V3 định dạng, hỗ trợhai chiềuchuyển đổi
  */
 
 import type { FlowV3, NodeV3, EdgeV3, FlowBinding } from '../../domain/flow';
@@ -79,9 +79,9 @@ export interface ConversionResult<T> {
 // ==================== V2 -> V3 Conversion ====================
 
 /**
- * noiDungTiengViet V2 Flow chuyển đổi thành V3 Flow
- * @param v2Flow V2 định dạngnoiDungTiengViet Flow
- * @returns chuyển đổikết quả，bao gồmthành công/thất bạitrạng thái、dữ liệunoiDungTiengVietlỗi/cảnh báothông tin
+ *  V2 Flow chuyển đổi thành V3 Flow
+ * @param v2Flow V2 định dạng Flow
+ * @returns chuyển đổikết quả, bao gồmthành công/thất bạitrạng thái, dữ liệulỗi/cảnh báothông tin
  */
 export function convertFlowV2ToV3(v2Flow: V2Flow): ConversionResult<FlowV3> {
   const errors: string[] = [];
@@ -98,7 +98,7 @@ export function convertFlowV2ToV3(v2Flow: V2Flow): ConversionResult<FlowV3> {
     errors.push('V2 Flow has no nodes');
   }
 
-  // 2. kiểm tranoiDungTiengViethỗ trợnoiDungTiengViet
+  // 2. kiểm trahỗ trợ
   if (v2Flow.subflows && Object.keys(v2Flow.subflows).length > 0) {
     errors.push(
       'V3 does not support subflows yet. Flow contains subflows: ' +
@@ -117,7 +117,7 @@ export function convertFlowV2ToV3(v2Flow: V2Flow): ConversionResult<FlowV3> {
     );
   }
 
-  // nếunoiDungTiengVietlỗi，trực tiếptrả về
+  // nếulỗi, trực tiếptrả về
   if (errors.length > 0) {
     return { success: false, errors, warnings };
   }
@@ -133,7 +133,7 @@ export function convertFlowV2ToV3(v2Flow: V2Flow): ConversionResult<FlowV3> {
     }
   }
 
-  // 4. chuyển đổinoiDungTiengViet
+  // 4. chuyển đổi
   const edges: EdgeV3[] = [];
   for (const v2Edge of v2Flow.edges || []) {
     const edge = convertEdgeV2ToV3(v2Edge);
@@ -156,7 +156,7 @@ export function convertFlowV2ToV3(v2Flow: V2Flow): ConversionResult<FlowV3> {
   // 6. chuyển đổibiến
   const variables = convertVariablesV2ToV3(v2Flow.variables || []);
 
-  // 7. chuyển đổinoiDungTiengVietdữ liệu
+  // 7. chuyển đổidữ liệu
   const meta = convertMetaV2ToV3(v2Flow.meta);
 
   // 8. xây dựng V3 Flow
@@ -187,7 +187,7 @@ export function convertFlowV2ToV3(v2Flow: V2Flow): ConversionResult<FlowV3> {
 }
 
 /**
- * chuyển đổiđơn lẻ V2 Node noiDungTiengViet V3 Node
+ * chuyển đổiđơn lẻ V2 Node  V3 Node
  */
 function convertNodeV2ToV3(v2Node: V2Node): NodeV3 | null {
   if (!v2Node.id || !v2Node.type) {
@@ -215,7 +215,7 @@ function convertNodeV2ToV3(v2Node: V2Node): NodeV3 | null {
 }
 
 /**
- * chuyển đổiđơn lẻ V2 Edge noiDungTiengViet V3 Edge
+ * chuyển đổiđơn lẻ V2 Edge  V3 Edge
  */
 function convertEdgeV2ToV3(v2Edge: V2Edge): EdgeV3 | null {
   if (!v2Edge.id || !v2Edge.from || !v2Edge.to) {
@@ -228,7 +228,7 @@ function convertEdgeV2ToV3(v2Edge: V2Edge): EdgeV3 | null {
     to: v2Edge.to as NodeId,
   };
 
-  // label trực tiếpnoiDungTiengViet
+  // label trực tiếp
   if (v2Edge.label) {
     edge.label = v2Edge.label as EdgeV3['label'];
   }
@@ -243,20 +243,20 @@ interface EntryNodeResult {
 }
 
 /**
- * noiDungTiengVietđiểm vàonút ID
+ * điểm vàonút ID
  *
- * quy tắc：
- * 1. noiDungTiengViet trigger kiểunút（noiDungTiengViet UI nút，noiDungTiengVietthực thi）
- * 2. noiDungTiengViet「noiDungTiengVietthực thinút -> noiDungTiengVietthực thinút」noiDungTiengViettính toánnoiDungTiengViet（bỏ qua trigger noiDungTiengViet）
- * 3. noiDungTiengViet 0 noiDungTiengVietnútnoiDungTiengVietứng viên
- * 4. nếunoiDungTiengVietứng viên，sử dụnglựa chọn ổn địnhquy tắc：
- *    - ưu tiênnoiDungTiengViet UI tọa độnoiDungTiengVietnút（noiDungTiengViet x tăng dần，x noiDungTiengViet y tăng dần）
- *    - nếunoiDungTiengViet UI tọa độ，noiDungTiengViet ID thứ tự từ điểnnoiDungTiengViet
+ * quy tắc:
+ * 1.  trigger kiểunút( UI nút, thực thi)
+ * 2. 「thực thinút -> thực thinút」tính toán(bỏ qua trigger )
+ * 3.  0 nútứng viên
+ * 4. nếuứng viên, sử dụnglựa chọn ổn địnhquy tắc:
+ *    - ưu tiên UI tọa độnút( x tăng dần, x  y tăng dần)
+ *    - nếu UI tọa độ,  ID thứ tự từ điển
  */
 function findEntryNodeId(nodes: NodeV3[], edges: EdgeV3[]): EntryNodeResult {
   const warnings: string[] = [];
 
-  // 1. noiDungTiengViet trigger nút，lấynoiDungTiengVietthực thinút
+  // 1.  trigger nút, lấythực thinút
   const executableNodes = nodes.filter((n) => n.kind !== 'trigger');
   if (executableNodes.length === 0) {
     warnings.push('No executable nodes found; cannot determine entry node');
@@ -265,28 +265,28 @@ function findEntryNodeId(nodes: NodeV3[], edges: EdgeV3[]): EntryNodeResult {
 
   const executableNodeIds = new Set<NodeId>(executableNodes.map((n) => n.id));
 
-  // 2. tính toánnoiDungTiengViet（noiDungTiengVietthực thinútnoiDungTiengViet）
+  // 2. tính toán(thực thinút)
   const inDegree = new Map<NodeId, number>();
   for (const node of executableNodes) {
     inDegree.set(node.id, 0);
   }
   for (const edge of edges) {
-    // bỏ quanoiDungTiengVietthực thinút（noiDungTiengViet trigger）noiDungTiengViet
+    // bỏ quathực thinút( trigger)
     if (!executableNodeIds.has(edge.from)) {
       continue;
     }
-    // bỏ quatrỏ đếnnoiDungTiengVietthực thinútnoiDungTiengViet
+    // bỏ quatrỏ đếnthực thinút
     if (!executableNodeIds.has(edge.to)) {
       continue;
     }
     inDegree.set(edge.to, (inDegree.get(edge.to) ?? 0) + 1);
   }
 
-  // 3. noiDungTiengViet 0 noiDungTiengVietnút
+  // 3.  0 nút
   const rootNodes = executableNodes.filter((n) => inDegree.get(n.id) === 0);
 
   if (rootNodes.length === 0) {
-    // không cónoiDungTiengViet 0 noiDungTiengVietnút，noiDungTiengViettồn tạinoiDungTiengViet，sử dụngnoiDungTiengVietbộ chọnnoiDungTiengViet fallback
+    // không có 0 nút, tồn tại, sử dụngbộ chọn fallback
     const fallbackResult = selectStableRootNode(executableNodes);
     warnings.push(
       `No inDegree=0 executable node found (graph may contain cycles); ` +
@@ -295,12 +295,12 @@ function findEntryNodeId(nodes: NodeV3[], edges: EdgeV3[]): EntryNodeResult {
     return { nodeId: fallbackResult.node.id, warnings };
   }
 
-  // 4. đơn lẻnoiDungTiengVietnút，trực tiếptrả về
+  // 4. đơn lẻnút, trực tiếptrả về
   if (rootNodes.length === 1) {
     return { nodeId: rootNodes[0].id, warnings };
   }
 
-  // 5. noiDungTiengVietnút，sử dụnglựa chọn ổn địnhquy tắc
+  // 5. nút, sử dụnglựa chọn ổn địnhquy tắc
   const selectedResult = selectStableRootNode(rootNodes);
   const candidateIds = rootNodes
     .map((n) => n.id)
@@ -321,18 +321,18 @@ interface StableSelectionResult {
 }
 
 /**
- * noiDungTiengVietnútnoiDungTiengVietđiểm vàonút
- * ưu tiênnoiDungTiengViet UI tọa độ（noiDungTiengVietưu tiên），noiDungTiengViet ID thứ tự từ điển
+ * nútđiểm vàonút
+ * ưu tiên UI tọa độ(ưu tiên),  ID thứ tự từ điển
  */
 function selectStableRootNode(nodes: NodeV3[]): StableSelectionResult {
-  // kiểm tranútcó/khôngnoiDungTiengViet UI tọa độ
+  // kiểm tranútcó/không UI tọa độ
   const hasValidUi = (n: NodeV3): n is NodeV3 & { ui: { x: number; y: number } } =>
     !!n.ui && Number.isFinite(n.ui.x) && Number.isFinite(n.ui.y);
 
   const nodesWithUi = nodes.filter(hasValidUi);
 
   if (nodesWithUi.length > 0) {
-    // noiDungTiengViet UI tọa độsắp xếp：x tăng dần -> y tăng dần -> id thứ tự từ điển（noiDungTiengViet tie-breaker）
+    //  UI tọa độsắp xếp: x tăng dần -> y tăng dần -> id thứ tự từ điển( tie-breaker)
     nodesWithUi.sort((a, b) => {
       if (a.ui.x !== b.ui.x) return a.ui.x - b.ui.x;
       if (a.ui.y !== b.ui.y) return a.ui.y - b.ui.y;
@@ -345,7 +345,7 @@ function selectStableRootNode(nodes: NodeV3[]): StableSelectionResult {
     };
   }
 
-  // noiDungTiengViet UI tọa độ，noiDungTiengViet ID thứ tự từ điển
+  //  UI tọa độ,  ID thứ tự từ điển
   const sortedById = [...nodes].sort((a, b) => a.id.localeCompare(b.id));
   return { node: sortedById[0], rule: 'id' };
 }
@@ -379,7 +379,7 @@ function convertVariablesV2ToV3(v2Variables: V2VariableDef[]): VariableDefinitio
 }
 
 /**
- * chuyển đổinoiDungTiengVietdữ liệu
+ * chuyển đổidữ liệu
  */
 function convertMetaV2ToV3(v2Meta: V2Flow['meta']): FlowV3['meta'] | undefined {
   if (!v2Meta) return undefined;
@@ -397,7 +397,7 @@ function convertMetaV2ToV3(v2Meta: V2Flow['meta']): FlowV3['meta'] | undefined {
     }));
   }
 
-  // nếu meta rỗngđối tượng，trả về undefined
+  // nếu meta rỗngđối tượng, trả về undefined
   if (Object.keys(meta).length === 0) {
     return undefined;
   }
@@ -408,8 +408,8 @@ function convertMetaV2ToV3(v2Meta: V2Flow['meta']): FlowV3['meta'] | undefined {
 // ==================== V3 -> V2 Conversion ====================
 
 /**
- * noiDungTiengViet V3 Flow chuyển đổi thành V2 Flow（dùng chonoiDungTiengViet V2 Builder noiDungTiengVietchỉnh sửa）
- * @param v3Flow V3 định dạngnoiDungTiengViet Flow
+ *  V3 Flow chuyển đổi thành V2 Flow(dùng cho V2 Builder chỉnh sửa)
+ * @param v3Flow V3 định dạng Flow
  * @returns chuyển đổikết quả
  */
 export function convertFlowV3ToV2(v3Flow: FlowV3): ConversionResult<V2Flow> {
@@ -426,7 +426,7 @@ export function convertFlowV3ToV2(v3Flow: FlowV3): ConversionResult<V2Flow> {
     ui: n.ui,
   }));
 
-  // 2. chuyển đổinoiDungTiengViet
+  // 2. chuyển đổi
   const edges: V2Edge[] = v3Flow.edges.map((e) => ({
     id: e.id,
     from: e.from,
@@ -443,7 +443,7 @@ export function convertFlowV3ToV2(v3Flow: FlowV3): ConversionResult<V2Flow> {
     rules: v.required ? { required: v.required } : undefined,
   }));
 
-  // 4. chuyển đổinoiDungTiengVietdữ liệu
+  // 4. chuyển đổidữ liệu
   const meta: V2Flow['meta'] = {
     createdAt: v3Flow.createdAt,
     updatedAt: v3Flow.updatedAt,
@@ -499,8 +499,8 @@ interface V2Trigger {
 }
 
 /**
- * noiDungTiengViet V2 Trigger chuyển đổi thành V3 TriggerSpec
- * @param v2Trigger V2 định dạngnoiDungTiengViet Trigger
+ *  V2 Trigger chuyển đổi thành V3 TriggerSpec
+ * @param v2Trigger V2 định dạng Trigger
  * @returns chuyển đổikết quả
  */
 export function convertTriggerV2ToV3(v2Trigger: V2Trigger): ConversionResult<TriggerSpec> {
@@ -521,7 +521,7 @@ export function convertTriggerV2ToV3(v2Trigger: V2Trigger): ConversionResult<Tri
     return { success: false, errors, warnings };
   }
 
-  // dựa trên type xây dựngnoiDungTiengViet TriggerSpec
+  // dựa trên type xây dựng TriggerSpec
   let trigger: TriggerSpec;
 
   switch (v2Trigger.type) {
@@ -555,7 +555,7 @@ export function convertTriggerV2ToV3(v2Trigger: V2Trigger): ConversionResult<Tri
       break;
 
     case 'schedule': {
-      // noiDungTiengViet V2 schedule chuyển đổi thành cron biểu thức
+      //  V2 schedule chuyển đổi thành cron biểu thức
       const cron = convertScheduleToCron(v2Trigger.schedule);
       if (!cron) {
         errors.push('Could not convert V2 schedule to cron expression');
@@ -590,14 +590,14 @@ export function convertTriggerV2ToV3(v2Trigger: V2Trigger): ConversionResult<Tri
 }
 
 /**
- * noiDungTiengViet V2 schedule cấu hìnhchuyển đổi thành cron biểu thức
+ *  V2 schedule cấu hìnhchuyển đổi thành cron biểu thức
  */
 function convertScheduleToCron(schedule: V2Trigger['schedule']): string | null {
   if (!schedule) return null;
 
   switch (schedule.type) {
     case 'interval': {
-      // noiDungTiengVietkhoảng cáchchuyển đổi thànhnoiDungTiengViet cron（noiDungTiengViet N phút）
+      // khoảng cáchchuyển đổi thành cron( N phút)
       const intervalMinutes = Math.max(1, Math.round((schedule.intervalMs || 60000) / 60000));
       if (intervalMinutes < 60) {
         return `*/${intervalMinutes} * * * *`;
@@ -616,7 +616,7 @@ function convertScheduleToCron(schedule: V2Trigger['schedule']): string | null {
       return '0 0 * * *'; // mặc địnhmỗi ngày 0:00
 
     case 'weekly': {
-      // noiDungTiengVietchỉ địnhnoiDungTiengVietthời gian
+      // chỉ địnhthời gian
       const days = (schedule.days || [0]).join(',');
       if (schedule.time) {
         const [hour, minute] = schedule.time.split(':').map(Number);
@@ -633,7 +633,7 @@ function convertScheduleToCron(schedule: V2Trigger['schedule']): string | null {
 // ==================== Converter Interface ====================
 
 /**
- * V2 noiDungTiengViet V3 chuyển đổinoiDungTiengVietgiao diện
+ * V2  V3 chuyển đổigiao diện
  */
 export interface V2ToV3Converter {
   /** chuyển đổi Flow */
@@ -666,8 +666,8 @@ export function createV2ToV3Converter(): V2ToV3Converter {
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet V2ToV3Converter（noiDungTiengViet）
- * @deprecated sử dụng createV2ToV3Converter() noiDungTiengViet
+ * tạo NotImplemented  V2ToV3Converter()
+ * @deprecated sử dụng createV2ToV3Converter()
  */
 export function createNotImplementedV2ToV3Converter(): V2ToV3Converter {
   return createV2ToV3Converter();

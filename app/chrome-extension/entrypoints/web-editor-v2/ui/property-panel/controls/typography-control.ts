@@ -127,7 +127,7 @@ function createBaseIconSvg(): SVGSVGElement {
 function createTextAlignIcon(value: TextAlignValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
+  // viền vùng chứa(hình chữ nhật nét đứt biểu thị vùng chứa)
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -140,22 +140,22 @@ function createTextAlignIcon(value: TextAlignValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // văn bảnnoiDungTiengVietcấu hình：noiDungTiengViet [xđiểm bắt đầu, noiDungTiengViet]
+  // văn bảncấu hình:  [xđiểm bắt đầu, ]
   const lineConfigs: Record<TextAlignValue, Array<[number, number]>> = {
     left: [
-      [3.5, 8], // noiDungTiengViet
-      [3.5, 5], // noiDungTiengViet
-      [3.5, 6.5], // noiDungTiengViet
+      [3.5, 8], //
+      [3.5, 5], //
+      [3.5, 6.5], //
     ],
     center: [
-      [3.5, 8], // noiDungTiengViet
-      [5, 5], // noiDungTiengViet
-      [4.25, 6.5], // noiDungTiengViet
+      [3.5, 8], //
+      [5, 5], //
+      [4.25, 6.5], //
     ],
     right: [
-      [3.5, 8], // noiDungTiengViet
-      [6.5, 5], // noiDungTiengViet
-      [5.5, 6.5], // noiDungTiengViet
+      [3.5, 8], //
+      [6.5, 5], //
+      [5.5, 6.5], //
     ],
     justify: [
       [3.5, 8], // toàn chiều rộng
@@ -185,7 +185,7 @@ function createTextAlignIcon(value: TextAlignValue): SVGElement {
 function createVerticalAlignIcon(value: VerticalAlignValue): SVGElement {
   const svg = createBaseIconSvg();
 
-  // viền vùng chứa（hình chữ nhật nét đứt biểu thị vùng chứa）
+  // viền vùng chứa(hình chữ nhật nét đứt biểu thị vùng chứa)
   const container = document.createElementNS(SVG_NS, 'rect');
   container.setAttribute('x', '2');
   container.setAttribute('y', '2');
@@ -198,15 +198,15 @@ function createVerticalAlignIcon(value: VerticalAlignValue): SVGElement {
   container.setAttribute('fill', 'none');
   container.setAttribute('opacity', '0.5');
 
-  // noiDungTiengViet Y tọa độdựa trêncách căn chỉnh khác nhau
+  //  Y tọa độdựa trêncách căn chỉnh khác nhau
   const blockY: Record<VerticalAlignValue, number> = {
-    top: 3.5, // noiDungTiengViet
+    top: 3.5, //
     middle: 5.5, // căn giữa
-    bottom: 7.5, // noiDungTiengViet
-    baseline: 6.5, // baseline noiDungTiengViet
+    bottom: 7.5, //
+    baseline: 6.5, // baseline
   };
 
-  // hainoiDungTiengVietbiểu thịnoiDungTiengVietphần tử
+  // haibiểu thịphần tử
   const block1 = document.createElementNS(SVG_NS, 'rect');
   block1.setAttribute('x', '4');
   block1.setAttribute('y', String(blockY[value]));
@@ -225,7 +225,7 @@ function createVerticalAlignIcon(value: VerticalAlignValue): SVGElement {
 
   svg.append(container, block1, block2);
 
-  // baseline schemathêmnoiDungTiengViet
+  // baseline schemathêm
   if (value === 'baseline') {
     const baselinePath = document.createElementNS(SVG_NS, 'path');
     baselinePath.setAttribute('d', 'M3 10H12');

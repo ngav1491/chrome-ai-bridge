@@ -1,6 +1,6 @@
 /**
- * @fileoverview StoragePort giao diệnđịnh nghĩa
- * @description định nghĩa Storage noiDungTiengVietgiao diện，dùng chophụ thuộcnoiDungTiengViet
+ * @fileoverview Định nghĩa interface StoragePort
+ * @description Định nghĩa interface trừu tượng của lớp lưu trữ, dùng cho injection phụ thuộc
  */
 
 import type { FlowId, RunId, TriggerId } from '../../domain/ids';
@@ -11,107 +11,107 @@ import type { TriggerSpec } from '../../domain/triggers';
 import type { RunQueue } from '../queue/queue';
 
 /**
- * FlowsStore giao diện
+ * Interface FlowsStore
  */
 export interface FlowsStore {
-  /** liệt kêtất cả Flow */
+  /** Liệt kê tất cả Flow */
   list(): Promise<FlowV3[]>;
-  /** lấyđơn lẻ Flow */
+  /** Lấy một Flow */
   get(id: FlowId): Promise<FlowV3 | null>;
-  /** lưu Flow */
+  /** Lưu Flow */
   save(flow: FlowV3): Promise<void>;
-  /** xóa Flow */
+  /** Xóa Flow */
   delete(id: FlowId): Promise<void>;
 }
 
 /**
- * RunsStore giao diện
+ * Interface RunsStore
  */
 export interface RunsStore {
-  /** liệt kêtất cả Run ghi */
+  /** Liệt kê tất cả bản ghi Run */
   list(): Promise<RunRecordV3[]>;
-  /** lấyđơn lẻ Run ghi */
+  /** Lấy một bản ghi Run */
   get(id: RunId): Promise<RunRecordV3 | null>;
-  /** lưu Run ghi */
+  /** Lưu bản ghi Run */
   save(record: RunRecordV3): Promise<void>;
-  /** noiDungTiengVietcập nhật Run ghi */
+  /** Cập nhật một phần bản ghi Run */
   patch(id: RunId, patch: Partial<RunRecordV3>): Promise<void>;
 }
 
 /**
- * EventsStore giao diện
- * @description seq noiDungTiengVietbắt buộcnoiDungTiengViet append() bên trongnoiDungTiengViethoàn tất
+ * Interface EventsStore
+ * @description việc cấp phát seq phải được thực hiện nguyên tử bên trong append()
  */
 export interface EventsStore {
   /**
-   * noiDungTiengVietsự kiệnnoiDungTiengViet seq
-   * @description noiDungTiengVietđơn lẻnoiDungTiengViet：đọc RunRecordV3.nextSeq -> ghisự kiện -> tăng dần nextSeq
-   * @param event sự kiệnđầu vào（noiDungTiengViet seq）
-   * @returns đầy đủsự kiện（noiDungTiengViet seq noiDungTiengViet ts）
+   * Thêm sự kiện và cấp phát seq nguyên tử
+   * @description Trong một transaction duy nhất: đọc RunRecordV3.nextSeq -> ghi sự kiện -> tăng nextSeq
+   * @param event đầu vào sự kiện (không chứa seq)
+   * @returns sự kiện đầy đủ (chứa seq và ts đã cấp phát)
    */
   append(event: RunEventInput): Promise<RunEvent>;
 
   /**
-   * liệt kêsự kiện
+   * Liệt kê sự kiện
    * @param runId Run ID
-   * @param opts truy vấntùy chọn
+   * @param opts tùy chọn truy vấn
    */
   list(runId: RunId, opts?: { fromSeq?: number; limit?: number }): Promise<RunEvent[]>;
 }
 
 /**
- * PersistentVarsStore giao diện
+ * Interface PersistentVarsStore
  */
 export interface PersistentVarsStore {
-  /** lấylưu trữ lâu dàibiến */
+  /** Lấy biến bền vững */
   get(key: PersistentVariableName): Promise<PersistentVarRecord | undefined>;
-  /** cài đặtlưu trữ lâu dàibiến */
+  /** Đặt biến bền vững */
   set(
     key: PersistentVariableName,
     value: PersistentVarRecord['value'],
   ): Promise<PersistentVarRecord>;
-  /** xóalưu trữ lâu dàibiến */
+  /** Xóa biến bền vững */
   delete(key: PersistentVariableName): Promise<void>;
-  /** liệt kêlưu trữ lâu dàibiến */
+  /** Liệt kê biến bền vững */
   list(prefix?: PersistentVariableName): Promise<PersistentVarRecord[]>;
 }
 
 /**
- * TriggersStore giao diện
+ * Interface TriggersStore
  */
 export interface TriggersStore {
-  /** liệt kêtất cảtrigger */
+  /** Liệt kê tất cả bộ kích hoạt */
   list(): Promise<TriggerSpec[]>;
-  /** lấyđơn lẻtrigger */
+  /** Lấy một bộ kích hoạt */
   get(id: TriggerId): Promise<TriggerSpec | null>;
-  /** lưutrigger */
+  /** Lưu bộ kích hoạt */
   save(spec: TriggerSpec): Promise<void>;
-  /** xóatrigger */
+  /** Xóa bộ kích hoạt */
   delete(id: TriggerId): Promise<void>;
 }
 
 /**
- * StoragePort giao diện
- * @description noiDungTiengViettất cảlưu trữgiao diện，dùng chophụ thuộcnoiDungTiengViet
+ * Interface StoragePort
+ * @description Tổng hợp tất cả interface lưu trữ, dùng cho injection phụ thuộc
  */
 export interface StoragePort {
-  /** Flows lưu trữ */
+  /** Lưu trữ Flows */
   flows: FlowsStore;
-  /** Runs lưu trữ */
+  /** Lưu trữ Runs */
   runs: RunsStore;
-  /** Events lưu trữ */
+  /** Lưu trữ Events */
   events: EventsStore;
-  /** Queue lưu trữ */
+  /** Lưu trữ Queue */
   queue: RunQueue;
-  /** lưu trữ lâu dàibiếnlưu trữ */
+  /** Lưu trữ biến bền vững */
   persistentVars: PersistentVarsStore;
-  /** triggerlưu trữ */
+  /** Lưu trữ bộ kích hoạt */
   triggers: TriggersStore;
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet Store
- * @description tránh Proxy tạo 'then' noiDungTiengViet thenable hành vi
+ * Tạo Store NotImplemented
+ * @description Tránh Proxy tạo 'then' dẫn đến hành vi thenable
  */
 function createNotImplementedStore<T extends object>(name: string): T {
   const target = {} as T;
@@ -129,8 +129,8 @@ function createNotImplementedStore<T extends object>(name: string): T {
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet StoragePort
- * @description Phase 0 giữ chỗtriển khai
+ * Tạo StoragePort NotImplemented
+ * @description triển khai giữ chỗ Phase 0
  */
 export function createNotImplementedStoragePort(): StoragePort {
   return {

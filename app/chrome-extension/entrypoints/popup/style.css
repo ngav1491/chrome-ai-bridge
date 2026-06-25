@@ -1,12 +1,12 @@
-/* noiDungTiengViet */
+/*  */
 :root {
-  /* noiDungTiengViet */
+  /*  */
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
 
-  /* noiDungTiengViet */
+  /*  */
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --primary-color: #667eea;
   --primary-dark: #5a67d8;
@@ -34,7 +34,7 @@
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
 
-  /* noiDungTiengViet */
+  /*  */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
@@ -43,19 +43,19 @@
   --spacing-2xl: 24px;
   --spacing-3xl: 32px;
 
-  /* noiDungTiengViet */
+  /*  */
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
   --radius-2xl: 16px;
 
-  /* noiDungTiengViet */
+  /*  */
   --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
 
-  /* noiDungTiengViet */
+  /*  */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -63,7 +63,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
-/* noiDungTiengViet */
+/*  */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -89,7 +89,7 @@ body {
   padding: 0;
 }
 
-/* noiDungTiengViet */
+/*  */
 a {
   color: var(--primary-color);
   text-decoration: none;
@@ -100,7 +100,7 @@ a:hover {
   color: var(--primary-dark);
 }
 
-/* noiDungTiengViet */
+/*  */
 button {
   font-family: inherit;
   font-size: inherit;
@@ -116,7 +116,7 @@ button:disabled {
   opacity: 0.6;
 }
 
-/* noiDungTiengViet */
+/*  */
 input,
 textarea,
 select {
@@ -139,7 +139,7 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-/* noiDungTiengViet */
+/*  */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -160,19 +160,19 @@ select:focus {
   background: var(--text-muted);
 }
 
-/* noiDungTiengViet */
+/*  */
 ::selection {
   background: rgba(102, 126, 234, 0.2);
   color: var(--text-primary);
 }
 
-/* noiDungTiengViet */
+/*  */
 :focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
 
-/* noiDungTiengViet */
+/*  */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -215,7 +215,7 @@ select:focus {
   }
 }
 
-/* noiDungTiengViet */
+/*  */
 @media (max-width: 420px) {
   :root {
     --spacing-xs: 3px;
@@ -228,7 +228,7 @@ select:focus {
   }
 }
 
-/* noiDungTiengViet */
+/*  */
 @media (prefers-contrast: high) {
   :root {
     --border-color: #000000;
@@ -236,7 +236,7 @@ select:focus {
   }
 }
 
-/* noiDungTiengViet */
+/*  */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

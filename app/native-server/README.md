@@ -1,106 +1,105 @@
-# Fastify Chrome Native MessagingnoiDungTiengViet
+# Dịch vụ Chrome Native Messaging bằng Fastify
 
-noiDungTiengVietFastifynoiDungTiengVietTypeScriptnoiDungTiengViet，noiDungTiengVietChromenoiDungTiengViet。
+Đây là một dự án TypeScript dựa trên Fastify, dùng để giao tiếp nguyên sinh (native) với tiện ích Chrome.
 
-## noiDungTiengViet
+## Tính năng
 
-- noiDungTiengVietChrome Native MessagingnoiDungTiengVietChromenoiDungTiengViet
-- **noiDungTiengViet**: Chrome noiDungTiengViet Chromium (noiDungTiengViet Linux、macOS noiDungTiengViet Windows)
-- noiDungTiengVietRESTful APInoiDungTiengViet
-- noiDungTiengVietTypeScriptnoiDungTiengViet
-- noiDungTiengViet
-- noiDungTiengViet
+- Giao tiếp hai chiều với tiện ích Chrome thông qua giao thức Chrome Native Messaging
+- **Hỗ trợ nhiều trình duyệt**: Chrome và Chromium (bao gồm Linux, macOS và Windows)
+- Cung cấp dịch vụ RESTful API
+- Phát triển hoàn toàn bằng TypeScript
+- Kèm bộ kiểm thử đầy đủ
+- Tuân thủ các quy tắc thực hành tốt nhất về chất lượng mã
 
-## noiDungTiengViet
+## Thiết lập môi trường phát triển
 
-### noiDungTiengViet
+### Điều kiện tiên quyết
 
 - Node.js 20+
-- npm 8+ noiDungTiengViet pnpm 8+
+- npm 8+ hoặc pnpm 8+
 
-### noiDungTiengViet
-
-```bash
-git clone https://github.com/your-username/fastify-chrome-native.git
-cd fastify-chrome-native
-npm install
-```
-
-### noiDungTiengViet
-
-1. noiDungTiengVietnative server
+### Cài đặt
 
 ```bash
-cd app/native-server
-npm run dev
+git clone https://github.com/ngav1491/chrome-ai-bridge.git
+cd chrome-ai-bridge
+corepack enable
+corepack pnpm install
 ```
 
-2. noiDungTiengVietchrome extension
+### Phát triển
+
+1. Build và đăng ký native server trên máy
 
 ```bash
-cd app/chrome-extension
-npm run dev
+corepack pnpm --filter chrome-ai-bridge dev
 ```
 
-### noiDungTiengViet
+2. Khởi động tiện ích Chrome
 
 ```bash
-npm run build
+corepack pnpm --filter chrome-mcp-server dev
 ```
 
-### noiDungTiengVietNative MessagingnoiDungTiengViet
+### Build
 
-#### noiDungTiengViet
+```bash
+corepack pnpm build:native
+```
+
+### Đăng ký máy chủ Native Messaging
+
+#### Tự động phát hiện và đăng ký mọi trình duyệt đã cài
 
 ```bash
 chrome-ai-bridge register --detect
 ```
 
-#### noiDungTiengViet
+#### Đăng ký trình duyệt cụ thể
 
 ```bash
-# noiDungTiengViet Chrome
+# Chỉ đăng ký Chrome
 chrome-ai-bridge register --browser chrome
 
-# noiDungTiengViet Chromium
+# Chỉ đăng ký Chromium
 chrome-ai-bridge register --browser chromium
 
-# noiDungTiengViet
+# Đăng ký mọi trình duyệt được hỗ trợ
 chrome-ai-bridge register --browser all
 ```
 
-#### noiDungTiengViet（noiDungTiengViet）
+#### Cài đặt toàn cục (sẽ tự động đăng ký các trình duyệt được phát hiện)
 
 ```bash
 npm i -g chrome-ai-bridge
 ```
 
-#### noiDungTiengViet
+#### Trình duyệt được hỗ trợ
 
-| noiDungTiengViet | Linux | macOS | Windows |
-| ---------------- | ----- | ----- | ------- |
-| Google Chrome    | ✓     | ✓     | ✓       |
-| Chromium         | ✓     | ✓     | ✓       |
+| Trình duyệt   | Linux | macOS | Windows |
+| ------------- | ----- | ----- | ------- |
+| Google Chrome | ✓     | ✓     | ✓       |
+| Chromium      | ✓     | ✓     | ✓       |
 
-noiDungTiengViet：
+Vị trí đăng ký:
 
 - **Linux**: `~/.config/[browser-name]/NativeMessagingHosts/`
 - **macOS**: `~/Library/Application Support/[Browser]/NativeMessagingHosts/`
 - **Windows**: `%APPDATA%\[Browser]\NativeMessagingHosts\`
 
-### noiDungTiengVietChromenoiDungTiengViet
+### Tích hợp với tiện ích Chrome
 
-noiDungTiengVietChromenoiDungTiengViet：
+Dưới đây là ví dụ đơn giản về cách sử dụng dịch vụ này trong tiện ích Chrome:
 
 ```javascript
 // background.js
 let nativePort = null;
 let serverRunning = false;
 
-// noiDungTiengVietNative MessagingnoiDungTiengViet
+// Khởi động dịch vụ Native Messaging
 function startServer() {
   if (nativePort) {
-    console.log('noiDungTiengVietNative MessagingnoiDungTiengViet');
+    console.log('Đã kết nối tới máy chủ Native Messaging');
     return;
   }
 
@@ -108,56 +107,56 @@ function startServer() {
     nativePort = chrome.runtime.connectNative('com.yourcompany.fastify_native_host');
 
     nativePort.onMessage.addListener((message) => {
-      console.log('noiDungTiengVietNativenoiDungTiengViet:', message);
+      console.log('Nhận tin nhắn Native:', message);
 
       if (message.type === 'started') {
         serverRunning = true;
-        console.log(`noiDungTiengViet，noiDungTiengViet: ${message.payload.port}`);
+        console.log(`Dịch vụ đã khởi động, cổng: ${message.payload.port}`);
       } else if (message.type === 'stopped') {
         serverRunning = false;
-        console.log('noiDungTiengViet');
+        console.log('Dịch vụ đã dừng');
       } else if (message.type === 'error') {
-        console.error('NativenoiDungTiengViet:', message.payload.message);
+        console.error('Lỗi Native:', message.payload.message);
       }
     });
 
     nativePort.onDisconnect.addListener(() => {
-      console.log('NativenoiDungTiengViet:', chrome.runtime.lastError);
+      console.log('Kết nối Native bị ngắt:', chrome.runtime.lastError);
       nativePort = null;
       serverRunning = false;
     });
 
-    // noiDungTiengViet
+    // Khởi động máy chủ
     nativePort.postMessage({ type: 'start', payload: { port: 3000 } });
   } catch (error) {
-    console.error('noiDungTiengVietNative MessagingnoiDungTiengViet:', error);
+    console.error('Lỗi khi khởi động Native Messaging:', error);
   }
 }
 
-// noiDungTiengViet
+// Dừng máy chủ
 function stopServer() {
   if (nativePort && serverRunning) {
     nativePort.postMessage({ type: 'stop' });
   }
 }
 
-// noiDungTiengViet
+// Kiểm thử giao tiếp với máy chủ
 async function testPing() {
   try {
     const response = await fetch('http://localhost:3000/ping');
     const data = await response.json();
-    console.log('PingnoiDungTiengViet:', data);
+    console.log('Phản hồi Ping:', data);
     return data;
   } catch (error) {
-    console.error('PingnoiDungTiengViet:', error);
+    console.error('Ping thất bại:', error);
     return null;
   }
 }
 
-// noiDungTiengVietNativenoiDungTiengViet
+// Kết nối máy chủ Native khi tiện ích khởi động
 chrome.runtime.onStartup.addListener(startServer);
 
-// noiDungTiengVietpopupnoiDungTiengVietAPI
+// Xuất API cho popup hoặc content script sử dụng
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'startServer') {
     startServer();
@@ -167,17 +166,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ success: true });
   } else if (message.action === 'testPing') {
     testPing().then(sendResponse);
-    return true; // noiDungTiengViet
+    return true; // Báo rằng chúng ta sẽ gửi phản hồi bất đồng bộ
   }
 });
 ```
 
-### noiDungTiengViet
+### Kiểm thử
 
 ```bash
 npm run test
 ```
 
-### noiDungTiengViet
+### Giấy phép
 
 MIT

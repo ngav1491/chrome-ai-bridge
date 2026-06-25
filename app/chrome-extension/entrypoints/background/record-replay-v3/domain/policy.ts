@@ -1,6 +1,6 @@
 /**
  * @fileoverview chiến lượckiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 noiDungTiengVietsử dụngnoiDungTiengViethết thời gian、thử lại、lỗixử lýnoiDungTiengVietartifactchiến lược
+ * @description định nghĩa Record-Replay V3 sử dụnghết thời gian, thử lại, lỗixử lýartifactchiến lược
  */
 
 import type { EdgeLabel, NodeId } from './ids';
@@ -9,37 +9,37 @@ import type { UnixMillis } from './json';
 
 /**
  * hết thời gianchiến lược
- * @description định nghĩathao tácnoiDungTiengViethết thời gianthời giannoiDungTiengViet
+ * @description định nghĩathao táchết thời gianthời gian
  */
 export interface TimeoutPolicy {
-  /** hết thời gianthời gian（mili giây） */
+  /** hết thời gianthời gian(mili giây) */
   ms: UnixMillis;
-  /** hết thời giannoiDungTiengViet：attempt=noiDungTiengVietthử, node=toàn bộnútthực thi */
+  /** hết thời gian: attempt=thử, node=toàn bộnútthực thi */
   scope?: 'attempt' | 'node';
 }
 
 /**
  * thử lạichiến lược
- * @description định nghĩathất bạinoiDungTiengVietthử lạihành vi
+ * @description định nghĩathất bạithử lạihành vi
  */
 export interface RetryPolicy {
-  /** tối đathử lạinoiDungTiengViet */
+  /** tối đathử lại */
   retries: number;
-  /** thử lạikhoảng cách（mili giây） */
+  /** thử lạikhoảng cách(mili giây) */
   intervalMs: UnixMillis;
-  /** noiDungTiengVietchiến lược：none=cố địnhkhoảng cách, exp=noiDungTiengViet, linear=noiDungTiengViet */
+  /** chiến lược: none=cố địnhkhoảng cách, exp=, linear= */
   backoff?: 'none' | 'exp' | 'linear';
-  /** tối đathử lạikhoảng cách（mili giây） */
+  /** tối đathử lạikhoảng cách(mili giây) */
   maxIntervalMs?: UnixMillis;
-  /** noiDungTiengVietchiến lược：none=noiDungTiengViet, full=noiDungTiengVietngẫu nhiên */
+  /** chiến lược: none=, full=ngẫu nhiên */
   jitter?: 'none' | 'full';
-  /** noiDungTiengVietlỗinoiDungTiengVietthử lại */
+  /** lỗithử lại */
   retryOn?: ReadonlyArray<RRErrorCode>;
 }
 
 /**
  * lỗixử lýchiến lược
- * @description định nghĩanútthực thithất bạinoiDungTiengVietxử lýphương thức
+ * @description định nghĩanútthực thithất bạixử lýphương thức
  */
 export type OnErrorPolicy =
   | { kind: 'stop' }
@@ -52,22 +52,22 @@ export type OnErrorPolicy =
 
 /**
  * artifactchiến lược
- * @description định nghĩaảnh chụp màn hìnhnoiDungTiengVietnhật kýnoiDungTiengViethành vi
+ * @description định nghĩaảnh chụp màn hìnhnhật kýhành vi
  */
 export interface ArtifactPolicy {
-  /** ảnh chụp màn hìnhchiến lược：never=noiDungTiengViet, onFailure=thất bạinoiDungTiengViet, always=noiDungTiengViet */
+  /** ảnh chụp màn hìnhchiến lược: never=, onFailure=thất bại, always= */
   screenshot?: 'never' | 'onFailure' | 'always';
   /** ảnh chụp màn hìnhlưuđường dẫnmẫu */
   saveScreenshotAs?: string;
-  /** có/khôngbao gồmđiều khiểnnoiDungTiengVietnhật ký */
+  /** có/khôngbao gồmđiều khiểnnhật ký */
   includeConsole?: boolean;
-  /** có/khôngbao gồmnoiDungTiengVietyêu cầu */
+  /** có/khôngbao gồmyêu cầu */
   includeNetwork?: boolean;
 }
 
 /**
- * nútnoiDungTiengVietchiến lược
- * @description đơn lẻnútnoiDungTiengVietthực thichiến lượccấu hình
+ * nútchiến lược
+ * @description đơn lẻnútthực thichiến lượccấu hình
  */
 export interface NodePolicy {
   /** hết thời gianchiến lược */
@@ -81,21 +81,21 @@ export interface NodePolicy {
 }
 
 /**
- * Flow noiDungTiengVietchiến lược
- * @description toàn bộ Flow noiDungTiengVietthực thichiến lượccấu hình
+ * Flow chiến lược
+ * @description toàn bộ Flow thực thichiến lượccấu hình
  */
 export interface FlowPolicy {
   /** mặc địnhnútchiến lược */
   defaultNodePolicy?: NodePolicy;
-  /** noiDungTiengViethỗ trợnútnoiDungTiengVietxử lýchiến lược */
+  /** hỗ trợnútxử lýchiến lược */
   unsupportedNodePolicy?: OnErrorPolicy;
-  /** Run noiDungTiengViethết thời gianthời gian（mili giây） */
+  /** Run hết thời gianthời gian(mili giây) */
   runTimeoutMs?: UnixMillis;
 }
 
 /**
- * noiDungTiengVietnútchiến lược
- * @description noiDungTiengViet Flow noiDungTiengVietmặc địnhchiến lượcnoiDungTiengVietnútnoiDungTiengVietchiến lượcnoiDungTiengViet
+ * nútchiến lược
+ * @description  Flow mặc địnhchiến lượcnútchiến lược
  */
 export function mergeNodePolicy(
   flowDefault: NodePolicy | undefined,

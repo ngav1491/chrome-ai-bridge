@@ -17,10 +17,10 @@ const IS_DEV = process.env.NODE_ENV !== 'production' && process.env.MODE !== 'pr
 export default defineConfig({
   modules: ['@wxt-dev/module-vue'],
   runner: {
-    // phương án1: vô hiệu hóatự độngkhởi động（khuyến nghị）
+    // phương án1: vô hiệu hóatự độngkhởi động(khuyến nghị)
     disabled: true,
 
-    // phương án2: nếunoiDungTiengVietbậttự độngkhởi độngnoiDungTiengVietsử dụnghiện cócấu hình，hủynoiDungTiengVietcấu hình
+    // phương án2: nếubậttự độngkhởi độngsử dụnghiện cócấu hình, hủycấu hình
     // chromiumArgs: [
     //   '--user-data-dir=' + homedir() + (process.platform === 'darwin'
     //     ? '/Library/Application Support/Google/Chrome'
@@ -102,15 +102,15 @@ export default defineConfig({
     web_accessible_resources: [
       {
         resources: [
-          '/models/*', // noiDungTiengViettruy cập public/models/ noiDungTiengViettất cảtệp
-          '/workers/*', // noiDungTiengViettruy cập workers tệp
-          '/inject-scripts/*', // noiDungTiengVietscriptnoiDungTiengViettệp
+          '/models/*', // truy cập public/models/ tất cảtệp
+          '/workers/*', // truy cập workers tệp
+          '/inject-scripts/*', // scripttệp
         ],
         matches: ['<all_urls>'],
       },
     ],
-    // lưu ý：noiDungTiengVietchiến lượcnoiDungTiengViet dev server noiDungTiengViet，
-    // noiDungTiengVietbật，noiDungTiengViet WXT mặc địnhchiến lượcxử lý。
+    // lưu ý: chiến lược dev server ,
+    // bật,  WXT mặc địnhchiến lượcxử lý.
     ...(IS_DEV
       ? {}
       : {
@@ -137,13 +137,13 @@ export default defineConfig({
       // after the build by copy-static-assets.mjs (see package.json build script).
     ],
     build: {
-      // noiDungTiengVietxây dựngnoiDungTiengVietcầnnoiDungTiengVietes6
+      // xây dựngcầnes6
       target: 'es2015',
-      // noiDungTiengViettạosourcemap
+      // tạosourcemap
       sourcemap: env.mode !== 'production',
-      // vô hiệu hóagzip noiDungTiengViet，noiDungTiengViettệpnoiDungTiengViet
+      // vô hiệu hóagzip , tệp
       reportCompressedSize: false,
-      // chunknoiDungTiengVietvượt quá1500kbnoiDungTiengVietkích hoạtcảnh báo
+      // chunkvượt quá1500kbkích hoạtcảnh báo
       chunkSizeWarningLimit: 1500,
       minify: false,
     },

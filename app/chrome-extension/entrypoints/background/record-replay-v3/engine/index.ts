@@ -1,5 +1,5 @@
 /**
- * @fileoverview Engine noiDungTiengVietxuấtđiểm vào
+ * @fileoverview Engine xuấtđiểm vào
  */
 
 // Kernel

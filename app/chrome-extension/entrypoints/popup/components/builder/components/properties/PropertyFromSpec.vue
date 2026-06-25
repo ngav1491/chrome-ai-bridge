@@ -2,12 +2,9 @@
   <PropertyFormRenderer v-if="node && hasSpec" :node="node" :variables="variables" />
   <div v-else class="form-section">
     <div class="section-title">không tìm thấynútquy tắc</div>
-    <div class="help"
-      >noiDungTiengVietnútchưanoiDungTiengViet NodeSpec，noiDungTiengVietmặc địnhthuộc
-      tínhnoiDungTiengViet。</div
-    >
+    <div class="help">nútchưa NodeSpec, mặc địnhthuộc tính. </div>
   </div>
-  <!-- noiDungTiengVietchungtrườngnoiDungTiengViet PropertyPanel noiDungTiengViet（timeoutMs/screenshotOnFailnoiDungTiengViet） -->
+  <!-- chungtrường PropertyPanel (timeoutMs/screenshotOnFail) -->
 </template>
 
 <script lang="ts" setup>

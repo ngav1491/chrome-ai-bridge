@@ -9,12 +9,12 @@
     </div>
     <div class="form-group checkbox-group">
       <label class="checkbox-label"
-        ><input type="checkbox" v-model="(node as any).config.inline" /> noiDungTiengVietthực
-        thi（noiDungTiengVietngữ cảnhbiến）</label
+        ><input type="checkbox" v-model="(node as any).config.inline" /> thực thi(ngữ
+        cảnhbiến)</label
       >
     </div>
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet (JSON)</label>
+      <label class="form-label"> (JSON)</label>
       <textarea
         class="form-textarea"
         v-model="execArgsJson"

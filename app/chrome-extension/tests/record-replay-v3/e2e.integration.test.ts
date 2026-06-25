@@ -1,11 +1,11 @@
 /**
  * @fileoverview Record-Replay V3 service-level E2E tích hợpkiểm thử
  * @description
- * xác thựcđầy đủ V3 quy trình：RPC → enqueue → schedule → run → complete
+ * xác thựcđầy đủ V3 quy trình: RPC → enqueue → schedule → run → complete
  *
- * kiểm thửsử dụng：
- * - noiDungTiengViet IndexedDB lưu trữ（fake-indexeddb）
- * - service-level RPC（trực tiếpgọibên trong handler，tránh Port mock）
+ * kiểm thửsử dụng:
+ * -  IndexedDB lưu trữ(fake-indexeddb)
+ * - service-level RPC(trực tiếpgọibên trong handler, tránh Port mock)
  */
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -25,7 +25,7 @@ import { createV3E2EHarness, type V3E2EHarness, type RpcClient } from './v3-e2e-
 // ==================== Test Fixtures ====================
 
 /**
- * tạokiểm thửnoiDungTiengViet Flow
+ * tạokiểm thử Flow
  */
 function createTestFlow(
   id: string,
@@ -45,7 +45,7 @@ function createTestFlow(
 }
 
 /**
- * tạokiểm thửnoiDungTiengViet RunRecord
+ * tạokiểm thử RunRecord
  */
 function createRunRecord(
   runId: string,
@@ -95,7 +95,7 @@ describe('V3 service-level E2E', () => {
 
   describe('Happy path', () => {
     it('enqueueRun → schedule → runner → succeeded', async () => {
-      // noiDungTiengViet Flow
+      //  Flow
       const flow = createTestFlow('flow-happy');
       await h.storage.flows.save(flow);
 
@@ -110,10 +110,10 @@ describe('V3 service-level E2E', () => {
       const run = await h.waitForTerminal(result.runId);
       expect(run.status).toBe('succeeded');
 
-      // chờmục hàng đợinoiDungTiengVietgỡ bỏ
+      // chờmục hàng đợigỡ bỏ
       await h.waitForQueueItemGone(result.runId);
 
-      // xác thựcsự kiệnnoiDungTiengViet
+      // xác thựcsự kiện
       const events = await h.listEvents(result.runId);
       const types = eventTypes(events, result.runId);
 
@@ -167,7 +167,7 @@ describe('V3 service-level E2E', () => {
       await h.waitForTerminal(runId);
       await h.waitForQueueItemGone(runId);
 
-      // xác thựcnoiDungTiengVietsự kiện
+      // xác thựcsự kiện
       const streamed = client.getStreamedEvents().filter((e) => e.runId === runId);
       const streamedTypes = streamed.map((e) => e.type);
 
@@ -182,13 +182,13 @@ describe('V3 service-level E2E', () => {
       await h.storage.flows.save(flow1);
       await h.storage.flows.save(flow2);
 
-      // noiDungTiengVietvào hàng đợi run1
+      // vào hàng đợi run1
       const { runId: runId1 } = await client.call<{ runId: string }>('rr_v3.enqueueRun', {
         flowId: flow1.id,
       });
       await h.waitForTerminal(runId1);
 
-      // đăng kýnoiDungTiengViet runId1 noiDungTiengVietsự kiện（noiDungTiengViet runId1 noiDungTiengViethoàn tất）
+      // đăng ký runId1 sự kiện( runId1 hoàn tất)
       await client.call('rr_v3.subscribe', { runId: runId1 });
       client.clearMessages();
 
@@ -198,7 +198,7 @@ describe('V3 service-level E2E', () => {
       });
       await h.waitForTerminal(runId2);
 
-      // noiDungTiengViet run2 noiDungTiengVietsự kiện
+      //  run2 sự kiện
       const streamedForRun2 = client.getStreamedEvents().filter((e) => e.runId === runId2);
       expect(streamedForRun2).toHaveLength(0);
     });
@@ -209,7 +209,7 @@ describe('V3 service-level E2E', () => {
       const flow = createTestFlow('flow-control');
       await h.storage.flows.save(flow);
 
-      // vào hàng đợinoiDungTiengVietbật pauseOnStart
+      // vào hàng đợibật pauseOnStart
       const { runId } = await client.call<{ runId: string }>('rr_v3.enqueueRun', {
         flowId: flow.id,
         debug: { pauseOnStart: true },
@@ -243,7 +243,7 @@ describe('V3 service-level E2E', () => {
 
       await h.waitForEvent(runId, (e) => e.type === 'run.paused');
 
-      // noiDungTiengViettạm dừng queue item
+      // tạm dừng queue item
       await client.call('rr_v3.pauseRun', { runId });
 
       // hủy
@@ -255,7 +255,7 @@ describe('V3 service-level E2E', () => {
     });
 
     it('cancel queued run removes it from queue', async () => {
-      // tạonoiDungTiengViet harness，noiDungTiengViettự độngkhởi động scheduler
+      // tạo harness, tự độngkhởi động scheduler
       await h.dispose();
       h = createV3E2EHarness({ autoStartScheduler: false });
       client = h.createClient();
@@ -267,7 +267,7 @@ describe('V3 service-level E2E', () => {
         flowId: flow.id,
       });
 
-      // hàng đợinoiDungTiengViet item
+      // hàng đợi item
       let item = await h.storage.queue.get(runId);
       expect(item?.status).toBe('queued');
 
@@ -278,7 +278,7 @@ describe('V3 service-level E2E', () => {
       item = await h.storage.queue.get(runId);
       expect(item).toBeNull();
 
-      // Run trạng tháinoiDungTiengViet canceled
+      // Run trạng thái canceled
       const run = await h.storage.runs.get(runId);
       expect(run?.status).toBe('canceled');
     });
@@ -286,7 +286,7 @@ describe('V3 service-level E2E', () => {
 
   describe('Recovery', () => {
     it('orphan running lease is requeued and run can complete', async () => {
-      // dừnghiện tại harness，tạonoiDungTiengVietkhởi động scheduler
+      // dừnghiện tại harness, tạokhởi động scheduler
       await h.dispose();
       h = createV3E2EHarness({ autoStartScheduler: false, ownerId: 'owner-new' });
       client = h.createClient();
@@ -297,7 +297,7 @@ describe('V3 service-level E2E', () => {
       const runId = 'run-orphan';
       await h.storage.runs.save(createRunRecord(runId, flow.id, 'running'));
 
-      // tạo orphan mục hàng đợi（noiDungTiengViet owner noiDungTiengViet）
+      // tạo orphan mục hàng đợi( owner )
       await h.storage.queue.enqueue({ id: runId, flowId: flow.id, priority: 0 });
       await h.storage.queue.markRunning(runId, 'owner-old', Date.now());
 
@@ -312,16 +312,16 @@ describe('V3 service-level E2E', () => {
 
       expect(recovery.requeuedRunning).toContain(runId);
 
-      // mục hàng đợinoiDungTiengViet queued trạng thái
+      // mục hàng đợi queued trạng thái
       const queueItemAfter = await h.storage.queue.get(runId);
       expect(queueItemAfter?.status).toBe('queued');
       expect(queueItemAfter?.lease).toBeUndefined();
 
-      // noiDungTiengViet run.recovered sự kiện
+      //  run.recovered sự kiện
       const events = await h.listEvents(runId);
       expect(events.some((e) => e.type === 'run.recovered')).toBe(true);
 
-      // khởi động scheduler，Run noiDungTiengViettiếp tụcthực thi
+      // khởi động scheduler, Run tiếp tụcthực thi
       h.scheduler.start();
 
       const run = await h.waitForTerminal(runId);
@@ -353,7 +353,7 @@ describe('V3 service-level E2E', () => {
 
       expect(recovery.adoptedPaused).toContain(runId);
 
-      // mục hàng đợinoiDungTiengViet paused，noiDungTiengViet owner noiDungTiengViet
+      // mục hàng đợi paused,  owner
       const queueItem = await h.storage.queue.get(runId);
       expect(queueItem?.status).toBe('paused');
       expect(queueItem?.lease?.ownerId).toBe(h.ownerId);
@@ -370,7 +370,7 @@ describe('V3 service-level E2E', () => {
       const runId = 'run-completed-orphan';
       await h.storage.runs.save(createRunRecord(runId, flow.id, 'succeeded'));
 
-      // noiDungTiengVietsậpnoiDungTiengViet：Run hoàn tấtnoiDungTiengVietmục hàng đợinoiDungTiengVietdọn dẹp
+      // sập: Run hoàn tấtmục hàng đợidọn dẹp
       await h.storage.queue.enqueue({ id: runId, flowId: flow.id, priority: 0 });
       await h.storage.queue.markRunning(runId, 'owner-old', Date.now());
 
@@ -384,7 +384,7 @@ describe('V3 service-level E2E', () => {
 
       expect(recovery.cleanedTerminal).toContain(runId);
 
-      // hàng đợinoiDungTiengVietrỗng
+      // hàng đợirỗng
       const remaining = await h.storage.queue.list();
       expect(remaining).toHaveLength(0);
     });

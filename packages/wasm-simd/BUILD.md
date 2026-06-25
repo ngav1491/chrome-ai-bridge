@@ -1,70 +1,73 @@
-# WASM SIMD noiDungTiengViet
+# WASM SIMD Build Guide
 
-## 🚀 noiDungTiengViet
+## Tổng quan
 
-### noiDungTiengViet
+Gói `packages/wasm-simd` chứa phần Rust/WASM dùng cho các tác vụ tính toán có thể hưởng lợi từ SIMD. Tài liệu này mô tả cách cài công cụ, build package và tích hợp artifact vào Chrome extension.
+
+## Cài đặt công cụ
 
 ```bash
-# noiDungTiengViet Rust
+# Cài Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# noiDungTiengViet wasm-pack
+# Cài wasm-pack
 curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
 
-### noiDungTiengViet
+## Build
 
-1. **noiDungTiengViet**（noiDungTiengViet）：
+1. **Build WASM cho Chrome extension**:
 
    ```bash
-   # noiDungTiengViet WASM noiDungTiengViet Chrome noiDungTiengViet
+   # Build WASM và copy artifact sang extension
    npm run build:wasm
    ```
 
-2. **noiDungTiengViet WASM noiDungTiengViet**：
+2. **Build riêng package WASM**:
 
    ```bash
-   # noiDungTiengViet packages/wasm-simd noiDungTiengViet
+   # Chạy trong packages/wasm-simd
    npm run build
 
-   # noiDungTiengViet pnpm filter
+   # Hoặc dùng pnpm filter từ repo root
    pnpm --filter @chrome-mcp/wasm-simd build
    ```
 
-3. **noiDungTiengViet**：
+3. **Build chế độ phát triển**:
+
    ```bash
-   npm run build:dev  # noiDungTiengViet，noiDungTiengViet
+   npm run build:dev  # build nhanh hơn, phù hợp khi đang phát triển
    ```
 
-### noiDungTiengViet
+## Artifact đầu ra
 
-noiDungTiengViet，noiDungTiengViet `pkg/` noiDungTiengViet：
+Sau khi build, thư mục `pkg/` sẽ chứa:
 
-- `simd_math.js` - JavaScript noiDungTiengViet
-- `simd_math_bg.wasm` - WebAssembly noiDungTiengViet
-- `simd_math.d.ts` - TypeScript noiDungTiengViet
-- `package.json` - NPM noiDungTiengViet
+- `simd_math.js` - JavaScript glue code.
+- `simd_math_bg.wasm` - WebAssembly binary.
+- `simd_math.d.ts` - TypeScript declarations.
+- `package.json` - metadata cho package npm nội bộ.
 
-### noiDungTiengViet Chrome noiDungTiengViet
+## Tích hợp trong Chrome extension
 
-WASM noiDungTiengViet `app/chrome-extension/workers/` noiDungTiengViet，Chrome noiDungTiengViet：
+WASM được copy vào `app/chrome-extension/workers/`. Trong Chrome extension, load module bằng URL runtime:
 
 ```typescript
-// noiDungTiengViet Chrome noiDungTiengViet
+// Load WASM từ Chrome extension runtime
 const wasmUrl = chrome.runtime.getURL('workers/simd_math.js');
 const wasmModule = await import(wasmUrl);
 ```
 
-## 🔧 noiDungTiengViet
+## Quy trình phát triển
 
-1. noiDungTiengViet `src/lib.rs` noiDungTiengViet Rust noiDungTiengViet
-2. noiDungTiengViet `npm run build` noiDungTiengViet
-3. Chrome noiDungTiengViet WASM noiDungTiengViet
+1. Sửa mã Rust trong `src/lib.rs`.
+2. Chạy `npm run build` trong package hoặc `npm run build:wasm` từ repo root.
+3. Kiểm tra Chrome extension với artifact WASM mới.
 
-## 📊 noiDungTiengViet
+## Benchmark
 
 ```bash
-# noiDungTiengViet Chrome noiDungTiengViet
+# Chạy benchmark trong ngữ cảnh Chrome extension
 import { runSIMDBenchmark } from './utils/simd-benchmark';
 await runSIMDBenchmark();
 ```

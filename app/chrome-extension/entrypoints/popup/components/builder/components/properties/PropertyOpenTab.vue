@@ -1,7 +1,7 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">URL địa chỉ（tùy chọn）</label>
+      <label class="form-label">URL địa chỉ(tùy chọn)</label>
       <input
         class="form-input"
         v-model="(node as any).config.url"
@@ -10,8 +10,8 @@
     </div>
     <div class="form-group checkbox-group">
       <label class="checkbox-label"
-        ><input type="checkbox" v-model="(node as any).config.newWindow" /> noiDungTiengViet</label
-      >
+        ><input type="checkbox" v-model="(node as any).config.newWindow" />
+      </label>
     </div>
   </div>
 </template>

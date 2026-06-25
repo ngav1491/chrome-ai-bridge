@@ -1,11 +1,11 @@
 /**
  * @fileoverview V2/V3 Flow hai chiềuchuyển đổicông cụ
- * @description noiDungTiengViet Builder V2 Flow kiểunoiDungTiengViet V3 RPC FlowV3 kiểu
+ * @description  Builder V2 Flow kiểu V3 RPC FlowV3 kiểu
  *
  * ghi chú thiết kế:
- * - Builder store noiDungTiengVietsử dụng V2 kiểu (type, version, steps)
- * - RPC noiDungTiengVietsử dụng V3 kiểu (kind, schemaVersion, entryNodeId)
- * - noiDungTiengViet UI noiDungTiengVietkiểuchuyển đổi，noiDungTiengVietchuyển đổinoiDungTiengViet
+ * - Builder store sử dụng V2 kiểu (type, version, steps)
+ * - RPC sử dụng V3 kiểu (kind, schemaVersion, entryNodeId)
+ * -  UI kiểuchuyển đổi, chuyển đổi
  */
 
 import type { Flow as FlowV2 } from '@/entrypoints/background/record-replay/types';
@@ -25,10 +25,10 @@ export interface FlowConversionResult<T> {
 // ==================== V2 -> V3 (for RPC calls) ====================
 
 /**
- * noiDungTiengViet V2 Flow chuyển đổi thành V3 định dạng，dùng cho RPC lưu
+ *  V2 Flow chuyển đổi thành V3 định dạng, dùng cho RPC lưu
  * @param flowV2 Builder store trong V2 Flow
- * @returns V3 Flow noiDungTiengVietcảnh báothông tin
- * @throws chuyển đổithất bạinoiDungTiengVietlỗi
+ * @returns V3 Flow cảnh báothông tin
+ * @throws chuyển đổithất bạilỗi
  */
 export function flowV2ToV3ForRpc(flowV2: FlowV2): FlowConversionResult<FlowV3> {
   const result = convertFlowV2ToV3(flowV2 as unknown as Parameters<typeof convertFlowV2ToV3>[0]);
@@ -48,10 +48,10 @@ export function flowV2ToV3ForRpc(flowV2: FlowV2): FlowConversionResult<FlowV3> {
 // ==================== V3 -> V2 (for Builder display) ====================
 
 /**
- * noiDungTiengViet V3 Flow chuyển đổi thành V2 định dạng，dùng cho Builder hiển thịnoiDungTiengVietchỉnh sửa
- * @param flowV3 noiDungTiengViet RPC lấynoiDungTiengViet V3 Flow
- * @returns V2 Flow noiDungTiengVietcảnh báothông tin
- * @throws chuyển đổithất bạinoiDungTiengVietlỗi
+ *  V3 Flow chuyển đổi thành V2 định dạng, dùng cho Builder hiển thịchỉnh sửa
+ * @param flowV3  RPC lấy V3 Flow
+ * @returns V2 Flow cảnh báothông tin
+ * @throws chuyển đổithất bạilỗi
  */
 export function flowV3ToV2ForBuilder(flowV3: FlowV3): FlowConversionResult<FlowV2> {
   const result = convertFlowV3ToV2(flowV3);
@@ -72,7 +72,7 @@ export function flowV3ToV2ForBuilder(flowV3: FlowV3): FlowConversionResult<FlowV
 
 /**
  * phán đoáncó phải là V3 Flow
- * @description dùng chonhậpnoiDungTiengVietphán đoán JSON định dạng
+ * @description dùng chonhậpphán đoán JSON định dạng
  */
 export function isFlowV3(value: unknown): value is FlowV3 {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -91,7 +91,7 @@ export function isFlowV3(value: unknown): value is FlowV3 {
 
 /**
  * phán đoáncó phải là V2 Flow
- * @description dùng chonhậpnoiDungTiengVietphán đoán JSON định dạng
+ * @description dùng chonhậpphán đoán JSON định dạng
  */
 export function isFlowV2(value: unknown): value is FlowV2 {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -102,10 +102,10 @@ export function isFlowV2(value: unknown): value is FlowV2 {
   return (
     typeof obj.id === 'string' &&
     typeof obj.name === 'string' &&
-    // V2 noiDungTiengViet version trường（số），noiDungTiengVietkhông có schemaVersion
+    // V2  version trường(số), không có schemaVersion
     typeof obj.version === 'number' &&
     obj.schemaVersion === undefined &&
-    // V2 noiDungTiengViet steps noiDungTiengViet nodes
+    // V2  steps  nodes
     (Array.isArray(obj.steps) || Array.isArray(obj.nodes))
   );
 }
@@ -113,8 +113,8 @@ export function isFlowV2(value: unknown): value is FlowV2 {
 // ==================== Import Helpers ====================
 
 /**
- * noiDungTiengVietnhậpnoiDungTiengViet JSON noiDungTiengViettrích xuất Flow ứng viêndanh sách
- * @description hỗ trợđơn lẻ Flow、Flow mảng、noiDungTiengViet { flows: Flow[] } định dạng
+ * nhập JSON trích xuất Flow ứng viêndanh sách
+ * @description hỗ trợđơn lẻ Flow, Flow mảng,  { flows: Flow[] } định dạng
  */
 export function extractFlowCandidates(parsed: unknown): unknown[] {
   // mảngđịnh dạng

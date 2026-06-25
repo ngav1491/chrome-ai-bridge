@@ -248,8 +248,8 @@ function createEmptyAnchors(): SnapAnchors {
  * 5. Take nearest N elements
  * 6. Extract left/center/right and top/middle/bottom anchors
  *
- * mô tả tiếng Việt：sử dụnghai chiềunoiDungTiengVietchiến lược，noiDungTiengViet target noiDungTiengViet，
- * tránhnoiDungTiengViet target noiDungTiengViet children noiDungTiengVietphần tử。
+ * mô tả tiếng Việt: sử dụnghai chiềuchiến lược,  target ,
+ * tránh target  children phần tử.
  */
 export function collectSiblingAnchors(target: Element): SnapAnchors {
   const parent = target.parentElement;
@@ -821,10 +821,10 @@ function clamp(value: number, min: number, max: number): number {
  *   - Edge align shows the corresponding margin; if filtered, fallback to opposite side
  *   - Center align shows both margins (may yield 2 labels)
  *
- * mô tả tiếng Việt：
- * - noiDungTiengViet，hiển thị"noiDungTiengViet"noiDungTiengViet
- * - lockX noiDungTiengViet，noiDungTiengViethiển thị Y noiDungTiengViet
- * - lockY noiDungTiengViet，noiDungTiengViethiển thị X noiDungTiengViet
+ * mô tả tiếng Việt:
+ * - , hiển thị""
+ * - lockX , hiển thị Y
+ * - lockY , hiển thị X
  */
 export function computeDistanceLabels(params: ComputeDistanceLabelsParams): DistanceLabel[] {
   const { rect, lockX, lockY, viewport, minGapPx } = params;

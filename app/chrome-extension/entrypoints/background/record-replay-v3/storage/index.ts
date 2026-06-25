@@ -1,5 +1,5 @@
 /**
- * @fileoverview Storage noiDungTiengVietxuấtđiểm vào
+ * @fileoverview Storage xuấtđiểm vào
  */
 
 export * from './db';

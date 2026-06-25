@@ -16,7 +16,7 @@ import { ModelCacheManager } from './model-cache-manager';
 async function getCachedModelData(modelUrl: string): Promise<ArrayBuffer> {
   const cacheManager = ModelCacheManager.getInstance();
 
-  // 1. thửnoiDungTiengVietbộ nhớ đệmlấydữ liệu
+  // 1. thửbộ nhớ đệmlấydữ liệu
   const cachedData = await cacheManager.getCachedModelData(modelUrl);
   if (cachedData) {
     return cachedData;
@@ -25,14 +25,14 @@ async function getCachedModelData(modelUrl: string): Promise<ArrayBuffer> {
   console.log('Model not found in cache or expired. Fetching from network...');
 
   try {
-    // 2. noiDungTiengVietlấydữ liệu
+    // 2. lấydữ liệu
     const response = await fetch(modelUrl);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch model: ${response.status} ${response.statusText}`);
     }
 
-    // 3. lấydữ liệunoiDungTiengVietlưu trữnoiDungTiengVietbộ nhớ đệm
+    // 3. lấydữ liệulưu trữbộ nhớ đệm
     const arrayBuffer = await response.arrayBuffer();
     await cacheManager.storeModelData(modelUrl, arrayBuffer);
 
@@ -43,7 +43,7 @@ async function getCachedModelData(modelUrl: string): Promise<ArrayBuffer> {
     return arrayBuffer;
   } catch (error) {
     console.error(`Error fetching or caching model:`, error);
-    // nếulấythất bại，dọn dẹpnoiDungTiengVietđầy đủbộ nhớ đệmmụcnoiDungTiengViet
+    // nếulấythất bại, dọn dẹpđầy đủbộ nhớ đệmmục
     await cacheManager.deleteCacheEntry(modelUrl);
     throw error;
   }
@@ -987,7 +987,7 @@ export class SemanticSimilarityEngine {
   private _setupWorker(): void {
     console.log('SemanticSimilarityEngine: Setting up worker...');
 
-    // phương thức1: Chrome extension URL (khuyến nghị，noiDungTiengViet)
+    // phương thức1: Chrome extension URL (khuyến nghị, )
     try {
       const workerUrl = chrome.runtime.getURL('workers/similarity.worker.js');
       console.log(`SemanticSimilarityEngine: Trying chrome.runtime.getURL ${workerUrl}`);
@@ -1080,7 +1080,7 @@ export class SemanticSimilarityEngine {
   }
 
   /**
-   * noiDungTiengVietcallbacknoiDungTiengVietkhởi tạophương thức
+   * callbackkhởi tạophương thức
    */
   public async initializeWithProgress(
     onProgress?: (progress: { status: string; progress: number; message?: string }) => void,
@@ -1097,7 +1097,7 @@ export class SemanticSimilarityEngine {
   }
 
   /**
-   * noiDungTiengVietcallbacknoiDungTiengVietbên trongkhởi tạophương thức
+   * callbackbên trongkhởi tạophương thức
    */
   private async _doInitializeWithProgress(
     onProgress?: (progress: { status: string; progress: number; message?: string }) => void,
@@ -1105,7 +1105,7 @@ export class SemanticSimilarityEngine {
     console.log('SemanticSimilarityEngine: Initializing with progress tracking...');
     const startTime = performance.now();
 
-    // noiDungTiengViethàm
+    // hàm
     const reportProgress = (status: string, progress: number, message?: string) => {
       if (onProgress) {
         onProgress({ status, progress, message });
@@ -1115,11 +1115,11 @@ export class SemanticSimilarityEngine {
     try {
       reportProgress('initializing', 5, 'Starting initialization...');
 
-      // phát hiệnnoiDungTiengVietquyết địnhsử dụngnoiDungTiengVietschema
+      // phát hiệnquyết địnhsử dụngschema
       const workerSupported = this.isWorkerSupported();
       const inOffscreenDocument = this.isInOffscreenDocument();
 
-      // 🛠️ noiDungTiengVietvòng lặp：nếunoiDungTiengViet offscreen document noiDungTiengViet，bắt buộcsử dụngtrực tiếp Worker schema
+      // 🛠️ vòng lặp: nếu offscreen document , bắt buộcsử dụngtrực tiếp Worker schema
       if (inOffscreenDocument) {
         this.useOffscreen = false;
         console.log(
@@ -1136,18 +1136,18 @@ export class SemanticSimilarityEngine {
       reportProgress('initializing', 10, 'Environment detection complete');
 
       if (this.useOffscreen) {
-        // sử dụngoffscreenschema - ủy thác chooffscreen document，noiDungTiengVietxử lýnoiDungTiengViet
+        // sử dụngoffscreenschema - ủy thác chooffscreen document, xử lý
         reportProgress('initializing', 15, 'Setting up offscreen document...');
         await this.ensureOffscreenDocument();
 
-        // gửikhởi tạotin nhắnnoiDungTiengVietoffscreen document
+        // gửikhởi tạotin nhắnoffscreen document
         console.log('SemanticSimilarityEngine: Sending config to offscreen:', {
           useLocalFiles: this.config.useLocalFiles,
           modelIdentifier: this.config.modelIdentifier,
           localModelPathPrefix: this.config.localModelPathPrefix,
         });
 
-        // đảm bảocấu hìnhđối tượngnoiDungTiengViettuần tự hóa，noiDungTiengVietcài đặttất cảthuộc tính
+        // đảm bảocấu hìnhđối tượngtuần tự hóa, cài đặttất cảthuộc tính
         const configToSend = {
           modelIdentifier: this.config.modelIdentifier,
           localModelPathPrefix: this.config.localModelPathPrefix,
@@ -1156,7 +1156,7 @@ export class SemanticSimilarityEngine {
           cacheSize: this.config.cacheSize,
           numThreads: this.config.numThreads,
           executionProviders: this.config.executionProviders,
-          useLocalFiles: Boolean(this.config.useLocalFiles), // bắt buộcchuyển đổi thànhbooleannoiDungTiengViet
+          useLocalFiles: Boolean(this.config.useLocalFiles), // bắt buộcchuyển đổi thànhboolean
           workerPath: this.config.workerPath,
           concurrentLimit: this.config.concurrentLimit,
           forceOffscreen: this.config.forceOffscreen,
@@ -1165,7 +1165,7 @@ export class SemanticSimilarityEngine {
           dimension: this.config.dimension,
         };
 
-        // sử dụng JSON tuần tự hóađảm bảodữ liệuđầy đủnoiDungTiengViet
+        // sử dụng JSON tuần tự hóađảm bảodữ liệuđầy đủ
         const serializedConfig = JSON.parse(JSON.stringify(configToSend));
 
         reportProgress('initializing', 20, 'Delegating to offscreen document...');
@@ -1183,7 +1183,7 @@ export class SemanticSimilarityEngine {
         reportProgress('ready', 100, 'Initialized via offscreen document');
         console.log('SemanticSimilarityEngine: Initialized via offscreen document');
       } else {
-        // sử dụngtrực tiếpWorkerschema - noiDungTiengViet
+        // sử dụngtrực tiếpWorkerschema -
         await this._initializeDirectWorkerWithProgress(reportProgress);
       }
 
@@ -1201,7 +1201,7 @@ export class SemanticSimilarityEngine {
       this.isInitializing = false;
       this.initPromise = null;
 
-      // tạonoiDungTiengVietchi tiếtnoiDungTiengVietlỗiđối tượng
+      // tạochi tiếtlỗiđối tượng
       const enhancedError = new Error(errorMessage);
       enhancedError.name = 'ModelInitializationError';
       throw enhancedError;
@@ -1212,11 +1212,11 @@ export class SemanticSimilarityEngine {
     console.log('SemanticSimilarityEngine: Initializing...');
     const startTime = performance.now();
     try {
-      // phát hiệnnoiDungTiengVietquyết địnhsử dụngnoiDungTiengVietschema
+      // phát hiệnquyết địnhsử dụngschema
       const workerSupported = this.isWorkerSupported();
       const inOffscreenDocument = this.isInOffscreenDocument();
 
-      // 🛠️ noiDungTiengVietvòng lặp：nếunoiDungTiengViet offscreen document noiDungTiengViet，bắt buộcsử dụngtrực tiếp Worker schema
+      // 🛠️ vòng lặp: nếu offscreen document , bắt buộcsử dụngtrực tiếp Worker schema
       if (inOffscreenDocument) {
         this.useOffscreen = false;
         console.log(
@@ -1234,14 +1234,14 @@ export class SemanticSimilarityEngine {
         // sử dụngoffscreenschema
         await this.ensureOffscreenDocument();
 
-        // gửikhởi tạotin nhắnnoiDungTiengVietoffscreen document
+        // gửikhởi tạotin nhắnoffscreen document
         console.log('SemanticSimilarityEngine: Sending config to offscreen:', {
           useLocalFiles: this.config.useLocalFiles,
           modelIdentifier: this.config.modelIdentifier,
           localModelPathPrefix: this.config.localModelPathPrefix,
         });
 
-        // đảm bảocấu hìnhđối tượngnoiDungTiengViettuần tự hóa，noiDungTiengVietcài đặttất cảthuộc tính
+        // đảm bảocấu hìnhđối tượngtuần tự hóa, cài đặttất cảthuộc tính
         const configToSend = {
           modelIdentifier: this.config.modelIdentifier,
           localModelPathPrefix: this.config.localModelPathPrefix,
@@ -1250,7 +1250,7 @@ export class SemanticSimilarityEngine {
           cacheSize: this.config.cacheSize,
           numThreads: this.config.numThreads,
           executionProviders: this.config.executionProviders,
-          useLocalFiles: Boolean(this.config.useLocalFiles), // bắt buộcchuyển đổi thànhbooleannoiDungTiengViet
+          useLocalFiles: Boolean(this.config.useLocalFiles), // bắt buộcchuyển đổi thànhboolean
           workerPath: this.config.workerPath,
           concurrentLimit: this.config.concurrentLimit,
           forceOffscreen: this.config.forceOffscreen,
@@ -1278,7 +1278,7 @@ export class SemanticSimilarityEngine {
           typeof this.config.useLocalFiles,
         );
 
-        // sử dụng JSON tuần tự hóađảm bảodữ liệuđầy đủnoiDungTiengViet
+        // sử dụng JSON tuần tự hóađảm bảodữ liệuđầy đủ
         const serializedConfig = JSON.parse(JSON.stringify(configToSend));
         console.log(
           'SemanticSimilarityEngine: DEBUG - serializedConfig.useLocalFiles:',
@@ -1288,7 +1288,7 @@ export class SemanticSimilarityEngine {
         const response = await chrome.runtime.sendMessage({
           target: 'offscreen',
           type: OFFSCREEN_MESSAGE_TYPES.SIMILARITY_ENGINE_INIT,
-          config: serializedConfig, // sử dụngthôcấu hình，noiDungTiengVietbắt buộcnoiDungTiengViet useLocalFiles
+          config: serializedConfig, // sử dụngthôcấu hình, bắt buộc useLocalFiles
         });
 
         if (!response || !response.success) {
@@ -1315,8 +1315,8 @@ export class SemanticSimilarityEngine {
 
         let tokenizerIdentifier = this.config.modelIdentifier;
         if (this.config.useLocalFiles) {
-          // đối vớiWXT，publicthư mụcnoiDungTiengVietchạynoiDungTiengVietđường dẫn
-          // trực tiếpsử dụngmô hìnhđịnh danhnoiDungTiengViet，transformers.js noiDungTiengViettự độngthêm /models/ tiền tố
+          // đối vớiWXT, publicthư mụcchạyđường dẫn
+          // trực tiếpsử dụngmô hìnhđịnh danh, transformers.js tự độngthêm /models/ tiền tố
           tokenizerIdentifier = this.config.modelIdentifier;
         }
         console.log(
@@ -1327,7 +1327,7 @@ export class SemanticSimilarityEngine {
           local_files_only: this.config.useLocalFiles,
         };
 
-        // đối vớikhông cầntoken_type_idsnoiDungTiengVietmô hình，noiDungTiengViettokenizercấu hìnhnoiDungTiengVietcài đặt
+        // đối vớikhông cầntoken_type_idsmô hình, tokenizercấu hìnhcài đặt
         if (!this.config.requiresTokenTypeIds) {
           tokenizerConfig.return_token_type_ids = false;
         }
@@ -1394,7 +1394,7 @@ export class SemanticSimilarityEngine {
         }
         console.log('SemanticSimilarityEngine: Worker reported model initialized.');
 
-        // thửkhởi tạo SIMD noiDungTiengViet
+        // thửkhởi tạo SIMD
         try {
           console.log('SemanticSimilarityEngine: Checking SIMD support...');
           const simdSupported = await SIMDMathEngine.checkSIMDSupport();
@@ -1436,7 +1436,7 @@ export class SemanticSimilarityEngine {
       this.isInitializing = false;
       this.initPromise = null;
 
-      // tạonoiDungTiengVietchi tiếtnoiDungTiengVietlỗiđối tượng
+      // tạochi tiếtlỗiđối tượng
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       const enhancedError = new Error(errorMessage);
       enhancedError.name = 'ModelInitializationError';
@@ -1445,7 +1445,7 @@ export class SemanticSimilarityEngine {
   }
 
   /**
-   * trực tiếpWorkerschemanoiDungTiengVietkhởi tạo，hỗ trợnoiDungTiengVietcallback
+   * trực tiếpWorkerschemakhởi tạo, hỗ trợcallback
    */
   private async _initializeDirectWorkerWithProgress(
     reportProgress: (status: string, progress: number, message?: string) => void,
@@ -1476,7 +1476,7 @@ export class SemanticSimilarityEngine {
       `SemanticSimilarityEngine: Loading tokenizer from ${tokenizerIdentifier} (local_files_only: ${this.config.useLocalFiles})`,
     );
 
-    // sử dụng transformers.js 2.17+ noiDungTiengVietcallbacknoiDungTiengViet
+    // sử dụng transformers.js 2.17+ callback
     const tokenizerProgressCallback = (progress: any) => {
       if (progress.status === 'downloading') {
         const progressPercent = Math.min(40 + (progress.progress || 0) * 0.3, 70);
@@ -1493,7 +1493,7 @@ export class SemanticSimilarityEngine {
       local_files_only: this.config.useLocalFiles,
     };
 
-    // đối vớikhông cầntoken_type_idsnoiDungTiengVietmô hình，noiDungTiengViettokenizercấu hìnhnoiDungTiengVietcài đặt
+    // đối vớikhông cầntoken_type_idsmô hình, tokenizercấu hìnhcài đặt
     if (!this.config.requiresTokenTypeIds) {
       tokenizerConfig.return_token_type_ids = false;
     }
@@ -1504,7 +1504,7 @@ export class SemanticSimilarityEngine {
       }
       this.tokenizer = await AutoTokenizer.from_pretrained(tokenizerIdentifier, tokenizerConfig);
     } catch (error) {
-      // nếunoiDungTiengVietcallbacknoiDungTiengViethỗ trợ，noiDungTiengVietphương thức
+      // nếucallbackhỗ trợ, phương thức
       console.log(
         'SemanticSimilarityEngine: Progress callback not supported, using standard loading',
       );
@@ -1568,7 +1568,7 @@ export class SemanticSimilarityEngine {
     console.log('SemanticSimilarityEngine: Worker reported model initialized.');
 
     reportProgress('initializing', 90, 'Setting up SIMD acceleration...');
-    // thửkhởi tạo SIMD noiDungTiengViet
+    // thửkhởi tạo SIMD
     try {
       console.log('SemanticSimilarityEngine: Checking SIMD support...');
       const simdSupported = await SIMDMathEngine.checkSIMDSupport();
@@ -1602,23 +1602,23 @@ export class SemanticSimilarityEngine {
     if (!this.isInitialized) throw new Error('Engine not initialized after warmup attempt.');
     console.log('SemanticSimilarityEngine: Warming up model...');
 
-    // noiDungTiengVietvăn bản，bao gồmnoiDungTiengVietđộ dàinoiDungTiengVietngôn ngữ
+    // văn bản, bao gồmđộ dàingôn ngữ
     const warmupTexts = [
-      // noiDungTiengVietvăn bản
+      // văn bản
       'Hello',
-      'noiDungTiengViet',
+      '',
       'Test',
-      // noiDungTiengVietđộ dàivăn bản
+      // độ dàivăn bản
       'Hello world, this is a test.',
-      'noiDungTiengViet，noiDungTiengVietkiểm thử。',
+      ', kiểm thử.',
       'The quick brown fox jumps over the lazy dog.',
-      // noiDungTiengVietvăn bản
+      // văn bản
       'This is a longer text that contains multiple sentences. It helps warm up the model for various text lengths.',
-      'noiDungTiengVietbao gồmnoiDungTiengVietvăn bản。noiDungTiengVietvăn bảnđộ dàinoiDungTiengVietmô hình。',
+      'bao gồmvăn bản.văn bảnđộ dàimô hình.',
     ];
 
     try {
-      // noiDungTiengViet：noiDungTiengVietđơn lẻ，noiDungTiengViethàng loạt
+      // : đơn lẻ, hàng loạt
       console.log('SemanticSimilarityEngine: Phase 1 - Individual warmup...');
       for (const text of warmupTexts.slice(0, 4)) {
         await this.getEmbedding(text);
@@ -1627,7 +1627,7 @@ export class SemanticSimilarityEngine {
       console.log('SemanticSimilarityEngine: Phase 2 - Batch warmup...');
       await this.getEmbeddingsBatch(warmupTexts.slice(4));
 
-      // noiDungTiengVietkết quả，noiDungTiengVietlàm trốngbộ nhớ đệm
+      // kết quả, làm trốngbộ nhớ đệm
       console.log('SemanticSimilarityEngine: Model warmup complete. Cache preserved.');
       console.log(`Embedding cache: ${this.cacheStats.embedding.size} items`);
       console.log(`Tokenization cache: ${this.cacheStats.tokenization.size} items`);
@@ -1639,7 +1639,7 @@ export class SemanticSimilarityEngine {
   private async _tokenizeText(text: string | string[]): Promise<TokenizedOutput> {
     if (!this.tokenizer) throw new Error('Tokenizer not initialized.');
 
-    // đối vớiđơn lẻvăn bản，thửsử dụngbộ nhớ đệm
+    // đối vớiđơn lẻvăn bản, thửsử dụngbộ nhớ đệm
     if (typeof text === 'string') {
       const cacheKey = `tokenize:${text}`;
       const cached = this.tokenizationCache.get(cacheKey);
@@ -1658,14 +1658,14 @@ export class SemanticSimilarityEngine {
         return_tensors: 'np',
       };
 
-      // đối vớikhông cầntoken_type_idsnoiDungTiengVietmô hình，noiDungTiengVietcài đặtreturn_token_type_idsnoiDungTiengVietfalse
+      // đối vớikhông cầntoken_type_idsmô hình, cài đặtreturn_token_type_idsfalse
       if (!this.config.requiresTokenTypeIds) {
         tokenizerOptions.return_token_type_ids = false;
       }
 
       const result = (await this.tokenizer(text, tokenizerOptions)) as TokenizedOutput;
 
-      // cập nhậtnoiDungTiengViet
+      // cập nhật
       this.performanceStats.totalTokenizationTime += performance.now() - startTime;
       this.performanceStats.averageTokenizationTime =
         this.performanceStats.totalTokenizationTime /
@@ -1678,7 +1678,7 @@ export class SemanticSimilarityEngine {
       return result;
     }
 
-    // đối vớihàng loạtvăn bản，trực tiếpxử lý（hàng loạtxử lýnoiDungTiengVietlặp lại）
+    // đối vớihàng loạtvăn bản, trực tiếpxử lý(hàng loạtxử lýlặp lại)
     const startTime = performance.now();
     const tokenizerOptions: any = {
       padding: true,
@@ -1687,7 +1687,7 @@ export class SemanticSimilarityEngine {
       return_tensors: 'np',
     };
 
-    // đối vớikhông cầntoken_type_idsnoiDungTiengVietmô hình，noiDungTiengVietcài đặtreturn_token_type_idsnoiDungTiengVietfalse
+    // đối vớikhông cầntoken_type_idsmô hình, cài đặtreturn_token_type_idsfalse
     if (!this.config.requiresTokenTypeIds) {
       tokenizerOptions.return_token_type_ids = false;
     }
@@ -1705,7 +1705,7 @@ export class SemanticSimilarityEngine {
     if (!workerOutput.data || !workerOutput.dims)
       throw new Error('Invalid worker output for embedding extraction.');
 
-    // tối ưu hóa：trực tiếpsử dụng Float32Array，tránhnoiDungTiengVietchuyển đổi
+    // tối ưu hóa: trực tiếpsử dụng Float32Array, tránhchuyển đổi
     const lastHiddenStateData =
       workerOutput.data instanceof Float32Array
         ? workerOutput.data
@@ -1715,7 +1715,7 @@ export class SemanticSimilarityEngine {
     const seqLength = dims[1];
     const hiddenSize = dims[2];
 
-    // sử dụngnoiDungTiengVietlấy embedding mảng
+    // sử dụnglấy embedding mảng
     const embedding = this.memoryPool.getEmbedding(hiddenSize);
     let validTokens = 0;
 
@@ -1743,7 +1743,7 @@ export class SemanticSimilarityEngine {
     if (!workerOutput.data || !workerOutput.dims)
       throw new Error('Invalid worker output for batch embedding extraction.');
 
-    // tối ưu hóa：trực tiếpsử dụng Float32Array，tránhnoiDungTiengVietchuyển đổi
+    // tối ưu hóa: trực tiếpsử dụng Float32Array, tránhchuyển đổi
     const lastHiddenStateData =
       workerOutput.data instanceof Float32Array
         ? workerOutput.data
@@ -1756,7 +1756,7 @@ export class SemanticSimilarityEngine {
     const embeddings: Float32Array[] = [];
 
     for (let b = 0; b < batchSize; b++) {
-      // sử dụngnoiDungTiengVietlấy embedding mảng
+      // sử dụnglấy embedding mảng
       const embedding = this.memoryPool.getEmbedding(hiddenSize);
       let validTokens = 0;
       const currentAttentionMask = attentionMasksBatch[b];
@@ -1794,7 +1794,7 @@ export class SemanticSimilarityEngine {
     }
     this.cacheStats.embedding.misses++;
 
-    // nếusử dụngoffscreenschema，ủy thác chooffscreen document
+    // nếusử dụngoffscreenschema, ủy thác chooffscreen document
     if (this.useOffscreen) {
       const response = await chrome.runtime.sendMessage({
         target: 'offscreen',
@@ -1821,7 +1821,7 @@ export class SemanticSimilarityEngine {
 
       const embedding = new Float32Array(response.embedding);
 
-      // xác thựcchuyển đổinoiDungTiengVietdữ liệu
+      // xác thựcchuyển đổidữ liệu
       console.log('SemanticSimilarityEngine: Converted embedding:', {
         length: embedding.length,
         type: typeof embedding,
@@ -1833,7 +1833,7 @@ export class SemanticSimilarityEngine {
       this.embeddingCache.set(cacheKey, embedding);
       this.cacheStats.embedding.size = this.embeddingCache.size;
 
-      // cập nhậtnoiDungTiengViet
+      // cập nhật
       this.performanceStats.totalEmbeddingComputations++;
 
       return embedding;
@@ -1888,9 +1888,9 @@ export class SemanticSimilarityEngine {
     if (!this.isInitialized) await this.initialize();
     if (!texts || texts.length === 0) return [];
 
-    // nếusử dụngoffscreenschema，ủy thác chooffscreen document
+    // nếusử dụngoffscreenschema, ủy thác chooffscreen document
     if (this.useOffscreen) {
-      // noiDungTiengVietkiểm trabộ nhớ đệm
+      // kiểm trabộ nhớ đệm
       const results: (Float32Array | undefined)[] = new Array(texts.length).fill(undefined);
       const uncachedTexts: string[] = [];
       const uncachedIndices: number[] = [];
@@ -1908,12 +1908,12 @@ export class SemanticSimilarityEngine {
         }
       });
 
-      // nếutất cảnoiDungTiengVietbộ nhớ đệmnoiDungTiengViet，trực tiếptrả về
+      // nếutất cảbộ nhớ đệm, trực tiếptrả về
       if (uncachedTexts.length === 0) {
         return results as Float32Array[];
       }
 
-      // noiDungTiengVietyêu cầunoiDungTiengVietbộ nhớ đệmnoiDungTiengVietvăn bản
+      // yêu cầubộ nhớ đệmvăn bản
       const response = await chrome.runtime.sendMessage({
         target: 'offscreen',
         type: OFFSCREEN_MESSAGE_TYPES.SIMILARITY_ENGINE_BATCH_COMPUTE,
@@ -1927,7 +1927,7 @@ export class SemanticSimilarityEngine {
         );
       }
 
-      // noiDungTiengVietkết quảnoiDungTiengVietbộ nhớ đệm
+      // kết quảbộ nhớ đệm
       response.embeddings.forEach((embeddingArray: number[], batchIndex: number) => {
         const embedding = new Float32Array(embeddingArray);
         const originalIndex = uncachedIndices[batchIndex];
@@ -1990,7 +1990,7 @@ export class SemanticSimilarityEngine {
         },
       };
 
-      // sử dụngnoiDungTiengVietxử lýsuy luận
+      // sử dụngxử lýsuy luận
       const workerOutput = await this._sendMessageToWorker('batchInfer', workerPayload);
       const attentionMasksForBatch: number[][] = [];
       const batchSize = tokenizedBatch.input_ids.dims[0];
@@ -2058,7 +2058,7 @@ export class SemanticSimilarityEngine {
     if (!this.isInitialized) await this.initialize();
     if (!pairs || pairs.length === 0) return [];
 
-    // nếusử dụngoffscreenschema，ủy thác chooffscreen document
+    // nếusử dụngoffscreenschema, ủy thác chooffscreen document
     if (this.useOffscreen) {
       const response = await chrome.runtime.sendMessage({
         target: 'offscreen',
@@ -2074,7 +2074,7 @@ export class SemanticSimilarityEngine {
       return response.similarities;
     }
 
-    // trực tiếpschemanoiDungTiengVietlogic
+    // trực tiếpschemalogic
     const simStartTime = performance.now();
     const uniqueTextsSet = new Set<string>();
     pairs.forEach((pair) => {
@@ -2126,7 +2126,7 @@ export class SemanticSimilarityEngine {
       embeddingMap.set(text, embeddingsArray[index]);
     });
 
-    // sử dụng SIMD tối ưu hóanoiDungTiengViettính toán（nếucó sẵn）
+    // sử dụng SIMD tối ưu hóatính toán(nếucó sẵn)
     if (this.useSIMD && this.simdMath) {
       try {
         const embeddings1 = texts1.map((text) => embeddingMap.get(text)!).filter(Boolean);
@@ -2148,7 +2148,7 @@ export class SemanticSimilarityEngine {
       }
     }
 
-    // JavaScript noiDungTiengVietphiên bản
+    // JavaScript phiên bản
     const matrix: number[][] = [];
     for (const textA of texts1) {
       const row: number[] = [];
@@ -2183,11 +2183,11 @@ export class SemanticSimilarityEngine {
       return 0;
     }
 
-    // sử dụng SIMD tối ưu hóaphiên bản（nếucó sẵn）
+    // sử dụng SIMD tối ưu hóaphiên bản(nếucó sẵn)
     if (this.useSIMD && this.simdMath) {
       try {
-        // SIMD phiên bảnnoiDungTiengViet，noiDungTiengVietduy trìgiao diệnnoiDungTiengViet，noiDungTiengVietcầnđồng bộphiên bản
-        // noiDungTiengViet JavaScript phiên bản，hoặcnoiDungTiengViet
+        // SIMD phiên bản, duy trìgiao diện, cầnđồng bộphiên bản
+        //  JavaScript phiên bản, hoặc
         return this.cosineSimilarityJS(vecA, vecB);
       } catch (error) {
         console.warn('SIMD cosine similarity failed, falling back to JavaScript:', error);
@@ -2211,7 +2211,7 @@ export class SemanticSimilarityEngine {
     return magnitude === 0 ? 0 : dotProduct / magnitude;
   }
 
-  // thêm mới：noiDungTiengViet SIMD tối ưu hóanoiDungTiengViet
+  // thêm mới:  SIMD tối ưu hóa
   public async cosineSimilaritySIMD(vecA: Float32Array, vecB: Float32Array): Promise<number> {
     if (!vecA || !vecB || vecA.length !== vecB.length) {
       console.warn('Cosine similarity: Invalid vectors provided.', vecA, vecB);
@@ -2241,7 +2241,7 @@ export class SemanticSimilarityEngine {
 
   public validateInput(text1: string, text2: string | 'valid_dummy'): void {
     if (typeof text1 !== 'string' || (text2 !== 'valid_dummy' && typeof text2 !== 'string')) {
-      throw new Error('đầu vàobắt buộcnoiDungTiengVietchuỗi');
+      throw new Error('đầu vàobắt buộcchuỗi');
     }
     if (text1.trim().length === 0 || (text2 !== 'valid_dummy' && text2.trim().length === 0)) {
       throw new Error('đầu vàovăn bảnkhông thểrỗng');
@@ -2251,7 +2251,7 @@ export class SemanticSimilarityEngine {
       text1.length > roughCharLimit ||
       (text2 !== 'valid_dummy' && text2.length > roughCharLimit)
     ) {
-      console.warn('đầu vàovăn bảnnoiDungTiengViet，noiDungTiengViet。');
+      console.warn('đầu vàovăn bản, .');
     }
   }
 
@@ -2304,7 +2304,7 @@ export class SemanticSimilarityEngine {
     }
   }
 
-  // thêm mới：lấy Worker thông tin thống kê
+  // thêm mới: lấy Worker thông tin thống kê
   public async getWorkerStats(): Promise<WorkerStats | null> {
     if (!this.worker || !this.isInitialized) return null;
 
@@ -2317,7 +2317,7 @@ export class SemanticSimilarityEngine {
     }
   }
 
-  // thêm mới：dọn dẹp Worker vùng đệm
+  // thêm mới: dọn dẹp Worker vùng đệm
   public async clearWorkerBuffers(): Promise<void> {
     if (!this.worker || !this.isInitialized) return;
 
@@ -2329,7 +2329,7 @@ export class SemanticSimilarityEngine {
     }
   }
 
-  // thêm mới：dọn dẹptất cảbộ nhớ đệm
+  // thêm mới: dọn dẹptất cảbộ nhớ đệm
   public clearAllCaches(): void {
     this.embeddingCache.clear();
     this.tokenizationCache.clear();
@@ -2340,7 +2340,7 @@ export class SemanticSimilarityEngine {
     console.log('SemanticSimilarityEngine: All caches cleared.');
   }
 
-  // thêm mới：lấynoiDungTiengVietsử dụngnoiDungTiengViet
+  // thêm mới: lấysử dụng
   public getMemoryUsage(): {
     embeddingCacheUsage: number;
     tokenizationCacheUsage: number;

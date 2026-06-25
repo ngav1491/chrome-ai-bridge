@@ -1,6 +1,6 @@
 /**
- * @fileoverview artifact（Artifacts）giao diện
- * @description định nghĩaảnh chụp màn hìnhnoiDungTiengVietartifactnoiDungTiengVietlấynoiDungTiengVietlưu trữgiao diện
+ * @fileoverview artifact(Artifacts)giao diện
+ * @description định nghĩaảnh chụp màn hìnhartifactlấylưu trữgiao diện
  */
 
 import type { NodeId, RunId } from '../../domain/ids';
@@ -14,11 +14,11 @@ export type ScreenshotResult = { ok: true; base64: string } | { ok: false; error
 
 /**
  * artifactdịch vụgiao diện
- * @description noiDungTiengVietartifactlấynoiDungTiengVietlưu trữnoiDungTiengViet
+ * @description artifactlấylưu trữ
  */
 export interface ArtifactService {
   /**
-   * noiDungTiengViettrangảnh chụp màn hình
+   * trangảnh chụp màn hình
    * @param tabId Tab ID
    * @param options ảnh chụp màn hìnhtùy chọn
    */
@@ -35,7 +35,7 @@ export interface ArtifactService {
    * @param runId Run ID
    * @param nodeId Node ID
    * @param base64 ảnh chụp màn hìnhdữ liệu
-   * @param filename tệpnoiDungTiengViet（tùy chọn）
+   * @param filename tệp(tùy chọn)
    */
   saveScreenshot(
     runId: RunId,
@@ -46,7 +46,7 @@ export interface ArtifactService {
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet ArtifactService
+ * tạo NotImplemented  ArtifactService
  * @description Phase 0-1 giữ chỗtriển khai
  */
 export function createNotImplementedArtifactService(): ArtifactService {
@@ -65,8 +65,8 @@ export function createNotImplementedArtifactService(): ArtifactService {
 }
 
 /**
- * tạonoiDungTiengViet chrome.tabs.captureVisibleTab noiDungTiengViet ArtifactService
- * @description sử dụng Chrome API noiDungTiengVietnhãnnoiDungTiengViet
+ * tạo chrome.tabs.captureVisibleTab  ArtifactService
+ * @description sử dụng Chrome API nhãn
  */
 export function createChromeArtifactService(): ArtifactService {
   // In-memory storage for screenshots (could be replaced with IndexedDB)
@@ -133,7 +133,7 @@ export function createChromeArtifactService(): ArtifactService {
 }
 
 /**
- * artifactchiến lượcthực thinoiDungTiengViet
+ * artifactchiến lượcthực thi
  * @description dựa trênchiến lượccấu hìnhquyết địnhcó/khônglấyartifact
  */
 export interface ArtifactPolicyExecutor {
@@ -155,7 +155,7 @@ export interface ArtifactPolicyExecutor {
 }
 
 /**
- * tạomặc địnhnoiDungTiengVietartifactchiến lượcthực thinoiDungTiengViet
+ * tạomặc địnhartifactchiến lượcthực thi
  */
 export function createArtifactPolicyExecutor(service: ArtifactService): ArtifactPolicyExecutor {
   return {
@@ -173,7 +173,7 @@ export function createArtifactPolicyExecutor(service: ArtifactService): Artifact
         return { captured: false, error: result.error };
       }
 
-      // lưu（nếuchỉ địnhnoiDungTiengViettệpnoiDungTiengViet）
+      // lưu(nếuchỉ địnhtệp)
       if (context.saveAs) {
         const saveResult = await service.saveScreenshot(
           context.runId,

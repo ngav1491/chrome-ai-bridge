@@ -12,8 +12,8 @@ const WEBSOCKET_OPEN_STATE = 1;
 /**
  * AgentStreamManager manages SSE/WebSocket connections keyed by sessionId.
  *
- * mô tả tiếng Việt：noiDungTiengViettriển khaitham chiếu other/cweb trong StreamManager，noiDungTiengVietthích ứng Fastify/Node HTTP，
- * sử dụng ServerResponse trực tiếpghi SSE dữ liệu，tránhnoiDungTiengViet Node noiDungTiengViet Web Streams phụ thuộc。
+ * mô tả tiếng Việt: triển khaitham chiếu other/cweb trong StreamManager, thích ứng Fastify/Node HTTP,
+ * sử dụng ServerResponse trực tiếpghi SSE dữ liệu, tránh Node  Web Streams phụ thuộc.
  */
 export class AgentStreamManager {
   private readonly sseClients = new Map<string, Set<ServerResponse>>();

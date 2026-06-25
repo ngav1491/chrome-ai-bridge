@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center gap-2">
-    <!-- noiDungTiengViet（noiDungTiengViet running/starting trạng tháihiển thị，noiDungTiengViet） -->
+    <!-- ( running/starting trạng tháihiển thị, ) -->
     <svg
       v-if="isRunning && !hideIcon"
       class="loading-scribble w-4 h-4 flex-shrink-0"
@@ -15,7 +15,7 @@
       />
     </svg>
 
-    <!-- shimmer văn bản（running trạng thái）noiDungTiengVietvăn bản -->
+    <!-- shimmer văn bản(running trạng thái)văn bản -->
     <span
       class="text-xs italic"
       :class="{ 'text-shimmer': isRunning }"
@@ -37,24 +37,24 @@ const props = defineProps<{
   hideIcon?: boolean;
 }>();
 
-// có/khôngnoiDungTiengVietchạytrạng thái
+// có/khôngchạytrạng thái
 const isRunning = computed(
   () => props.item.status === 'running' || props.item.status === 'starting',
 );
 
-// ngẫu nhiênvăn bản（noiDungTiengViet running trạng tháisử dụng）
+// ngẫu nhiênvăn bản( running trạng tháisử dụng)
 const randomText = ref(getRandomLoadingText());
 
-// định thờicập nhậtvăn bảnnoiDungTiengViet timeout ID
+// định thờicập nhậtvăn bản timeout ID
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-// ghinoiDungTiengVietmột lầnnoiDungTiengVietchạytrạng thái，dùng chophán đoántrạng tháithay đổi
+// ghimột lầnchạytrạng thái, dùng chophán đoántrạng tháithay đổi
 let wasRunning = false;
 
-// khởi độngđịnh thờinoiDungTiengViet
+// khởi độngđịnh thời
 function startInterval(): void {
   if (timeoutId) return;
-  // 5-8 noiDungTiengVietngẫu nhiênkhoảng cáchcập nhậtvăn bản
+  // 5-8 ngẫu nhiênkhoảng cáchcập nhậtvăn bản
   const scheduleNext = () => {
     timeoutId = setTimeout(
       () => {
@@ -67,7 +67,7 @@ function startInterval(): void {
   scheduleNext();
 }
 
-// dừngđịnh thờinoiDungTiengViet
+// dừngđịnh thời
 function stopInterval(): void {
   if (timeoutId) {
     clearTimeout(timeoutId);
@@ -75,9 +75,9 @@ function stopInterval(): void {
   }
 }
 
-// lắng nghechạytrạng tháithay đổi - noiDungTiengViettrạng tháinoiDungTiengVietthay đổinoiDungTiengVietxử lý
+// lắng nghechạytrạng tháithay đổi - trạng tháithay đổixử lý
 watch(isRunning, (running) => {
-  // noiDungTiengVietchạynoiDungTiengVietchạynoiDungTiengViet，noiDungTiengViettạovăn bảnnoiDungTiengVietkhởi độngđịnh thờinoiDungTiengViet
+  // chạychạy, tạovăn bảnkhởi độngđịnh thời
   if (running && !wasRunning) {
     randomText.value = getRandomLoadingText();
     startInterval();
@@ -99,7 +99,7 @@ onUnmounted(() => {
   stopInterval();
 });
 
-// noiDungTiengVietchạytrạng tháinoiDungTiengVietmặc địnhvăn bản
+// chạytrạng tháimặc địnhvăn bản
 const defaultText = computed(() => {
   switch (props.item.status) {
     case 'completed':
@@ -113,7 +113,7 @@ const defaultText = computed(() => {
   }
 });
 
-// noiDungTiengViethiển thịnoiDungTiengVietvăn bản
+// hiển thịvăn bản
 const displayText = computed(() => {
   if (isRunning.value) {
     return randomText.value;

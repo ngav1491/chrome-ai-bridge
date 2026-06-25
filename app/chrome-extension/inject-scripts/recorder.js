@@ -202,14 +202,14 @@
       });
       root.innerHTML = `
         <div id="__rr_rec_panel" style="background: rgba(220,38,38,0.95); color: #fff; padding:8px 10px; border-radius:8px; display:flex; align-items:center; gap:8px; box-shadow:0 4px 16px rgba(0,0,0,0.2);">
-          <span id="__rr_badge" style="font-weight:600;">ghinoiDungTiengViet</span>
+          <span id="__rr_badge" style="font-weight:600;">ghi</span>
           <label style="display:inline-flex; align-items:center; gap:4px; font-size:12px;">
-            <input id="__rr_hide_values" type="checkbox" style="vertical-align:middle;" />noiDungTiengVietđầu vàonoiDungTiengViet
+            <input id="__rr_hide_values" type="checkbox" style="vertical-align:middle;" />đầu vào
           </label>
           <label style="display:inline-flex; align-items:center; gap:4px; font-size:12px;">
-            <input id="__rr_enable_highlight" type="checkbox" style="vertical-align:middle;" />noiDungTiengViet
+            <input id="__rr_enable_highlight" type="checkbox" style="vertical-align:middle;" />
           </label>
-          <button id="__rr_toggle_timeline" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.5); border-radius:6px; padding:2px 6px; cursor:pointer; font-size:12px;">noiDungTiengViet</button>
+          <button id="__rr_toggle_timeline" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.5); border-radius:6px; padding:2px 6px; cursor:pointer; font-size:12px;"></button>
           <button id="__rr_pause" style="background:#fff; color:#111; border:none; border-radius:6px; padding:4px 8px; cursor:pointer;">tạm dừng</button>
           <button id="__rr_stop" style="background:#111; color:#fff; border:none; border-radius:6px; padding:4px 8px; cursor:pointer;">dừng</button>
         </div>`;
@@ -232,7 +232,7 @@
         lineHeight: '1.4',
       });
       const header = document.createElement('div');
-      header.textContent = 'noiDungTiengVietghinoiDungTiengViet';
+      header.textContent = 'ghi';
       header.style.opacity = '0.8';
       header.style.marginBottom = '4px';
       const list = document.createElement('ol');
@@ -265,7 +265,7 @@
           this._collapsed = !this._collapsed;
           if (this._timelineBox)
             this._timelineBox.style.display = this._collapsed ? 'none' : 'block';
-          btnToggle.textContent = this._collapsed ? 'noiDungTiengViet' : 'noiDungTiengViet';
+          btnToggle.textContent = this._collapsed ? '' : '';
         });
       }
       btnPause.addEventListener('click', () => {
@@ -301,10 +301,7 @@
     updateStatus() {
       const badge = document.getElementById('__rr_badge');
       const pauseBtn = document.getElementById('__rr_pause');
-      if (badge)
-        badge.textContent = this.recorder.isPaused
-          ? 'noiDungTiengViettạm dừng'
-          : 'ghinoiDungTiengViet';
+      if (badge) badge.textContent = this.recorder.isPaused ? 'tạm dừng' : 'ghi';
       if (pauseBtn) pauseBtn.textContent = this.recorder.isPaused ? 'tiếp tục' : 'tạm dừng';
     }
 
@@ -424,7 +421,7 @@
     // Create a short, human-readable text for a recorded step
     _formatStepText(step, _idx) {
       try {
-        if (!step || typeof step !== 'object') return 'noiDungTiengViet';
+        if (!step || typeof step !== 'object') return '';
         const t = step.type;
         const sel = step.target && step.target.selector ? step.target.selector : '';
         if (t === 'click' || t === 'dblclick') {
@@ -440,15 +437,14 @@
           const off = step.offset || {};
           return `cuộn(${mode}): y=${off.y ?? 0}, x=${off.x ?? 0}`;
         }
-        if (t === 'openTab') return `noiDungTiengVietnhãnnoiDungTiengViet: ${step.url || ''}`;
-        if (t === 'switchTab')
-          return `chuyển đổinhãnnoiDungTiengViet: bao gồm ${step.urlContains || ''}`;
+        if (t === 'openTab') return `nhãn: ${step.url || ''}`;
+        if (t === 'switchTab') return `chuyển đổinhãn: bao gồm ${step.urlContains || ''}`;
         if (t === 'switchFrame')
           return `chuyển đổiFrame: bao gồm ${step.frame && step.frame.urlContains ? step.frame.urlContains : ''}`;
         if (t === 'waitFor') return `chờ: ${sel || step.until || ''}`;
         return `${t}`;
       } catch (_) {
-        return 'noiDungTiengViet';
+        return '';
       }
     }
   }
@@ -882,7 +878,7 @@
       const nowIso = new Date().toISOString();
       return {
         id: `flow_${Date.now()}`,
-        name: 'noiDungTiengVietghi',
+        name: 'ghi',
         version: 1,
         steps: [],
         variables: [],

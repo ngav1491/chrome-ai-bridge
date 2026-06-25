@@ -7,16 +7,15 @@
         <input
           class="form-input"
           v-model="(node as any).config.event"
-          placeholder="noiDungTiengViet input/change/mouseover"
+          placeholder=" input/change/mouseover"
         />
       </div>
       <div class="form-group checkbox-group">
         <label class="checkbox-label"
-          ><input type="checkbox" v-model="(node as any).config.bubbles" /> noiDungTiengViet</label
-        >
+          ><input type="checkbox" v-model="(node as any).config.bubbles" />
+        </label>
         <label class="checkbox-label"
-          ><input type="checkbox" v-model="(node as any).config.cancelable" />
-          noiDungTiengViethủy</label
+          ><input type="checkbox" v-model="(node as any).config.cancelable" /> hủy</label
         >
       </div>
     </div>

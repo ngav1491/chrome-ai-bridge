@@ -76,13 +76,13 @@ interface TestNodeConfig {
  * E2E Harness cấu hìnhtùy chọn
  */
 export interface V3E2EHarnessOptions {
-  /** Owner ID（định danhbộ lập lịchthể hiện） */
+  /** Owner ID(định danhbộ lập lịchthể hiện) */
   ownerId?: string;
   /** bộ lập lịchcấu hìnhbao phủ */
   schedulerConfig?: Partial<RunQueueConfig>;
-  /** có/khôngtự độngkhởi độngbộ lập lịch（mặc định true） */
+  /** có/khôngtự độngkhởi độngbộ lập lịch(mặc định true) */
   autoStartScheduler?: boolean;
-  /** nguồn thời gian（dùng để kiểm thử tiêm） */
+  /** nguồn thời gian(dùng để kiểm thử tiêm) */
   now?: () => number;
   /** logger */
   logger?: Logger;
@@ -92,13 +92,13 @@ export interface V3E2EHarnessOptions {
  * RPC phía clientgiao diện
  */
 export interface RpcClient {
-  /** noiDungTiengViettất cảtin nhắn */
+  /** tất cảtin nhắn */
   readonly messages: unknown[];
   /** gọi RPC phương thức */
   call<T = unknown>(method: string, params?: JsonObject): Promise<T>;
   /** làm trốngtin nhắn */
   clearMessages(): void;
-  /** lấynoiDungTiengVietsự kiện */
+  /** lấysự kiện */
   getStreamedEvents(): RunEvent[];
 }
 
@@ -116,23 +116,23 @@ export interface V3E2EHarness {
   /** tạo RPC phía client */
   createClient(): RpcClient;
 
-  /** chờnoiDungTiengVietsự kiện */
+  /** chờsự kiện */
   waitForEvent(
     runId: RunId,
     predicate: (event: RunEvent) => boolean,
     opts?: { timeoutMs?: number },
   ): Promise<RunEvent>;
 
-  /** chờ Run noiDungTiengViet */
+  /** chờ Run  */
   waitForTerminal(runId: RunId, opts?: { timeoutMs?: number }): Promise<RunRecordV3>;
 
-  /** chờmục hàng đợinoiDungTiengVietgỡ bỏ */
+  /** chờmục hàng đợigỡ bỏ */
   waitForQueueItemGone(runId: RunId, opts?: { timeoutMs?: number }): Promise<void>;
 
-  /** liệt kê Run noiDungTiengViettất cảsự kiện */
+  /** liệt kê Run tất cảsự kiện */
   listEvents(runId: RunId): Promise<RunEvent[]>;
 
-  /** hủy harness，noiDungTiengViet */
+  /** hủy harness,  */
   dispose(): Promise<void>;
 }
 
@@ -186,8 +186,8 @@ function sleep(ms: number): Promise<void> {
 }
 
 /**
- * tạokiểm thửnoiDungTiengViet Node định nghĩa
- * @description noiDungTiengVietkiểm thửnút，hỗ trợthành công/thất bại/độ trễ
+ * tạokiểm thử Node định nghĩa
+ * @description kiểm thửnút, hỗ trợthành công/thất bại/độ trễ
  */
 function createTestNodeDefinition(): NodeDefinition<'test', TestNodeConfig> {
   return {
@@ -202,7 +202,7 @@ function createTestNodeDefinition(): NodeDefinition<'test', TestNodeConfig> {
     execute: async (_ctx, node): Promise<NodeExecutionResult> => {
       const cfg = node.config as unknown as TestNodeConfig;
 
-      // noiDungTiengVietđộ trễ
+      // độ trễ
       if (cfg.delayMs && cfg.delayMs > 0) {
         await sleep(cfg.delayMs);
       }
@@ -226,7 +226,7 @@ function createTestNodeDefinition(): NodeDefinition<'test', TestNodeConfig> {
 
 /**
  * tạo V3 E2E kiểm thử harness
- * @description noiDungTiengVietđầy đủ V3 runtime dùng chotích hợpkiểm thử
+ * @description đầy đủ V3 runtime dùng chotích hợpkiểm thử
  */
 export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarness {
   const logger = options.logger ?? createSilentLogger();
@@ -255,7 +255,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
     artifactService: createNotImplementedArtifactService(),
   });
 
-  // 6) RunExecutor - kết nối scheduler noiDungTiengViet runner
+  // 6) RunExecutor - kết nối scheduler  runner
   const execute: RunExecutor = createE2EExecutor({
     storage,
     events,
@@ -373,7 +373,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
   ): Promise<RunEvent> {
     const timeoutMs = opts?.timeoutMs ?? 5_000;
 
-    // Fast-path: kiểm tranoiDungTiengVietlưu trữ lâu dàinoiDungTiengVietsự kiện
+    // Fast-path: kiểm tralưu trữ lâu dàisự kiện
     try {
       const existing = await storage.events.list(runId);
       const found = existing.find(predicate);
@@ -406,7 +406,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
   ): Promise<RunRecordV3> {
     const timeoutMs = opts?.timeoutMs ?? 10_000;
 
-    // noiDungTiengVietkiểm trahiện tạitrạng thái
+    // kiểm trahiện tạitrạng thái
     const initial = await storage.runs.get(runId);
     if (!initial) {
       throw new Error(`Run "${runId}" not found`);
@@ -415,7 +415,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
       return initial;
     }
 
-    // chờnoiDungTiengVietsự kiện
+    // chờsự kiện
     await waitForEvent(
       runId,
       (e) => e.type === 'run.succeeded' || e.type === 'run.failed' || e.type === 'run.canceled',
@@ -452,7 +452,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
   }
 
   async function dispose(): Promise<void> {
-    // hủysự kiệnnoiDungTiengViet
+    // hủysự kiện
     try {
       unsubscribeForward();
     } catch {
@@ -466,7 +466,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
       // ignore
     }
 
-    // noiDungTiengViet lease manager
+    //  lease manager
     try {
       leaseManager.dispose();
     } catch {
@@ -502,7 +502,7 @@ export function createV3E2EHarness(options: V3E2EHarnessOptions = {}): V3E2EHarn
 // ==================== Internal Helpers ====================
 
 /**
- * tạo E2E kiểm thửnoiDungTiengViet RunExecutor
+ * tạo E2E kiểm thử RunExecutor
  */
 function createE2EExecutor(deps: {
   storage: StoragePort;
@@ -529,7 +529,7 @@ function createE2EExecutor(deps: {
       return;
     }
 
-    // 3. đồng bộ attempt/tabId noiDungTiengViet RunRecord
+    // 3. đồng bộ attempt/tabId  RunRecord
     const tabId = item.tabId ?? run.tabId ?? 1;
     try {
       await deps.storage.runs.patch(runId, {
@@ -541,7 +541,7 @@ function createE2EExecutor(deps: {
       // ignore
     }
 
-    // 4. tạonoiDungTiengVietchạy Runner
+    // 4. tạochạy Runner
     const runner = deps.runnerFactory.create(runId, {
       flow,
       tabId,
@@ -560,7 +560,7 @@ function createE2EExecutor(deps: {
 }
 
 /**
- * noiDungTiengViet Run đánh dấu làthất bại
+ *  Run đánh dấu làthất bại
  */
 async function failRun(
   deps: { storage: StoragePort; events: EventsBus; now: () => number },

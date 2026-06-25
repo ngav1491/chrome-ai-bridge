@@ -287,11 +287,11 @@ async function clearVectorIndexedDB(): Promise<void> {
           };
           deleteRequest.onerror = () => {
             console.warn(`Offscreen: Failed to delete database: ${dbName}`, deleteRequest.error);
-            resolve(); // noiDungTiengVietkhácdữ liệunoiDungTiengVietdọn dẹp
+            resolve(); // khácdữ liệudọn dẹp
           };
           deleteRequest.onblocked = () => {
             console.warn(`Offscreen: Database deletion blocked: ${dbName}`);
-            resolve(); // noiDungTiengVietkhácdữ liệunoiDungTiengVietdọn dẹp
+            resolve(); // khácdữ liệudọn dẹp
           };
         });
       } catch (error) {

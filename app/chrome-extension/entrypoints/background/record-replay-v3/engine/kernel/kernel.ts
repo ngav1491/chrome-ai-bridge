@@ -1,6 +1,6 @@
 /**
  * @fileoverview ExecutionKernel giao diệnđịnh nghĩa
- * @description định nghĩa Record-Replay V3 noiDungTiengVietthực thienginegiao diện
+ * @description định nghĩa Record-Replay V3 thực thienginegiao diện
  */
 
 import type { JsonObject } from '../../domain/json';
@@ -14,17 +14,17 @@ import type { RunEvent, RunStatus, Unsubscribe } from '../../domain/events';
  * Run khởi độngyêu cầu
  */
 export interface RunStartRequest {
-  /** Run ID（noiDungTiengVietgọinoiDungTiengViettạo） */
+  /** Run ID(gọitạo) */
   runId: RunId;
   /** Flow ID */
   flowId: FlowId;
-  /** Flow snapshot（thực thinoiDungTiengVietsử dụngnoiDungTiengVietđầy đủ Flow định nghĩa） */
+  /** Flow snapshot(thực thisử dụngđầy đủ Flow định nghĩa) */
   flowSnapshot: FlowV3;
   /** chạytham số */
   args?: JsonObject;
-  /** bắt đầunút ID（mặc địnhnoiDungTiengViet Flow noiDungTiengViet entryNodeId） */
+  /** bắt đầunút ID(mặc định Flow  entryNodeId) */
   startNodeId?: NodeId;
-  /** Tab ID（bắt buộcnoiDungTiengVietgọinoiDungTiengViet，noiDungTiengViet Run độc quyền） */
+  /** Tab ID(bắt buộcgọi,  Run độc quyền) */
   tabId: number;
   /** gỡ lỗicấu hình */
   debug?: { breakpoints?: NodeId[]; pauseOnStart?: boolean };
@@ -36,11 +36,11 @@ export interface RunStartRequest {
 export interface RunResult {
   /** Run ID */
   runId: RunId;
-  /** noiDungTiengViettrạng thái */
+  /** trạng thái */
   status: Extract<RunStatus, 'succeeded' | 'failed' | 'canceled'>;
-  /** noiDungTiengViet（mili giây） */
+  /** (mili giây) */
   tookMs: number;
-  /** lỗithông tin（nếuthất bại） */
+  /** lỗithông tin(nếuthất bại) */
   error?: RRError;
   /** đầu rakết quả */
   outputs?: JsonObject;
@@ -64,19 +64,19 @@ export interface RunStatusInfo {
 
 /**
  * ExecutionKernel giao diện
- * @description Record-Replay V3 noiDungTiengVietthực thiengine
+ * @description Record-Replay V3 thực thiengine
  */
 export interface ExecutionKernel {
   /**
-   * đăng kýsự kiệnnoiDungTiengViet
-   * @param listener sự kiệnlắng nghenoiDungTiengViet
+   * đăng kýsự kiện
+   * @param listener sự kiệnlắng nghe
    * @returns hủyđăng kýhàm
    */
   onEvent(listener: (event: RunEvent) => void): Unsubscribe;
 
   /**
    * khởi động Run
-   * @description noiDungTiengViet Run noiDungTiengVietvào hàng đợinoiDungTiengVietbắt đầuthực thi
+   * @description  Run vào hàng đợibắt đầuthực thi
    */
   startRun(req: RunStartRequest): Promise<void>;
 
@@ -113,19 +113,19 @@ export interface ExecutionKernel {
   /**
    * lấy Run trạng thái
    * @param runId Run ID
-   * @returns Run trạng tháithông tinnoiDungTiengViet null（nếukhông tồn tại）
+   * @returns Run trạng tháithông tin null(nếukhông tồn tại)
    */
   getRunStatus(runId: RunId): Promise<RunStatusInfo | null>;
 
   /**
    * khôi phụcthực thi
-   * @description noiDungTiengViet Service Worker noiDungTiengVietgọi，khôi phụcnoiDungTiengViet Run
+   * @description  Service Worker gọi, khôi phục Run
    */
   recover(): Promise<void>;
 }
 
 /**
- * tạo NotImplemented noiDungTiengViet ExecutionKernel
+ * tạo NotImplemented  ExecutionKernel
  * @description Phase 0 giữ chỗtriển khai
  */
 export function createNotImplementedKernel(): ExecutionKernel {

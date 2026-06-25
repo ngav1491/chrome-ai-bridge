@@ -5,14 +5,14 @@
     :style="wrapperStyle"
     :class="{ 'navigator-dragging': isDragging }"
   >
-    <!-- kích hoạtnút（noiDungTiengVietkéo thảnoiDungTiengViet） -->
+    <!-- kích hoạtnút(kéo thả) -->
     <button
       ref="triggerRef"
       class="navigator-trigger"
       :class="{ 'navigator-trigger-active': isOpen }"
       @click="handleTriggerClick"
       @dblclick="resetToDefault"
-      title="chuyển đổitrang（noiDungTiengVietkéo thảnoiDungTiengViet，nhấp đúpnoiDungTiengViet）"
+      title="chuyển đổitrang(kéo thả, nhấp đúp)"
     >
       <svg
         class="navigator-icon"
@@ -27,7 +27,7 @@
       </svg>
     </button>
 
-    <!-- noiDungTiengViet -->
+    <!--  -->
     <Transition name="navigator-menu">
       <div v-if="isOpen" class="navigator-overlay" @click="closeMenu">
         <div class="navigator-menu" :style="menuStyle" @click.stop>
@@ -70,7 +70,7 @@
               </div>
               <div class="navigator-item-content">
                 <span class="navigator-item-title">trợ lý thông minh</span>
-                <span class="navigator-item-desc">AI Agent noiDungTiengViet</span>
+                <span class="navigator-item-desc">AI Agent </span>
               </div>
               <div v-if="activeTab === 'agent-chat'" class="navigator-item-check">
                 <svg
@@ -108,9 +108,7 @@
               </div>
               <div class="navigator-item-content">
                 <span class="navigator-item-title">quy trình làm việcquản lý</span>
-                <span class="navigator-item-desc"
-                  >ghinoiDungTiengVietphát lạitự độngnoiDungTiengVietquy trình</span
-                >
+                <span class="navigator-item-desc">ghiphát lạitự độngquy trình</span>
               </div>
               <div v-if="activeTab === 'workflows'" class="navigator-item-check">
                 <svg

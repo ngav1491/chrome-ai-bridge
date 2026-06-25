@@ -158,7 +158,7 @@ describe('V3 UrlTriggerHandler', () => {
         kind: 'url',
         enabled: true,
         flowId: 'flow-1' as never,
-        match: [{ kind: 'domain', value: '..example.com..' }],
+        match: [{ kind: 'domain', value: '...example.com...' }],
       };
 
       await handler.install(trigger);

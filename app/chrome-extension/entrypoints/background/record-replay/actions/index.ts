@@ -1,11 +1,11 @@
 /**
- * Action System - xuấtnoiDungTiengViet
+ * Action System - mô đun xuất
  */
 
-// kiểuxuất
+// Xuất kiểu
 export * from './types';
 
-// đăng kýnoiDungTiengVietxuất
+// Xuất bảng đăng ký
 export {
   ActionRegistry,
   createActionRegistry,
@@ -23,7 +23,7 @@ export {
   type ActionRegistryHooks,
 } from './registry';
 
-// adapterxuất
+// Xuất bộ thích ứng hợp
 export {
   execCtxToActionCtx,
   stepToAction,
@@ -34,7 +34,7 @@ export {
   type StepExecutionAttempt,
 } from './adapter';
 
-// Handler factoryxuất
+// Xuất factory Handler
 export {
   createReplayActionRegistry,
   registerReplayHandlers,

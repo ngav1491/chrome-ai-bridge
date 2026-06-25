@@ -1,11 +1,11 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">tệpnoiDungTiengVietbao gồm（tùy chọn）</label>
+      <label class="form-label">tệpbao gồm(tùy chọn)</label>
       <input
         class="form-input"
         v-model="(node as any).config.filenameContains"
-        placeholder="noiDungTiengVietkhớptệpnoiDungTiengVietURL"
+        placeholder="khớptệpURL"
       />
     </div>
     <div class="form-group">
@@ -23,7 +23,7 @@
       >
     </div>
     <div class="form-group">
-      <label class="form-label">lưunoiDungTiengVietbiến</label>
+      <label class="form-label">lưubiến</label>
       <input
         class="form-input"
         v-model="(node as any).config.saveAs"

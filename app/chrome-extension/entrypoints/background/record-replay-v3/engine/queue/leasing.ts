@@ -1,6 +1,6 @@
 /**
  * @fileoverview leasequản lý
- * @description quản lý Run noiDungTiengVietleasenoiDungTiengVietthu hồi
+ * @description quản lý Run leasethu hồi
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -8,8 +8,8 @@ import type { RunId } from '../../domain/ids';
 import type { RunQueue, RunQueueConfig, Lease } from './queue';
 
 /**
- * leasequản lýnoiDungTiengViet
- * @description quản lýleasenoiDungTiengVietphát hiện
+ * leasequản lý
+ * @description quản lýleasephát hiện
  */
 export interface LeaseManager {
   /**
@@ -25,19 +25,19 @@ export interface LeaseManager {
   stopHeartbeat(ownerId: string): void;
 
   /**
-   * kiểm tranoiDungTiengVietthu hồinoiDungTiengVietlease
+   * kiểm trathu hồilease
    * @param now hiện tạithời gian
-   * @returns noiDungTiengVietthu hồinoiDungTiengViet Run ID danh sách
+   * @returns thu hồi Run ID danh sách
    */
   reclaimExpiredLeases(now: UnixMillis): Promise<RunId[]>;
 
   /**
-   * phán đoánleasecó/khôngnoiDungTiengViet
+   * phán đoánleasecó/không
    */
   isLeaseExpired(lease: Lease, now: UnixMillis): boolean;
 
   /**
-   * tạonoiDungTiengVietlease
+   * tạolease
    */
   createLease(ownerId: string, now: UnixMillis): Lease;
 
@@ -48,17 +48,17 @@ export interface LeaseManager {
 }
 
 /**
- * tạoleasequản lýnoiDungTiengViet
+ * tạoleasequản lý
  */
 export function createLeaseManager(queue: RunQueue, config: RunQueueConfig): LeaseManager {
   const heartbeatTimers = new Map<string, ReturnType<typeof setInterval>>();
 
   return {
     startHeartbeat(ownerId: string): void {
-      // nếunoiDungTiengVietđịnh thờinoiDungTiengViet，noiDungTiengVietdừng
+      // nếuđịnh thời, dừng
       this.stopHeartbeat(ownerId);
 
-      // tạonoiDungTiengVietheartbeatđịnh thờinoiDungTiengViet
+      // tạoheartbeatđịnh thời
       const timer = setInterval(async () => {
         try {
           await queue.heartbeat(ownerId, Date.now());
@@ -105,7 +105,7 @@ export function createLeaseManager(queue: RunQueue, config: RunQueueConfig): Lea
 }
 
 /**
- * tạonoiDungTiengViet owner ID
+ * tạo owner ID
  * @description dùng chođịnh danhhiện tại Service Worker thể hiện
  */
 export function generateOwnerId(): string {

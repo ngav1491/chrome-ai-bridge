@@ -6,12 +6,8 @@
       >
     </div>
     <div class="form-group">
-      <label class="form-label">mô tả（tùy chọn）</label>
-      <input
-        class="form-input"
-        v-model="cfg.description"
-        placeholder="noiDungTiengViettriggernoiDungTiengViet"
-      />
+      <label class="form-label">mô tả(tùy chọn)</label>
+      <input class="form-input" v-model="cfg.description" placeholder="trigger" />
     </div>
   </div>
 
@@ -72,14 +68,10 @@
     <div class="section-title">menu chuột phải</div>
     <div class="form-group">
       <label class="form-label">tiêu đề</label>
-      <input
-        class="form-input"
-        v-model="cfg.contextMenu.title"
-        placeholder="noiDungTiengViettiêu đề"
-      />
+      <input class="form-input" v-model="cfg.contextMenu.title" placeholder="tiêu đề" />
     </div>
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet</label>
+      <label class="form-label"></label>
       <div class="checkbox-group">
         <label class="checkbox-label" v-for="c in menuContexts" :key="c">
           <input type="checkbox" :value="c" v-model="cfg.contextMenu.contexts" /> {{ c }}
@@ -91,9 +83,7 @@
   <div v-if="cfg.modes.command" class="form-section">
     <div class="section-title">phím tắt</div>
     <div class="form-group">
-      <label class="form-label"
-        >lệnhnoiDungTiengViet（noiDungTiengViet manifest commands noiDungTiengViet）</label
-      >
+      <label class="form-label">lệnh( manifest commands )</label>
       <input
         class="form-input"
         v-model="cfg.command.commandKey"
@@ -101,9 +91,8 @@
       />
     </div>
     <div class="text-xs text-slate-500" style="padding: 0 20px"
-      >gợi ý：Chrome noiDungTiengVietphím tắtcầnnoiDungTiengViet manifest noiDungTiengVietcố
-      địnhnoiDungTiengViet，không thểchạynoiDungTiengVietthêm。</div
-    >
+      >gợi ý: Chrome phím tắtcần manifest cố định, không thểchạythêm.
+    </div>
   </div>
 
   <div v-if="cfg.modes.dom" class="form-section">
@@ -114,14 +103,14 @@
     </div>
     <div class="form-group checkbox-group">
       <label class="checkbox-label"
-        ><input type="checkbox" v-model="cfg.dom.appear" /> noiDungTiengVietkích hoạt</label
+        ><input type="checkbox" v-model="cfg.dom.appear" /> kích hoạt</label
       >
       <label class="checkbox-label"
-        ><input type="checkbox" v-model="cfg.dom.once" /> noiDungTiengVietkích hoạtmột lần</label
+        ><input type="checkbox" v-model="cfg.dom.once" /> kích hoạtmột lần</label
       >
     </div>
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet(ms)</label>
+      <label class="form-label">(ms)</label>
       <input class="form-input" type="number" min="0" v-model.number="cfg.dom.debounceMs" />
     </div>
   </div>
@@ -138,7 +127,7 @@
         <input
           class="form-input-sm flex-1"
           v-model="s.when"
-          placeholder="5 noiDungTiengViet 09:00 noiDungTiengViet 2025-01-01T10:00:00"
+          placeholder="5  09:00  2025-01-01T10:00:00"
         />
         <label class="checkbox-label"><input type="checkbox" v-model="s.enabled" /> bật</label>
         <button class="btn-icon-sm" @click="move(schedules, i, -1)" :disabled="i === 0">↑</button>
@@ -159,9 +148,8 @@
   <div class="divider"></div>
   <div class="form-section">
     <div class="text-xs text-slate-500" style="padding: 0 20px"
-      >noiDungTiengViet： triggernoiDungTiengVietlưuquy trình làm việcnoiDungTiengVietđồng
-      bộnoiDungTiengVietkích hoạtnoiDungTiengViet（URL/noiDungTiengViet/phím
-      tắt/DOM）noiDungTiengViet（khoảng cách/mỗi ngày/một lần）。
+      >: triggerlưuquy trình làm việcđồng bộkích hoạt(URL//phím tắt/DOM)(khoảng cách/mỗi ngày/một
+      lần).
     </div>
   </div>
 </template>

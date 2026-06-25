@@ -1,6 +1,6 @@
 /**
  * @fileoverview V3 Spec Smoke Test
- * @description xác thực V3 kiểuđịnh nghĩanoiDungTiengVietnhậpsử dụng
+ * @description xác thực V3 kiểuđịnh nghĩanhậpsử dụng
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';

@@ -49,7 +49,7 @@
             <input
               v-model="markerSearch"
               class="em-search-input"
-              placeholder="tìm kiếmchú thíchtên、bộ chọn..."
+              placeholder="tìm kiếmchú thíchtên, bộ chọn..."
               type="text"
             />
             <button
@@ -120,7 +120,7 @@
                   <div class="em-select-wrapper">
                     <select v-model="markerForm.matchType" class="em-select">
                       <option value="prefix">đường dẫntiền tố</option>
-                      <option value="exact">noiDungTiengVietkhớp</option>
+                      <option value="exact">khớp</option>
                       <option value="host">tên miền</option>
                     </select>
                   </div>
@@ -133,7 +133,7 @@
                   <textarea
                     v-model="markerForm.selector"
                     class="em-textarea"
-                    placeholder="CSS bộ chọnnoiDungTiengViet XPath"
+                    placeholder="CSS bộ chọn XPath"
                     rows="3"
                     required
                   ></textarea>
@@ -158,15 +158,13 @@
           <div class="em-stats-bar">
             <span class="em-stats-text">
               <template v-if="markerSearch">
-                noiDungTiengViet <strong>{{ filteredMarkers.length }}</strong> noiDungTiengVietchú
-                thích （noiDungTiengViet {{ markers.length }} noiDungTiengViet，{{
-                  groupedMarkers.length
-                }}
-                noiDungTiengViettên miền）
+                <strong>{{ filteredMarkers.length }}</strong> chú thích ( {{ markers.length }} ,
+                {{ groupedMarkers.length }}
+                tên miền)
               </template>
               <template v-else>
-                noiDungTiengViet <strong>{{ markers.length }}</strong> noiDungTiengVietchú thích，
-                <strong>{{ groupedMarkers.length }}</strong> noiDungTiengViettên miền
+                <strong>{{ markers.length }}</strong> chú thích,
+                <strong>{{ groupedMarkers.length }}</strong> tên miền
               </template>
             </span>
           </div>
@@ -190,9 +188,7 @@
                   <path fill="currentColor" d="M6 8l4 4 4-4" />
                 </svg>
                 <h3 class="em-domain-name">{{ domainGroup.domain }}</h3>
-                <span class="em-domain-count"
-                  >{{ domainGroup.count }} noiDungTiengVietchú thích</span
-                >
+                <span class="em-domain-count">{{ domainGroup.count }} chú thích</span>
               </div>
             </div>
 
@@ -275,7 +271,7 @@
 
         <!-- No search results -->
         <div v-else-if="markers.length > 0 && filteredMarkers.length === 0" class="em-empty">
-          <p>không tìm thấykhớpnoiDungTiengVietchú thích</p>
+          <p>không tìm thấykhớpchú thích</p>
           <button class="em-btn em-btn-ghost em-empty-btn" @click="markerSearch = ''">
             xóatìm kiếm
           </button>
@@ -361,7 +357,7 @@ const groupedMarkers = computed(() => {
   for (const marker of filteredMarkers.value) {
     // Use pre-normalized fields from storage instead of reparsing URLs
     const domain = marker.host || '(cục bộtệp)';
-    const fullUrl = marker.url || '(noiDungTiengVietURL)';
+    const fullUrl = marker.url || '(URL)';
 
     if (!groups.has(domain)) {
       groups.set(domain, new Map());
@@ -444,12 +440,12 @@ async function exportFlow(id: string) {
 
 function createTrigger() {
   // V3 Trigger management not yet implemented
-  alert('V3 Trigger quản lýchưatriển khai，tạm thời không thểtạotrigger');
+  alert('V3 Trigger quản lýchưatriển khai, tạm thời không thểtạotrigger');
 }
 
 function editTrigger(_id: string) {
   // V3 Trigger management not yet implemented
-  alert('V3 Trigger quản lýchưatriển khai，tạm thời không thểchỉnh sửatrigger');
+  alert('V3 Trigger quản lýchưatriển khai, tạm thời không thểchỉnh sửatrigger');
 }
 
 async function removeTrigger(id: string) {
@@ -469,21 +465,19 @@ async function run(id: string) {
 
 function edit(id: string) {
   // V3 Builder not yet implemented - show message
-  alert('V3 Builder chưatriển khai，tạm thời không thểchỉnh sửaquy trình làm việc');
+  alert('V3 Builder chưatriển khai, tạm thời không thểchỉnh sửaquy trình làm việc');
   // TODO: openBuilder({ flowId: id });
 }
 
 function createFlow() {
   // V3 Builder not yet implemented - show message
-  alert('V3 Builder chưatriển khai，tạm thời không thểtạoquy trình làm việc');
+  alert('V3 Builder chưatriển khai, tạm thời không thểtạoquy trình làm việc');
   // TODO: openBuilder({ newFlow: true });
 }
 
 async function remove(id: string) {
   try {
-    const ok = confirm(
-      'xác nhậnxóanoiDungTiengVietquy trình làm việc？noiDungTiengVietthao tácnoiDungTiengVietkhôi phục',
-    );
+    const ok = confirm('xác nhậnxóaquy trình làm việc?thao táckhôi phục');
     if (!ok) return;
     await workflowsV3.deleteFlow(id);
   } catch {}

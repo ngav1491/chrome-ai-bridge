@@ -1,7 +1,7 @@
 <template>
   <div class="form-section">
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet</label>
+      <label class="form-label"></label>
       <textarea
         class="form-textarea"
         v-model="(node as any).config.code"
@@ -10,7 +10,7 @@
       ></textarea>
     </div>
     <div class="form-group">
-      <label class="form-label">thực thinoiDungTiengViet</label>
+      <label class="form-label">thực thi</label>
       <select class="form-select" v-model="(node as any).config.world">
         <option value="ISOLATED">ISOLATED</option>
         <option value="MAIN">MAIN</option>
@@ -24,12 +24,8 @@
       </select>
     </div>
     <div class="form-group">
-      <label class="form-label">lưunoiDungTiengVietbiến（tùy chọn）</label>
-      <input
-        class="form-input"
-        v-model="(node as any).config.saveAs"
-        placeholder="biếnnoiDungTiengViet"
-      />
+      <label class="form-label">lưubiến(tùy chọn)</label>
+      <input class="form-input" v-model="(node as any).config.saveAs" placeholder="biến" />
     </div>
     <div class="form-group">
       <label class="form-label">kết quảtrườngánh xạ</label>

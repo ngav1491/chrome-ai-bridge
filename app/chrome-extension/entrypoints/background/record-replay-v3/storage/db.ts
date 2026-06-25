@@ -1,16 +1,16 @@
 /**
- * @fileoverview V3 IndexedDB dữ liệunoiDungTiengVietđịnh nghĩa
- * @description định nghĩa rr_v3 dữ liệunoiDungTiengViet schema noiDungTiengVietkhởi tạologic
+ * @fileoverview V3 IndexedDB dữ liệuđịnh nghĩa
+ * @description định nghĩa rr_v3 dữ liệu schema khởi tạologic
  */
 
-/** dữ liệunoiDungTiengViettên */
+/** dữ liệutên */
 export const RR_V3_DB_NAME = 'rr_v3';
 
-/** dữ liệunoiDungTiengVietphiên bản */
+/** dữ liệuphiên bản */
 export const RR_V3_DB_VERSION = 1;
 
 /**
- * Store tênnoiDungTiengViet
+ * Store tên
  */
 export const RR_V3_STORES = {
   FLOWS: 'flows',
@@ -36,7 +36,7 @@ export interface StoreConfig {
 
 /**
  * V3 Store Schema định nghĩa
- * @description bao gồm Phase 1-3 noiDungTiengViettất cảchỉ mục，tránhnoiDungTiengViet
+ * @description bao gồm Phase 1-3 tất cảchỉ mục, tránh
  */
 export const RR_V3_STORE_SCHEMAS: Record<string, StoreConfig> = {
   [RR_V3_STORES.FLOWS]: {
@@ -96,7 +96,7 @@ export const RR_V3_STORE_SCHEMAS: Record<string, StoreConfig> = {
 };
 
 /**
- * dữ liệunoiDungTiengVietxử lýnoiDungTiengViet
+ * dữ liệuxử lý
  */
 export function handleUpgrade(db: IDBDatabase, oldVersion: number, _newVersion: number): void {
   // Version 0 -> 1: tạotất cả stores
@@ -117,13 +117,13 @@ export function handleUpgrade(db: IDBDatabase, oldVersion: number, _newVersion: 
   }
 }
 
-/** toàn cụcdữ liệunoiDungTiengVietthể hiện */
+/** toàn cụcdữ liệuthể hiện */
 let dbInstance: IDBDatabase | null = null;
 let dbPromise: Promise<IDBDatabase> | null = null;
 
 /**
- * noiDungTiengViet V3 dữ liệunoiDungTiengViet
- * @description noiDungTiengVietschema，đảm bảonoiDungTiengVietdữ liệunoiDungTiengVietkết nối
+ *  V3 dữ liệu
+ * @description schema, đảm bảodữ liệukết nối
  */
 export async function openRrV3Db(): Promise<IDBDatabase> {
   if (dbInstance) {
@@ -145,7 +145,7 @@ export async function openRrV3Db(): Promise<IDBDatabase> {
     request.onsuccess = () => {
       dbInstance = request.result;
 
-      // xử lýphiên bảnnoiDungTiengViet（khác tab noiDungTiengVietdữ liệunoiDungTiengViet）
+      // xử lýphiên bản(khác tab dữ liệu)
       dbInstance.onversionchange = () => {
         dbInstance?.close();
         dbInstance = null;
@@ -167,7 +167,7 @@ export async function openRrV3Db(): Promise<IDBDatabase> {
 }
 
 /**
- * đóngdữ liệunoiDungTiengVietkết nối
+ * đóngdữ liệukết nối
  * @description chínhdùng chokiểm thử
  */
 export function closeRrV3Db(): void {
@@ -179,7 +179,7 @@ export function closeRrV3Db(): void {
 }
 
 /**
- * xóadữ liệunoiDungTiengViet
+ * xóadữ liệu
  * @description chínhdùng chokiểm thử
  */
 export async function deleteRrV3Db(): Promise<void> {
@@ -193,10 +193,10 @@ export async function deleteRrV3Db(): Promise<void> {
 }
 
 /**
- * thực thinoiDungTiengViet
- * @param storeNames Store tên（đơn lẻnoiDungTiengViet）
- * @param mode noiDungTiengVietschema
- * @param callback noiDungTiengVietcallback
+ * thực thi
+ * @param storeNames Store tên(đơn lẻ)
+ * @param mode schema
+ * @param callback callback
  */
 export async function withTransaction<T>(
   storeNames: string | string[],

@@ -55,7 +55,7 @@ jobs:
         # type definition. Restrict typecheck to the Node-side workspaces.
         run: |
           pnpm --filter chrome-mcp-shared exec tsc --noEmit
-          pnpm --filter mcp-chrome-bridge exec tsc --noEmit
+          pnpm --filter chrome-ai-bridge exec tsc --noEmit
 
       - name: Build all workspaces
         run: pnpm build

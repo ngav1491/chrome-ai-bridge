@@ -1,6 +1,6 @@
 /**
- * @fileoverview RunRunner giao diệnnoiDungTiengViettriển khai
- * @description định nghĩanoiDungTiengViettriển khaiđơn lẻ Run noiDungTiengVietthứ tựthực thinoiDungTiengViet
+ * @fileoverview RunRunner giao diệntriển khai
+ * @description định nghĩatriển khaiđơn lẻ Run thứ tựthực thi
  */
 
 import type { NodeId, RunId } from '../../domain/ids';
@@ -35,7 +35,7 @@ import type { RunResult } from './kernel';
 // ==================== Types ====================
 
 /**
- * RunRunner chạynoiDungTiengViettrạng thái
+ * RunRunner chạytrạng thái
  */
 export interface RunnerRuntimeState {
   /** Run ID */
@@ -44,7 +44,7 @@ export interface RunnerRuntimeState {
   currentNodeId: NodeId | null;
   /** hiện tạisố lần thử */
   attempt: number;
-  /** biếnnoiDungTiengViet */
+  /** biến */
   vars: Record<string, JsonValue>;
   /** có/khôngtạm dừng */
   paused: boolean;
@@ -60,7 +60,7 @@ export interface RunnerConfig {
   flow: FlowV3;
   /** Tab ID */
   tabId: number;
-  /** noiDungTiengViettham số */
+  /** tham số */
   args?: JsonObject;
   /** bắt đầunút ID */
   startNodeId?: NodeId;
@@ -86,9 +86,9 @@ export interface RunRunner {
   resume(): void;
   /** hủythực thi */
   cancel(reason?: string): void;
-  /** lấybiếnnoiDungTiengViet */
+  /** lấybiến */
   getVar(name: string): JsonValue | undefined;
-  /** cài đặtbiếnnoiDungTiengViet */
+  /** cài đặtbiến */
   setVar(name: string, value: JsonValue): void;
 }
 
@@ -225,7 +225,7 @@ class SerialQueue {
 // ==================== Factory ====================
 
 /**
- * tạo NotImplemented noiDungTiengViet RunRunnerFactory
+ * tạo NotImplemented  RunRunnerFactory
  */
 export function createNotImplementedRunnerFactory(): RunRunnerFactory {
   return {

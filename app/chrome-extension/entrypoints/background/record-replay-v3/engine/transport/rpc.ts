@@ -1,29 +1,29 @@
 /**
- * @fileoverview Port RPC giao thứcđịnh nghĩa
- * @description định nghĩathông qua chrome.runtime.Port noiDungTiengVietgiao thứckiểu
+ * @fileoverview Định nghĩa giao thức Port RPC
+ * @description Định nghĩa các kiểu giao thức giao tiếp qua chrome.runtime.Port
  */
 
 import type { JsonObject, JsonValue } from '../../domain/json';
 import type { RunId } from '../../domain/ids';
 import type { RunEvent } from '../../domain/events';
 
-/** Port tên */
+/** Tên Port */
 export const RR_V3_PORT_NAME = 'rr_v3' as const;
 
 /**
- * RPC phương thứctên
+ * Tên phương thức RPC
  */
 export type RpcMethod =
-  // truy vấnphương thức
+  // Phương thức truy vấn
   | 'rr_v3.listRuns'
   | 'rr_v3.getRun'
   | 'rr_v3.getEvents'
-  // Flow quản lýphương thức
+  // Phương thức quản lý Flow
   | 'rr_v3.getFlow'
   | 'rr_v3.listFlows'
   | 'rr_v3.saveFlow'
   | 'rr_v3.deleteFlow'
-  // triggerquản lýphương thức
+  // Phương thức quản lý bộ kích hoạt
   | 'rr_v3.createTrigger'
   | 'rr_v3.updateTrigger'
   | 'rr_v3.deleteTrigger'
@@ -32,83 +32,83 @@ export type RpcMethod =
   | 'rr_v3.enableTrigger'
   | 'rr_v3.disableTrigger'
   | 'rr_v3.fireTrigger'
-  // hàng đợiquản lýphương thức
+  // Phương thức quản lý hàng đợi
   | 'rr_v3.enqueueRun'
   | 'rr_v3.listQueue'
   | 'rr_v3.cancelQueueItem'
-  // điều khiểnphương thức
+  // Phương thức điều khiển
   | 'rr_v3.startRun'
   | 'rr_v3.cancelRun'
   | 'rr_v3.pauseRun'
   | 'rr_v3.resumeRun'
-  // gỡ lỗiphương thức
+  // Phương thức gỡ lỗi
   | 'rr_v3.debug'
-  // đăng kýphương thức
+  // Phương thức đăng ký
   | 'rr_v3.subscribe'
   | 'rr_v3.unsubscribe';
 
 /**
- * RPC yêu cầutin nhắn
+ * Tin nhắn yêu cầu RPC
  */
 export interface RpcRequest {
   type: 'rr_v3.request';
-  /** yêu cầu ID（dùng chokhớpphản hồi） */
+  /** ID yêu cầu (dùng để khớp phản hồi) */
   requestId: string;
-  /** phương thứcnoiDungTiengViet */
+  /** Tên phương thức */
   method: RpcMethod;
-  /** tham số */
+  /** Tham số */
   params?: JsonObject;
 }
 
 /**
- * RPC thành côngphản hồi
+ * Phản hồi thành công RPC
  */
 export interface RpcResponseOk {
   type: 'rr_v3.response';
-  /** noiDungTiengVietyêu cầu ID */
+  /** ID yêu cầu tương ứng */
   requestId: string;
   ok: true;
-  /** trả vềkết quả */
+  /** Kết quả trả về */
   result: JsonValue;
 }
 
 /**
- * RPC lỗiphản hồi
+ * Phản hồi lỗi RPC
  */
 export interface RpcResponseErr {
   type: 'rr_v3.response';
-  /** noiDungTiengVietyêu cầu ID */
+  /** ID yêu cầu tương ứng */
   requestId: string;
   ok: false;
-  /** lỗithông tin */
+  /** Thông tin lỗi */
   error: string;
 }
 
 /**
- * RPC phản hồi
+ * Phản hồi RPC
  */
 export type RpcResponse = RpcResponseOk | RpcResponseErr;
 
 /**
- * RPC sự kiệnnoiDungTiengViet
+ * Đẩy sự kiện RPC
  */
 export interface RpcEventMessage {
   type: 'rr_v3.event';
-  /** sự kiệndữ liệu */
+  /** Dữ liệu sự kiện */
   event: RunEvent;
 }
 
 /**
- * RPC đăng kýxác nhận
+ * Xác nhận đăng ký RPC
  */
 export interface RpcSubscribeAck {
   type: 'rr_v3.subscribeAck';
-  /** đăng kýnoiDungTiengViet Run ID（tùy chọn，null biểu thịđăng kýtất cả） */
+  /** Run ID đã đăng ký (tùy chọn, null nghĩa là đăng ký tất cả) */
   runId: RunId | null;
 }
 
 /**
- * tất cả RPC tin nhắnkiểu
+ * Tất cả kiểu tin nhắn RPC
  */
 export type RpcMessage =
   | RpcRequest
@@ -118,35 +118,35 @@ export type RpcMessage =
   | RpcSubscribeAck;
 
 /**
- * tạonoiDungTiengVietyêu cầu ID
+ * Tạo ID yêu cầu duy nhất
  */
 export function generateRequestId(): string {
   return `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 /**
- * phán đoántin nhắncó phải là RPC yêu cầu
+ * Kiểm tra xem tin nhắn có phải là yêu cầu RPC hay không
  */
 export function isRpcRequest(msg: unknown): msg is RpcRequest {
   return typeof msg === 'object' && msg !== null && (msg as RpcRequest).type === 'rr_v3.request';
 }
 
 /**
- * phán đoántin nhắncó phải là RPC phản hồi
+ * Kiểm tra xem tin nhắn có phải là phản hồi RPC hay không
  */
 export function isRpcResponse(msg: unknown): msg is RpcResponse {
   return typeof msg === 'object' && msg !== null && (msg as RpcResponse).type === 'rr_v3.response';
 }
 
 /**
- * phán đoántin nhắncó phải là RPC sự kiện
+ * Kiểm tra xem tin nhắn có phải là sự kiện RPC hay không
  */
 export function isRpcEvent(msg: unknown): msg is RpcEventMessage {
   return typeof msg === 'object' && msg !== null && (msg as RpcEventMessage).type === 'rr_v3.event';
 }
 
 /**
- * tạo RPC yêu cầu
+ * Tạo yêu cầu RPC
  */
 export function createRpcRequest(method: RpcMethod, params?: JsonObject): RpcRequest {
   return {
@@ -158,7 +158,7 @@ export function createRpcRequest(method: RpcMethod, params?: JsonObject): RpcReq
 }
 
 /**
- * tạothành côngphản hồi
+ * Tạo phản hồi thành công
  */
 export function createRpcResponseOk(requestId: string, result: JsonValue): RpcResponseOk {
   return {
@@ -170,7 +170,7 @@ export function createRpcResponseOk(requestId: string, result: JsonValue): RpcRe
 }
 
 /**
- * tạolỗiphản hồi
+ * Tạo phản hồi lỗi
  */
 export function createRpcResponseErr(requestId: string, error: string): RpcResponseErr {
   return {
@@ -182,7 +182,7 @@ export function createRpcResponseErr(requestId: string, error: string): RpcRespo
 }
 
 /**
- * tạosự kiệntin nhắn
+ * Tạo tin nhắn sự kiện
  */
 export function createRpcEventMessage(event: RunEvent): RpcEventMessage {
   return {

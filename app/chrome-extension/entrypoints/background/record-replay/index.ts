@@ -79,7 +79,7 @@ export function initRecordReplayListeners() {
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     try {
-      // rr_recorder_event noiDungTiengViet ContentMessageHandler xử lý
+      // rr_recorder_event  ContentMessageHandler xử lý
       switch (message?.type) {
         case BACKGROUND_MESSAGE_TYPES.RR_START_RECORDING: {
           startRecording(message.meta)

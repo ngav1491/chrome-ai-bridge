@@ -1,10 +1,10 @@
 /**
- * @fileoverview hỗ trợsậpkhôi phụcnoiDungTiengViet ExecutionKernel triển khai (P3-06)
+ * @fileoverview hỗ trợsậpkhôi phục ExecutionKernel triển khai (P3-06)
  * @description
- * noiDungTiengViet ExecutionKernel noiDungTiengVietkhôi phụcnoiDungTiengViettriển khai，hỗ trợ `recover()` phương thức。
- * thông quaủy thác cho RecoveryCoordinator triển khaisậpkhôi phục。
+ *  ExecutionKernel khôi phụctriển khai, hỗ trợ `recover()` phương thức.
+ * thông quaủy thác cho RecoveryCoordinator triển khaisậpkhôi phục.
  *
- * khácthực thiphương thức（startRun, pauseRun noiDungTiengViet）noiDungTiengViettriển khai，noiDungTiengViethoàn tất。
+ * khácthực thiphương thức(startRun, pauseRun )triển khai, hoàn tất.
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -20,14 +20,14 @@ import type { ExecutionKernel, RunStartRequest, RunStatusInfo } from './kernel';
 // ==================== Types ====================
 
 /**
- * hỗ trợkhôi phụcnoiDungTiengViet Kernel phụ thuộc
+ * hỗ trợkhôi phục Kernel phụ thuộc
  */
 export interface RecoveryEnabledKernelDeps {
-  /** lưu trữnoiDungTiengViet */
+  /** lưu trữ */
   storage: StoragePort;
   /** sự kiệnbus */
   events: EventsBus;
-  /** hiện tại Service Worker noiDungTiengViet ownerId */
+  /** hiện tại Service Worker  ownerId */
   ownerId: string;
   /** nguồn thời gian */
   now?: () => UnixMillis;
@@ -38,10 +38,10 @@ export interface RecoveryEnabledKernelDeps {
 // ==================== Factory ====================
 
 /**
- * tạohỗ trợkhôi phụcnoiDungTiengViet ExecutionKernel
+ * tạohỗ trợkhôi phục ExecutionKernel
  * @description
- * noiDungTiengViettriển khainoiDungTiengViethỗ trợ `recover()` noiDungTiengViet `getRunStatus()` phương thức。
- * khácthực thiphương thứcnoiDungTiengViettriển khai，noiDungTiengViethoàn tất。
+ * triển khaihỗ trợ `recover()`  `getRunStatus()` phương thức.
+ * khácthực thiphương thứctriển khai, hoàn tất.
  */
 export function createRecoveryEnabledKernel(deps: RecoveryEnabledKernelDeps): ExecutionKernel {
   const logger = deps.logger ?? console;

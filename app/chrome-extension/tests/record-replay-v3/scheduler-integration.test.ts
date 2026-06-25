@@ -1,5 +1,5 @@
 /**
- * @fileoverview noiDungTiengVietlập lịchtích hợpkiểm thử (P3-07)
+ * @fileoverview lập lịchtích hợpkiểm thử (P3-07)
  * @description
  * End-to-end tests for Scheduler + Queue + LeaseManager + Recovery
  * Uses real IndexedDB storage (fake-indexeddb) to verify integration.

@@ -841,7 +841,7 @@
             pointerEvents: 'none',
           });
           const tip = document.createElement('div');
-          tip.textContent = 'nhấpnoiDungTiengVietphần tử（Esc hủy）';
+          tip.textContent = 'nhấpphần tử(Esc hủy)';
           Object.assign(tip.style, {
             position: 'fixed',
             top: '10px',
@@ -1379,7 +1379,7 @@
               if (!key) continue;
               const label = v.label || key;
               const def = v.default || '';
-              const promptText = `noiDungTiengVietđầu vàotham số ${label} (${key})`;
+              const promptText = `đầu vàotham số ${label} (${key})`;
               let val = window.prompt(promptText, def);
               if (typeof val !== 'string') val = def;
               values[key] = val;
@@ -1414,7 +1414,7 @@
             fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
           });
           const title = document.createElement('div');
-          title.textContent = 'noiDungTiengVietđầu vàophát lạitham số';
+          title.textContent = 'đầu vàophát lạitham số';
           Object.assign(title.style, { fontSize: '16px', fontWeight: '600', marginBottom: '12px' });
           const form = document.createElement('form');
           for (const v of vars) {
@@ -1447,7 +1447,7 @@
           Object.assign(actions.style, { display: 'flex', gap: '8px', marginTop: '12px' });
           const ok = document.createElement('button');
           ok.type = 'submit';
-          ok.textContent = 'noiDungTiengViet';
+          ok.textContent = '';
           Object.assign(ok.style, {
             background: '#0969da',
             color: '#fff',
@@ -1600,7 +1600,7 @@
             sendResponse({ success: false, error: `ref "${ref}" not found or expired` });
             return true;
           }
-          // xác thựcvân tay：phân tích cú pháplưu trữnoiDungTiengVietvân taynoiDungTiengViethiện tạiphần tửnoiDungTiengViet
+          // xác thựcvân tay: phân tích cú pháplưu trữvân tayhiện tạiphần tử
           const parts = fingerprint.split('|');
           const storedTag = parts[0] || 'unknown';
           const currentTag = el.tagName ? String(el.tagName).toLowerCase() : 'unknown';
@@ -1609,7 +1609,7 @@
             sendResponse({ success: true, match: false });
             return true;
           }
-          // nếulưu trữnoiDungTiengVietvân taynoiDungTiengViet id，hiện tạiphần tửbắt buộcnoiDungTiengViet id
+          // nếulưu trữvân tay id, hiện tạiphần tửbắt buộc id
           const storedIdPart = parts.find((p) => p.startsWith('id='));
           if (storedIdPart) {
             const storedId = storedIdPart.slice(3);

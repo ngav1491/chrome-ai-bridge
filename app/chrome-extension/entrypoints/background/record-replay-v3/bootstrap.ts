@@ -3,10 +3,10 @@
  * @description
  * Wires storage, events, scheduler, triggers and RPC for the MV3 background service worker.
  *
- * ghi chú thiết kế：
- * - bắt buộcnoiDungTiengVietthực thi recoverFromCrash() noiDungTiengVietkhởi động scheduler.start()
- * - sử dụngtoàn cụcnoiDungTiengViet keepalive-manager tránhnoiDungTiengVietđiều khiểnnoiDungTiengViet
- * - RunExecutor sử dụng RunRunner thực thinoiDungTiengViet Flow
+ * Ghi chú thiết kế:
+ * - Bắt buộc thực thi recoverFromCrash() trước khi khởi động scheduler.start()
+ * - Sử dụng singleton toàn cục keepalive-manager để tránh xung đột nhiều bộ điều khiển
+ * - RunExecutor sử dụng RunRunner để thực thi Flow thực tế
  */
 
 import type { UnixMillis } from './domain/json';
@@ -56,7 +56,7 @@ import { createStoragePort } from './index';
 type Logger = Pick<Console, 'debug' | 'info' | 'warn' | 'error'>;
 
 /**
- * V3 chạynoiDungTiengViet
+ * Handle runtime V3
  */
 export interface V3Runtime {
   ownerId: string;
@@ -116,8 +116,8 @@ async function safeRemoveTab(tabId: number, logger: Logger): Promise<void> {
 }
 
 /**
- * phân tích cú phápchạy Run noiDungTiengViet Tab ID
- * độ ưu tiên: run.tabId > queue.tabId > trigger.sourceTabId > tạonoiDungTiengViet Tab
+ * Phân giải Tab ID cần thiết để chạy Run
+ * Độ ưu tiên: run.tabId > queue.tabId > trigger.sourceTabId > tạo Tab mới
  */
 async function resolveRunTab(input: {
   runTabId?: number;
@@ -140,8 +140,8 @@ async function resolveRunTab(input: {
 }
 
 /**
- * noiDungTiengViet Run đánh dấu làthất bại
- * lưu ý：noiDungTiengVietđọcnoiDungTiengViet RunRecord noiDungTiengVietlấyđúng startedAt
+ * Đánh dấu Run là thất bại
+ * Lưu ý: sẽ đọc lại RunRecord mới nhất để lấy startedAt chính xác
  */
 async function failRun(
   deps: { storage: StoragePort; events: EventsBus; now: () => UnixMillis; logger: Logger },
@@ -150,7 +150,7 @@ async function failRun(
 ): Promise<void> {
   const finishedAt = deps.now();
 
-  // noiDungTiengVietlấynoiDungTiengViet run ghinoiDungTiengVietlấyđúng startedAt
+  // Đọc lại bản ghi run mới nhất để lấy startedAt chính xác
   let startedAt = finishedAt;
   try {
     const latestRun = await deps.storage.runs.get(runId);
@@ -185,8 +185,8 @@ async function failRun(
 // ==================== Run Executor ====================
 
 /**
- * tạomặc địnhnoiDungTiengViet RunExecutor
- * sử dụng RunRunner thực thi Flow
+ * Tạo RunExecutor mặc định
+ * Sử dụng RunRunner để thực thi Flow
  */
 function createDefaultRunExecutor(deps: {
   storage: StoragePort;
@@ -199,14 +199,14 @@ function createDefaultRunExecutor(deps: {
   return async (item: RunQueueItem): Promise<void> => {
     const runId = item.id;
 
-    // 1. lấy RunRecord
+    // 1. Lấy RunRecord
     const run = await deps.storage.runs.get(runId);
     if (!run) {
       deps.logger.warn(`[RR-V3] RunRecord not found for queue item "${runId}", skipping execution`);
       return;
     }
 
-    // 2. lấy Flow
+    // 2. Lấy Flow
     const flow = await deps.storage.flows.get(item.flowId);
     if (!flow) {
       await failRun(
@@ -217,7 +217,7 @@ function createDefaultRunExecutor(deps: {
       return;
     }
 
-    // 3. phân tích cú pháp Tab ID
+    // 3. Phân giải Tab ID
     const { tabId, shouldClose } = await resolveRunTab({
       runTabId: run.tabId,
       queueTabId: item.tabId,
@@ -225,7 +225,7 @@ function createDefaultRunExecutor(deps: {
       logger: deps.logger,
     });
 
-    // 4. đồng bộ attempt noiDungTiengViet RunRecord
+    // 4. Đồng bộ attempt vào RunRecord
     try {
       await deps.storage.runs.patch(runId, {
         attempt: item.attempt,
@@ -236,7 +236,7 @@ function createDefaultRunExecutor(deps: {
       deps.logger.debug(`[RR-V3] Failed to patch run "${runId}" attempt/tabId:`, e);
     }
 
-    // 5. thực thi Run
+    // 5. Thực thi Run
     let runner;
     try {
       runner = deps.runnerFactory.create(runId, {
@@ -247,7 +247,7 @@ function createDefaultRunExecutor(deps: {
         debug: item.debug,
       });
 
-      // đăng kýnoiDungTiengViet RunnerRegistry，noiDungTiengViet DebugController noiDungTiengViet RPC sử dụng
+      // Đăng ký vào RunnerRegistry, để DebugController và RPC sử dụng
       deps.runners.register(runId, runner);
 
       await runner.start();
@@ -258,12 +258,12 @@ function createDefaultRunExecutor(deps: {
         createRRError(RR_ERROR_CODES.INTERNAL, `Executor crashed: ${errorMessage(e)}`),
       );
     } finally {
-      // 6. đăng xuất Runner
+      // 6. Hủy đăng ký Runner
       if (runner) {
         deps.runners.unregister(runId);
       }
 
-      // 7. dọn dẹpnoiDungTiengViet Tab
+      // 7. Dọn dẹp Tab tạm
       if (shouldClose) {
         await safeRemoveTab(tabId, deps.logger);
       }
@@ -274,8 +274,8 @@ function createDefaultRunExecutor(deps: {
 // ==================== Bootstrap ====================
 
 /**
- * khởi động RR-V3 chạynoiDungTiengViet
- * @returns chạynoiDungTiengViet
+ * Khởi động runtime RR-V3
+ * @returns Handle runtime
  */
 export async function bootstrapV3(): Promise<V3Runtime> {
   if (runtime) return runtime;
@@ -455,14 +455,14 @@ export async function bootstrapV3(): Promise<V3Runtime> {
 }
 
 /**
- * lấyhiện tạichạynoiDungTiengViet（nếunoiDungTiengVietkhởi động）
+ * Lấy runtime hiện tại (nếu đã khởi động)
  */
 export function getV3Runtime(): V3Runtime | null {
   return runtime;
 }
 
 /**
- * kiểm tra V3 có/khôngnoiDungTiengVietkhởi động
+ * Kiểm tra V3 đã khởi động hay chưa
  */
 export function isV3Running(): boolean {
   return runtime !== null;

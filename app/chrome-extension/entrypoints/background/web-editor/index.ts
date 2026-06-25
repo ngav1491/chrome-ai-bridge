@@ -677,7 +677,7 @@ async function ensureContextMenu(): Promise<void> {
     } catch {}
     await chrome.contextMenus.create({
       id: CONTEXT_MENU_ID,
-      title: 'chuyển đổinoiDungTiengVietchỉnh sửaschema',
+      title: 'chuyển đổichỉnh sửaschema',
       contexts: ['all'],
     });
   } catch (error) {

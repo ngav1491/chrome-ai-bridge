@@ -28,7 +28,7 @@ import {
 } from './rpc';
 
 /**
- * RPC Server cấu hình
+ * Cấu hình RPC Server
  */
 export interface RpcServerConfig {
   storage: StoragePort;
@@ -37,14 +37,14 @@ export interface RpcServerConfig {
   runners?: RunnerRegistry;
   scheduler?: RunScheduler;
   triggerManager?: TriggerManager;
-  /** ID trình tạo（dùng để kiểm thử tiêm） */
+  /** Trình tạo ID (dùng để inject kiểm thử) */
   generateRunId?: () => RunId;
-  /** nguồn thời gian（dùng để kiểm thử tiêm） */
+  /** Nguồn thời gian (dùng để inject kiểm thử) */
   now?: () => number;
 }
 
 /**
- * noiDungTiengViet Port kết nối
+ * Kết nối Port đang hoạt động
  */
 interface PortConnection {
   port: chrome.runtime.Port;
@@ -52,7 +52,7 @@ interface PortConnection {
 }
 
 /**
- * mặc định RunId trình tạo
+ * Trình tạo RunId mặc định
  */
 function defaultGenerateRunId(): RunId {
   return `run_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
@@ -60,7 +60,7 @@ function defaultGenerateRunId(): RunId {
 
 /**
  * RPC Server
- * @description xử lýnoiDungTiengViet UI noiDungTiengViet RPC yêu cầu
+ * @description Xử lý các yêu cầu RPC từ UI
  */
 export class RpcServer {
   private readonly storage: StoragePort;
@@ -86,7 +86,7 @@ export class RpcServer {
   }
 
   /**
-   * khởi động RPC Server
+   * Khởi động RPC Server
    */
   start(): void {
     chrome.runtime.onConnect.addListener(this.handleConnect);
@@ -98,7 +98,7 @@ export class RpcServer {
   }
 
   /**
-   * dừng RPC Server
+   * Dừng RPC Server
    */
   stop(): void {
     chrome.runtime.onConnect.removeListener(this.handleConnect);
@@ -116,7 +116,7 @@ export class RpcServer {
   }
 
   /**
-   * xử lýnoiDungTiengVietkết nối
+   * Xử lý kết nối mới
    */
   private handleConnect = (port: chrome.runtime.Port): void => {
     if (port.name !== RR_V3_PORT_NAME) return;
@@ -134,7 +134,7 @@ export class RpcServer {
   };
 
   /**
-   * xử lýtin nhắn
+   * Xử lý tin nhắn
    */
   private handleMessage = async (connId: string, msg: unknown): Promise<void> => {
     if (!isRpcRequest(msg)) return;
@@ -152,14 +152,14 @@ export class RpcServer {
   };
 
   /**
-   * xử lýnoiDungTiengVietkết nối
+   * Xử lý ngắt kết nối
    */
   private handleDisconnect = (connId: string): void => {
     this.connections.delete(connId);
   };
 
   /**
-   * noiDungTiengVietsự kiện
+   * Phát sóng sự kiện
    */
   private broadcastEvent(event: RunEvent): void {
     const message = createRpcEventMessage(event);
@@ -181,8 +181,8 @@ export class RpcServer {
   // ===== Queue Management Handlers =====
 
   /**
-   * xử lý enqueueRun yêu cầu
-   * @description ủy thác chonoiDungTiengViet enqueueRun dịch vụ
+   * Xử lý yêu cầu enqueueRun
+   * @description Ủy quyền cho dịch vụ enqueueRun dùng chung
    */
   private async handleEnqueueRun(params: JsonObject | undefined): Promise<JsonValue> {
     const result = await enqueueRun(
@@ -207,13 +207,13 @@ export class RpcServer {
   }
 
   /**
-   * xử lý listQueue yêu cầu
-   * @description liệt kêmục hàng đợi，noiDungTiengViet priority DESC + createdAt ASC sắp xếp
+   * Xử lý yêu cầu listQueue
+   * @description Liệt kê các mục hàng đợi, sắp xếp theo priority DESC + createdAt ASC
    */
   private async handleListQueue(params: JsonObject | undefined): Promise<JsonValue> {
     const rawStatus = params?.status;
 
-    // xác thực status noiDungTiengViet
+    // Kiểm tra whitelist status
     let status: QueueItemStatus | undefined;
     if (rawStatus !== undefined) {
       if (rawStatus !== 'queued' && rawStatus !== 'running' && rawStatus !== 'paused') {
@@ -224,7 +224,7 @@ export class RpcServer {
 
     const items = await this.storage.queue.list(status);
 
-    // noiDungTiengViet priority DESC + createdAt ASC sắp xếp
+    // Sắp xếp theo priority DESC + createdAt ASC
     items.sort((a, b) => {
       if (a.priority !== b.priority) {
         return b.priority - a.priority; // DESC
@@ -236,9 +236,9 @@ export class RpcServer {
   }
 
   /**
-   * xử lý cancelQueueItem yêu cầu
-   * @description hủynoiDungTiengViettrongmục hàng đợi，cập nhật Run trạng thái，phát hành run.canceled sự kiện
-   * @note noiDungTiengViethủy status=queued noiDungTiengViet；running/paused noiDungTiengVietsử dụng rr_v3.cancelRun
+   * Xử lý yêu cầu cancelQueueItem
+   * @description Hủy mục hàng đợi đang xếp hàng, cập nhật trạng thái Run, phát hành sự kiện run.canceled
+   * @note Chỉ cho phép hủy các mục có status=queued; running/paused cần dùng rr_v3.cancelRun
    */
   private async handleCancelQueueItem(params: JsonObject | undefined): Promise<JsonValue> {
     const runId = params?.runId as RunId | undefined;
@@ -247,30 +247,30 @@ export class RpcServer {
     const reason = params?.reason as string | undefined;
     const now = this.now();
 
-    // 1. kiểm tramục hàng đợitồn tại
+    // 1. Kiểm tra mục hàng đợi tồn tại
     const queueItem = await this.storage.queue.get(runId);
     if (!queueItem) {
       throw new Error(`Queue item "${runId}" not found`);
     }
 
-    // 2. noiDungTiengViethủy queued trạng thái（running/paused noiDungTiengVietsử dụng rr_v3.cancelRun）
+    // 2. Chỉ cho phép hủy trạng thái queued (running/paused cần dùng rr_v3.cancelRun)
     if (queueItem.status !== 'queued') {
       throw new Error(
         `Cannot cancel queue item "${runId}" with status "${queueItem.status}"; use rr_v3.cancelRun for running/paused runs`,
       );
     }
 
-    // 3. noiDungTiengViethàng đợigỡ bỏ
+    // 3. Gỡ bỏ khỏi hàng đợi
     await this.storage.queue.cancel(runId, now, reason);
 
-    // 4. cập nhật Run ghitrạng thái
+    // 4. Cập nhật trạng thái bản ghi Run
     await this.storage.runs.patch(runId, {
       status: 'canceled',
       updatedAt: now,
       finishedAt: now,
     });
 
-    // 5. phát hành run.canceled sự kiện（thông qua EventsBus noiDungTiengVietđảm bảonoiDungTiengViet）
+    // 5. Phát hành sự kiện run.canceled (qua EventsBus để đảm bảo phát sóng)
     await this.events.append({
       runId,
       type: 'run.canceled',
@@ -281,7 +281,7 @@ export class RpcServer {
   }
 
   /**
-   * xử lý RPC yêu cầu
+   * Xử lý yêu cầu RPC
    */
   private async handleRequest(request: RpcRequest, conn: PortConnection): Promise<JsonValue> {
     const { method, params } = request;
@@ -415,8 +415,8 @@ export class RpcServer {
   // ===== Flow Management Handlers =====
 
   /**
-   * xử lý saveFlow yêu cầu
-   * @description lưunoiDungTiengVietcập nhật Flow，thực thiđầy đủcấu trúcxác thực
+   * Xử lý yêu cầu saveFlow
+   * @description Lưu hoặc cập nhật Flow, thực hiện xác thực cấu trúc đầy đủ
    */
   private async handleSaveFlow(params: JsonObject | undefined): Promise<JsonValue> {
     const rawFlow = params?.flow;
@@ -424,37 +424,37 @@ export class RpcServer {
       throw new Error('flow is required');
     }
 
-    // kiểm tracó phải làcập nhậthiện có flow（sử dụng trim noiDungTiengViet ID truy vấn）
+    // Kiểm tra xem có phải cập nhật Flow hiện có (dùng trim ID để truy vấn)
     const rawId = (rawFlow as JsonObject).id;
     let existingFlow: FlowV3 | null = null;
     if (typeof rawId === 'string' && rawId.trim()) {
       existingFlow = await this.storage.flows.get(rawId.trim() as FlowId);
     }
 
-    // chuẩn hóa flow，noiDungTiengViet existingFlow noiDungTiengViet createdAt
+    // Chuẩn hóa Flow, giữ nguyên existingFlow và createdAt
     const flow = this.normalizeFlowSpec(rawFlow, existingFlow);
 
-    // lưunoiDungTiengVietlưu trữ（lưu trữnoiDungTiengVietthực thinoiDungTiengVietxác thực）
+    // Lưu vào lưu trữ (lưu trữ thực hiện xác thực)
     await this.storage.flows.save(flow);
 
     return flow as unknown as JsonValue;
   }
 
   /**
-   * xử lý deleteFlow yêu cầu
-   * @description xóa Flow，noiDungTiengVietkiểm tracó/khôngnoiDungTiengVietliên quan Trigger noiDungTiengViet queued runs
+   * Xử lý yêu cầu deleteFlow
+   * @description Xóa Flow, kiểm tra có/không có Trigger hoặc queued runs liên quan
    */
   private async handleDeleteFlow(params: JsonObject | undefined): Promise<JsonValue> {
     const flowId = params?.flowId as FlowId | undefined;
     if (!flowId) throw new Error('flowId is required');
 
-    // kiểm tra Flow có/khôngtồn tại
+    // Kiểm tra Flow có tồn tại không
     const existing = await this.storage.flows.get(flowId);
     if (!existing) {
       throw new Error(`Flow "${flowId}" not found`);
     }
 
-    // kiểm tracó/khôngnoiDungTiengVietliên quan Trigger
+    // Kiểm tra có/không có Trigger liên quan
     const triggers = await this.storage.triggers.list();
     const linkedTriggers = triggers.filter((t) => t.flowId === flowId);
     if (linkedTriggers.length > 0) {
@@ -465,7 +465,7 @@ export class RpcServer {
       );
     }
 
-    // kiểm tracó/khôngnoiDungTiengViet queued runs（noiDungTiengVietthực thinoiDungTiengViet runs xóanoiDungTiengVietthất bại）
+    // Kiểm tra có/không có queued runs (thực thể runs xóa sẽ thất bại)
     const queuedItems = await this.storage.queue.list('queued');
     const linkedQueuedRuns = queuedItems.filter((item) => item.flowId === flowId);
     if (linkedQueuedRuns.length > 0) {
@@ -476,17 +476,17 @@ export class RpcServer {
       );
     }
 
-    // xóa Flow
+    // Xóa Flow
     await this.storage.flows.delete(flowId);
 
     return { ok: true, flowId };
   }
 
   /**
-   * chuẩn hóa FlowV3 đầu vào
-   * @description xác thựcnoiDungTiengVietchuyển đổiđầu vàonoiDungTiengVietđầy đủ FlowV3 cấu trúc
-   * @param value thôđầu vào
-   * @param existingFlow noiDungTiengViettồn tạinoiDungTiengViet flow（dùng chonoiDungTiengViet createdAt）
+   * Chuẩn hóa đầu vào FlowV3
+   * @description Xác thực và chuyển đổi đầu vào thành cấu trúc FlowV3 đầy đủ
+   * @param value Đầu vào thô
+   * @param existingFlow Flow hiện có (dùng để giữ createdAt)
    */
   private normalizeFlowSpec(value: unknown, existingFlow: FlowV3 | null = null): FlowV3 {
     if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -494,7 +494,7 @@ export class RpcServer {
     }
     const raw = value as JsonObject;
 
-    // id xác thựcnoiDungTiengViettạo
+    // Xác thực và tạo id
     let id: FlowId;
     if (raw.id === undefined || raw.id === null) {
       id = `flow_${Date.now()}_${Math.random().toString(36).slice(2, 8)}` as FlowId;
@@ -505,13 +505,13 @@ export class RpcServer {
       id = raw.id.trim() as FlowId;
     }
 
-    // name xác thực
+    // Xác thực name
     if (!raw.name || typeof raw.name !== 'string' || !raw.name.trim()) {
       throw new Error('flow.name is required');
     }
     const name = raw.name.trim();
 
-    // description xác thực
+    // Xác thực description
     let description: string | undefined;
     if (raw.description !== undefined && raw.description !== null) {
       if (typeof raw.description !== 'string') {
@@ -520,19 +520,19 @@ export class RpcServer {
       description = raw.description;
     }
 
-    // entryNodeId xác thực
+    // Xác thực entryNodeId
     if (!raw.entryNodeId || typeof raw.entryNodeId !== 'string' || !raw.entryNodeId.trim()) {
       throw new Error('flow.entryNodeId is required');
     }
     const entryNodeId = raw.entryNodeId.trim() as NodeId;
 
-    // nodes xác thực
+    // Xác thực nodes
     if (!Array.isArray(raw.nodes)) {
       throw new Error('flow.nodes must be an array');
     }
     const nodes = raw.nodes.map((n, i) => this.normalizeNode(n, i));
 
-    // xác thực node ID noiDungTiengViet
+    // Xác thực node ID trùng lặp
     const nodeIdSet = new Set<string>();
     for (const node of nodes) {
       if (nodeIdSet.has(node.id)) {
@@ -541,7 +541,7 @@ export class RpcServer {
       nodeIdSet.add(node.id);
     }
 
-    // edges xác thực
+    // Xác thực edges
     let edges: EdgeV3[] = [];
     if (raw.edges !== undefined && raw.edges !== null) {
       if (!Array.isArray(raw.edges)) {
@@ -550,7 +550,7 @@ export class RpcServer {
       edges = raw.edges.map((e, i) => this.normalizeEdge(e, i));
     }
 
-    // xác thực edge ID noiDungTiengViet
+    // Xác thực edge ID trùng lặp
     const edgeIdSet = new Set<string>();
     for (const edge of edges) {
       if (edgeIdSet.has(edge.id)) {
@@ -559,12 +559,12 @@ export class RpcServer {
       edgeIdSet.add(edge.id);
     }
 
-    // xác thực entryNodeId tồn tại
+    // Xác thực entryNodeId tồn tại
     if (!nodeIdSet.has(entryNodeId)) {
       throw new Error(`Entry node "${entryNodeId}" does not exist in flow`);
     }
 
-    // xác thựcnoiDungTiengViet
+    // Xác thực tính hợp lệ của edge
     for (const edge of edges) {
       if (!nodeIdSet.has(edge.from)) {
         throw new Error(`Edge "${edge.id}" references non-existent source node "${edge.from}"`);
@@ -574,12 +574,12 @@ export class RpcServer {
       }
     }
 
-    // thời giannoiDungTiengViet：cập nhậtnoiDungTiengViet existingFlow.createdAt，noiDungTiengViethiện tạithời gian
+    // Xử lý thời gian: giữ nguyên existingFlow.createdAt, dùng thời gian hiện tại cho updatedAt
     const now = new Date(this.now()).toISOString() as ISODateTimeString;
     const createdAt = existingFlow?.createdAt ?? now;
     const updatedAt = now;
 
-    // xây dựngđầy đủ FlowV3
+    // Xây dựng FlowV3 đầy đủ
     const flow: FlowV3 = {
       schemaVersion: CURRENT_FLOW_SCHEMA_VERSION,
       id,
@@ -591,12 +591,12 @@ export class RpcServer {
       edges,
     };
 
-    // tùy chọntrường
+    // Trường tùy chọn
     if (description !== undefined) {
       flow.description = description;
     }
 
-    // variables xác thực：noiDungTiengVietbắt buộcnoiDungTiengViet object noiDungTiengViet name trường
+    // Xác thực variables: phải là mảng các object có trường name
     if (raw.variables !== undefined && raw.variables !== null) {
       if (!Array.isArray(raw.variables)) {
         throw new Error('flow.variables must be an array');
@@ -617,7 +617,7 @@ export class RpcServer {
           throw new Error(`Duplicate variable name: "${varName}"`);
         }
         varNameSet.add(varName);
-        // sử dụng trim noiDungTiengViet name
+        // Sử dụng trim cho name
         variables.push({ ...varObj, name: varName } as unknown as VariableDefinition);
       }
       if (variables.length > 0) {
@@ -642,7 +642,7 @@ export class RpcServer {
   }
 
   /**
-   * chuẩn hóa Node đầu vào
+   * Chuẩn hóa đầu vào Node
    */
   private normalizeNode(value: unknown, index: number): NodeV3 {
     if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -650,19 +650,19 @@ export class RpcServer {
     }
     const raw = value as JsonObject;
 
-    // id xác thực（không rỗng + trim）
+    // Xác thực id (không rỗng + trim)
     if (!raw.id || typeof raw.id !== 'string' || !raw.id.trim()) {
       throw new Error(`flow.nodes[${index}].id is required`);
     }
     const nodeId = raw.id.trim() as NodeId;
 
-    // kind xác thực（không rỗng + trim）
+    // Xác thực kind (không rỗng + trim)
     if (!raw.kind || typeof raw.kind !== 'string' || !raw.kind.trim()) {
       throw new Error(`flow.nodes[${index}].kind is required`);
     }
     const kind = raw.kind.trim();
 
-    // config xác thực
+    // Xác thực config
     if (raw.config !== undefined && raw.config !== null) {
       if (typeof raw.config !== 'object' || Array.isArray(raw.config)) {
         throw new Error(`flow.nodes[${index}].config must be an object`);
@@ -675,7 +675,7 @@ export class RpcServer {
       config: (raw.config as JsonObject) ?? {},
     };
 
-    // tùy chọntrường
+    // Trường tùy chọn
     if (raw.name !== undefined && raw.name !== null) {
       if (typeof raw.name !== 'string') {
         throw new Error(`flow.nodes[${index}].name must be a string`);
@@ -705,7 +705,7 @@ export class RpcServer {
   }
 
   /**
-   * chuẩn hóa Edge đầu vào
+   * Chuẩn hóa đầu vào Edge
    */
   private normalizeEdge(value: unknown, index: number): EdgeV3 {
     if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -713,7 +713,7 @@ export class RpcServer {
     }
     const raw = value as JsonObject;
 
-    // id xác thựcnoiDungTiengViettạo（không rỗng + trim）
+    // Xác thực và tạo id (không rỗng + trim)
     let id: EdgeId;
     if (raw.id === undefined || raw.id === null) {
       id = `edge_${index}_${Math.random().toString(36).slice(2, 8)}` as EdgeId;
@@ -724,13 +724,13 @@ export class RpcServer {
       id = raw.id.trim() as EdgeId;
     }
 
-    // from xác thực（không rỗng + trim）
+    // Xác thực from (không rỗng + trim)
     if (!raw.from || typeof raw.from !== 'string' || !raw.from.trim()) {
       throw new Error(`flow.edges[${index}].from is required`);
     }
     const from = raw.from.trim() as NodeId;
 
-    // to xác thực（không rỗng + trim）
+    // Xác thực to (không rỗng + trim)
     if (!raw.to || typeof raw.to !== 'string' || !raw.to.trim()) {
       throw new Error(`flow.edges[${index}].to is required`);
     }
@@ -742,7 +742,7 @@ export class RpcServer {
       to,
     };
 
-    // label tùy chọn
+    // Label tùy chọn
     if (raw.label !== undefined && raw.label !== null) {
       if (typeof raw.label !== 'string') {
         throw new Error(`flow.edges[${index}].label must be a string`);
@@ -898,7 +898,7 @@ export class RpcServer {
   }
 
   /**
-   * chuẩn hóa TriggerSpec đầu vào
+   * Chuẩn hóa đầu vào TriggerSpec
    */
   private normalizeTriggerSpec(value: unknown, opts: { requireId: boolean }): TriggerSpec {
     if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -906,19 +906,19 @@ export class RpcServer {
     }
     const raw = value as JsonObject;
 
-    // kind xác thực
+    // Xác thực kind
     const kind = raw.kind;
     if (!kind || typeof kind !== 'string') {
       throw new Error('trigger.kind is required');
     }
 
-    // flowId xác thực
+    // Xác thực flowId
     const flowId = raw.flowId;
     if (!flowId || typeof flowId !== 'string') {
       throw new Error('trigger.flowId is required');
     }
 
-    // id xác thực
+    // Xác thực id
     let id: TriggerId;
     if (raw.id === undefined || raw.id === null) {
       if (opts.requireId) {
@@ -932,7 +932,7 @@ export class RpcServer {
       id = raw.id as TriggerId;
     }
 
-    // enabled xác thực
+    // Xác thực enabled
     let enabled = true;
     if (raw.enabled !== undefined && raw.enabled !== null) {
       if (typeof raw.enabled !== 'boolean') {
@@ -941,7 +941,7 @@ export class RpcServer {
       enabled = raw.enabled;
     }
 
-    // args xác thực
+    // Xác thực args
     let args: JsonObject | undefined;
     if (raw.args !== undefined && raw.args !== null) {
       if (typeof raw.args !== 'object' || Array.isArray(raw.args)) {
@@ -950,10 +950,10 @@ export class RpcServer {
       args = raw.args as JsonObject;
     }
 
-    // cơ sởtrường
+    // Trường cơ sở
     const base = { id, kind: kind as TriggerKind, enabled, flowId: flowId as FlowId, args };
 
-    // dựa trên kind thêmnoiDungTiengViettrường
+    // Thêm trường cụ thể theo kind
     switch (kind) {
       case 'manual':
         return base as TriggerSpec;
@@ -1159,7 +1159,7 @@ export class RpcServer {
 }
 
 /**
- * tạonoiDungTiengVietkhởi động RPC Server
+ * Tạo và khởi động RPC Server
  */
 export function createRpcServer(config: RpcServerConfig): RpcServer {
   const server = new RpcServer(config);

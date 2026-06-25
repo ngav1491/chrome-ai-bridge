@@ -1,6 +1,6 @@
 /**
- * @fileoverview gỡ lỗinoiDungTiengVietkiểuđịnh nghĩa
- * @description định nghĩa Record-Replay V3 tronggỡ lỗinoiDungTiengViettrạng tháinoiDungTiengVietgiao thức
+ * @fileoverview Định nghĩa kiểu debugger
+ * @description Định nghĩa trạng thái và giao thức debugger trong Record-Replay V3
  */
 
 import type { JsonValue } from './json';
@@ -8,74 +8,74 @@ import type { NodeId, RunId } from './ids';
 import type { PauseReason } from './events';
 
 /**
- * điểm dừngđịnh nghĩa
+ * Định nghĩa điểm ngắt
  */
 export interface Breakpoint {
-  /** điểm dừngnoiDungTiengVietnút ID */
+  /** ID nút chứa điểm ngắt */
   nodeId: NodeId;
-  /** có/khôngbật */
+  /** Có bật hay không */
   enabled: boolean;
 }
 
 /**
- * gỡ lỗinoiDungTiengViettrạng thái
- * @description mô tảgỡ lỗinoiDungTiengViethiện tạinoiDungTiengVietkết nốinoiDungTiengVietthực thitrạng thái
+ * Trạng thái debugger
+ * @description Mô tả trạng thái kết nối và thực thi hiện tại của debugger
  */
 export interface DebuggerState {
-  /** liên quan Run ID */
+  /** Run ID liên quan */
   runId: RunId;
-  /** gỡ lỗinoiDungTiengVietkết nốitrạng thái */
+  /** Trạng thái kết nối debugger */
   status: 'attached' | 'detached';
-  /** thực thitrạng thái */
+  /** Trạng thái thực thi */
   execution: 'running' | 'paused';
-  /** tạm dừngnguyên nhân（noiDungTiengViet execution='paused' noiDungTiengViet） */
+  /** Lý do tạm dừng (chỉ có hiệu lực khi execution='paused') */
   pauseReason?: PauseReason;
-  /** hiện tạinút ID */
+  /** ID nút hiện tại */
   currentNodeId?: NodeId;
-  /** điểm dừngdanh sách */
+  /** Danh sách điểm ngắt */
   breakpoints: Breakpoint[];
-  /** một bướcschema */
+  /** Chế độ bước đi */
   stepMode?: 'none' | 'stepOver';
 }
 
 /**
- * gỡ lỗilệnh
- * @description phía clientgửinoiDungTiengVietgỡ lỗinoiDungTiengVietlệnh
+ * Lệnh debugger
+ * @description Lệnh mà client gửi cho debugger
  */
 export type DebuggerCommand =
-  // ===== kết nốiđiều khiển =====
+  // ===== Điều khiển kết nối =====
   | { type: 'debug.attach'; runId: RunId }
   | { type: 'debug.detach'; runId: RunId }
 
-  // ===== thực thiđiều khiển =====
+  // ===== Điều khiển thực thi =====
   | { type: 'debug.pause'; runId: RunId }
   | { type: 'debug.resume'; runId: RunId }
   | { type: 'debug.stepOver'; runId: RunId }
 
-  // ===== điểm dừngquản lý =====
+  // ===== Quản lý điểm ngắt =====
   | { type: 'debug.setBreakpoints'; runId: RunId; nodeIds: NodeId[] }
   | { type: 'debug.addBreakpoint'; runId: RunId; nodeId: NodeId }
   | { type: 'debug.removeBreakpoint'; runId: RunId; nodeId: NodeId }
 
-  // ===== trạng tháitruy vấn =====
+  // ===== Truy vấn trạng thái =====
   | { type: 'debug.getState'; runId: RunId }
 
-  // ===== biếnthao tác =====
+  // ===== Thao tác biến =====
   | { type: 'debug.getVar'; runId: RunId; name: string }
   | { type: 'debug.setVar'; runId: RunId; name: string; value: JsonValue };
 
-/** gỡ lỗilệnhkiểu（noiDungTiengVietkiểutrích xuất） */
+/** Kiểu lệnh debugger (trích xuất từ union type) */
 export type DebuggerCommandType = DebuggerCommand['type'];
 
 /**
- * gỡ lỗilệnhphản hồi
+ * Phản hồi lệnh debugger
  */
 export type DebuggerResponse =
   | { ok: true; state?: DebuggerState; value?: JsonValue }
   | { ok: false; error: string };
 
 /**
- * tạonoiDungTiengVietgỡ lỗinoiDungTiengViettrạng thái
+ * Tạo trạng thái debugger ban đầu
  */
 export function createInitialDebuggerState(runId: RunId): DebuggerState {
   return {

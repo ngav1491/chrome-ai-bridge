@@ -1,17 +1,9 @@
 <template>
   <div>
     <SelectorEditor :node="node" :allowPick="true" title="điểm bắt đầubộ chọn" targetKey="start" />
-    <SelectorEditor
-      :node="node"
-      :allowPick="true"
-      title="noiDungTiengVietbộ chọn"
-      targetKey="end"
-    />
+    <SelectorEditor :node="node" :allowPick="true" title="bộ chọn" targetKey="end" />
     <div class="hint">
-      <small
-        >gợi ý：đường dẫn（path）noiDungTiengVietghinoiDungTiengViettự độngtạo，thủ
-        côngtạonoiDungTiengViet。</small
-      >
+      <small>gợi ý: đường dẫn(path)ghitự độngtạo, thủ côngtạo. </small>
     </div>
   </div>
 </template>

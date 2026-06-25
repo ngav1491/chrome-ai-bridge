@@ -3,12 +3,8 @@
     <SelectorEditor :node="node" :allowPick="true" />
     <div class="form-section">
       <div class="form-group" data-field="fill.value">
-        <label class="form-label">đầu vàonoiDungTiengViet</label>
-        <VarInput
-          v-model="value"
-          :variables="variables"
-          placeholder="hỗ trợ {biếnnoiDungTiengViet} định dạng"
-        />
+        <label class="form-label">đầu vào</label>
+        <VarInput v-model="value" :variables="variables" placeholder="hỗ trợ {biến} định dạng" />
       </div>
     </div>
   </div>

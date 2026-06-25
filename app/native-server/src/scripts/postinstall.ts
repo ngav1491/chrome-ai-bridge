@@ -74,16 +74,16 @@ function isRunningElevated(): boolean {
 }
 
 /**
- * đảm bảothực thiquyền（noiDungTiengVietcó phải làtoàn cụccài đặt）
+ * Đảm bảo quyền thực thi (dù có phải cài đặt toàn cục hay không)
  */
 async function ensureExecutionPermissions(): Promise<void> {
   if (process.platform === 'win32') {
-    // Windows nền tảngxử lý
+    // Xử lý nền tảng Windows
     await ensureWindowsFilePermissions();
     return;
   }
 
-  // Unix/Linux nền tảngxử lý
+  // Xử lý nền tảng Unix/Linux
   const filesToCheck = [
     path.join(__dirname, '..', 'index.js'),
     path.join(__dirname, '..', 'run_host.sh'),
@@ -112,7 +112,7 @@ async function ensureExecutionPermissions(): Promise<void> {
 }
 
 /**
- * Windows nền tảngtệpquyềnxử lý
+ * Xử lý quyền tệp nền tảng Windows
  */
 async function ensureWindowsFilePermissions(): Promise<void> {
   const filesToCheck = [
@@ -124,18 +124,18 @@ async function ensureWindowsFilePermissions(): Promise<void> {
   for (const filePath of filesToCheck) {
     if (fs.existsSync(filePath)) {
       try {
-        // kiểm tratệpcó phải lànoiDungTiengViet，nếunoiDungTiengVietgỡ bỏnoiDungTiengVietthuộc tính
+        // Kiểm tra tệp có phải là chỉ đọc hay không, nếu phải thì gỡ bỏ thuộc tính chỉ đọc
         const stats = fs.statSync(filePath);
         if (!(stats.mode & parseInt('200', 8))) {
-          // kiểm tranoiDungTiengVietquyền
-          // thửgỡ bỏnoiDungTiengVietthuộc tính
+          // Kiểm tra quyền ghi
+          // Thử gỡ bỏ thuộc tính chỉ đọc
           fs.chmodSync(filePath, stats.mode | parseInt('200', 8));
           console.log(
             colorText(`✓ Removed read-only attribute from ${path.basename(filePath)}`, 'green'),
           );
         }
 
-        // xác thựctệpnoiDungTiengViet
+        // Xác thực tệp có thể đọc
         fs.accessSync(filePath, fs.constants.R_OK);
         console.log(
           colorText(`✓ Verified file accessibility for ${path.basename(filePath)}`, 'green'),
@@ -213,7 +213,7 @@ async function tryRegisterNativeHost(): Promise<void> {
   } catch (error) {
     console.log(
       colorText(
-        `đăng kýnoiDungTiengVietlỗi: ${error instanceof Error ? error.message : String(error)}`,
+        `Lỗi xuất hiện trong quá trình đăng ký: ${error instanceof Error ? error.message : String(error)}`,
         'red',
       ),
     );
@@ -222,7 +222,7 @@ async function tryRegisterNativeHost(): Promise<void> {
 }
 
 /**
- * noiDungTiengVietthủ côngcài đặtnoiDungTiengViet
+ * In hướng dẫn cài đặt thủ công
  */
 function printManualInstructions(): void {
   console.log('\n' + colorText('===== Manual Registration Guide =====', 'blue'));
@@ -277,7 +277,7 @@ function printManualInstructions(): void {
 }
 
 /**
- * noiDungTiengViethàm
+ * Hàm chính
  */
 async function main(): Promise<void> {
   console.log(colorText(`Installing ${COMMAND_NAME}...`, 'green'));

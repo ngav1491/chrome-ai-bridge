@@ -1,13 +1,13 @@
 /**
- * @fileoverview triggerxử lýnoiDungTiengVietgiao diệnđịnh nghĩa
- * @description định nghĩanoiDungTiengViettriggernoiDungTiengVietgiao diện
+ * @fileoverview triggerxử lýgiao diệnđịnh nghĩa
+ * @description định nghĩatriggergiao diện
  */
 
 import type { TriggerSpec, TriggerKind } from '../../domain/triggers';
 
 /**
- * triggerxử lýnoiDungTiengVietgiao diện
- * @description noiDungTiengVietkiểu triggercầntriển khainoiDungTiengVietgiao diện
+ * triggerxử lýgiao diện
+ * @description kiểu triggercầntriển khaigiao diện
  */
 export interface TriggerHandler<K extends TriggerKind = TriggerKind> {
   /** kiểu trigger */
@@ -15,37 +15,37 @@ export interface TriggerHandler<K extends TriggerKind = TriggerKind> {
 
   /**
    * cài đặttrigger
-   * @description đăng ký chrome API lắng nghenoiDungTiengViet
+   * @description đăng ký chrome API lắng nghe
    * @param trigger triggerquy tắc
    */
   install(trigger: Extract<TriggerSpec, { kind: K }>): Promise<void>;
 
   /**
    * gỡ cài đặttrigger
-   * @description gỡ bỏ chrome API lắng nghenoiDungTiengViet
+   * @description gỡ bỏ chrome API lắng nghe
    * @param triggerId trigger ID
    */
   uninstall(triggerId: string): Promise<void>;
 
   /**
    * gỡ cài đặttất cảtrigger
-   * @description dọn dẹptất cảnoiDungTiengVietkiểunoiDungTiengViettrigger
+   * @description dọn dẹptất cảkiểutrigger
    */
   uninstallAll(): Promise<void>;
 
   /**
-   * lấynoiDungTiengVietcài đặtnoiDungTiengViettrigger ID danh sách
+   * lấycài đặttrigger ID danh sách
    */
   getInstalledIds(): string[];
 }
 
 /**
  * triggerkích hoạtcallback
- * @description TriggerManager noiDungTiengViet Handler noiDungTiengVietcallback
+ * @description TriggerManager  Handler callback
  */
 export interface TriggerFireCallback {
   /**
-   * triggernoiDungTiengVietkích hoạtnoiDungTiengVietgọi
+   * triggerkích hoạtgọi
    * @param triggerId trigger ID
    * @param context kích hoạtngữ cảnh
    */
@@ -59,7 +59,7 @@ export interface TriggerFireCallback {
 }
 
 /**
- * triggerxử lýnoiDungTiengVietfactory
+ * triggerxử lýfactory
  */
 export type TriggerHandlerFactory<K extends TriggerKind> = (
   fireCallback: TriggerFireCallback,

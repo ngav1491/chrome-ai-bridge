@@ -5,7 +5,7 @@
       <input class="form-input" v-model="(node as any).config.selector" placeholder="CSS bộ chọn" />
     </div>
     <div class="form-group">
-      <label class="form-label">danh sáchbiếnnoiDungTiengViet</label>
+      <label class="form-label">danh sáchbiến</label>
       <input
         class="form-input"
         v-model="(node as any).config.saveAs"
@@ -13,7 +13,7 @@
       />
     </div>
     <div class="form-group">
-      <label class="form-label">vòng lặpnoiDungTiengVietbiếnnoiDungTiengViet</label>
+      <label class="form-label">vòng lặpbiến</label>
       <input
         class="form-input"
         v-model="(node as any).config.itemVar"
@@ -21,15 +21,9 @@
       />
     </div>
     <div class="form-group">
-      <label class="form-label">noiDungTiengViet ID</label>
-      <input
-        class="form-input"
-        v-model="(node as any).config.subflowId"
-        placeholder="noiDungTiengViet"
-      />
-      <button class="btn-sm" style="margin-top: 8px" @click="onCreateSubflow"
-        >noiDungTiengViet</button
-      >
+      <label class="form-label"> ID</label>
+      <input class="form-input" v-model="(node as any).config.subflowId" placeholder="" />
+      <button class="btn-sm" style="margin-top: 8px" @click="onCreateSubflow"></button>
     </div>
   </div>
 </template>
@@ -42,7 +36,7 @@ const props = defineProps<{ node: NodeBase }>();
 const emit = defineEmits<{ (e: 'create-subflow', id: string): void }>();
 
 function onCreateSubflow() {
-  const id = prompt('noiDungTiengVietđầu vàonoiDungTiengVietID');
+  const id = prompt('đầu vàoID');
   if (!id) return;
   emit('create-subflow', id);
   const n = props.node as any;

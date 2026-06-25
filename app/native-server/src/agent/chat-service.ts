@@ -30,8 +30,8 @@ export interface AgentChatServiceOptions {
 /**
  * AgentChatService coordinates incoming /agent/chat requests and delegates to engines.
  *
- * mô tả tiếng Việt：noiDungTiengVietdịch vụnoiDungTiengVietphiênnoiDungTiengVietlập lịch，noiDungTiengViet CLI/SDK triển khainoiDungTiengViet。
- * thông qua Engine giao diệntriển khaiphụ thuộcnoiDungTiengViet，noiDungTiengVietthêm mớienginenoiDungTiengViet HTTP noiDungTiengViet。
+ * mô tả tiếng Việt: dịch vụphiênlập lịch,  CLI/SDK triển khai.
+ * thông qua Engine giao diệntriển khaiphụ thuộc, thêm mớiengine HTTP .
  */
 export class AgentChatService {
   private readonly engines = new Map<EngineName, AgentEngine>();

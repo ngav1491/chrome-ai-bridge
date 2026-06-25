@@ -1,12 +1,12 @@
 import { createApp } from 'vue';
 import { NativeMessageType } from 'chrome-mcp-shared';
 import './style.css';
-// noiDungTiengVietAgentChatnoiDungTiengViet
+// AgentChat
 import '../sidepanel/styles/agent-chat.css';
 import { preloadAgentTheme } from '../sidepanel/composables/useAgentTheme';
 import App from './App.vue';
 
-// noiDungTiengVietVuenoiDungTiengViet，noiDungTiengViet
+// Vue,
 preloadAgentTheme().then(() => {
   // Trigger ensure native connection (fire-and-forget, don't block UI mounting)
   void chrome.runtime.sendMessage({ type: NativeMessageType.ENSURE_NATIVE }).catch(() => {

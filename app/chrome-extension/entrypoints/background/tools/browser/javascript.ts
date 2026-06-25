@@ -232,11 +232,11 @@ async function executeViaCdp(
           expression,
           returnByValue: true,
           awaitPromise: true,
-          // CDP noiDungTiengViethết thời gian（mili giây），noiDungTiengViet withTimeout noiDungTiengViet
+          // CDP hết thời gian(mili giây),  withTimeout
           timeout: options.timeoutMs,
         })) as CDPEvaluateResult;
       }),
-      // noiDungTiengViethết thời giannoiDungTiengViet，noiDungTiengViet CDP noiDungTiengVietxử lýhết thời gianphản hồi
+      // hết thời gian,  CDP xử lýhết thời gianphản hồi
       options.timeoutMs + 1000,
     );
 

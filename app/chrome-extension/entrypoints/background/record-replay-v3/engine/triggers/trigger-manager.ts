@@ -1,15 +1,15 @@
 /**
- * @fileoverview triggerquản lýnoiDungTiengViet
+ * @fileoverview triggerquản lý
  * @description
- * TriggerManager noiDungTiengVietquản lýtất cảtrigger Handler noiDungTiengViet：
- * - noiDungTiengViet TriggerStore noiDungTiengViettriggernoiDungTiengVietcài đặt
- * - xử lýtriggerkích hoạtsự kiện，gọi enqueueRun
- * - noiDungTiengVietchống bãonoiDungTiengViet (cooldown + maxQueued)
+ * TriggerManager quản lýtất cảtrigger Handler :
+ * -  TriggerStore triggercài đặt
+ * - xử lýtriggerkích hoạtsự kiện, gọi enqueueRun
+ * - chống bão (cooldown + maxQueued)
  *
- * lý do thiết kế：
- * - Orchestrator schema：TriggerManager noiDungTiengViettrực tiếptriển khainoiDungTiengViettriggerlogic，noiDungTiengVietủy thác cho per-kind Handler
- * - Handler factoryschema：TriggerManager noiDungTiengViettạo Handler thể hiện，noiDungTiengViet fireCallback
- * - chống bão：cooldown (per-trigger) + maxQueued (global best-effort)
+ * lý do thiết kế:
+ * - Orchestrator schema: TriggerManager trực tiếptriển khaitriggerlogic, ủy thác cho per-kind Handler
+ * - Handler factoryschema: TriggerManager tạo Handler thể hiện,  fireCallback
+ * - chống bão: cooldown (per-trigger) + maxQueued (global best-effort)
  */
 
 import type { UnixMillis } from '../../domain/json';
@@ -35,16 +35,16 @@ export type TriggerHandlerFactories = Partial<{
  */
 export interface TriggerManagerStormControl {
   /**
-   * noiDungTiengViettriggernoiDungTiengVietkích hoạtnoiDungTiengVietkhoảng cách (ms)
-   * - 0 noiDungTiengViet undefined biểu thịvô hiệu hóanoiDungTiengViet
+   * triggerkích hoạtkhoảng cách (ms)
+   * - 0  undefined biểu thịvô hiệu hóa
    */
   cooldownMs?: number;
 
   /**
-   * toàn cụctối đanoiDungTiengViet Run noiDungTiengViet
-   * - noiDungTiengVietkích hoạt
-   * - undefined biểu thịvô hiệu hóanoiDungTiengVietkiểm tra
-   * - lưu ý：noiDungTiengViet best-effort kiểm tra，noiDungTiengViet
+   * toàn cụctối đa Run
+   * - kích hoạt
+   * - undefined biểu thịvô hiệu hóakiểm tra
+   * - lưu ý:  best-effort kiểm tra,
    */
   maxQueued?: number;
 }
@@ -53,7 +53,7 @@ export interface TriggerManagerStormControl {
  * TriggerManager phụ thuộc
  */
 export interface TriggerManagerDeps {
-  /** lưu trữnoiDungTiengViet */
+  /** lưu trữ */
   storage: Pick<StoragePort, 'triggers' | 'flows' | 'runs' | 'queue'>;
   /** sự kiệnbus */
   events: Pick<EventsBus, 'append'>;
@@ -75,9 +75,9 @@ export interface TriggerManagerDeps {
  * TriggerManager trạng thái
  */
 export interface TriggerManagerState {
-  /** có/khôngnoiDungTiengVietkhởi động */
+  /** có/khôngkhởi động */
   started: boolean;
-  /** noiDungTiengVietcài đặtnoiDungTiengViettrigger ID danh sách */
+  /** cài đặttrigger ID danh sách */
   installedTriggerIds: TriggerId[];
 }
 
@@ -85,21 +85,21 @@ export interface TriggerManagerState {
  * TriggerManager giao diện
  */
 export interface TriggerManager {
-  /** khởi độngquản lýnoiDungTiengViet，noiDungTiengVietcài đặttất cảbậtnoiDungTiengViettrigger */
+  /** khởi độngquản lý, cài đặttất cảbậttrigger */
   start(): Promise<void>;
-  /** dừngquản lýnoiDungTiengViet，gỡ cài đặttất cảtrigger */
+  /** dừngquản lý, gỡ cài đặttất cảtrigger */
   stop(): Promise<void>;
-  /** làm mớitrigger，noiDungTiengVietlưu trữnoiDungTiengVietcài đặt */
+  /** làm mớitrigger, lưu trữcài đặt */
   refresh(): Promise<void>;
   /**
-   * thủ côngkích hoạtnoiDungTiengViettrigger
-   * @description noiDungTiengViet RPC/UI gọi，dùng cho manual trigger
+   * thủ côngkích hoạttrigger
+   * @description  RPC/UI gọi, dùng cho manual trigger
    */
   fire(
     triggerId: TriggerId,
     context?: { sourceTabId?: number; sourceUrl?: string },
   ): Promise<EnqueueRunResult>;
-  /** hủyquản lýnoiDungTiengViet */
+  /** hủyquản lý */
   dispose(): Promise<void>;
   /** lấyhiện tạitrạng thái */
   getState(): TriggerManagerState;
@@ -108,7 +108,7 @@ export interface TriggerManager {
 // ==================== Utilities ====================
 
 /**
- * xác thựcnoiDungTiengViet
+ * xác thực
  */
 function normalizeNonNegativeInt(value: unknown, fallback: number, fieldName: string): number {
   if (value === undefined || value === null) return fallback;
@@ -119,7 +119,7 @@ function normalizeNonNegativeInt(value: unknown, fallback: number, fieldName: st
 }
 
 /**
- * xác thựcnoiDungTiengViet
+ * xác thực
  */
 function normalizePositiveInt(value: unknown, fieldName: string): number {
   if (typeof value !== 'number' || !Number.isFinite(value)) {
@@ -154,7 +154,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   let started = false;
   let inFlightEnqueues = 0;
 
-  // noiDungTiengViet refresh noiDungTiengViet
+  //  refresh
   let refreshPromise: Promise<void> | null = null;
   let pendingRefresh = false;
 
@@ -164,7 +164,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   // kích hoạtcallback
   const fireCallback: TriggerFireCallback = {
     onFire: async (triggerId, context) => {
-      // noiDungTiengViettất cảngoại lệ，tránhnoiDungTiengViet chrome API lắng nghenoiDungTiengViet
+      // tất cảngoại lệ, tránh chrome API lắng nghe
       try {
         await handleFire(triggerId as TriggerId, context);
       } catch (e) {
@@ -189,9 +189,9 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   }
 
   /**
-   * xử lýtriggerkích hoạt（bên trongphương thức）
-   * @param throwOnDrop nếunoiDungTiengViet true，noiDungTiengViet cooldown/maxQueued noiDungTiengVietlỗi
-   * @returns EnqueueRunResult noiDungTiengViet null（noiDungTiengViet）
+   * xử lýtriggerkích hoạt(bên trongphương thức)
+   * @param throwOnDrop nếu true,  cooldown/maxQueued lỗi
+   * @returns EnqueueRunResult  null()
    */
   async function handleFire(
     triggerId: TriggerId,
@@ -226,7 +226,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
     }
 
     // Global maxQueued kiểm tra (best-effort)
-    // lưu ý：noiDungTiengViet cooldown cài đặtnoiDungTiengVietkiểm tra，tránhnoiDungTiengViet maxQueued drop noiDungTiengViet cooldown
+    // lưu ý:  cooldown cài đặtkiểm tra, tránh maxQueued drop  cooldown
     if (maxQueued !== undefined) {
       const queued = await deps.storage.queue.list('queued');
       if (queued.length + inFlightEnqueues >= maxQueued) {
@@ -240,7 +240,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
       }
     }
 
-    // cài đặt lastFireAt noiDungTiengVietkích hoạt（noiDungTiengViet maxQueued kiểm trathông quanoiDungTiengViet）
+    // cài đặt lastFireAt kích hoạt( maxQueued kiểm trathông qua)
     if (cooldownMs > 0) {
       lastFireAt.set(triggerId, t);
     }
@@ -272,7 +272,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
       );
       return result;
     } catch (e) {
-      // vào hàng đợithất bạinoiDungTiengVietkhôi phục cooldown noiDungTiengViet
+      // vào hàng đợithất bạikhôi phục cooldown
       if (cooldownMs > 0) {
         if (prevLastFireAt === undefined) {
           lastFireAt.delete(triggerId);
@@ -292,8 +292,8 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   }
 
   /**
-   * thủ côngkích hoạtnoiDungTiengViettrigger（noiDungTiengViet）
-   * @description dùng cho RPC/UI gọi，noiDungTiengVietlỗinoiDungTiengViet
+   * thủ côngkích hoạttrigger()
+   * @description dùng cho RPC/UI gọi, lỗi
    */
   async function fire(
     triggerId: TriggerId,
@@ -313,7 +313,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
     const triggers = await deps.storage.triggers.list();
     if (!started) return;
 
-    // noiDungTiengVietgỡ cài đặttất cả，noiDungTiengVietcài đặt (noiDungTiengVietchiến lược，noiDungTiengViet)
+    // gỡ cài đặttất cả, cài đặt (chiến lược, )
     // Best-effort: đơn lẻ handler gỡ cài đặtthất bạikhông ảnh hưởngkhác
     for (const handler of handlers.values()) {
       try {
@@ -324,7 +324,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
     }
     installed.clear();
 
-    // cài đặtbậtnoiDungTiengViettrigger
+    // cài đặtbậttrigger
     for (const trigger of triggers) {
       if (!started) return;
       if (!trigger.enabled) continue;
@@ -345,7 +345,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   }
 
   /**
-   * làm mớitrigger (noiDungTiengVietgọi)
+   * làm mớitrigger (gọi)
    */
   async function refresh(): Promise<void> {
     if (!started) {
@@ -368,7 +368,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   }
 
   /**
-   * khởi độngquản lýnoiDungTiengViet
+   * khởi độngquản lý
    */
   async function start(): Promise<void> {
     if (started) return;
@@ -377,7 +377,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   }
 
   /**
-   * dừngquản lýnoiDungTiengViet
+   * dừngquản lý
    */
   async function stop(): Promise<void> {
     if (!started) return;
@@ -385,7 +385,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
     started = false;
     pendingRefresh = false;
 
-    // chờnoiDungTiengViettrong refresh hoàn tất
+    // chờtrong refresh hoàn tất
     if (refreshPromise) {
       try {
         await refreshPromise;
@@ -407,7 +407,7 @@ export function createTriggerManager(deps: TriggerManagerDeps): TriggerManager {
   }
 
   /**
-   * hủyquản lýnoiDungTiengViet
+   * hủyquản lý
    */
   async function dispose(): Promise<void> {
     await stop();
