@@ -17,14 +17,36 @@ export const TIMEOUTS = {
   PROCESS_DATA_TIMEOUT: 20000,
 } as const;
 
+/**
+ * Resolve the bind host for the native server.
+ * Defaults to 127.0.0.1 (loopback only) for security.
+ * Set SERVER_HOST=0.0.0.0 (or any IP) to listen on other interfaces,
+ * e.g. when Cursor runs on a different machine and connects over LAN.
+ */
+function resolveServerHost(): string {
+  const raw = process.env.SERVER_HOST;
+  if (raw && raw.trim()) return raw.trim();
+  return '127.0.0.1';
+}
+
+const SERVER_HOST_VALUE = resolveServerHost();
+const SERVER_HOST_IS_LAN = SERVER_HOST_VALUE !== '127.0.0.1' && SERVER_HOST_VALUE !== 'localhost';
+
 // Server configuration
 export const SERVER_CONFIG = {
-  HOST: '127.0.0.1',
+  HOST: SERVER_HOST_VALUE,
   /**
    * CORS origin whitelist - only allow Chrome/Firefox extensions and local debugging.
    * Use RegExp patterns for extension origins, string for exact match.
+   * When SERVER_HOST is a non-loopback address, LAN origins are also allowed.
    */
-  CORS_ORIGIN: [/^chrome-extension:\/\//, /^moz-extension:\/\//, 'http://127.0.0.1'] as const,
+  CORS_ORIGIN: [
+    /^chrome-extension:\/\//,
+    /^moz-extension:\/\//,
+    'http://127.0.0.1',
+    // Allow any LAN origin when SERVER_HOST is explicitly set to a non-loopback address.
+    ...(SERVER_HOST_IS_LAN ? [/^http:\/\/(\d{1,3}\.){3}\d{1,3}(:\d+)?$/] : []),
+  ] as const,
   LOGGER_ENABLED: false,
 } as const;
 
@@ -78,5 +100,9 @@ export function getChromeMcpPort(): number {
  * This URL is used by Claude/Codex agents to connect to the MCP server.
  */
 export function getChromeMcpUrl(): string {
-  return `http://${SERVER_CONFIG.HOST}:${getChromeMcpPort()}/mcp`;
+  const host =
+    process.env.SERVER_HOST && process.env.SERVER_HOST.trim()
+      ? process.env.SERVER_HOST.trim()
+      : SERVER_CONFIG.HOST;
+  return `http://${host}:${getChromeMcpPort()}/mcp`;
 }

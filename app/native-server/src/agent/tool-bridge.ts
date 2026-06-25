@@ -40,7 +40,8 @@ export class AgentToolBridge {
 
   constructor(options: AgentToolBridgeOptions = {}) {
     const url =
-      options.mcpUrl || `http://127.0.0.1:${process.env.MCP_HTTP_PORT || NATIVE_SERVER_PORT}/mcp`;
+      options.mcpUrl ||
+      `http://${process.env.SERVER_HOST || '127.0.0.1'}:${process.env.MCP_HTTP_PORT || NATIVE_SERVER_PORT}/mcp`;
 
     this.transport = new StreamableHTTPClientTransport(new URL(url));
     this.client = new Client(
