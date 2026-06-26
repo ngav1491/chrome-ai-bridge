@@ -28,8 +28,8 @@ Chúng tôi hoan nghênh nhiều hình thức đóng góp:
 1. **Fork và sao chép kho mã nguồn**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/chrome-mcp-server.git
-cd chrome-mcp-server
+git clone https://github.com/YOUR_USERNAME/chrome-ai-bridge.git
+cd chrome-ai-bridge
 ```
 
 2. **Cài đặt các phụ thuộc**
@@ -52,7 +52,7 @@ npm run dev
 ## 🏗️ Cấu trúc dự án
 
 ```
-chrome-mcp-server/
+chrome-ai-bridge/
 ├── app/
 │   ├── chrome-extension/     # Tiện ích Chrome (WXT + Vue 3)
 │   │   ├── entrypoints/      # Script nền, popup, content script

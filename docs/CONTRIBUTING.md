@@ -28,8 +28,8 @@ We welcome contributions in many forms:
 1. **Fork and clone the repository**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/chrome-mcp-server.git
-cd chrome-mcp-server
+git clone https://github.com/YOUR_USERNAME/chrome-ai-bridge.git
+cd chrome-ai-bridge
 ```
 
 2. **Install dependencies**
@@ -52,7 +52,7 @@ npm run dev
 ## 🏗️ Project Structure
 
 ```
-chrome-mcp-server/
+chrome-ai-bridge/
 ├── app/
 │   ├── chrome-extension/     # Chrome extension (WXT + Vue 3)
 │   │   ├── entrypoints/      # Background scripts, popup, content scripts

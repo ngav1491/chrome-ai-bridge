@@ -102,7 +102,7 @@ Add the following configuration to your MCP client configuration (using CherrySt
 ```json
 {
   "mcpServers": {
-    "chrome-mcp-server": {
+    "chrome-ai-bridge": {
       "type": "streamableHttp",
       "url": "http://127.0.0.1:12306/mcp"
     }

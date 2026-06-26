@@ -107,7 +107,7 @@ The build runs three workspace projects:
 - `app/native-server` → the `chrome-ai-bridge` CLI binary (`dist/`)
 - `app/chrome-extension` → the WXT-built extension at `app/chrome-extension/.output/chrome-mv3/`
 
-> If you only need to rebuild the extension (for example after editing Vue components), run `corepack pnpm --filter chrome-mcp-server build`.
+> If you only need to rebuild the extension (for example after editing Vue components), run `corepack pnpm --filter chrome-ai-bridge-extension build`.
 
 ### Step 3 — Load the local build into Chrome
 
@@ -193,7 +193,7 @@ Append `dist/mcp/mcp-server-stdio.js` to get the final path, then use it in your
 
    The command should report the native host, the Chrome extension id, and the configured port.
 
-3. In your MCP client (Claude Desktop, Cherry Studio, Cursor, ...), trigger a tool call against `chrome-mcp-server`. A successful round-trip confirms that Chrome, the native host, and the MCP client are all talking to each other.
+3. In your MCP client (Claude Desktop, Cherry Studio, Cursor, ...), trigger a tool call against `chrome-ai-bridge`. A successful round-trip confirms that Chrome, the native host, and the MCP client are all talking to each other.
 
 ---
 

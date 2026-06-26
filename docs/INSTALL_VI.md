@@ -107,7 +107,7 @@ Lệnh build chạy 3 workspace:
 - `app/native-server` → binary CLI `chrome-ai-bridge` (`dist/`)
 - `app/chrome-extension` → extension build bằng WXT tại `app/chrome-extension/.output/chrome-mv3/`
 
-> Nếu chỉ cần build lại extension (ví dụ sau khi sửa Vue component), chạy `corepack pnpm --filter chrome-mcp-server build`.
+> Nếu chỉ cần build lại extension (ví dụ sau khi sửa Vue component), chạy `corepack pnpm --filter chrome-ai-bridge-extension build`.
 
 ### Bước 3 — Load bản build cục bộ vào Chrome
 
@@ -193,7 +193,7 @@ Nối thêm `dist/mcp/mcp-server-stdio.js` để có đường dẫn cuối cùn
 
    Lệnh sẽ báo cáo trạng thái native host, Chrome extension id và cổng đang cấu hình.
 
-3. Trong MCP client (Claude Desktop, Cherry Studio, Cursor, ...), thử gọi một tool thuộc `chrome-mcp-server`. Nếu round-trip thành công tức là Chrome, native host và MCP client đang nói chuyện đúng với nhau.
+3. Trong MCP client (Claude Desktop, Cherry Studio, Cursor, ...), thử gọi một tool thuộc `chrome-ai-bridge`. Nếu round-trip thành công tức là Chrome, native host và MCP client đang nói chuyện đúng với nhau.
 
 ---
 
