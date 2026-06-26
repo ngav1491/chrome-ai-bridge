@@ -10,6 +10,38 @@ export const access = promisify(fs.access);
 export const mkdir = promisify(fs.mkdir);
 export const writeFile = promisify(fs.writeFile);
 
+export interface ExtensionIdOptions {
+  extensionId?: string;
+}
+
+const EXTENSION_ID_PATTERN = /^[a-p]{32}$/;
+
+export function normalizeExtensionId(extensionId?: string): string | undefined {
+  const value = extensionId?.trim();
+  if (!value) return undefined;
+
+  if (!EXTENSION_ID_PATTERN.test(value)) {
+    throw new Error(
+      `Invalid Chrome extension ID: ${value}. Expected 32 lowercase characters from a-p.`,
+    );
+  }
+
+  return value;
+}
+
+export function getConfiguredExtensionId(extensionId?: string): string | undefined {
+  return normalizeExtensionId(extensionId || process.env.CHROME_AI_BRIDGE_EXTENSION_ID);
+}
+
+export function resolveAllowedExtensionIds(extensionId?: string): string[] {
+  const configured = getConfiguredExtensionId(extensionId);
+  return Array.from(new Set([EXTENSION_ID, configured].filter(Boolean) as string[]));
+}
+
+export function resolveAllowedOrigins(extensionId?: string): string[] {
+  return resolveAllowedExtensionIds(extensionId).map((id) => `chrome-extension://${id}/`);
+}
+
 /**
  * Project name (GitHub repo): chrome-ai-bridge.
  * The CLI binary is now published as `chrome-ai-bridge` (the new canonical
@@ -246,7 +278,7 @@ async function ensureWindowsFilePermissions(packageDistDir: string): Promise<voi
 /**
  * Create Native Messaging host manifest content
  */
-export async function createManifestContent(): Promise<any> {
+export async function createManifestContent(options: ExtensionIdOptions = {}): Promise<any> {
   const mainPath = await getMainPath();
 
   return {
@@ -254,7 +286,7 @@ export async function createManifestContent(): Promise<any> {
     description: DESCRIPTION,
     path: mainPath, // Đường dẫn tệp thực thi Node.js
     type: 'stdio',
-    allowed_origins: [`chrome-extension://${EXTENSION_ID}/`],
+    allowed_origins: resolveAllowedOrigins(options.extensionId),
   };
 }
 
@@ -301,15 +333,19 @@ function verifyWindowsRegistryEntry(registryKey: string, expectedPath: string): 
  */
 export async function registerUserLevelHostWithNodePath(
   browsers?: BrowserType[],
+  options: ExtensionIdOptions = {},
 ): Promise<boolean> {
   writeNodePathFile(path.join(__dirname, '..'));
-  return tryRegisterUserLevelHost(browsers);
+  return tryRegisterUserLevelHost(browsers, options);
 }
 
 /**
  * Thử đăng ký Native Messaging host cấp người dùng
  */
-export async function tryRegisterUserLevelHost(targetBrowsers?: BrowserType[]): Promise<boolean> {
+export async function tryRegisterUserLevelHost(
+  targetBrowsers?: BrowserType[],
+  options: ExtensionIdOptions = {},
+): Promise<boolean> {
   try {
     console.log(colorText('Attempting to register user-level Native Messaging host...', 'blue'));
 
@@ -329,7 +365,7 @@ export async function tryRegisterUserLevelHost(targetBrowsers?: BrowserType[]): 
     }
 
     // 3. Tạo nội dung manifest
-    const manifest = await createManifestContent();
+    const manifest = await createManifestContent(options);
 
     let successCount = 0;
     const results: { browser: string; success: boolean; error?: string }[] = [];
@@ -413,7 +449,9 @@ if (process.platform === 'win32') {
 /**
  * Dùng quyền nâng cao để đăng ký manifest cấp hệ thống
  */
-export async function registerWithElevatedPermissions(): Promise<void> {
+export async function registerWithElevatedPermissions(
+  options: ExtensionIdOptions = {},
+): Promise<void> {
   try {
     console.log(colorText('Attempting to register system-level manifest...', 'blue'));
 
@@ -421,7 +459,7 @@ export async function registerWithElevatedPermissions(): Promise<void> {
     await ensureExecutionPermissions();
 
     // 2. Chuẩn bị nội dung manifest
-    const manifest = await createManifestContent();
+    const manifest = await createManifestContent(options);
 
     // 3. Lấy đường dẫn manifest cấp hệ thống
     const manifestPath = getSystemManifestPath();

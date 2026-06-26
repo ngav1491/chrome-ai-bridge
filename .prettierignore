@@ -1,35 +1,35 @@
-# 构建输出目录
+# Thư mục output khi build
 dist
 .output
 .wxt
 
-# 依赖
+# Dependencies
 node_modules
 
-# 日志
+# Logs
 logs
 *.log
 
-# 缓存
+# Cache
 .cache
 .temp
 
-# 编辑器配置
+# Cấu hình editor
 .vscode
 !.vscode/extensions.json
 .idea
 
-# 系统文件
+# File hệ thống
 .DS_Store
 Thumbs.db
 
-# 打包文件
+# File đóng gói
 *.zip
 *.tar.gz
 
-# 统计文件
+# File thống kê
 stats.html
 stats-*.json
 
-# 锁文件
+# File khóa
 pnpm-lock.yaml

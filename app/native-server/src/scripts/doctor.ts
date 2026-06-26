@@ -11,7 +11,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { execFileSync } from 'child_process';
-import { EXTENSION_ID, HOST_NAME, COMMAND_NAME } from './constant';
+import { HOST_NAME, COMMAND_NAME } from './constant';
 import {
   BrowserType,
   detectInstalledBrowsers,
@@ -23,6 +23,7 @@ import {
   ensureExecutionPermissions,
   tryRegisterUserLevelHost,
   getLogDir,
+  resolveAllowedOrigins,
 } from './utils';
 import { NATIVE_SERVER_PORT } from '../constant';
 
@@ -38,6 +39,7 @@ export interface DoctorOptions {
   json?: boolean;
   fix?: boolean;
   browser?: string;
+  extensionId?: string;
 }
 
 export type DoctorStatus = 'ok' | 'warn' | 'error';
@@ -471,6 +473,7 @@ async function attemptFixes(
   silent: boolean,
   distDir: string,
   targetBrowsers: BrowserType[] | undefined,
+  extensionId?: string,
 ): Promise<DoctorFixAttempt[]> {
   if (!enabled) return [];
 
@@ -517,12 +520,23 @@ async function attemptFixes(
     fs.writeFileSync(nodePathFile, process.execPath, 'utf8');
   });
 
+  await attempt('port_config', 'Reset stdio-config.json port to 12306', async () => {
+    const stdioConfigPath = path.join(distDir, 'mcp', 'stdio-config.json');
+    if (!fs.existsSync(stdioConfigPath)) return;
+    const config = JSON.parse(fs.readFileSync(stdioConfigPath, 'utf8')) as { url?: string };
+    if (!config.url) throw new Error('stdio-config.json missing url');
+    const url = new URL(config.url);
+    url.port = EXPECTED_PORT.toString();
+    config.url = url.toString();
+    fs.writeFileSync(stdioConfigPath, JSON.stringify(config, null, 2), 'utf8');
+  });
+
   await attempt('permissions', 'Fix execution permissions for native host files', async () => {
     await ensureExecutionPermissions();
   });
 
   await attempt('register', 'Re-register Native Messaging host (user-level)', async () => {
-    const ok = await tryRegisterUserLevelHost(targetBrowsers);
+    const ok = await tryRegisterUserLevelHost(targetBrowsers, { extensionId });
     if (!ok) {
       throw new Error('User-level registration failed');
     }
@@ -648,6 +662,7 @@ export async function collectDoctorReport(options: DoctorOptions): Promise<Docto
     Boolean(options.json),
     distDir,
     targetBrowsers,
+    options.extensionId,
   );
 
   const checks: DoctorCheckResult[] = [];
@@ -801,7 +816,7 @@ export async function collectDoctorReport(options: DoctorOptions): Promise<Docto
   });
 
   // Check 5: Manifest checks per browser
-  const expectedOrigin = `chrome-extension://${EXTENSION_ID}/`;
+  const expectedOrigins = resolveAllowedOrigins(options.extensionId);
   for (const browser of browsersToCheck) {
     const config = getBrowserConfig(browser);
     const candidates = [config.userManifestPath, config.systemManifestPath];
@@ -850,8 +865,13 @@ export async function collectDoctorReport(options: DoctorOptions): Promise<Docto
       if (!fs.existsSync(manifest.path)) issues.push('path target does not exist');
     }
     const allowedOrigins = manifest.allowed_origins;
-    if (!Array.isArray(allowedOrigins) || !allowedOrigins.includes(expectedOrigin)) {
-      issues.push(`allowed_origins missing ${expectedOrigin}`);
+    if (!Array.isArray(allowedOrigins)) {
+      issues.push('allowed_origins is missing');
+    } else {
+      const missingOrigins = expectedOrigins.filter((origin) => !allowedOrigins.includes(origin));
+      if (missingOrigins.length > 0) {
+        issues.push(`allowed_origins missing ${missingOrigins.join(', ')}`);
+      }
     }
 
     checks.push({
@@ -862,7 +882,7 @@ export async function collectDoctorReport(options: DoctorOptions): Promise<Docto
       details: {
         path: found,
         expectedWrapperPath: wrapperPath,
-        expectedOrigin,
+        expectedOrigins,
         fix: issues.length === 0 ? undefined : [`${COMMAND_NAME} register --browser ${browser}`],
       },
     });

@@ -19,18 +19,17 @@ export const TIMEOUTS = {
 
 /**
  * Resolve the bind host for the native server.
- * Defaults to 127.0.0.1 (loopback only) for security.
- * Set SERVER_HOST=0.0.0.0 (or any IP) to listen on other interfaces,
- * e.g. when Cursor runs on a different machine and connects over LAN.
+ * Defaults to 0.0.0.0 (all interfaces) for LAN access.
+ * Set SERVER_HOST=127.0.0.1 to lock to loopback only.
  */
 function resolveServerHost(): string {
   const raw = process.env.SERVER_HOST;
   if (raw && raw.trim()) return raw.trim();
-  return '127.0.0.1';
+  return '0.0.0.0';
 }
 
 const SERVER_HOST_VALUE = resolveServerHost();
-const SERVER_HOST_IS_LAN = SERVER_HOST_VALUE !== '127.0.0.1' && SERVER_HOST_VALUE !== 'localhost';
+const SERVER_HOST_IS_LAN = SERVER_HOST_VALUE !== '0.0.0.0' && SERVER_HOST_VALUE !== 'localhost';
 
 // Server configuration
 export const SERVER_CONFIG = {
@@ -43,7 +42,7 @@ export const SERVER_CONFIG = {
   CORS_ORIGIN: [
     /^chrome-extension:\/\//,
     /^moz-extension:\/\//,
-    'http://127.0.0.1',
+    'http://0.0.0.0',
     // Allow any LAN origin when SERVER_HOST is explicitly set to a non-loopback address.
     ...(SERVER_HOST_IS_LAN ? [/^http:\/\/(\d{1,3}\.){3}\d{1,3}(:\d+)?$/] : []),
   ] as const,

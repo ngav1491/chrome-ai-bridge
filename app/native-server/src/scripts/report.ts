@@ -151,17 +151,25 @@ function safeOsVersion(): string | undefined {
 }
 
 function safeExecVersion(command: string): VersionResult {
-  try {
-    const out = execFileSync(command, ['-v'], {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'pipe'],
-      timeout: 2500,
-      windowsHide: true,
-    });
-    return { version: out.trim() };
-  } catch (e) {
-    return { error: stringifyError(e) };
+  const candidates = process.platform === 'win32' ? [command, `${command}.cmd`] : [command];
+  let lastError: unknown;
+
+  for (const candidate of candidates) {
+    try {
+      const out = execFileSync(candidate, ['-v'], {
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: 2500,
+        windowsHide: true,
+        shell: process.platform === 'win32' && candidate.endsWith('.cmd'),
+      });
+      return { version: out.trim() };
+    } catch (e) {
+      lastError = e;
+    }
   }
+
+  return { error: stringifyError(lastError) };
 }
 
 function parseIncludeLogsMode(raw: unknown): IncludeLogsMode {
@@ -731,8 +739,10 @@ function tryCopyToClipboard(text: string): { ok: boolean; method?: string; error
     return r.ok ? { ok: true, method: 'pbcopy' } : { ok: false, method: 'pbcopy', error: r.error };
   }
   if (process.platform === 'win32') {
-    const r = spawn('clip', []);
-    return r.ok ? { ok: true, method: 'clip' } : { ok: false, method: 'clip', error: r.error };
+    const r = spawn('clip.exe', []);
+    return r.ok
+      ? { ok: true, method: 'clip.exe' }
+      : { ok: false, method: 'clip.exe', error: r.error };
   }
 
   // Linux: try wl-copy, xclip, xsel

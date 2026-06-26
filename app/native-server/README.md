@@ -38,7 +38,7 @@ corepack pnpm --filter chrome-ai-bridge dev
 2. Khởi động tiện ích Chrome
 
 ```bash
-corepack pnpm --filter chrome-mcp-server dev
+corepack pnpm --filter chrome-ai-bridge-extension dev
 ```
 
 ### Build
@@ -104,7 +104,7 @@ function startServer() {
   }
 
   try {
-    nativePort = chrome.runtime.connectNative('com.yourcompany.fastify_native_host');
+    nativePort = chrome.runtime.connectNative('com.chromeaibridge.native_host');
 
     nativePort.onMessage.addListener((message) => {
       console.log('Nhận tin nhắn Native:', message);
@@ -143,7 +143,7 @@ function stopServer() {
 // Kiểm thử giao tiếp với máy chủ
 async function testPing() {
   try {
-    const response = await fetch('http://localhost:3000/ping');
+    const response = await fetch('http://127.0.0.1:12306/ping');
     const data = await response.json();
     console.log('Phản hồi Ping:', data);
     return data;

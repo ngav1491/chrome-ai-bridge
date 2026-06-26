@@ -26,6 +26,7 @@ program
   .option('-s, --system', 'Use system-level installation (requires administrator/sudo privileges)')
   .option('-b, --browser <browser>', 'Register for specific browser (chrome, chromium, or all)')
   .option('-d, --detect', 'Auto-detect installed browsers')
+  .option('--extension-id <id>', 'Chrome extension ID to add to Native Messaging allowed_origins')
   .action(async (options) => {
     try {
       // Write Node.js path for run_host scripts
@@ -85,7 +86,7 @@ program
       // If --system option is specified or running with root/administrator privileges
       if (options.system || hasElevatedPermissions) {
         // TODO: Update registerWithElevatedPermissions to support multiple browsers
-        await registerWithElevatedPermissions();
+        await registerWithElevatedPermissions({ extensionId: options.extensionId });
         console.log(
           colorText('System-level Native Messaging host registered successfully!', 'green'),
         );
@@ -98,7 +99,9 @@ program
       } else {
         // Regular user-level installation
         console.log(colorText('Registering user-level Native Messaging host...', 'blue'));
-        const success = await tryRegisterUserLevelHost(targetBrowsers);
+        const success = await tryRegisterUserLevelHost(targetBrowsers, {
+          extensionId: options.extensionId,
+        });
 
         if (success) {
           console.log(colorText('Native Messaging host registered successfully!', 'green'));
@@ -184,12 +187,14 @@ program
   .option('--json', 'Output diagnostics as JSON')
   .option('--fix', 'Attempt to fix common issues automatically')
   .option('-b, --browser <browser>', 'Target browser (chrome, chromium, or all)')
+  .option('--extension-id <id>', 'Chrome extension ID expected in Native Messaging allowed_origins')
   .action(async (options) => {
     try {
       const exitCode = await runDoctor({
         json: Boolean(options.json),
         fix: Boolean(options.fix),
         browser: options.browser,
+        extensionId: options.extensionId,
       });
       process.exit(exitCode);
     } catch (error: any) {

@@ -2,41 +2,41 @@
 // import * as fs from 'fs';
 // import * as path from 'path';
 
-// // cài đặtnhật kýtệpđường dẫn
+// // Cài đặt đường dẫn thư mục log
 // const LOG_DIR = path.join(
 //   '/Users/hang/code/ai/chrome-mcp-server/app/native-server/dist/',
 //   '.debug-log',
-// ); // sử dụngthư mục
+// ); // Sử dụng thư mục
 // const LOG_FILE = path.join(
 //   LOG_DIR,
 //   `native-host-${new Date().toISOString().replace(/:/g, '-')}.log`,
 // );
-// // đảm bảonhật kýthư mụctồn tại
+// // Đảm bảo thư mục log tồn tại
 // if (!fs.existsSync(LOG_DIR)) {
 //   try {
 //     fs.mkdirSync(LOG_DIR, { recursive: true });
 //   } catch (err) {
-//     stderr.write(`[ERROR] tạonhật kýthư mụcthất bại: ${err}\n`);
+//     stderr.write(`[ERROR] Tạo thư mục log thất bại: ${err}\n`);
 //   }
 // }
 
-// // nhật kýhàm
+// // Hàm ghi log
 // function writeLog(level: string, message: string): void {
 //   const timestamp = new Date().toISOString();
 //   const logMessage = `[${timestamp}] [${level}] ${message}\n`;
 
-//   // ghitệp
+//   // Ghi file
 //   try {
 //     fs.appendFileSync(LOG_FILE, logMessage);
 //   } catch (err) {
-//     stderr.write(`[ERROR] ghinhật kýthất bại: ${err}\n`);
+//     stderr.write(`[ERROR] Ghi log thất bại: ${err}\n`);
 //   }
 
-//   // đầu rastderr(không ảnh hưởngnative messaginggiao thức)
+//   // Xuất ra stderr (không ảnh hưởng giao thức native messaging)
 //   stderr.write(logMessage);
 // }
 
-// // nhật kýhàm
+// // Hàm log
 // export const logger = {
 //   debug: (message: string) => writeLog('DEBUG', message),
 //   info: (message: string) => writeLog('INFO', message),

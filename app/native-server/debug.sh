@@ -1,40 +1,40 @@
 #!/bin/bash
-# 获取脚本所在的绝对目录
+# Lấy thư mục tuyệt đối của script
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-LOG_DIR="/Users/hang/code/tencent/ai/chrome-mcp-server/app/native-server/dist/logs" # 或者你选择的、确定有写入权限的目录
+LOG_DIR="${SCRIPT_DIR}/dist/logs"
 
-# 获取当前时间戳用于日志文件名，避免覆盖
+# Lấy timestamp hiện tại cho tên file log, tránh ghi đè
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 WRAPPER_LOG="${LOG_DIR}/native_host_wrapper_${TIMESTAMP}.log"
 
-# Node.js 脚本的实际路径
+# Đường dẫn thực tế của script Node.js
 NODE_SCRIPT="${SCRIPT_DIR}/index.js"
 
-# 确保日志目录存在
+# Đảm bảo thư mục log tồn tại
 mkdir -p "${LOG_DIR}"
 
-# 记录 wrapper 脚本被调用的信息
+# Ghi thông tin wrapper script được gọi
 echo "Wrapper script called at $(date)" > "${WRAPPER_LOG}"
 echo "SCRIPT_DIR: ${SCRIPT_DIR}" >> "${WRAPPER_LOG}"
 echo "LOG_DIR: ${LOG_DIR}" >> "${WRAPPER_LOG}"
 echo "NODE_SCRIPT: ${NODE_SCRIPT}" >> "${WRAPPER_LOG}"
 echo "Initial PATH: ${PATH}" >> "${WRAPPER_LOG}"
 
-# 动态查找 Node.js 可执行文件
+# Tìm executable Node.js động
 NODE_EXEC=""
-# 1. 尝试用 which (它会使用当前环境的 PATH, 但 Chrome 的 PATH 可能不完整)
+# 1. Thử dùng which (sử dụng PATH hiện tại, nhưng PATH của Chrome có thể không đầy đủ)
 if command -v node &>/dev/null; then
     NODE_EXEC=$(command -v node)
     echo "Found node using 'command -v node': ${NODE_EXEC}" >> "${WRAPPER_LOG}"
 fi
 
-# 2. 如果 which 找不到，尝试一些 macOS 上常见的 Node.js 安装路径
+# 2. Nếu which không tìm thấy, thử các đường dẫn Node.js phổ biến trên macOS
 if [ -z "${NODE_EXEC}" ]; then
     COMMON_NODE_PATHS=(
-        "/usr/local/bin/node"            # Homebrew on Intel Macs / direct install
-        "/opt/homebrew/bin/node"         # Homebrew on Apple Silicon
-        "$HOME/.nvm/versions/node/$(ls -t $HOME/.nvm/versions/node | head -n 1)/bin/node" # NVM (latest installed)
-        # 你可以根据需要添加更多你环境中可能存在的路径
+        "/usr/local/bin/node"            # Homebrew trên Intel Mac / cài trực tiếp
+        "/opt/homebrew/bin/node"         # Homebrew trên Apple Silicon
+        "$HOME/.nvm/versions/node/$(ls -t $HOME/.nvm/versions/node | head -n 1)/bin/node" # NVM (phiên bản mới nhất)
+        # Có thể thêm các đường dẫn khác tùy môi trường
     )
     for path_to_node in "${COMMON_NODE_PATHS[@]}"; do
         if [ -x "${path_to_node}" ]; then
@@ -45,20 +45,20 @@ if [ -z "${NODE_EXEC}" ]; then
     done
 fi
 
-# 3. 如果还是找不到，记录错误并退出
+# 3. Nếu vẫn không tìm thấy, ghi lỗi và thoát
 if [ -z "${NODE_EXEC}" ]; then
     echo "ERROR: Node.js executable not found!" >> "${WRAPPER_LOG}"
     echo "Please ensure Node.js is installed and its path is accessible or configured in this script." >> "${WRAPPER_LOG}"
-    # 对于 Native Host，它需要保持运行以接收消息，直接退出可能不是最佳
-    # 但如果node都找不到，也无法执行目标脚本
-    # 这里可以考虑输出一个符合 Native Messaging 协议的错误消息给扩展（如果可以的话）
-    # 或者就让它失败，Chrome会报告 Native Host Exited.
-    exit 1 # 必须退出，否则下面的 exec 会失败
+    # Đối với Native Host, cần giữ chạy để nhận message, nhưng nếu không tìm thấy node
+    # thì cũng không thể thực thi script mục tiêu
+    # Có thể output message lỗi theo giao thức Native Messaging cho extension (nếu được)
+    # Hoặc để nó fail, Chrome sẽ báo Native Host Exited.
+    exit 1 # Bắt buộc thoát, nếu không exec bên dưới sẽ fail
 fi
 
 echo "Using Node executable: ${NODE_EXEC}" >> "${WRAPPER_LOG}"
 echo "Node version found by script: $(${NODE_EXEC} -v)" >> "${WRAPPER_LOG}"
 echo "Executing: ${NODE_EXEC} ${NODE_SCRIPT}" >> "${WRAPPER_LOG}"
-echo "PWD: $(pwd)" >> "${WRAPPER_LOG}" # PWD 记录一下，有时有用
+echo "PWD: $(pwd)" >> "${WRAPPER_LOG}" # Ghi PWD, đôi khi hữu ích
 
 exec "${NODE_EXEC}" "${NODE_SCRIPT}" 2>> "${LOG_DIR}/native_host_stderr_${TIMESTAMP}.log"
