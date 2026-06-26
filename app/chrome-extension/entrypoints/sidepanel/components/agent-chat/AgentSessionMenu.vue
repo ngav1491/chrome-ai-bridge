@@ -180,7 +180,7 @@
 
 <script lang="ts" setup>
 import { ref, nextTick } from 'vue';
-import type { AgentSession } from 'chrome-mcp-shared';
+import type { AgentSession } from 'chrome-ai-bridge-shared';
 
 const props = defineProps<{
   open: boolean;

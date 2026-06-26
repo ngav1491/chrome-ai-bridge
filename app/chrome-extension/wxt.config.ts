@@ -17,10 +17,10 @@ const IS_DEV = process.env.NODE_ENV !== 'production' && process.env.MODE !== 'pr
 export default defineConfig({
   modules: ['@wxt-dev/module-vue'],
   runner: {
-    // phương án1: vô hiệu hóatự độngkhởi động(khuyến nghị)
+    // Phương án 1: vô hiệu hóa tự động khởi động (khuyến nghị)
     disabled: true,
 
-    // phương án2: nếubậttự độngkhởi độngsử dụnghiện cócấu hình, hủycấu hình
+    // Phương án 2: nếu bật tự động khởi động sử dụng config hiện có, hủy config
     // chromiumArgs: [
     //   '--user-data-dir=' + homedir() + (process.platform === 'darwin'
     //     ? '/Library/Application Support/Google/Chrome'
@@ -65,7 +65,7 @@ export default defineConfig({
     },
     action: {
       default_popup: 'popup.html',
-      default_title: 'Chrome MCP Server',
+      default_title: 'Chrome AI Bridge',
     },
     // Chrome Side Panel entry for workflow management
     // Ref: https://developer.chrome.com/docs/extensions/reference/api/sidePanel
@@ -102,15 +102,15 @@ export default defineConfig({
     web_accessible_resources: [
       {
         resources: [
-          '/models/*', // truy cập public/models/ tất cảtệp
-          '/workers/*', // truy cập workers tệp
-          '/inject-scripts/*', // scripttệp
+          '/models/*', // Truy cập public/models/ tất cả tệp
+          '/workers/*', // Truy cập tệp workers
+          '/inject-scripts/*', // Tệp script
         ],
         matches: ['<all_urls>'],
       },
     ],
-    // lưu ý: chiến lược dev server ,
-    // bật,  WXT mặc địnhchiến lượcxử lý.
+    // Lưu ý: chiến lược dev server,
+    // bật, WXT mặc định chiến lược xử lý.
     ...(IS_DEV
       ? {}
       : {
@@ -137,13 +137,13 @@ export default defineConfig({
       // after the build by copy-static-assets.mjs (see package.json build script).
     ],
     build: {
-      // xây dựngcầnes6
+      // Xây dựng cần es6
       target: 'es2015',
-      // tạosourcemap
+      // Tạo sourcemap
       sourcemap: env.mode !== 'production',
-      // vô hiệu hóagzip , tệp
+      // Vô hiệu hóa gzip, tệp
       reportCompressedSize: false,
-      // chunkvượt quá1500kbkích hoạtcảnh báo
+      // Chunk vượt quá 1500kb kích hoạt cảnh báo
       chunkSizeWarningLimit: 1500,
       minify: false,
     },

@@ -221,7 +221,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import type { AgentProject, AgentEngineInfo, CodexReasoningEffort } from 'chrome-mcp-shared';
+import type { AgentProject, AgentEngineInfo, CodexReasoningEffort } from 'chrome-ai-bridge-shared';
 import {
   getModelsForCli,
   getDefaultModelForCli,

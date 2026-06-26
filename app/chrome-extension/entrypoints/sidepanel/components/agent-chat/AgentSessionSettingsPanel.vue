@@ -376,7 +376,7 @@ import type {
   AgentSystemPromptConfig,
   CodexReasoningEffort,
   AgentSessionOptionsConfig,
-} from 'chrome-mcp-shared';
+} from 'chrome-ai-bridge-shared';
 import {
   getModelsForCli,
   getCodexReasoningEfforts,

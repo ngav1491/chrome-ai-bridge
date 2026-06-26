@@ -12,7 +12,7 @@ import type {
   AgentStatusEvent,
   AgentCliPreference,
   AgentUsageStats,
-} from 'chrome-mcp-shared';
+} from 'chrome-ai-bridge-shared';
 
 /**
  * Request lifecycle state.

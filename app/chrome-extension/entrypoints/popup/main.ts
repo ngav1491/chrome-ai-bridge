@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { NativeMessageType } from 'chrome-mcp-shared';
+import { NativeMessageType } from 'chrome-ai-bridge-shared';
 import './style.css';
 // AgentChat
 import '../sidepanel/styles/agent-chat.css';
