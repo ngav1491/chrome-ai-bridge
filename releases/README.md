@@ -4,7 +4,7 @@
 
 ### 1. File phát hành
 
-Tải file [chrome-mcp-server-latest.zip](/releases/chrome-extension/latest/chrome-mcp-server-lastest.zip).
+Tải file [chrome-ai-bridge-latest.zip](/releases/chrome-extension/latest/chrome-ai-bridge-latest.zip).
 
 ### 2. Cài đặt extension
 
